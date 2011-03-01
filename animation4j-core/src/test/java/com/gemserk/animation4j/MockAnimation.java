@@ -1,6 +1,5 @@
 package com.gemserk.animation4j;
 
-import com.gemserk.animation4j.Animation;
 
 public class MockAnimation implements Animation {
 
@@ -8,12 +7,18 @@ public class MockAnimation implements Animation {
 	
 	boolean finished;
 
+	int iteration;
+
 	public void setStarted(boolean started) {
 		this.started = started;
 	}
 	
 	public void setFinished(boolean finished) {
 		this.finished = finished;
+	}
+	
+	public void setIteration(int iteration) {
+		this.iteration = iteration;
 	}
 	
 	@Override
@@ -46,6 +51,17 @@ public class MockAnimation implements Animation {
 	public void stop() {
 		started = false;
 		finished = false;
+	}
+
+	@Override
+	public void play(int iterationCount) {
+		this.iteration = iterationCount;
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated function stub
+		
 	}
 
 }

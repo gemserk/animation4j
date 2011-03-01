@@ -10,9 +10,11 @@ public class TimelineAnimation implements Animation {
 
 	boolean playing = false;
 
-	boolean loop = false;
-
 	Timeline timeline;
+
+	private int iteration = 1;
+
+	private int iterations = 1;
 
 	public void setSpeed(float speed) {
 		this.speed = speed;
@@ -37,12 +39,7 @@ public class TimelineAnimation implements Animation {
 	}
 
 	public void play() {
-		play(false);
-	}
-
-	public void play(boolean loop) {
-		this.playing = true;
-		this.loop = loop;
+		playing = true;
 	}
 
 	public void pause() {
@@ -55,15 +52,24 @@ public class TimelineAnimation implements Animation {
 
 		currentTime += time * speed;
 
-		if (isFinished()) {
-			if (!loop) {
+		// if timeline is finished....
+		if (isTimelineFinished()) {
+			iteration++;
+			if (iteration > iterations) {
+				// if (!loop) {
 				currentTime = getDuration();
 				pause();
 			} else {
-				stop();
-				play(true);
+				currentTime = 0;
+				// stop();
+				// play(true);
+				play();
 			}
 		}
+	}
+
+	private boolean isTimelineFinished() {
+		return currentTime >= timeline.getDuration() + timeline.getDelay();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -77,7 +83,8 @@ public class TimelineAnimation implements Animation {
 
 	@Override
 	public boolean isFinished() {
-		return currentTime >= timeline.getDuration() + timeline.getDelay();
+		return isTimelineFinished() && (iteration > iterations);
+		// return currentTime >= timeline.getDuration() + timeline.getDelay();
 	}
 
 	@Override
@@ -88,6 +95,14 @@ public class TimelineAnimation implements Animation {
 	@Override
 	public void restart() {
 		currentTime = 0;
+		iteration = 1;
+		play();
+	}
+
+	@Override
+	public void play(int iterationCount) {
+		this.iterations = iterationCount;
+		this.iteration = 1;
 		play();
 	}
 

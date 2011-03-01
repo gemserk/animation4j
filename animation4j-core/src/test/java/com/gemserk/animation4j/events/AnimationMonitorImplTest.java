@@ -6,9 +6,6 @@ import org.junit.Test;
 
 import com.gemserk.animation4j.Animation;
 import com.gemserk.animation4j.MockAnimation;
-import com.gemserk.animation4j.events.AnimationEventHandler;
-import com.gemserk.animation4j.events.AnimationMonitor;
-import com.gemserk.animation4j.events.AnimationMonitorImpl;
 import com.gemserk.animation4j.timeline.LinearInterpolatorFactory;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineBuilder;
@@ -33,7 +30,7 @@ public class AnimationMonitorImplTest {
 
 		assertEquals(false, animationEventHandler.onFinishCalled);
 	}
-	
+
 	@Test
 	public void onEndShouldBeCalledOnceIfAnimationFinishedAndNeverAgainIfAnimationNotStartedAgain() {
 		MockAnimation animation = new MockAnimation() {
@@ -51,7 +48,7 @@ public class AnimationMonitorImplTest {
 
 		assertEquals(false, animationEventHandler.onStartCalled);
 		assertEquals(false, animationEventHandler.onFinishCalled);
-		
+
 		animation.setStarted(true);
 		animationEventHandler.reset();
 		animationMonitor.checkAnimationChanges();
@@ -68,7 +65,7 @@ public class AnimationMonitorImplTest {
 		animationMonitor.checkAnimationChanges();
 		assertEquals(false, animationEventHandler.onFinishCalled);
 		assertEquals(false, animationEventHandler.onStartCalled);
-		
+
 		animationEventHandler.reset();
 		animationMonitor.checkAnimationChanges();
 		assertEquals(false, animationEventHandler.onFinishCalled);
@@ -77,7 +74,7 @@ public class AnimationMonitorImplTest {
 
 	@Test
 	public void onFinishShouldBeCalledOnlyOnceIfAnimationFinished() {
-		
+
 		MockAnimation animation = new MockAnimation() {
 			{
 				setStarted(true);
@@ -90,15 +87,15 @@ public class AnimationMonitorImplTest {
 		AnimationMonitor animationMonitor = new AnimationMonitorImpl(animation);
 		animationMonitor.addAnimationHandler(animationEventHandler);
 		animationMonitor.checkAnimationChanges();
-		
+
 		assertEquals(false, animationEventHandler.onFinishCalled);
-		
+
 		animation.setFinished(true);
 		animationEventHandler.reset();
 		animationMonitor.checkAnimationChanges();
 
 		assertEquals(true, animationEventHandler.onFinishCalled);
-		
+
 		animationEventHandler.reset();
 		animationMonitor.checkAnimationChanges();
 
@@ -114,7 +111,7 @@ public class AnimationMonitorImplTest {
 		};
 
 		MockAnimationEventHandler animationEventHandler = new MockAnimationEventHandler();
-		
+
 		AnimationMonitor animationMonitor = new AnimationMonitorImpl(animation);
 		animationMonitor.addAnimationHandler(animationEventHandler);
 		animationMonitor.checkAnimationChanges();
@@ -189,15 +186,19 @@ public class AnimationMonitorImplTest {
 
 		animation.update(500);
 		animationMonitor.checkAnimationChanges();
-		
+
 		animation.update(500);
 		animationMonitor.checkAnimationChanges();
-		
+
 		animation.update(500);
 		animationMonitor.checkAnimationChanges();
-		
+
 		animation.update(500);
 		animationMonitor.checkAnimationChanges();
 	}
-	
+
+	// @Test
+	// public void onIterationChangedShouldBeCalledWhenIterationChanged() {
+	//
+	// }
 }

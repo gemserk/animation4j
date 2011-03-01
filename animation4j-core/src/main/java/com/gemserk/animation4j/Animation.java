@@ -7,6 +7,10 @@ package com.gemserk.animation4j;
 public interface Animation {
 
 	void play();
+	
+	void play(int iterationCount);
+	
+	void pause();
 
 	void update(float delta);
 	
