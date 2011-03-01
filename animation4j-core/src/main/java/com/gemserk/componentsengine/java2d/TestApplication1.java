@@ -67,6 +67,7 @@ public class TestApplication1 extends Java2dDesktopApplication {
 				
 				value("x", new TimelineValueBuilder<Float>() {{
 					interpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
+					// keyFrame(0, 0f, interpolator(...)); <- this is going to create an interpolator between keyframe0 (default) and this keyframe
 					keyFrame(0, 0f);
 					keyFrame(1000, 100f);
 					keyFrame(2000, 0f);
