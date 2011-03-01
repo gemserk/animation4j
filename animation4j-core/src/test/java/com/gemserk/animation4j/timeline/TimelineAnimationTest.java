@@ -53,7 +53,6 @@ public class TimelineAnimationTest {
 				delay(100);
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
-						interpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
 						keyFrame(0, 100f, null);
 						keyFrame(100, 200f, null);
 					}
@@ -77,7 +76,6 @@ public class TimelineAnimationTest {
 			{
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
-						interpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
 						keyFrame(0, 100f, null);
 						keyFrame(100, 200f, null);
 					}
@@ -107,7 +105,6 @@ public class TimelineAnimationTest {
 			{
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
-						interpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
 						keyFrame(0, 100f, null);
 						keyFrame(100, 200f, null);
 					}
@@ -142,7 +139,6 @@ public class TimelineAnimationTest {
 			{
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
-						interpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
 						delay(100);
 						keyFrame(0, 100f, null);
 						keyFrame(100, 200f, null);

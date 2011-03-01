@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import com.gemserk.animation4j.Animation;
 import com.gemserk.animation4j.MockAnimation;
-import com.gemserk.animation4j.timeline.LinearInterpolatorFactory;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
@@ -160,7 +159,6 @@ public class AnimationMonitorImplTest {
 			{
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
-						interpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
 						keyFrame(0, 100f, null);
 						keyFrame(100, 200f, null);
 					}

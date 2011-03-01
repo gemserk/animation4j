@@ -38,13 +38,4 @@ public class TimelineValueBuilder<T> {
 
 	}
 
-	/**
-	 * Sets an Interpolator for the TimelineValue, use LinearInterpolatorFactory for linearInterpolators.
-	 * @param interpolator
-	 * @deprecated
-	 */
-	public void interpolator(Interpolator<T> interpolator) {
-		
-	}
-
 }

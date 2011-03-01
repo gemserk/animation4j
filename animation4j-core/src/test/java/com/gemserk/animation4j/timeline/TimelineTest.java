@@ -4,11 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.gemserk.animation4j.timeline.LinearInterpolatorFactory;
-import com.gemserk.animation4j.timeline.Timeline;
-import com.gemserk.animation4j.timeline.TimelineBuilder;
-import com.gemserk.animation4j.timeline.TimelineValueBuilder;
-
 public class TimelineTest {
 
 	@Test
@@ -17,7 +12,6 @@ public class TimelineTest {
 			{
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
-						interpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
 						keyFrame(0, 100f, null);
 						keyFrame(100, 200f, null);
 					}
@@ -36,7 +30,6 @@ public class TimelineTest {
 				delay(100);
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
-						interpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
 						keyFrame(0, 100f, null);
 						keyFrame(100, 200f, null);
 					}
