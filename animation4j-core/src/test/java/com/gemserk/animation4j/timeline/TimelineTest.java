@@ -18,8 +18,8 @@ public class TimelineTest {
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
 						interpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
-						keyFrame(0, 100f);
-						keyFrame(100, 200f);
+						keyFrame(0, 100f, null);
+						keyFrame(100, 200f, null);
 					}
 				});
 			}
@@ -37,8 +37,8 @@ public class TimelineTest {
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
 						interpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
-						keyFrame(0, 100f);
-						keyFrame(100, 200f);
+						keyFrame(0, 100f, null);
+						keyFrame(100, 200f, null);
 					}
 				});
 			}

@@ -33,6 +33,8 @@ public class TimelineValue<T> {
 
 		private T value;
 
+		private Interpolator<T> interpolator;
+
 		public float getTime() {
 			return time;
 		}
@@ -40,28 +42,23 @@ public class TimelineValue<T> {
 		public T getValue() {
 			return value;
 		}
+		
+		public Interpolator<T> getInterpolator() {
+			return interpolator;
+		}
 
-		public KeyFrame(float time, T value) {
+		public KeyFrame(float time, T value, Interpolator<T> interpolator) {
 			this.time = time;
 			this.value = value;
+			this.interpolator = interpolator;
 		}
 
 	}
 
 	LinkedList<TimelineValue.KeyFrame<T>> keyFrames = new LinkedList<TimelineValue.KeyFrame<T>>();
 
-	Interpolator<T> interpolator;
-
-	public void setInterpolator(Interpolator<T> interpolator) {
-		this.interpolator = interpolator;
-	}
-
-	public Interpolator<T> getInterpolator() {
-		return interpolator;
-	}
-
-	public void addKeyFrame(float time, T value) {
-		keyFrames.add(new TimelineValue.KeyFrame<T>(time, value));
+	public void addKeyFrame(float time, T value, Interpolator<T> interpolator) {
+		keyFrames.add(new TimelineValue.KeyFrame<T>(time, value, interpolator));
 	}
 
 	public T getValue(float time) {
@@ -74,6 +71,7 @@ public class TimelineValue<T> {
 
 			KeyFrame<T> secondKeyFrame = keyFrames.get(1);
 
+			Interpolator<T> interpolator = firstKeyFrame.getInterpolator();
 			return interpolator.interpolate(firstKeyFrame.getValue(), secondKeyFrame.getValue(), 0f);
 		}
 
@@ -92,6 +90,7 @@ public class TimelineValue<T> {
 
 				float weight = (time - previousKeyFrame.getTime()) / interval;
 
+				Interpolator<T> interpolator = previousKeyFrame.getInterpolator();
 				return interpolator.interpolate(previousKeyFrame.getValue(), currentKeyFrame.getValue(), weight);
 
 			}

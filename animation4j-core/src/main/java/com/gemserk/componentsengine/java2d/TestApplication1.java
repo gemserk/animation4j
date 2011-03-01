@@ -46,7 +46,7 @@ public class TestApplication1 extends Java2dDesktopApplication {
 		@Override
 		public void render(Graphics2D graphics2d) {
 			
-			// graphics2d.clearRect(0, 0, 800, 480);
+			 graphics2d.clearRect(0, 0, 800, 480);
 			
 			Float xvalue = timelineAnimation.getValue("x");
 			Float yvalue = timelineAnimation.getValue("y");
@@ -69,29 +69,13 @@ public class TestApplication1 extends Java2dDesktopApplication {
 				delay(1000);
 				
 				value("x", new TimelineValueBuilder<Float>() {{
-							// interpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
-							// interpolator(new FloatInterpolator(InterpolatorFunctionFactory.ease()));
-
-							// interpolator(new FloatInterpolator(new LinearBezierInterpolator(0, 1)));
-							// interpolator(new FloatInterpolator(new QuadraticBezierInterpolator(1f, 1f, 10f)));
-					interpolator(new FloatInterpolator(new CubicBezierInterpolator(0f, 0.42f, 1f, 1f)));
-					
-					// keyFrame(0, 0f, interpolator(...)); <- this is going to create an interpolator between keyframe0 (default) and this keyframe
-					keyFrame(0, 0f);
-					keyFrame(1000, 1f);
+					keyFrame(0, 0f, new FloatInterpolator(new CubicBezierInterpolator(0f, 0.42f, 1f, 1f)));
+					keyFrame(1000, 1f, null);
 				}});
 				
 				value("y", new TimelineValueBuilder<Float>() {{
-							// interpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
-							// interpolator(new FloatInterpolator(InterpolatorFunctionFactory.ease()));
-
-							// interpolator(new FloatInterpolator(new LinearBezierInterpolator(0, 1)));
-							// interpolator(new FloatInterpolator(new QuadraticBezierInterpolator(1f, 10f, 10f)));
-					interpolator(new FloatInterpolator(new CubicBezierInterpolator(0f, 0f, 1f, 1f)));
-					
-					// keyFrame(0, 0f, interpolator(...)); <- this is going to create an interpolator between keyframe0 (default) and this keyframe
-					keyFrame(0, 0f);
-					keyFrame(1000, 1f);
+					keyFrame(0, 0f, new FloatInterpolator(new CubicBezierInterpolator(0f, 0f, 1f, 1f)));
+					keyFrame(1000, 1f, null);
 				}});
 				
 			}}.build();

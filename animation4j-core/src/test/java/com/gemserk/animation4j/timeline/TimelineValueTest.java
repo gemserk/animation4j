@@ -4,20 +4,21 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.gemserk.animation4j.timeline.LinearInterpolatorFactory;
-import com.gemserk.animation4j.timeline.TimelineValue;
+import com.gemserk.animation4j.interpolators.Interpolator;
 
 
 public class TimelineValueTest {
 	
 	@Test
 	public void testTimeLineValues() {
+		Interpolator<Float> interpolator = LinearInterpolatorFactory.linearInterpolatorFloat();
 		TimelineValue<Float> timelineValue = new TimelineValue<Float>();
-		timelineValue.addKeyFrame(0, 10f);
-		timelineValue.addKeyFrame(100, 20f);
-		timelineValue.addKeyFrame(200, 30f);
 		
-		timelineValue.setInterpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
+		timelineValue.addKeyFrame(0, 10f, interpolator);
+		timelineValue.addKeyFrame(100, 20f, interpolator);
+		timelineValue.addKeyFrame(200, 30f, interpolator);
+		
+//		timelineValue.setInterpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
 		
 		assertEquals(10f, timelineValue.getValue(-50), 0.001f);
 		assertEquals(10f, timelineValue.getValue(0), 0.001f);
@@ -29,11 +30,13 @@ public class TimelineValueTest {
 	
 	@Test
 	public void testTimelineValuesWithOffset() {
-		TimelineValue<Float> timelineValue = new TimelineValue<Float>();
-		timelineValue.addKeyFrame(100, 10f);
-		timelineValue.addKeyFrame(200, 20f);
+		Interpolator<Float> interpolator = LinearInterpolatorFactory.linearInterpolatorFloat();
 		
-		timelineValue.setInterpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
+		TimelineValue<Float> timelineValue = new TimelineValue<Float>();
+		timelineValue.addKeyFrame(100, 10f, interpolator);
+		timelineValue.addKeyFrame(200, 20f, interpolator);
+		
+//		timelineValue.setInterpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
 		
 		assertEquals(10f, timelineValue.getValue(0), 0.001f);
 		assertEquals(10f, timelineValue.getValue(50), 0.001f);
