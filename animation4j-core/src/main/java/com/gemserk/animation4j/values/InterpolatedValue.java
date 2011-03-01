@@ -65,7 +65,7 @@ public abstract class InterpolatedValue<T>  {
 		return interpolator.interpolate(a, b, alpha);
 	}
 
-	public boolean isFinnished() {
+	public boolean isFinished() {
 		return alpha == 1f;
 	}
 

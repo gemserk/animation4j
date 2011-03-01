@@ -26,9 +26,9 @@ public class InterpolatedValueTest {
 	@Test
 	public void shouldStartNotFinished() {
 		InterpolatedValue<Float> interpolatedValue = new FloatInterpolatedValue(linearFloatInterpolator, 10f, 10f);
-		assertEquals(false, interpolatedValue.isFinnished());
+		assertEquals(false, interpolatedValue.isFinished());
 		interpolatedValue.setAlpha(1f);
-		assertEquals(true, interpolatedValue.isFinnished());
+		assertEquals(true, interpolatedValue.isFinished());
 	}
 
 	@Test
