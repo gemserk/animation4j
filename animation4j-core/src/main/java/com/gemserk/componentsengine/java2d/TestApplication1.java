@@ -45,12 +45,14 @@ public class TestApplication1 extends Java2dDesktopApplication {
 		@Override
 		public void render(Graphics2D graphics2d) {
 			
+			graphics2d.clearRect(0, 0, 800, 480);
+			
 			Float xvalue = timelineAnimation.getValue("x");
 			
 			int x = xvalue.intValue() + 100;
 			int y = (int)time + 100;
 			
-			graphics2d.fillOval(y, x, 2, 2);
+			graphics2d.fillOval(y, x, 5, 5);
 			
 		}
 
