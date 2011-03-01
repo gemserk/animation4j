@@ -4,8 +4,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
+import com.gemserk.animation4j.interpolators.CubicBezierInterpolator;
 import com.gemserk.animation4j.interpolators.FloatInterpolator;
-import com.gemserk.animation4j.interpolators.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.timeline.Timeline;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineBuilder;
@@ -46,14 +46,16 @@ public class TestApplication1 extends Java2dDesktopApplication {
 		@Override
 		public void render(Graphics2D graphics2d) {
 			
-			graphics2d.clearRect(0, 0, 800, 480);
+			// graphics2d.clearRect(0, 0, 800, 480);
 			
 			Float xvalue = timelineAnimation.getValue("x");
+			Float yvalue = timelineAnimation.getValue("y");
 			
-			int x = xvalue.intValue() + 100;
-			// int y = (int)time + 100;
+			int x = (int) (xvalue * 100 + 100);
+//			int y = (int)time + 100;
+			int y = (int) (yvalue * 100 + 100);
 			
-			graphics2d.fillOval(x, 100, 5, 5);
+			graphics2d.fillOval(x, y, 5, 5);
 			
 		}
 
@@ -67,14 +69,29 @@ public class TestApplication1 extends Java2dDesktopApplication {
 				delay(1000);
 				
 				value("x", new TimelineValueBuilder<Float>() {{
-					// interpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
-					interpolator(new FloatInterpolator(InterpolatorFunctionFactory.ease()));
+							// interpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
+							// interpolator(new FloatInterpolator(InterpolatorFunctionFactory.ease()));
+
+							// interpolator(new FloatInterpolator(new LinearBezierInterpolator(0, 1)));
+							// interpolator(new FloatInterpolator(new QuadraticBezierInterpolator(1f, 1f, 10f)));
+					interpolator(new FloatInterpolator(new CubicBezierInterpolator(0f, 0.42f, 1f, 1f)));
+					
 					// keyFrame(0, 0f, interpolator(...)); <- this is going to create an interpolator between keyframe0 (default) and this keyframe
 					keyFrame(0, 0f);
-					keyFrame(1000, 100f);
-					keyFrame(2000, 0f);
-					keyFrame(3000, 50f);
-					keyFrame(4000, 0f);
+					keyFrame(1000, 1f);
+				}});
+				
+				value("y", new TimelineValueBuilder<Float>() {{
+							// interpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
+							// interpolator(new FloatInterpolator(InterpolatorFunctionFactory.ease()));
+
+							// interpolator(new FloatInterpolator(new LinearBezierInterpolator(0, 1)));
+							// interpolator(new FloatInterpolator(new QuadraticBezierInterpolator(1f, 10f, 10f)));
+					interpolator(new FloatInterpolator(new CubicBezierInterpolator(0f, 0f, 1f, 1f)));
+					
+					// keyFrame(0, 0f, interpolator(...)); <- this is going to create an interpolator between keyframe0 (default) and this keyframe
+					keyFrame(0, 0f);
+					keyFrame(1000, 1f);
 				}});
 				
 			}}.build();

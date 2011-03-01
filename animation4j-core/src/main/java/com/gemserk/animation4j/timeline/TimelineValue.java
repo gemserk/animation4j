@@ -10,6 +10,7 @@ public class TimelineValue<T> {
 
 	/**
 	 * Determines a way to compare key frames based on the key frame time.
+	 * 
 	 * @author acoppes
 	 */
 	static class KeyFrameComparator implements Comparator<TimelineValue.KeyFrame> {
@@ -20,8 +21,10 @@ public class TimelineValue<T> {
 	}
 
 	/**
-	 * A key frame specifies a specific value the variable should have in a specific time. 
-	 * @param <T> the type of the variable
+	 * A key frame specifies a specific value the variable should have in a specific time.
+	 * 
+	 * @param <T>
+	 *            the type of the variable
 	 * @author acoppes
 	 */
 	static class KeyFrame<T> {
@@ -65,8 +68,14 @@ public class TimelineValue<T> {
 
 		KeyFrame<T> firstKeyFrame = keyFrames.getFirst();
 
-		if (time <= firstKeyFrame.time)
-			return firstKeyFrame.getValue();
+		if (time <= firstKeyFrame.time) {
+			if (keyFrames.size() == 1)
+				return firstKeyFrame.getValue();
+
+			KeyFrame<T> secondKeyFrame = keyFrames.get(1);
+
+			return interpolator.interpolate(firstKeyFrame.getValue(), secondKeyFrame.getValue(), 0f);
+		}
 
 		for (int i = 0; i < keyFrames.size(); i++) {
 
@@ -90,6 +99,14 @@ public class TimelineValue<T> {
 		}
 
 		return keyFrames.getLast().getValue();
+
+		// if (keyFrames.size() == 1)
+		// return keyFrames.getLast().getValue();
+		//
+		// KeyFrame<T> secondLastFrame = keyFrames.get(keyFrames.size() - 2);
+		// KeyFrame<T> lastFrame = keyFrames.getLast();
+		//
+		// return interpolator.interpolate(secondLastFrame.getValue(), lastFrame.getValue(), 1f);
 	}
 
 }
