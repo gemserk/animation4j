@@ -1,6 +1,6 @@
 package com.gemserk.animation4j.interpolators;
 
-public class CubicBezierInterpolator {
+public class CubicBezierInterpolator implements BezierInterpolator {
 
 	private final float p0, p1, p2, p3;
 
@@ -11,12 +11,8 @@ public class CubicBezierInterpolator {
 		this.p3 = p3;
 	}
 
-	/**
-	 * @param t
-	 *           - A real number in the interval [0,1]
-	 * @return The interpolated value.
-	 */
-	public Float interpolate(float t) {
+	@Override
+	public float interpolate(float t) {
 		float a = (1 - t) * (1 - t) * (1 - t) * p0;
 		float b = 3 * (1 - t) * (1 - t) * t * p1;
 		float c = 3 * (1 - t) * t * t * p2;

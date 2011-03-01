@@ -1,6 +1,6 @@
 package com.gemserk.animation4j.interpolators;
 
-public class LinearBezierInterpolator {
+public class LinearBezierInterpolator implements BezierInterpolator {
 
 	private final float p0, p1;
 
@@ -9,12 +9,8 @@ public class LinearBezierInterpolator {
 		this.p1 = p1;
 	}
 
-	/**
-	 * @param t
-	 *            - A real number in the interval [0,1]
-	 * @return The interpolated value.
-	 */
-	public Float interpolate(float t) {
+	@Override
+	public float interpolate(float t) {
 		return (1 - t) * p0 + t * p1;
 	}
 
