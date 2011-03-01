@@ -34,7 +34,7 @@ public class TestApplication1 extends Java2dDesktopApplication {
 			
 			timelineAnimation.update(deltaF);
 			
-			time += deltaF * 0.01f;
+			time += deltaF * 0.03f;
 			
 			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
 				timelineAnimation.restart();
@@ -50,9 +50,9 @@ public class TestApplication1 extends Java2dDesktopApplication {
 			Float xvalue = timelineAnimation.getValue("x");
 			
 			int x = xvalue.intValue() + 100;
-			int y = (int)time + 100;
+			// int y = (int)time + 100;
 			
-			graphics2d.fillOval(y, x, 5, 5);
+			graphics2d.fillOval(x, 100, 5, 5);
 			
 		}
 
@@ -68,7 +68,7 @@ public class TestApplication1 extends Java2dDesktopApplication {
 				value("x", new TimelineValueBuilder<Float>() {{
 					interpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
 					keyFrame(0, 0f);
-					keyFrame(1000, 20f);
+					keyFrame(1000, 100f);
 					keyFrame(2000, 0f);
 					keyFrame(3000, 50f);
 					keyFrame(4000, 0f);
@@ -77,7 +77,8 @@ public class TestApplication1 extends Java2dDesktopApplication {
 			}}.build();
 			
 			timelineAnimation = new TimelineAnimation(timeline);
-			timelineAnimation.play();
+			timelineAnimation.setSpeed(3f);
+			timelineAnimation.start(2);
 			
 		}
 	}

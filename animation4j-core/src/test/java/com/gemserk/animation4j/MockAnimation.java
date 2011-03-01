@@ -22,7 +22,7 @@ public class MockAnimation implements Animation {
 	}
 	
 	@Override
-	public void play() {
+	public void resume() {
 
 	}
 
@@ -54,13 +54,17 @@ public class MockAnimation implements Animation {
 	}
 
 	@Override
-	public void play(int iterationCount) {
+	public void start(int iterationCount) {
 		this.iteration = iterationCount;
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated function stub
+		
+	}
+
+	@Override
+	public void start() {
 		
 	}
 

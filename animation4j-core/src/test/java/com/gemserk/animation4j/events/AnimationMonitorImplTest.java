@@ -181,7 +181,7 @@ public class AnimationMonitorImplTest {
 			}
 		});
 		animationMonitor.checkAnimationChanges();
-		animation.play();
+		animation.resume();
 		animationMonitor.checkAnimationChanges();
 
 		animation.update(500);

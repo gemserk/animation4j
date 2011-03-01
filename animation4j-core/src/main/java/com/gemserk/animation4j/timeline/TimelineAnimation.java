@@ -35,10 +35,11 @@ public class TimelineAnimation implements Animation {
 
 	public void stop() {
 		currentTime = 0;
+		iteration = 1;
 		pause();
 	}
 
-	public void play() {
+	public void resume() {
 		playing = true;
 	}
 
@@ -63,7 +64,7 @@ public class TimelineAnimation implements Animation {
 				currentTime = 0;
 				// stop();
 				// play(true);
-				play();
+				resume();
 			}
 		}
 	}
@@ -89,21 +90,29 @@ public class TimelineAnimation implements Animation {
 
 	@Override
 	public boolean isStarted() {
+		if (iteration > 1)
+			return true;
 		return currentTime >= timeline.getDelay();
 	}
 
 	@Override
 	public void restart() {
-		currentTime = 0;
-		iteration = 1;
-		play();
+		stop();
+		resume();
 	}
 
 	@Override
-	public void play(int iterationCount) {
+	public void start(int iterationCount) {
 		this.iterations = iterationCount;
+		if (this.iterations <= 0)
+			this.iterations = Integer.MAX_VALUE;
 		this.iteration = 1;
-		play();
+		resume();
+	}
+
+	@Override
+	public void start() {
+		start(1);
 	}
 
 }
