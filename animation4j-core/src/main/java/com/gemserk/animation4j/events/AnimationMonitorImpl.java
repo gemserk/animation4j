@@ -14,6 +14,8 @@ public class AnimationMonitorImpl implements AnimationMonitor {
 	boolean wasFinished = false;
 
 	boolean wasStarted = false;
+	
+	int lastIteration = 1;
 
 	Animation animation;
 
@@ -41,11 +43,13 @@ public class AnimationMonitorImpl implements AnimationMonitor {
 
 		boolean callOnStart = animation.isStarted() && !wasStarted && !animation.isFinished();
 		boolean callOnFinish = animation.isFinished() && !wasFinished;
+		boolean callOnIterationChanged = animation.getIteration() != lastIteration;
 
 		wasStarted = animation.isStarted();
 		wasFinished = animation.isFinished();
+		lastIteration = animation.getIteration();
 
-		if (!callOnFinish && !callOnStart)
+		if (!callOnFinish && !callOnStart && !callOnIterationChanged)
 			return;
 
 		for (AnimationEventHandler animationEventHandler : animationEventHandlers) {
@@ -53,6 +57,8 @@ public class AnimationMonitorImpl implements AnimationMonitor {
 				animationEventHandler.onAnimationFinished(animation);
 			if (callOnStart)
 				animationEventHandler.onAnimationStarted(animation);
+			if (callOnIterationChanged)
+				animationEventHandler.onIterationChanged(animation);
 		}
 
 	}

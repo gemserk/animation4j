@@ -53,7 +53,6 @@ public class TimelineAnimation implements Animation {
 
 		currentTime += time * speed;
 
-		// if timeline is finished....
 		if (isTimelineFinished()) {
 			iteration++;
 			if (iteration > iterations) {
@@ -62,8 +61,6 @@ public class TimelineAnimation implements Animation {
 				pause();
 			} else {
 				currentTime = 0;
-				// stop();
-				// play(true);
 				resume();
 			}
 		}
@@ -85,7 +82,6 @@ public class TimelineAnimation implements Animation {
 	@Override
 	public boolean isFinished() {
 		return isTimelineFinished() && (iteration > iterations);
-		// return currentTime >= timeline.getDuration() + timeline.getDelay();
 	}
 
 	@Override
@@ -113,6 +109,11 @@ public class TimelineAnimation implements Animation {
 	@Override
 	public void start() {
 		start(1);
+	}
+
+	@Override
+	public int getIteration() {
+		return iteration;
 	}
 
 }

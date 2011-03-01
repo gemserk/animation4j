@@ -1,26 +1,27 @@
 package com.gemserk.animation4j;
 
-
 public class MockAnimation implements Animation {
 
 	boolean started;
-	
+
 	boolean finished;
 
 	int iteration;
 
+	int iterations;
+
 	public void setStarted(boolean started) {
 		this.started = started;
 	}
-	
+
 	public void setFinished(boolean finished) {
 		this.finished = finished;
 	}
-	
+
 	public void setIteration(int iteration) {
 		this.iteration = iteration;
 	}
-	
+
 	@Override
 	public void resume() {
 
@@ -55,17 +56,23 @@ public class MockAnimation implements Animation {
 
 	@Override
 	public void start(int iterationCount) {
-		this.iteration = iterationCount;
+		this.iterations = iterationCount;
+		this.iteration = 1;
 	}
 
 	@Override
 	public void pause() {
-		
+
 	}
 
 	@Override
 	public void start() {
-		
+
+	}
+
+	@Override
+	public int getIteration() {
+		return iteration;
 	}
 
 }

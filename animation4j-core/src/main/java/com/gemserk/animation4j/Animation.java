@@ -17,6 +17,14 @@ public interface Animation {
 	 */
 	void start(int iterationCount);
 	
+	/**
+	 * Restarts the animation from the beginning.
+	 */
+	void restart();
+	
+	/**
+	 * Stops the animation.
+	 */
 	void stop();
 	
 	/**
@@ -29,6 +37,8 @@ public interface Animation {
 	 */
 	void resume();
 	
+	/// used by the monitor
+	
 	/**
 	 * Returns true if the animation is started.
 	 */
@@ -39,9 +49,11 @@ public interface Animation {
 	 */
 	boolean isFinished();
 
-	void restart();
-	
-	
+	/**
+	 * Returns the current iteration number.
+	 * @return The current iteration number.
+	 */
+	int getIteration();
 	
 	void update(float delta);
 }

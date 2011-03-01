@@ -11,5 +11,9 @@ public class AnimationEventHandler {
 	public void onAnimationFinished(Animation animation) {
 		
 	}
+	
+	public void onIterationChanged(Animation animation) {
+		
+	}
 
 }

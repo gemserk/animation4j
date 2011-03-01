@@ -197,8 +197,31 @@ public class AnimationMonitorImplTest {
 		animationMonitor.checkAnimationChanges();
 	}
 
-	// @Test
-	// public void onIterationChangedShouldBeCalledWhenIterationChanged() {
-	//
-	// }
+	 @Test
+	 public void onIterationChangedShouldBeCalledWhenIterationChanged() {
+		 
+			MockAnimation animation = new MockAnimation() {
+				{
+					setStarted(true);
+					setIteration(1);
+				}
+			};
+
+			MockAnimationEventHandler animationEventHandler = new MockAnimationEventHandler();
+
+			AnimationMonitor animationMonitor = new AnimationMonitorImpl(animation);
+			animationMonitor.addAnimationHandler(animationEventHandler);
+			animationMonitor.checkAnimationChanges();
+
+			assertEquals(false, animationEventHandler.onIterationChangedCalled);
+			animation.setIteration(2);
+			animationMonitor.checkAnimationChanges();
+			assertEquals(true, animationEventHandler.onIterationChangedCalled);
+			
+			animationEventHandler.onIterationChangedCalled = false;
+			
+			animationMonitor.checkAnimationChanges();
+			assertEquals(false, animationEventHandler.onIterationChangedCalled);
+	
+	 }
 }
