@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 
 import com.gemserk.animation4j.interpolators.CubicBezierInterpolatorFunction;
 import com.gemserk.animation4j.interpolators.FloatInterpolator;
+import com.gemserk.animation4j.interpolators.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.timeline.Timeline;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineBuilder;
@@ -69,15 +70,17 @@ public class TestApplication1 extends Java2dDesktopApplication {
 				delay(1000);
 				
 				value("x", new TimelineValueBuilder<Float>() {{
-					keyFrame(0, 4f, new FloatInterpolator(new CubicBezierInterpolatorFunction(0f, 0.42f, 1f, 1f)));
-					keyFrame(1000, 5f, new FloatInterpolator(new CubicBezierInterpolatorFunction(0f, 0f, 0.58f, 1f)));
-					keyFrame(2000, 4f, null);
+//					keyFrame(0, 4f, new FloatInterpolator(new CubicBezierInterpolatorFunction(0f, 0.42f, 1f, 1f)));
+//					keyFrame(1000, 5f, new FloatInterpolator(new CubicBezierInterpolatorFunction(0f, 0f, 0.58f, 1f)));
+					keyFrame(0, 4f, new FloatInterpolator(InterpolatorFunctionFactory.easeIn()));
+					keyFrame(1000, 5f, new FloatInterpolator(InterpolatorFunctionFactory.easeOut()));
+					keyFrame(2000, 6f, null);
 				}});
 				
 				value("y", new TimelineValueBuilder<Float>() {{
 					keyFrame(0, 0f, new FloatInterpolator(new CubicBezierInterpolatorFunction(0f, 0f, 1f, 1f)));
 					keyFrame(1000, 1f, new FloatInterpolator(new CubicBezierInterpolatorFunction(0f, 0f, 1f, 1f)));
-					keyFrame(2000, 0f, null);
+					keyFrame(2000, 2f, null);
 				}});
 				
 			}}.build();
