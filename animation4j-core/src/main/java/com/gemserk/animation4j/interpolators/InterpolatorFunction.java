@@ -1,6 +1,6 @@
 package com.gemserk.animation4j.interpolators;
 
-public interface BezierInterpolator {
+public interface InterpolatorFunction {
 
 	/**
 	 * @param t

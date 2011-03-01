@@ -1,6 +1,6 @@
 package com.gemserk.animation4j.interpolators;
 
-public class CubicBezierInterpolator implements BezierInterpolator {
+public class CubicBezierInterpolator implements InterpolatorFunction {
 
 	private final float p0, p1, p2, p3;
 

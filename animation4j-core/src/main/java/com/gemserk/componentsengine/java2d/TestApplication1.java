@@ -4,7 +4,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
-import com.gemserk.animation4j.timeline.LinearInterpolatorFactory;
+import com.gemserk.animation4j.interpolators.FloatInterpolator;
+import com.gemserk.animation4j.interpolators.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.timeline.Timeline;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineBuilder;
@@ -66,7 +67,8 @@ public class TestApplication1 extends Java2dDesktopApplication {
 				delay(1000);
 				
 				value("x", new TimelineValueBuilder<Float>() {{
-					interpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
+					// interpolator(LinearInterpolatorFactory.linearInterpolatorFloat());
+					interpolator(new FloatInterpolator(InterpolatorFunctionFactory.ease()));
 					// keyFrame(0, 0f, interpolator(...)); <- this is going to create an interpolator between keyframe0 (default) and this keyframe
 					keyFrame(0, 0f);
 					keyFrame(1000, 100f);
@@ -78,7 +80,7 @@ public class TestApplication1 extends Java2dDesktopApplication {
 			}}.build();
 			
 			timelineAnimation = new TimelineAnimation(timeline);
-			timelineAnimation.setSpeed(3f);
+			timelineAnimation.setSpeed(1f);
 			timelineAnimation.start(2);
 			
 		}
