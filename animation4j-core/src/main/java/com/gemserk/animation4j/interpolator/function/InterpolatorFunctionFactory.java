@@ -1,4 +1,4 @@
-package com.gemserk.animation4j.interpolators;
+package com.gemserk.animation4j.interpolator.function;
 
 public class InterpolatorFunctionFactory {
 	

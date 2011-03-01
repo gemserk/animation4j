@@ -1,4 +1,4 @@
-package com.gemserk.animation4j.events;
+package com.gemserk.animation4j.event;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import com.gemserk.animation4j.Animation;
 import com.gemserk.animation4j.MockAnimation;
+import com.gemserk.animation4j.event.AnimationEventHandler;
+import com.gemserk.animation4j.event.AnimationMonitor;
+import com.gemserk.animation4j.event.AnimationMonitorImpl;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;

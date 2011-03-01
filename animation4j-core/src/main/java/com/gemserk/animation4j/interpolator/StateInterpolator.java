@@ -1,4 +1,4 @@
-package com.gemserk.animation4j.interpolators;
+package com.gemserk.animation4j.interpolator;
 
 /**
  * An Interpolator implementation with internal state.

@@ -1,11 +1,11 @@
-package com.gemserk.animation4j.interpolators;
+package com.gemserk.animation4j.interpolator;
 
 import static org.junit.Assert.assertThat;
 
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
-import com.gemserk.animation4j.interpolators.FloatStateInterpolator;
+import com.gemserk.animation4j.interpolator.FloatStateInterpolator;
 
 
 public class FloatInterpolatorTest {

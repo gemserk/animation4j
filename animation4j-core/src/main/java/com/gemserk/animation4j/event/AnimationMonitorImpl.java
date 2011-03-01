@@ -1,4 +1,4 @@
-package com.gemserk.animation4j.events;
+package com.gemserk.animation4j.event;
 
 import java.util.ArrayList;
 import java.util.List;

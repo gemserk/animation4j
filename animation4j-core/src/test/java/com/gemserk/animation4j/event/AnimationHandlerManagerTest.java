@@ -1,4 +1,4 @@
-package com.gemserk.animation4j.events;
+package com.gemserk.animation4j.event;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -7,8 +7,8 @@ import org.junit.Test;
 
 import com.gemserk.animation4j.Animation;
 import com.gemserk.animation4j.MockAnimation;
-import com.gemserk.animation4j.events.AnimationHandlerManager;
-import com.gemserk.animation4j.events.AnimationMonitorImpl;
+import com.gemserk.animation4j.event.AnimationHandlerManager;
+import com.gemserk.animation4j.event.AnimationMonitorImpl;
 
 public class AnimationHandlerManagerTest {
 

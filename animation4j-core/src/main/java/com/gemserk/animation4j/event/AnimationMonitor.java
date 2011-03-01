@@ -1,4 +1,4 @@
-package com.gemserk.animation4j.events;
+package com.gemserk.animation4j.event;
 
 public interface AnimationMonitor {
 

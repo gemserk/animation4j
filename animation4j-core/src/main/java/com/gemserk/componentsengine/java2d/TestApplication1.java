@@ -4,9 +4,9 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
-import com.gemserk.animation4j.interpolators.CubicBezierInterpolatorFunction;
-import com.gemserk.animation4j.interpolators.FloatInterpolator;
-import com.gemserk.animation4j.interpolators.InterpolatorFunctionFactory;
+import com.gemserk.animation4j.interpolator.FloatInterpolator;
+import com.gemserk.animation4j.interpolator.function.CubicBezierInterpolatorFunction;
+import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.timeline.Timeline;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineBuilder;
@@ -47,7 +47,7 @@ public class TestApplication1 extends Java2dDesktopApplication {
 		@Override
 		public void render(Graphics2D graphics2d) {
 			
-			 graphics2d.clearRect(0, 0, 800, 480);
+			graphics2d.clearRect(0, 0, 800, 480);
 			
 			Float xvalue = timelineAnimation.getValue("x");
 			Float yvalue = timelineAnimation.getValue("y");
@@ -56,7 +56,7 @@ public class TestApplication1 extends Java2dDesktopApplication {
 //			int y = (int)time + 100;
 			int y = (int) (yvalue * 100 + 100);
 			
-			graphics2d.fillOval(x, y, 5, 5);
+			graphics2d.fillOval(x, y, 10, 10);
 			
 		}
 
@@ -67,11 +67,9 @@ public class TestApplication1 extends Java2dDesktopApplication {
 			
 			Timeline timeline = new TimelineBuilder() {{
 				
-				delay(1000);
+				delay(0);
 				
 				value("x", new TimelineValueBuilder<Float>() {{
-//					keyFrame(0, 4f, new FloatInterpolator(new CubicBezierInterpolatorFunction(0f, 0.42f, 1f, 1f)));
-//					keyFrame(1000, 5f, new FloatInterpolator(new CubicBezierInterpolatorFunction(0f, 0f, 0.58f, 1f)));
 					keyFrame(0, 4f, new FloatInterpolator(InterpolatorFunctionFactory.easeIn()));
 					keyFrame(1000, 5f, new FloatInterpolator(InterpolatorFunctionFactory.easeOut()));
 					keyFrame(2000, 6f, null);

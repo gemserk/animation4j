@@ -1,6 +1,6 @@
 package com.gemserk.animation4j.values;
 
-import com.gemserk.animation4j.interpolators.Interpolator;
+import com.gemserk.animation4j.interpolator.Interpolator;
 
 /**
  * Used to simplify interpolated values management. You simply create an interpolated value with an interpolator and two values, and then move the alpha between 0 and 1 to get an interpolated value.

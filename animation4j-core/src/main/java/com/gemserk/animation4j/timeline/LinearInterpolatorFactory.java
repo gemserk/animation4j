@@ -1,8 +1,8 @@
 package com.gemserk.animation4j.timeline;
 
-import com.gemserk.animation4j.interpolators.FloatInterpolator;
-import com.gemserk.animation4j.interpolators.Interpolator;
-import com.gemserk.animation4j.interpolators.InterpolatorFunctionFactory;
+import com.gemserk.animation4j.interpolator.FloatInterpolator;
+import com.gemserk.animation4j.interpolator.Interpolator;
+import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 
 /**
  * Provides a way to build linear interpolators of most common types.

@@ -3,7 +3,7 @@ package com.gemserk.animation4j.timeline;
 import java.util.Comparator;
 import java.util.LinkedList;
 
-import com.gemserk.animation4j.interpolators.Interpolator;
+import com.gemserk.animation4j.interpolator.Interpolator;
 
 @SuppressWarnings("rawtypes")
 public class TimelineValue<T> {

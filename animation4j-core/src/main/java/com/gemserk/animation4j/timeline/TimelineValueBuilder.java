@@ -1,7 +1,14 @@
 package com.gemserk.animation4j.timeline;
 
-import com.gemserk.animation4j.interpolators.Interpolator;
+import com.gemserk.animation4j.interpolator.Interpolator;
 
+/**
+ * Provides an easy way to create TimelineValues.
+ * 
+ * @param <T> - The type of the variable of the TimelineValue.
+ *
+ * @author acoppes
+ */
 public class TimelineValueBuilder<T> {
 
 	String name;
@@ -26,7 +33,12 @@ public class TimelineValueBuilder<T> {
 		return duration;
 	}
 
-	@SuppressWarnings("unchecked")
+	/**
+	 * Defines a new key frame in the timeline value.
+	 * @param time - The time when the key frame starts.
+	 * @param value - The value the variable should have in the key frame.
+	 * @param interpolator - The interpolator to use between the key frame and the next key frame.
+	 */
 	public void keyFrame(float time, T value, Interpolator<T> interpolator) {
 
 		if (interpolator == null)

@@ -1,4 +1,4 @@
-package com.gemserk.animation4j.interpolators;
+package com.gemserk.animation4j.interpolator;
 
 /**
  * Provides a way to interpolate values between two values based on a weight and an interpolation function. 

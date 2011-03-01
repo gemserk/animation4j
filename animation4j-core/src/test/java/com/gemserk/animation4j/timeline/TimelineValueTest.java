@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.gemserk.animation4j.interpolators.Interpolator;
+import com.gemserk.animation4j.interpolator.Interpolator;
 
 
 public class TimelineValueTest {

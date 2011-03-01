@@ -1,4 +1,4 @@
-package com.gemserk.animation4j.interpolators;
+package com.gemserk.animation4j.interpolator;
 
 public class FloatStateInterpolator implements StateInterpolator<Float> {
 

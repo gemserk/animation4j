@@ -1,6 +1,6 @@
 package com.gemserk.animation4j.values;
 
-import com.gemserk.animation4j.interpolators.Interpolator;
+import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.timeline.LinearInterpolatorFactory;
 
 /**

@@ -1,4 +1,6 @@
-package com.gemserk.animation4j.interpolators;
+package com.gemserk.animation4j.interpolator;
+
+import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
 
 public class FloatInterpolator implements Interpolator<Float> {
 
