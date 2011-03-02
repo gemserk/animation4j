@@ -17,3 +17,8 @@ animation4j-examples/.classpath
 animation4j-examples/.settings
 animation4j-examples/.project
 animation4j-examples/target
+
+animation4j-slick/.classpath
+animation4j-slick/.settings
+animation4j-slick/.project
+animation4j-slick/target
