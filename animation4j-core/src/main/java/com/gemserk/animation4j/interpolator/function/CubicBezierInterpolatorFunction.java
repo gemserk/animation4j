@@ -13,6 +13,10 @@ public class CubicBezierInterpolatorFunction implements InterpolatorFunction {
 
 	@Override
 	public float interpolate(float t) {
+		if (t < 0)
+			return p0;
+		if (t > 1)
+			return p1;
 		float a = (1 - t) * (1 - t) * (1 - t) * p0;
 		float b = 3 * (1 - t) * (1 - t) * t * p1;
 		float c = 3 * (1 - t) * t * t * p2;

@@ -11,6 +11,10 @@ public class LinearBezierInterpolatorFunction implements InterpolatorFunction {
 
 	@Override
 	public float interpolate(float t) {
+		if (t < 0)
+			return p0;
+		if (t > 1)
+			return p1;
 		return (1 - t) * p0 + t * p1;
 	}
 
