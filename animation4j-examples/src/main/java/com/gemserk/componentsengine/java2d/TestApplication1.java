@@ -11,6 +11,8 @@ import com.gemserk.animation4j.timeline.Timeline;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 public class TestApplication1 extends Java2dDesktopApplication {
 	
@@ -99,10 +101,12 @@ public class TestApplication1 extends Java2dDesktopApplication {
 	@Override
 	public void init() {
 		
+		Injector injector = Guice.createInjector(new Java2dModule());
+		
 		KeyboardInput keyboardInput = new KeyboardInput();
 		MouseInput mouseInput = new MouseInput();
 		
-		createWindow("Title", new Dimension(800, 480), new Test1(keyboardInput, mouseInput), keyboardInput, mouseInput);
+		createWindow("Title", new Dimension(800, 480), new Test1(keyboardInput, mouseInput), injector);
 		
 	}
 

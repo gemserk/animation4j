@@ -45,6 +45,7 @@
 	<modules>
 		<module>animation4j-core</module>
 		<module>animation4j-componentsengine</module>
+		<module>animation4j-examples</module>
 	</modules>
 
 	<properties>

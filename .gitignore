@@ -12,3 +12,8 @@ animation4j-componentsengine/.classpath
 animation4j-componentsengine/.settings
 animation4j-componentsengine/.project
 animation4j-componentsengine/target
+
+animation4j-examples/.classpath
+animation4j-examples/.settings
+animation4j-examples/.project
+animation4j-examples/target
