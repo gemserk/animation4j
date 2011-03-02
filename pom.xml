@@ -28,6 +28,14 @@
 		</developer>
 	</developers>
 
+	<url>https://github.com/gemserk/animation4j</url>
+
+	<scm>
+		<url>https://github.com/gemserk/animation4j</url>
+		<connection>scm:git://github.com/gemserk/animation4j.git</connection>
+		<developerConnection>scm:git:git@github.com:gemserk/animation4j.git</developerConnection>
+	</scm>
+
 	<distributionManagement>
 		<repository>
 			<id>gemserk.releases</id>
