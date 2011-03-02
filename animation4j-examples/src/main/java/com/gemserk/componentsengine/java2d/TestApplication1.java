@@ -11,6 +11,8 @@ import com.gemserk.animation4j.timeline.Timeline;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
+import com.gemserk.componentsengine.java2d.input.KeyboardInput;
+import com.gemserk.componentsengine.java2d.input.MouseInput;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
