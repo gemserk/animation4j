@@ -16,6 +16,10 @@ public class InterpolatorFunctionFactory {
 		return new CubicBezierInterpolatorFunction(p0, p1, p2, p3);
 	}
 	
+	public static InterpolatorFunction quadratic(float p0, float p1, float p2) {
+		return new QuadraticBezierInterpolatorFunction(p0, p1, p2);
+	}
+	
 	public static InterpolatorFunction ease() {
 		return easeInterpolatorFunction;
 	}

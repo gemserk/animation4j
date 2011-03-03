@@ -12,7 +12,7 @@ public class FloatStateInterpolator implements StateInterpolator<Float> {
 
 	float speed;
 	
-	public FloatStateInterpolator(int time, Float from, Float to) {
+	public FloatStateInterpolator(int time, float from, float to) {
 		this.from = from;
 		this.to = to;
 		this.time = time;

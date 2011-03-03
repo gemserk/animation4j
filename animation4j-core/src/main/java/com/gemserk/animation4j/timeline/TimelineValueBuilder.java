@@ -49,5 +49,9 @@ public class TimelineValueBuilder<T> {
 		duration = Math.max(duration, time);
 
 	}
+	
+	public void keyFrame(float time, T value) {
+		keyFrame(time, value, LinearInterpolatorFactory.inferLinearInterpolator(value));
+	}
 
 }
