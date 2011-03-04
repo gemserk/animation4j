@@ -31,6 +31,14 @@ public class TimelineAnimation implements Animation {
 	public void setAlternateDirection(boolean alternateDirection) {
 		this.alternateDirection = alternateDirection;
 	}
+	
+	public float getCurrentTime() {
+		return currentTime;
+	}
+	
+	public PlayingDirection getDirection() {
+		return direction;
+	}
 
 	public float getDuration() {
 		return timeline.getDuration() + timeline.getDelay();
@@ -50,20 +58,6 @@ public class TimelineAnimation implements Animation {
 		this.alternateDirection = alternateDirection;
 	}
 
-	public void stop() {
-		currentTime = 0;
-		iteration = 1;
-		pause();
-	}
-
-	public void resume() {
-		playing = true;
-	}
-
-	public void pause() {
-		playing = false;
-	}
-
 	protected boolean isTimelineFinished() {
 		if (direction.equals(PlayingDirection.Normal))
 			return currentTime >= timeline.getDuration() + timeline.getDelay();
@@ -77,12 +71,6 @@ public class TimelineAnimation implements Animation {
 
 	public Timeline getTimeline() {
 		return timeline;
-	}
-
-	@Override
-	public void restart() {
-		stop();
-		resume();
 	}
 
 	@Override
@@ -103,6 +91,26 @@ public class TimelineAnimation implements Animation {
 	public void start(int iterationCount, boolean alternateDirection) {
 		start(iterationCount);
 		this.alternateDirection = alternateDirection; 
+	}
+	
+	@Override
+	public void restart() {
+		stop();
+		resume();
+	}
+	
+	public void stop() {
+		currentTime = 0;
+		iteration = 1;
+		pause();
+	}
+
+	public void pause() {
+		playing = false;
+	}
+
+	public void resume() {
+		playing = true;
 	}
 
 	@Override
@@ -130,9 +138,7 @@ public class TimelineAnimation implements Animation {
 			currentTime += time * speed;
 
 			if (isTimelineFinished()) {
-
 				iteration++;
-
 				if (iteration > iterations) {
 					currentTime = getDuration();
 					pause();
@@ -151,11 +157,11 @@ public class TimelineAnimation implements Animation {
 			currentTime -= time * speed;
 
 			if (isTimelineFinished()) {
-
 				iteration++;
-
 				if (iteration > iterations) {
+					currentTime = 0f;
 					pause();
+					direction = PlayingDirection.Normal;
 				} else {
 					if (alternateDirection)
 						direction = PlayingDirection.Normal;

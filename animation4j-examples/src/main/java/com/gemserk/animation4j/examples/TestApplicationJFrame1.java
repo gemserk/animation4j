@@ -34,7 +34,7 @@ public class TestApplicationJFrame1 extends JFrame {
 	private TimelineAnimation timelineAnimation;
 
 	private long currentTime;
-	
+
 	private boolean done = false;
 
 	public TestApplicationJFrame1() {
@@ -42,7 +42,7 @@ public class TestApplicationJFrame1 extends JFrame {
 		Timeline timeline = new TimelineBuilder() {
 			{
 
-				delay(0);
+				// delay(0);
 
 				value("x", new TimelineValueBuilder<Float>() {
 					{
@@ -75,7 +75,7 @@ public class TestApplicationJFrame1 extends JFrame {
 				done = true;
 				System.exit(0);
 			}
-			
+
 			@Override
 			public void windowClosed(WindowEvent e) {
 				System.out.println("closed");
@@ -83,13 +83,23 @@ public class TestApplicationJFrame1 extends JFrame {
 				System.exit(0);
 			}
 		});
-		
+
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER)
 					timelineAnimation.restart();
+
+				if (e.getKeyCode() == KeyEvent.VK_D) {
+
+					System.out.println("direction: " + timelineAnimation.getDirection());
+					System.out.println("currentTime: " + timelineAnimation.getCurrentTime());
+					System.out.println("iteration: " + timelineAnimation.getIteration());
+					System.out.println("duration: " + timelineAnimation.getDuration());
+					
+				}
 			}
+
 		});
 
 	}
@@ -99,13 +109,13 @@ public class TestApplicationJFrame1 extends JFrame {
 			timelineAnimation.update(System.currentTimeMillis() - currentTime);
 			drawStuff();
 			currentTime = System.currentTimeMillis();
-			
+
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
+
 		}
 	}
 
