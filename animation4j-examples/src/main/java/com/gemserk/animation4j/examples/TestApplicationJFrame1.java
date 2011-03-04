@@ -64,7 +64,7 @@ public class TestApplicationJFrame1 extends JFrame {
 
 		timelineAnimation = new TimelineAnimation(timeline);
 		timelineAnimation.setSpeed(1f);
-		timelineAnimation.start(1);
+		timelineAnimation.start(2, true);
 
 		currentTime = System.currentTimeMillis();
 

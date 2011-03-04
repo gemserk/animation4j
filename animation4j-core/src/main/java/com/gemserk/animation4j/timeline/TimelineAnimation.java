@@ -27,6 +27,10 @@ public class TimelineAnimation implements Animation {
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
+	
+	public void setAlternateDirection(boolean alternateDirection) {
+		this.alternateDirection = alternateDirection;
+	}
 
 	public float getDuration() {
 		return timeline.getDuration() + timeline.getDelay();
@@ -37,8 +41,13 @@ public class TimelineAnimation implements Animation {
 	}
 
 	public TimelineAnimation(Timeline timeline, boolean started) {
+		this(timeline, started, false);
+	}
+	
+	public TimelineAnimation(Timeline timeline, boolean started, boolean alternateDirection) {
 		this.timeline = timeline;
 		this.playing = started;
+		this.alternateDirection = alternateDirection;
 	}
 
 	public void stop() {
@@ -55,6 +64,64 @@ public class TimelineAnimation implements Animation {
 		playing = false;
 	}
 
+	protected boolean isTimelineFinished() {
+		if (direction.equals(PlayingDirection.Normal))
+			return currentTime >= timeline.getDuration() + timeline.getDelay();
+		return currentTime + timeline.getDelay() <= 0;
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T getValue(String name) {
+		return (T) timeline.getValue(currentTime, name);
+	}
+
+	public Timeline getTimeline() {
+		return timeline;
+	}
+
+	@Override
+	public void restart() {
+		stop();
+		resume();
+	}
+
+	@Override
+	public void start() {
+		start(1);
+	}
+
+	@Override
+	public void start(int iterationCount) {
+		this.iterations = iterationCount;
+		if (this.iterations <= 0)
+			this.iterations = Integer.MAX_VALUE;
+		this.iteration = 1;
+		resume();
+	}
+
+	@Override
+	public void start(int iterationCount, boolean alternateDirection) {
+		start(iterationCount);
+		this.alternateDirection = alternateDirection; 
+	}
+
+	@Override
+	public int getIteration() {
+		return iteration;
+	}
+
+	@Override
+	public boolean isFinished() {
+		return isTimelineFinished() && (iteration > iterations);
+	}
+
+	@Override
+	public boolean isStarted() {
+		if (iteration > 1)
+			return true;
+		return currentTime >= timeline.getDelay();
+	}
+
 	public void update(float time) {
 		if (!playing)
 			return;
@@ -67,7 +134,6 @@ public class TimelineAnimation implements Animation {
 				iteration++;
 
 				if (iteration > iterations) {
-					// if (!loop) {
 					currentTime = getDuration();
 					pause();
 				} else {
@@ -99,61 +165,4 @@ public class TimelineAnimation implements Animation {
 		}
 
 	}
-
-	protected boolean isTimelineFinished() {
-		if (direction.equals(PlayingDirection.Normal))
-			return currentTime >= timeline.getDuration() + timeline.getDelay();
-		return currentTime + timeline.getDelay() <= 0;
-	}
-
-	@SuppressWarnings("unchecked")
-	public <T> T getValue(String name) {
-		return (T) timeline.getValue(currentTime, name);
-	}
-
-	public Timeline getTimeline() {
-		return timeline;
-	}
-
-	@Override
-	public boolean isFinished() {
-		return isTimelineFinished() && (iteration > iterations);
-	}
-
-	@Override
-	public boolean isStarted() {
-		if (iteration > 1)
-			return true;
-		return currentTime >= timeline.getDelay();
-	}
-
-	@Override
-	public void restart() {
-		stop();
-		resume();
-	}
-
-	@Override
-	public void start(int iterationCount) {
-		this.iterations = iterationCount;
-		if (this.iterations <= 0)
-			this.iterations = Integer.MAX_VALUE;
-		this.iteration = 1;
-		resume();
-	}
-
-	@Override
-	public void start() {
-		start(1);
-	}
-
-	@Override
-	public int getIteration() {
-		return iteration;
-	}
-
-	public void alternateDirection() {
-		alternateDirection = true;
-	}
-
 }

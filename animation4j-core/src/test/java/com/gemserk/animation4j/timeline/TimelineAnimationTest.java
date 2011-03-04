@@ -169,7 +169,7 @@ public class TimelineAnimationTest {
 			}
 		}.build());
 		
-		animation.alternateDirection();
+		animation.setAlternateDirection(true);
 		animation.start(2);
 		
 		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(200f, 0.1f));
@@ -191,5 +191,9 @@ public class TimelineAnimationTest {
 		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(200f, 0.1f));
 
 	}
+	
+	// test reverse Animation with delay
+	
+	// test restart is not setting iteration to 0? 
 
 }

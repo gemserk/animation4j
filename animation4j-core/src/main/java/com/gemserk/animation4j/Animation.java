@@ -18,6 +18,13 @@ public interface Animation {
 	void start(int iterationCount);
 	
 	/**
+	 * Starts the animation and repeats it the specified number of times.
+	 * @param iterationCount - The number of times to repeat the animation. Use 0 or negative number to repeat the Animation an infinite number of times.
+	 * @param alternateDirection - Specify if the animation should alternate between normal and reverse playing direction each time an iteration ends. 
+	 */
+	void start(int iterationCount, boolean alternateDirection);
+	
+	/**
 	 * Restarts the animation from the beginning.
 	 */
 	void restart();
@@ -54,6 +61,8 @@ public interface Animation {
 	 * @return The current iteration number.
 	 */
 	int getIteration();
+	
+	/// used to update the animation (should be in the subclass only)
 	
 	void update(float delta);
 }

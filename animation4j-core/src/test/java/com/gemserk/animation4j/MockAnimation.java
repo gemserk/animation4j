@@ -75,4 +75,10 @@ public class MockAnimation implements Animation {
 		return iteration;
 	}
 
+	@Override
+	public void start(int iterationCount, boolean alternateDirection) {
+		start(iterationCount);
+		// add alternate direction.
+	}
+
 }
