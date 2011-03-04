@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 
 import com.gemserk.animation4j.interpolator.Interpolator;
+import com.gemserk.animation4j.interpolator.NullInterpolator;
 
 @SuppressWarnings("rawtypes")
 public class TimelineValue<T> {
@@ -42,7 +43,7 @@ public class TimelineValue<T> {
 		public T getValue() {
 			return value;
 		}
-		
+
 		public Interpolator<T> getInterpolator() {
 			return interpolator;
 		}
@@ -59,6 +60,10 @@ public class TimelineValue<T> {
 
 	public void addKeyFrame(float time, T value, Interpolator<T> interpolator) {
 		keyFrames.add(new TimelineValue.KeyFrame<T>(time, value, interpolator));
+	}
+
+	public void addKeyFrame(float time, T value) {
+		addKeyFrame(time, value, new NullInterpolator<T>());
 	}
 
 	public T getValue(float time) {
@@ -97,15 +102,15 @@ public class TimelineValue<T> {
 
 		}
 
-		return keyFrames.getLast().getValue();
+		if (keyFrames.size() == 1)
+			return keyFrames.getLast().getValue();
 
-		// if (keyFrames.size() == 1)
-		// return keyFrames.getLast().getValue();
-		//
-		// KeyFrame<T> secondLastFrame = keyFrames.get(keyFrames.size() - 2);
-		// KeyFrame<T> lastFrame = keyFrames.getLast();
-		//
-		// return interpolator.interpolate(secondLastFrame.getValue(), lastFrame.getValue(), 1f);
+		KeyFrame<T> secondLastFrame = keyFrames.get(keyFrames.size() - 2);
+		KeyFrame<T> lastFrame = keyFrames.getLast();
+
+		Interpolator<T> interpolator = secondLastFrame.getInterpolator();
+
+		return interpolator.interpolate(secondLastFrame.getValue(), lastFrame.getValue(), 1f);
 	}
 
 }
