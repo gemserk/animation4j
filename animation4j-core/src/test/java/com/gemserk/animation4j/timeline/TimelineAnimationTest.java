@@ -153,9 +153,43 @@ public class TimelineAnimationTest {
 		assertThat(animation.isStarted(), IsEqual.equalTo(true));
 	}
 
-	// @Test
-	// public void shouldPlayInReversIfAlternateDirection() {
-	// fail();
-	// }
+	@Test
+	public void shouldPlayInReversIfAlternateDirection() {
+
+		TimelineAnimation animation = new TimelineAnimation(new TimelineBuilder() {
+			{
+				value("myvalue", new TimelineValueBuilder<Float>() {
+					{
+						keyFrame(0, 200f, null);
+						keyFrame(100, 900f, null);
+						keyFrame(150, 1900f, null);
+						keyFrame(200, 2000f, null);
+					}
+				});
+			}
+		}.build());
+		
+		animation.alternateDirection();
+		animation.start(2);
+		
+		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(200f, 0.1f));
+		
+		animation.update(100);
+		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(900f, 0.1f));
+
+		animation.update(100);
+		assertThat(animation.isStarted(), IsEqual.equalTo(true));
+		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(2000f, 0.1f));
+
+		animation.update(50);
+		assertThat(animation.isStarted(), IsEqual.equalTo(true));
+		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(1900f, 0.1f));
+		assertThat(animation.isFinished(), IsEqual.equalTo(false));
+		
+		animation.update(151);
+		assertThat(animation.isFinished(), IsEqual.equalTo(true));
+		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(200f, 0.1f));
+
+	}
 
 }

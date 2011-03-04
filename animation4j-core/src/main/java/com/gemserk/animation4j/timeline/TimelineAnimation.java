@@ -16,6 +16,14 @@ public class TimelineAnimation implements Animation {
 
 	private int iterations = 1;
 
+	enum PlayingDirection {
+		Normal, Reverse;
+	}
+
+	boolean alternateDirection = false;
+
+	PlayingDirection direction = PlayingDirection.Normal;
+
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
@@ -51,23 +59,51 @@ public class TimelineAnimation implements Animation {
 		if (!playing)
 			return;
 
-		currentTime += time * speed;
+		if (direction.equals(PlayingDirection.Normal)) {
+			currentTime += time * speed;
 
-		if (isTimelineFinished()) {
-			iteration++;
-			if (iteration > iterations) {
-				// if (!loop) {
-				currentTime = getDuration();
-				pause();
-			} else {
-				currentTime = 0;
-				resume();
+			if (isTimelineFinished()) {
+
+				iteration++;
+
+				if (iteration > iterations) {
+					// if (!loop) {
+					currentTime = getDuration();
+					pause();
+				} else {
+
+					if (alternateDirection) {
+						direction = PlayingDirection.Reverse;
+					} else {
+						currentTime = 0;
+					}
+				}
+
 			}
+
+		} else if (direction.equals(PlayingDirection.Reverse)) {
+			currentTime -= time * speed;
+
+			if (isTimelineFinished()) {
+
+				iteration++;
+
+				if (iteration > iterations) {
+					pause();
+				} else {
+					if (alternateDirection)
+						direction = PlayingDirection.Normal;
+				}
+			}
+
 		}
+
 	}
 
-	private boolean isTimelineFinished() {
-		return currentTime >= timeline.getDuration() + timeline.getDelay();
+	protected boolean isTimelineFinished() {
+		if (direction.equals(PlayingDirection.Normal))
+			return currentTime >= timeline.getDuration() + timeline.getDelay();
+		return currentTime + timeline.getDelay() <= 0;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -114,6 +150,10 @@ public class TimelineAnimation implements Animation {
 	@Override
 	public int getIteration() {
 		return iteration;
+	}
+
+	public void alternateDirection() {
+		alternateDirection = true;
 	}
 
 }
