@@ -120,7 +120,9 @@ public class TimelineAnimation implements Animation {
 
 	@Override
 	public boolean isFinished() {
-		return isTimelineFinished() && (iteration > iterations);
+		if (iteration > iterations)
+			return true;
+		return isTimelineFinished();
 	}
 
 	@Override
