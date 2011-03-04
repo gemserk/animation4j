@@ -27,15 +27,15 @@ public class TimelineAnimation implements Animation {
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
-	
+
 	public void setAlternateDirection(boolean alternateDirection) {
 		this.alternateDirection = alternateDirection;
 	}
-	
+
 	public float getCurrentTime() {
 		return currentTime;
 	}
-	
+
 	public PlayingDirection getDirection() {
 		return direction;
 	}
@@ -51,17 +51,21 @@ public class TimelineAnimation implements Animation {
 	public TimelineAnimation(Timeline timeline, boolean started) {
 		this(timeline, started, false);
 	}
-	
+
 	public TimelineAnimation(Timeline timeline, boolean started, boolean alternateDirection) {
 		this.timeline = timeline;
 		this.playing = started;
 		this.alternateDirection = alternateDirection;
 	}
 
-	protected boolean isTimelineFinished() {
+	/**
+	 * Returns true when the time line for the current iteration is finished, could be normal or reverse playing direction.
+	 */
+	protected boolean isIterationFinished() {
+		float delay = timeline.getDelay();
 		if (direction.equals(PlayingDirection.Normal))
-			return currentTime >= timeline.getDuration() + timeline.getDelay();
-		return currentTime + timeline.getDelay() <= 0;
+			return currentTime >= timeline.getDuration() + delay;
+		return currentTime + delay <= 0;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -90,15 +94,15 @@ public class TimelineAnimation implements Animation {
 	@Override
 	public void start(int iterationCount, boolean alternateDirection) {
 		start(iterationCount);
-		this.alternateDirection = alternateDirection; 
+		this.alternateDirection = alternateDirection;
 	}
-	
+
 	@Override
 	public void restart() {
 		stop();
 		resume();
 	}
-	
+
 	public void stop() {
 		currentTime = 0;
 		iteration = 1;
@@ -122,7 +126,7 @@ public class TimelineAnimation implements Animation {
 	public boolean isFinished() {
 		if (iteration > iterations)
 			return true;
-		return isTimelineFinished();
+		return isIterationFinished();
 	}
 
 	@Override
@@ -135,42 +139,43 @@ public class TimelineAnimation implements Animation {
 	public void update(float time) {
 		if (!playing)
 			return;
-
-		if (direction.equals(PlayingDirection.Normal)) {
-			currentTime += time * speed;
-
-			if (isTimelineFinished()) {
-				iteration++;
-				if (iteration > iterations) {
-					currentTime = getDuration();
-					pause();
-				} else {
-
-					if (alternateDirection) {
-						direction = PlayingDirection.Reverse;
-					} else {
-						currentTime = 0;
-					}
-				}
-
-			}
-
-		} else if (direction.equals(PlayingDirection.Reverse)) {
-			currentTime -= time * speed;
-
-			if (isTimelineFinished()) {
-				iteration++;
-				if (iteration > iterations) {
-					currentTime = 0f;
-					pause();
-					direction = PlayingDirection.Normal;
-				} else {
-					if (alternateDirection)
-						direction = PlayingDirection.Normal;
-				}
-			}
-
+		moveCurrentTime(time);
+		if (isIterationFinished()) {
+			iteration++;
+			if (iteration > iterations)
+				finishIterations();
+			else
+				nextIteration();
 		}
+	}
 
+	protected void nextIteration() {
+		if (direction.equals(PlayingDirection.Normal)) {
+			if (alternateDirection)
+				direction = PlayingDirection.Reverse;
+			else
+				currentTime = 0 + timeline.getDelay();
+		} else {
+			if (alternateDirection)
+				direction = PlayingDirection.Normal;
+		}
+	}
+
+	protected void finishIterations() {
+		if (direction.equals(PlayingDirection.Normal)) {
+			currentTime = getDuration();
+			pause();
+		} else {
+			currentTime = 0f;
+			pause();
+			direction = PlayingDirection.Normal;
+		}
+	}
+
+	protected void moveCurrentTime(float time) {
+		if (direction.equals(PlayingDirection.Normal))
+			currentTime += time * speed;
+		else
+			currentTime -= time * speed;
 	}
 }
