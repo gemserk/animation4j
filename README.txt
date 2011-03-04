@@ -8,11 +8,13 @@ It is a maven project and it is based on the next modules:
 
 	animation4j-componentsengine
 
-		This module provides implementations of animation4j core module to be used with components engine project.
+		This module provides implementations of animation4j core module to be used 
+		with components engine project.
 
 	animation4j-slick
 
-		This module provides implementations of animation4j core module to be used with Slick2D.
+		If you are already using Slick2D, this module provides you with specific 
+		classes to easier your work with animation4j.
 
 	animation4j-examples
 
