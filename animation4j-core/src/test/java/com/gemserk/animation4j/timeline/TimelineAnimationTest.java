@@ -195,7 +195,7 @@ public class TimelineAnimationTest {
 	// test: delay should be used only to start the animation, not in each iteration.
 	
 	@Test
-	public void shouldProcessDelayOnlyWhenAnimationNotStarted() {
+	public void shouldProcessDelayOnlyWhenAnimationIsNotStarted() {
 
 		final String valueName = "myvalue";
 		

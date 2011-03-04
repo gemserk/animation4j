@@ -41,15 +41,9 @@ public class TestApplicationJFrame1 extends JFrame {
 
 		Timeline timeline = new TimelineBuilder() {
 			{
-
-				// delay(0);
-
 				value("x", new TimelineValueBuilder<Float>() {
 					{
-						keyFrame(0, 150f, new FloatInterpolator(InterpolatorFunctionFactory.quadratic(0f, -1f, 1f)));
-						keyFrame(1000, 400f, null);
-						keyFrame(1250, 400f, new FloatInterpolator(InterpolatorFunctionFactory.quadratic(0f, -1f, 1f)));
-						keyFrame(2250, 150f);
+						keyFrame(0, 150f);
 					}
 				});
 
@@ -58,13 +52,12 @@ public class TestApplicationJFrame1 extends JFrame {
 						keyFrame(0, 150f);
 					}
 				});
-
 			}
 		}.build();
 
 		timelineAnimation = new TimelineAnimation(timeline);
 		timelineAnimation.setSpeed(1f);
-		timelineAnimation.start(2, true);
+		timelineAnimation.start(1);
 
 		currentTime = System.currentTimeMillis();
 
@@ -96,6 +89,64 @@ public class TestApplicationJFrame1 extends JFrame {
 					System.out.println("currentTime: " + timelineAnimation.getCurrentTime());
 					System.out.println("iteration: " + timelineAnimation.getIteration());
 					System.out.println("duration: " + timelineAnimation.getDuration());
+					
+				}
+				
+				if (e.getKeyCode() == KeyEvent.VK_1) {
+					
+					Timeline timeline = new TimelineBuilder() {
+						{
+							delay(1000);
+
+							value("x", new TimelineValueBuilder<Float>() {
+								{
+									keyFrame(0, 150f, new FloatInterpolator(InterpolatorFunctionFactory.quadratic(0f, -1f, 1f)));
+									keyFrame(1000, 400f, null);
+									keyFrame(1250, 400f, new FloatInterpolator(InterpolatorFunctionFactory.quadratic(0f, -1f, 1f)));
+									keyFrame(2250, 150f);
+								}
+							});
+
+							value("y", new TimelineValueBuilder<Float>() {
+								{
+									keyFrame(0, 150f);
+								}
+							});
+
+						}
+					}.build();
+
+					timelineAnimation = new TimelineAnimation(timeline);
+					timelineAnimation.setSpeed(1f);
+					timelineAnimation.start(2, false);
+					
+				}
+				
+				if (e.getKeyCode() == KeyEvent.VK_2) {
+					
+					Timeline timeline = new TimelineBuilder() {
+						{
+							value("x", new TimelineValueBuilder<Float>() {
+								{
+									keyFrame(0, 150f, new FloatInterpolator(InterpolatorFunctionFactory.quadratic(0f, -1f, 1f)));
+									keyFrame(1000, 400f, null);
+									keyFrame(1250, 400f, new FloatInterpolator(InterpolatorFunctionFactory.quadratic(0f, -1f, 1f)));
+									keyFrame(2250, 150f);
+								}
+							});
+
+							value("y", new TimelineValueBuilder<Float>() {
+								{
+									keyFrame(0, 150f);
+								}
+							});
+
+						}
+					}.build();
+
+					timelineAnimation = new TimelineAnimation(timeline);
+					timelineAnimation.setSpeed(1f);
+					timelineAnimation.start(2, true);
 					
 				}
 			}
