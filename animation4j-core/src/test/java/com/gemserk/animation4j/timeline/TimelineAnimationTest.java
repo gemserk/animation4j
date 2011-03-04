@@ -9,26 +9,26 @@ import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 public class TimelineAnimationTest {
-	
+
 	public static class IsNear {
-		
+
 		public static Matcher<Float> isNear(float x, float range) {
 			return new Near(x, range);
 		}
-		
+
 	}
 
 	public static class Near extends BaseMatcher<Float> {
-		
+
 		private final float x;
-		
+
 		private final float range;
 
 		public Near(float x, float range) {
 			this.x = x;
 			this.range = range;
 		}
-		
+
 		@Override
 		public boolean matches(Object o) {
 			if (!(o instanceof Float))
@@ -39,11 +39,9 @@ public class TimelineAnimationTest {
 
 		@Override
 		public void describeTo(Description description) {
-			
+
 		}
 	}
-
-	// TEST: timeline animation with delay must not be started until first keyframe
 
 	@Test
 	public void shouldNotBeStartedBeforeDelay() {
@@ -84,20 +82,20 @@ public class TimelineAnimationTest {
 		}.build());
 
 		animation.start(2);
-		
+
 		// assertThat(animation.getIteration(), IsEqual.equalTo(1));
-		assertThat((Float)animation.getValue("myvalue"), IsEqual.equalTo(100f));
+		assertThat((Float) animation.getValue("myvalue"), IsEqual.equalTo(100f));
 		animation.update(99.99f);
-		assertThat((Float)animation.getValue("myvalue"), IsNear.isNear(200f, 0.1f));
+		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(200f, 0.1f));
 		animation.update(0.01f);
 		// assertThat(animation.getIteration(), IsEqual.equalTo(2));
 		assertThat(animation.isFinished(), IsEqual.equalTo(false));
-		assertThat((Float)animation.getValue("myvalue"), IsNear.isNear(100f, 0.1f));
+		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(100f, 0.1f));
 		animation.update(100f);
 		assertThat(animation.isFinished(), IsEqual.equalTo(true));
-		assertThat((Float)animation.getValue("myvalue"), IsNear.isNear(200f, 0.1f));
+		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(200f, 0.1f));
 	}
-	
+
 	@Test
 	public void shouldIterateAnIndefiniteNumberOfTimes() {
 
@@ -113,25 +111,25 @@ public class TimelineAnimationTest {
 		}.build());
 
 		animation.start(0);
-		
+
 		// assertThat(animation.getIteration(), IsEqual.equalTo(1));
-		assertThat((Float)animation.getValue("myvalue"), IsEqual.equalTo(100f));
+		assertThat((Float) animation.getValue("myvalue"), IsEqual.equalTo(100f));
 		animation.update(99.99f);
-		assertThat((Float)animation.getValue("myvalue"), IsNear.isNear(200f, 0.1f));
+		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(200f, 0.1f));
 		animation.update(0.01f);
 		// assertThat(animation.getIteration(), IsEqual.equalTo(2));
 		assertThat(animation.isFinished(), IsEqual.equalTo(false));
-		assertThat((Float)animation.getValue("myvalue"), IsNear.isNear(100f, 0.1f));
+		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(100f, 0.1f));
 		animation.update(99.99f);
 		assertThat(animation.isFinished(), IsEqual.equalTo(false));
-		assertThat((Float)animation.getValue("myvalue"), IsNear.isNear(200f, 0.1f));
-		
+		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(200f, 0.1f));
+
 		animation.update(9999999f);
 		assertThat(animation.isFinished(), IsEqual.equalTo(false));
 		// assertThat(animation.getIteration(), IsEqual.equalTo(100));
 
 	}
-	
+
 	@Test
 	public void shouldBeStartedBetweenIterationsWithDelays() {
 
@@ -153,7 +151,11 @@ public class TimelineAnimationTest {
 		assertThat(animation.isStarted(), IsEqual.equalTo(true));
 		animation.update(101);
 		assertThat(animation.isStarted(), IsEqual.equalTo(true));
-		
-
 	}
+
+	// @Test
+	// public void shouldPlayInReversIfAlternateDirection() {
+	// fail();
+	// }
+
 }
