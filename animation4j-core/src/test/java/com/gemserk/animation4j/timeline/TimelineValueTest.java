@@ -13,7 +13,7 @@ public class TimelineValueTest {
 	
 	@Test
 	public void testTimeLineValues() {
-		Interpolator<Float> interpolator = LinearInterpolatorFactory.linearInterpolatorFloat();
+		Interpolator<Float> interpolator = new FloatInterpolator(InterpolatorFunctionFactory.linear());
 		TimelineValue<Float> timelineValue = new TimelineValue<Float>();
 		
 		timelineValue.addKeyFrame(0, 10f, interpolator);
@@ -30,7 +30,7 @@ public class TimelineValueTest {
 	
 	@Test
 	public void testTimelineValuesWithOffset() {
-		Interpolator<Float> interpolator = LinearInterpolatorFactory.linearInterpolatorFloat();
+		Interpolator<Float> interpolator = new FloatInterpolator(InterpolatorFunctionFactory.linear());
 		
 		TimelineValue<Float> timelineValue = new TimelineValue<Float>();
 		timelineValue.addKeyFrame(100, 10f, interpolator);

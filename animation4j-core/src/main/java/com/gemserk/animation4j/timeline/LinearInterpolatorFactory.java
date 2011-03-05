@@ -11,15 +11,11 @@ import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory
  */
 public class LinearInterpolatorFactory {
 
-	public static Interpolator<Float> linearInterpolatorFloat() {
-		return new FloatInterpolator(InterpolatorFunctionFactory.linear());
-	}
-
 	@SuppressWarnings("rawtypes")
 	public static Interpolator inferLinearInterpolator(Object value) {
 
 		if (value instanceof Float)
-			return linearInterpolatorFloat();
+			return new FloatInterpolator(InterpolatorFunctionFactory.linear());
 
 		return null;
 	}

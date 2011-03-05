@@ -1,6 +1,8 @@
 package com.gemserk.animation4j.values;
 
+import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
+import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.timeline.LinearInterpolatorFactory;
 
 /**
@@ -14,7 +16,7 @@ public class FloatInterpolatedValue extends InterpolatedValue<Float> {
 	}
 
 	public FloatInterpolatedValue(Float a, Float b) {
-		this(LinearInterpolatorFactory.linearInterpolatorFloat(), a, b);
+		this(new FloatInterpolator(InterpolatorFunctionFactory.linear()), a, b);
 	}
 
 	public FloatInterpolatedValue(Float a) {

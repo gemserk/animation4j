@@ -39,7 +39,7 @@ public class TimelineValueBuilder<T> {
 	 * @param value - The value the variable should have in the key frame.
 	 * @param interpolator - The interpolator to use between the key frame and the next key frame.
 	 */
-	public void keyFrame(float time, T value, Interpolator<T> interpolator) {
+	public TimelineValueBuilder<T> keyFrame(float time, T value, Interpolator<T> interpolator) {
 
 		if (interpolator == null)
 			interpolator = LinearInterpolatorFactory.inferLinearInterpolator(value);
@@ -48,10 +48,11 @@ public class TimelineValueBuilder<T> {
 
 		duration = Math.max(duration, time);
 
+		return this;
 	}
 	
-	public void keyFrame(float time, T value) {
-		keyFrame(time, value, LinearInterpolatorFactory.inferLinearInterpolator(value));
+	public TimelineValueBuilder<T> keyFrame(float time, T value) {
+		return keyFrame(time, value, LinearInterpolatorFactory.inferLinearInterpolator(value));
 	}
 
 }

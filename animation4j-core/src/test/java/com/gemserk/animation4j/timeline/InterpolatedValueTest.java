@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
+import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.timeline.LinearInterpolatorFactory;
 import com.gemserk.animation4j.values.InterpolatedValue;
 
@@ -21,7 +23,7 @@ public class InterpolatedValueTest {
 		}
 	}
 
-	static Interpolator<Float> linearFloatInterpolator = LinearInterpolatorFactory.linearInterpolatorFloat();
+	static Interpolator<Float> linearFloatInterpolator = new FloatInterpolator(InterpolatorFunctionFactory.linear());
 
 	@Test
 	public void shouldStartNotFinished() {
