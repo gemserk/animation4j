@@ -18,7 +18,7 @@ public class InterpolatorProviderTest {
 		
 		Interpolator<Float> interpolator = new FloatInterpolator(InterpolatorFunctionFactory.linear());
 		interpolatorProvider.register(Float.class, interpolator);
-		Interpolator<Float> interpolatorInfered = interpolatorProvider.inferLinearInterpolator(new Float(100f));
+		Interpolator<Float> interpolatorInfered = interpolatorProvider.inferInterpolator(new Float(100f));
 		
 		assertThat(interpolatorInfered, IsSame.sameInstance(interpolator));
 	}

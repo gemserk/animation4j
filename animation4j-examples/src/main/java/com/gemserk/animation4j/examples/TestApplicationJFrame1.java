@@ -101,7 +101,7 @@ public class TestApplicationJFrame1 extends JFrame {
 							value("x", new TimelineValueBuilder<Float>() {
 								{
 									keyFrame(0, 150f, new FloatInterpolator(InterpolatorFunctionFactory.quadratic(0f, -1f, 1f)));
-									keyFrame(1000, 400f, null);
+									keyFrame(1000, 400f);
 									keyFrame(1250, 400f, new FloatInterpolator(InterpolatorFunctionFactory.quadratic(0f, -1f, 1f)));
 									keyFrame(2250, 150f);
 								}
@@ -129,7 +129,7 @@ public class TestApplicationJFrame1 extends JFrame {
 							value("x", new TimelineValueBuilder<Float>() {
 								{
 									keyFrame(0, 150f, new FloatInterpolator(InterpolatorFunctionFactory.quadratic(0f, -1f, 1f)));
-									keyFrame(1000, 400f, null);
+									keyFrame(1000, 400f);
 									keyFrame(1250, 400f, new FloatInterpolator(InterpolatorFunctionFactory.quadratic(0f, -1f, 1f)));
 									keyFrame(2250, 150f);
 								}
