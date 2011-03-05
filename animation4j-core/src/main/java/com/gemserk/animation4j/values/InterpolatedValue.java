@@ -70,24 +70,23 @@ public abstract class InterpolatedValue<T>  {
 	}
 
 	/**
-	 * Sets alpha normalizing it based on distance between a and b.
-	 * @param alpha
+	 * Sets alpha by normalizing d between a and b based on segment length.
+	 * @param d - The value between a and b to be used.
 	 */
-	public void setNormalizedAlpha(float alpha) {
-		float length = getLength();
-		if (length != 0) {
-			setAlpha(alpha / length);
-		} else
-			setAlpha(0f);
+	public void setNormalizedAlpha(float d) {
+		setAlpha(normalize(d));
 	}
 	
 	/**
 	 * Returns a value normalized by the distance between a and b.
-	 * @param d - The value to be normalized.
+	 * @param d - The value between a and b to be normalized.
 	 * @return The normalized value;
 	 */
 	public float normalize(float d) {
-		return d / getLength();
+		float length = getLength();
+		if (length != 0f)
+			return d / getLength();
+		return 0f;
 	}
 
 	/**

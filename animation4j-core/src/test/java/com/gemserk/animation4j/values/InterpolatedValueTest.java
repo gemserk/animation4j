@@ -7,20 +7,8 @@ import org.junit.Test;
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
-import com.gemserk.animation4j.values.InterpolatedValue;
 
 public class InterpolatedValueTest {
-
-	public static class FloatInterpolatedValue extends InterpolatedValue<Float> {
-		public FloatInterpolatedValue(Interpolator<Float> interpolator, Float a, Float b) {
-			super(interpolator, a, b);
-		}
-
-		@Override
-		protected float getLength() {
-			return Math.abs(getB() - getA());
-		}
-	}
 
 	static Interpolator<Float> linearFloatInterpolator = new FloatInterpolator(InterpolatorFunctionFactory.linear());
 
@@ -66,6 +54,6 @@ public class InterpolatedValueTest {
 		assertEquals(10f, normalizedInterpolatedValue.getInterpolatedValue(), 0.01f);
 		normalizedInterpolatedValue.setNormalizedAlpha(5f);
 		assertEquals(10f, normalizedInterpolatedValue.getInterpolatedValue(), 0.01f);
-
 	}
+	
 }
