@@ -38,6 +38,10 @@ public class TimelineValueBuilder<T> {
 	private InterpolatorProvider interpolatorProvider = new InterpolatorProvider() {{
 		register(Float.class, new FloatInterpolator(InterpolatorFunctionFactory.linear()));
 	}};
+	
+	public void setInterpolatorProvider(InterpolatorProvider interpolatorProvider) {
+		this.interpolatorProvider = interpolatorProvider;
+	}
 
 	/**
 	 * Defines a new key frame in the timeline value.

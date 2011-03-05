@@ -9,7 +9,11 @@ import com.gemserk.animation4j.timeline.Timeline;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineValue;
 
-
+/**
+ * Used to test some concepts.
+ * @author acoppes
+ */
+@Deprecated
 public class BuilderTest {
 
 	
