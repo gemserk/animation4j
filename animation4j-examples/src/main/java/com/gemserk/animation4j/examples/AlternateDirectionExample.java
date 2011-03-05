@@ -22,7 +22,7 @@ import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
 
-public class TestApplicationJFrame1 extends JFrame {
+public class AlternateDirectionExample extends JFrame {
 
 	private final class DumpAnimationStateHandler extends AnimationEventHandler {
 		public void onAnimationStarted(Animation animation) {
@@ -43,7 +43,7 @@ public class TestApplicationJFrame1 extends JFrame {
 	private static final long serialVersionUID = -730040543509574215L;
 
 	public static void main(String[] args) {
-		TestApplicationJFrame1 testApplication1 = new TestApplicationJFrame1();
+		AlternateDirectionExample testApplication1 = new AlternateDirectionExample();
 		testApplication1.setSize(640, 480);
 		testApplication1.setVisible(true);
 		testApplication1.createBufferStrategy(2);
@@ -58,20 +58,22 @@ public class TestApplicationJFrame1 extends JFrame {
 
 	private AnimationHandlerManager animationHandlerManager;
 
-	public TestApplicationJFrame1() {
+	public AlternateDirectionExample() {
 
 		animationHandlerManager = new AnimationHandlerManager();
 
 		Timeline timeline = new TimelineBuilder() {
 			{
-				value("x", new TimelineValueBuilder<Float>().keyFrame(0, 150f));
+				value("x", new TimelineValueBuilder<Float>().keyFrame(0, 150f, new FloatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, 350f));
 				value("y", new TimelineValueBuilder<Float>().keyFrame(0, 150f));
 			}
 		}.build();
 
 		timelineAnimation = new TimelineAnimation(timeline);
 		timelineAnimation.setSpeed(1f);
-		timelineAnimation.start(1);
+		timelineAnimation.start(2, true);
+
+		animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(timelineAnimation);
 
 		currentTime = System.currentTimeMillis();
 
@@ -94,11 +96,12 @@ public class TestApplicationJFrame1 extends JFrame {
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
+				
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					timelineAnimation.restart();
-					animationHandlerManager.with(new  DumpAnimationStateHandler()).handleChangesOf(timelineAnimation);
+					animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(timelineAnimation);
 				}
-
+				
 				if (e.getKeyCode() == KeyEvent.VK_D) {
 
 					System.out.println("direction: " + timelineAnimation.getDirection());
@@ -108,55 +111,6 @@ public class TestApplicationJFrame1 extends JFrame {
 
 				}
 
-				if (e.getKeyCode() == KeyEvent.VK_1) {
-
-					Timeline timeline = new TimelineBuilder() {
-						{
-							delay(1000);
-
-							value("x", new TimelineValueBuilder<Float>() //
-									.keyFrame(0, 150f, new FloatInterpolator(InterpolatorFunctionFactory.quadratic(0f, -1f, 1f))) //
-									.keyFrame(1000, 400f) //
-									.keyFrame(1250, 400f, new FloatInterpolator(InterpolatorFunctionFactory.quadratic(0f, -1f, 1f))) //
-									.keyFrame(2250, 150f) //
-							);
-
-							value("y", new TimelineValueBuilder<Float>().keyFrame(0, 150f));
-						}
-					}.build();
-
-					timelineAnimation = new TimelineAnimation(timeline);
-					timelineAnimation.setSpeed(1f);
-					timelineAnimation.start(2, false);
-
-					animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(timelineAnimation);
-
-				}
-
-				if (e.getKeyCode() == KeyEvent.VK_2) {
-
-					Timeline timeline = new TimelineBuilder() {
-						{
-							value("x", new TimelineValueBuilder<Float>() {
-								{
-									keyFrame(0, 150f, new FloatInterpolator(InterpolatorFunctionFactory.quadratic(0f, -1f, 1f)));
-									keyFrame(1000, 400f);
-									keyFrame(1250, 400f, new FloatInterpolator(InterpolatorFunctionFactory.quadratic(0f, -1f, 1f)));
-									keyFrame(2250, 150f);
-								}
-							});
-
-							value("y", new TimelineValueBuilder<Float>().keyFrame(0, 150f));
-						}
-					}.build();
-
-					timelineAnimation = new TimelineAnimation(timeline);
-					timelineAnimation.setSpeed(1f);
-					timelineAnimation.start(2, true);
-					
-					animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(timelineAnimation);
-
-				}
 			}
 
 		});

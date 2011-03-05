@@ -149,16 +149,23 @@ public class TimelineAnimation implements Animation {
 		}
 	}
 
-	protected void nextIteration() {
+	public void nextIteration() {
 		if (direction.equals(PlayingDirection.Normal)) {
 			if (alternateDirection)
-				direction = PlayingDirection.Reverse;
+				switchDirection();
 			else
 				currentTime = 0 + timeline.getDelay();
 		} else {
 			if (alternateDirection)
-				direction = PlayingDirection.Normal;
+				switchDirection();
 		}
+	}
+
+	public void switchDirection() {
+		if (direction == PlayingDirection.Normal)
+			direction = PlayingDirection.Reverse;
+		else 
+			direction = PlayingDirection.Normal;
 	}
 
 	protected void finishIterations() {
@@ -168,7 +175,7 @@ public class TimelineAnimation implements Animation {
 		} else {
 			currentTime = 0f;
 			pause();
-			direction = PlayingDirection.Normal;
+			switchDirection();
 		}
 	}
 

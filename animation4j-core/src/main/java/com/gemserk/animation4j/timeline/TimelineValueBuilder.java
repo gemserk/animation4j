@@ -24,10 +24,6 @@ public class TimelineValueBuilder<T> {
 
 	TimelineValue<T> timelineValue = new TimelineValue<T>();
 
-	public TimelineValue<T> build() {
-		return timelineValue;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -42,6 +38,10 @@ public class TimelineValueBuilder<T> {
 	
 	public void setInterpolatorProvider(InterpolatorProvider interpolatorProvider) {
 		this.interpolatorProvider = interpolatorProvider;
+	}
+
+	public TimelineValue<T> build() {
+		return timelineValue;
 	}
 
 	/**

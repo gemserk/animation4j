@@ -43,7 +43,7 @@ public class AnimationMonitorImpl implements AnimationMonitor {
 
 		boolean callOnStart = animation.isStarted() && !wasStarted && !animation.isFinished();
 		boolean callOnFinish = animation.isFinished() && !wasFinished;
-		boolean callOnIterationChanged = animation.getIteration() != lastIteration;
+		boolean callOnIterationChanged = animation.getIteration() != lastIteration && !animation.isFinished();
 
 		wasStarted = animation.isStarted();
 		wasFinished = animation.isFinished();

@@ -37,6 +37,7 @@ public class AnimationHandlerManager {
 
 	public void handleAnimationChanges(final AnimationMonitor animationMonitor) {
 		animationMonitors.add(animationMonitor);
+		// Not sure about this yet... 
 		animationMonitor.addAnimationHandler(new AnimationEventHandler() {
 			@Override
 			public void onAnimationFinished(Animation animation) {
