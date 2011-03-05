@@ -75,10 +75,19 @@ public abstract class InterpolatedValue<T>  {
 	 */
 	public void setNormalizedAlpha(float alpha) {
 		float length = getLength();
-		if (length != 0)
+		if (length != 0) {
 			setAlpha(alpha / length);
-		else
+		} else
 			setAlpha(0f);
+	}
+	
+	/**
+	 * Returns a value normalized by the distance between a and b.
+	 * @param d - The value to be normalized.
+	 * @return The normalized value;
+	 */
+	public float normalize(float d) {
+		return d / getLength();
 	}
 
 	/**
