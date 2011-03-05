@@ -1,4 +1,4 @@
-package com.gemserk.animation4j.timeline;
+package com.gemserk.animation4j.interpolator;
 
 import static org.junit.Assert.assertThat;
 
@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
+import com.gemserk.animation4j.interpolator.InterpolatorProvider;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 
 

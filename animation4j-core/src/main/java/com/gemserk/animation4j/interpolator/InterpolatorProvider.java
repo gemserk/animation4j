@@ -1,10 +1,8 @@
-package com.gemserk.animation4j.timeline;
+package com.gemserk.animation4j.interpolator;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import com.gemserk.animation4j.interpolator.Interpolator;
-import com.gemserk.animation4j.interpolator.NullInterpolator;
 
 /**
  * Provides a way to infer previous registered interpolators for an object based on its type. 
