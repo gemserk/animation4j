@@ -12,8 +12,8 @@ public class TimelineTest {
 			{
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
-						keyFrame(0, 100f, null);
-						keyFrame(100, 200f, null);
+						keyFrame(0, 100f);
+						keyFrame(100, 200f);
 					}
 				});
 			}
@@ -30,8 +30,8 @@ public class TimelineTest {
 				delay(100);
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
-						keyFrame(0, 100f, null);
-						keyFrame(100, 200f, null);
+						keyFrame(0, 100f);
+						keyFrame(100, 200f);
 					}
 				});
 			}

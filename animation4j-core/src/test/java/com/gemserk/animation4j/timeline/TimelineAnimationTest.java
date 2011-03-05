@@ -74,8 +74,8 @@ public class TimelineAnimationTest {
 			{
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
-						keyFrame(0, 100f, null);
-						keyFrame(100, 200f, null);
+						keyFrame(0, 100f);
+						keyFrame(100, 200f);
 					}
 				});
 			}
@@ -103,8 +103,8 @@ public class TimelineAnimationTest {
 			{
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
-						keyFrame(0, 100f, null);
-						keyFrame(100, 200f, null);
+						keyFrame(0, 100f);
+						keyFrame(100, 200f);
 					}
 				});
 			}
@@ -160,10 +160,10 @@ public class TimelineAnimationTest {
 			{
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
-						keyFrame(0, 200f, null);
-						keyFrame(100, 900f, null);
-						keyFrame(150, 1900f, null);
-						keyFrame(200, 2000f, null);
+						keyFrame(0, 200f);
+						keyFrame(100, 900f);
+						keyFrame(150, 1900f);
+						keyFrame(200, 2000f);
 					}
 				});
 			}
@@ -204,8 +204,8 @@ public class TimelineAnimationTest {
 				value(valueName, new TimelineValueBuilder<Float>() {
 					{
 						delay(100);
-						keyFrame(0, 100f, null);
-						keyFrame(100, 200f, null);
+						keyFrame(0, 100f);
+						keyFrame(100, 200f);
 					}
 				});
 			}

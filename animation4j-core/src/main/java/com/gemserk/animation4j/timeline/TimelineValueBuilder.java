@@ -1,6 +1,8 @@
 package com.gemserk.animation4j.timeline;
 
+import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
+import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 
 /**
  * Provides an easy way to create TimelineValues.
@@ -32,6 +34,10 @@ public class TimelineValueBuilder<T> {
 	public float getDuration() {
 		return duration;
 	}
+	
+	private InterpolatorProvider interpolatorProvider = new InterpolatorProvider() {{
+		register(Float.class, new FloatInterpolator(InterpolatorFunctionFactory.linear()));
+	}};
 
 	/**
 	 * Defines a new key frame in the timeline value.
@@ -40,19 +46,18 @@ public class TimelineValueBuilder<T> {
 	 * @param interpolator - The interpolator to use between the key frame and the next key frame.
 	 */
 	public TimelineValueBuilder<T> keyFrame(float time, T value, Interpolator<T> interpolator) {
-
-		if (interpolator == null)
-			interpolator = LinearInterpolatorInferator.inferLinearInterpolator(value);
-
 		timelineValue.addKeyFrame(time, value, interpolator);
-
 		duration = Math.max(duration, time);
-
 		return this;
 	}
-	
+
+	/**
+	 * Defines a new key frame in the timeline value, infering an interpolator based on the type of the value.
+	 * @param time - The time when the key frame starts.
+	 * @param value - The value the variable should have in the key frame.
+	 */
 	public TimelineValueBuilder<T> keyFrame(float time, T value) {
-		return keyFrame(time, value, LinearInterpolatorInferator.inferLinearInterpolator(value));
+		return keyFrame(time, value, interpolatorProvider.inferLinearInterpolator(value));
 	}
 
 }
