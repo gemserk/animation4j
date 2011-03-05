@@ -7,7 +7,7 @@ import org.junit.Test;
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
-import com.gemserk.animation4j.timeline.LinearInterpolatorFactory;
+import com.gemserk.animation4j.timeline.LinearInterpolatorInferator;
 import com.gemserk.animation4j.values.InterpolatedValue;
 
 public class InterpolatedValueTest {

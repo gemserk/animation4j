@@ -42,7 +42,7 @@ public class TimelineValueBuilder<T> {
 	public TimelineValueBuilder<T> keyFrame(float time, T value, Interpolator<T> interpolator) {
 
 		if (interpolator == null)
-			interpolator = LinearInterpolatorFactory.inferLinearInterpolator(value);
+			interpolator = LinearInterpolatorInferator.inferLinearInterpolator(value);
 
 		timelineValue.addKeyFrame(time, value, interpolator);
 
@@ -52,7 +52,7 @@ public class TimelineValueBuilder<T> {
 	}
 	
 	public TimelineValueBuilder<T> keyFrame(float time, T value) {
-		return keyFrame(time, value, LinearInterpolatorFactory.inferLinearInterpolator(value));
+		return keyFrame(time, value, LinearInterpolatorInferator.inferLinearInterpolator(value));
 	}
 
 }

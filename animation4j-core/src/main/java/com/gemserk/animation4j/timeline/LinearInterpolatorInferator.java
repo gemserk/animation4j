@@ -5,12 +5,17 @@ import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 
 /**
- * Provides a way to build linear interpolators of most common types.
+ * Provides a way to infer a linear Interpolator for the type of the value. 
  * 
  * @author acoppes
  */
-public class LinearInterpolatorFactory {
-
+public class LinearInterpolatorInferator {
+	
+	/**
+	 * Infer a linear interpolator for the value.
+	 * @param value - The value to use to infer the asociated linear interpolator.
+	 * @return A linear interpolator for the type of the value.
+	 */
 	@SuppressWarnings("rawtypes")
 	public static Interpolator inferLinearInterpolator(Object value) {
 
