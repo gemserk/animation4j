@@ -195,56 +195,55 @@ public class AnimationMonitorImplTest {
 		animationMonitor.checkAnimationChanges();
 	}
 
-	 @Test
-	 public void onIterationChangedShouldBeCalledWhenIterationChanged() {
-		 
-			MockAnimation animation = new MockAnimation() {
-				{
-					setStarted(true);
-					setIteration(1);
-				}
-			};
+	@Test
+	public void onIterationChangedShouldBeCalledWhenIterationChanged() {
 
-			MockAnimationEventHandler animationEventHandler = new MockAnimationEventHandler();
+		MockAnimation animation = new MockAnimation() {
+			{
+				setStarted(true);
+				setIteration(1);
+			}
+		};
 
-			AnimationMonitor animationMonitor = new AnimationMonitorImpl(animation);
-			animationMonitor.addAnimationHandler(animationEventHandler);
-			animationMonitor.checkAnimationChanges();
+		MockAnimationEventHandler animationEventHandler = new MockAnimationEventHandler();
 
-			assertEquals(false, animationEventHandler.onIterationChangedCalled);
-			animation.setIteration(2);
-			animationMonitor.checkAnimationChanges();
-			assertEquals(true, animationEventHandler.onIterationChangedCalled);
-			
-			animationEventHandler.onIterationChangedCalled = false;
-			
-			animationMonitor.checkAnimationChanges();
-			assertEquals(false, animationEventHandler.onIterationChangedCalled);
-	
-	 }
-	 
-	 // TEST: should not call animation iteration changed after animation finished.
-	 @Test
-	 public void shouldNotCallOnIterationChangedAfterAnimationFinished() {
-		 
-			MockAnimation animation = new MockAnimation() {
-				{
-					setStarted(true);
-					setFinished(true);
-					setIteration(1);
-				}
-			};
+		AnimationMonitor animationMonitor = new AnimationMonitorImpl(animation);
+		animationMonitor.addAnimationHandler(animationEventHandler);
+		animationMonitor.checkAnimationChanges();
 
-			MockAnimationEventHandler animationEventHandler = new MockAnimationEventHandler();
+		assertEquals(false, animationEventHandler.onIterationChangedCalled);
+		animation.setIteration(2);
+		animationMonitor.checkAnimationChanges();
+		assertEquals(true, animationEventHandler.onIterationChangedCalled);
 
-			AnimationMonitor animationMonitor = new AnimationMonitorImpl(animation);
-			animationMonitor.addAnimationHandler(animationEventHandler);
-			animationMonitor.checkAnimationChanges();
+		animationEventHandler.onIterationChangedCalled = false;
 
-			assertEquals(false, animationEventHandler.onIterationChangedCalled);
-			animation.setIteration(2);
-			animationMonitor.checkAnimationChanges();
-			assertEquals(false, animationEventHandler.onIterationChangedCalled);
-			
-	 }
+		animationMonitor.checkAnimationChanges();
+		assertEquals(false, animationEventHandler.onIterationChangedCalled);
+
+	}
+
+	@Test
+	public void shouldNotCallOnIterationChangedAfterAnimationFinished() {
+
+		MockAnimation animation = new MockAnimation() {
+			{
+				setStarted(true);
+				setFinished(true);
+				setIteration(1);
+			}
+		};
+
+		MockAnimationEventHandler animationEventHandler = new MockAnimationEventHandler();
+
+		AnimationMonitor animationMonitor = new AnimationMonitorImpl(animation);
+		animationMonitor.addAnimationHandler(animationEventHandler);
+		animationMonitor.checkAnimationChanges();
+
+		assertEquals(false, animationEventHandler.onIterationChangedCalled);
+		animation.setIteration(2);
+		animationMonitor.checkAnimationChanges();
+		assertEquals(false, animationEventHandler.onIterationChangedCalled);
+
+	}
 }

@@ -16,13 +16,9 @@ public class TimelineAnimation implements Animation {
 
 	private int iterations = 1;
 
-	enum PlayingDirection {
-		Normal, Reverse;
-	}
-
 	boolean alternateDirection = false;
 
-	PlayingDirection direction = PlayingDirection.Normal;
+	PlayingDirection playingDirection = PlayingDirection.Normal;
 
 	public void setSpeed(float speed) {
 		this.speed = speed;
@@ -36,8 +32,9 @@ public class TimelineAnimation implements Animation {
 		return currentTime;
 	}
 
-	public PlayingDirection getDirection() {
-		return direction;
+	@Override
+	public PlayingDirection getPlayingDirection() {
+		return playingDirection;
 	}
 
 	public float getDuration() {
@@ -63,7 +60,7 @@ public class TimelineAnimation implements Animation {
 	 */
 	protected boolean isIterationFinished() {
 		float delay = timeline.getDelay();
-		if (direction.equals(PlayingDirection.Normal))
+		if (playingDirection.equals(PlayingDirection.Normal))
 			return currentTime >= timeline.getDuration() + delay;
 		return currentTime + delay <= 0;
 	}
@@ -150,7 +147,7 @@ public class TimelineAnimation implements Animation {
 	}
 
 	public void nextIteration() {
-		if (direction.equals(PlayingDirection.Normal)) {
+		if (playingDirection.equals(PlayingDirection.Normal)) {
 			if (alternateDirection)
 				switchDirection();
 			else
@@ -162,14 +159,14 @@ public class TimelineAnimation implements Animation {
 	}
 
 	public void switchDirection() {
-		if (direction == PlayingDirection.Normal)
-			direction = PlayingDirection.Reverse;
+		if (playingDirection == PlayingDirection.Normal)
+			playingDirection = PlayingDirection.Reverse;
 		else 
-			direction = PlayingDirection.Normal;
+			playingDirection = PlayingDirection.Normal;
 	}
 
 	protected void finishIterations() {
-		if (direction.equals(PlayingDirection.Normal)) {
+		if (playingDirection.equals(PlayingDirection.Normal)) {
 			currentTime = getDuration();
 			pause();
 		} else {
@@ -180,9 +177,10 @@ public class TimelineAnimation implements Animation {
 	}
 
 	protected void moveCurrentTime(float time) {
-		if (direction.equals(PlayingDirection.Normal))
+		if (playingDirection.equals(PlayingDirection.Normal))
 			currentTime += time * speed;
 		else
 			currentTime -= time * speed;
 	}
+
 }

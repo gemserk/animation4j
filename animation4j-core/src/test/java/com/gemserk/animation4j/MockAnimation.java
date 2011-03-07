@@ -78,7 +78,13 @@ public class MockAnimation implements Animation {
 	@Override
 	public void start(int iterationCount, boolean alternateDirection) {
 		start(iterationCount);
-		// add alternate direction.
+	}
+
+	@Override
+	public PlayingDirection getPlayingDirection() {
+		// TODO Auto-generated function stub
+		return null;
+		
 	}
 
 }

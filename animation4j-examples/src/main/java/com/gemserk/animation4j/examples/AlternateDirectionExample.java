@@ -1,6 +1,8 @@
 package com.gemserk.animation4j.examples;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
@@ -9,8 +11,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import com.gemserk.animation4j.Animation;
 import com.gemserk.animation4j.event.AnimationEventHandler;
@@ -58,7 +65,15 @@ public class AlternateDirectionExample extends JFrame {
 
 	private AnimationHandlerManager animationHandlerManager;
 
+	private Font textFont;
+
+	private JPanel panel;
+
+	private JEditorPane comp;
+
 	public AlternateDirectionExample() {
+
+		textFont = new Font("Arial", Font.PLAIN, 16);
 
 		animationHandlerManager = new AnimationHandlerManager();
 
@@ -96,15 +111,15 @@ public class AlternateDirectionExample extends JFrame {
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				
+
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					timelineAnimation.restart();
 					animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(timelineAnimation);
 				}
-				
+
 				if (e.getKeyCode() == KeyEvent.VK_D) {
 
-					System.out.println("direction: " + timelineAnimation.getDirection());
+					System.out.println("direction: " + timelineAnimation.getPlayingDirection());
 					System.out.println("currentTime: " + timelineAnimation.getCurrentTime());
 					System.out.println("iteration: " + timelineAnimation.getIteration());
 					System.out.println("duration: " + timelineAnimation.getDuration());
@@ -115,6 +130,66 @@ public class AlternateDirectionExample extends JFrame {
 
 		});
 
+		// panel = new Container() {
+		// public void paint(Graphics g) {
+		// Component[] components = this.getComponents();
+		// for (Component component : components) {
+		// component.paint(g);
+		// }
+		// }
+		// };
+
+		String html = getExampleDescription("example1.html");
+
+		panel = new JPanel();
+		panel.setSize(640, 120);
+		panel.setLayout(new BorderLayout());
+		panel.setIgnoreRepaint(true);
+		panel.setOpaque(false);
+
+		comp = new JEditorPane("text/html", html);
+		comp.setLocation(50, 50);
+		comp.setSize(250, 120);
+		comp.setForeground(Color.white);
+		comp.setOpaque(false);
+		comp.setEditable(false);
+
+		panel.add(comp);
+
+		// this.add(comp);
+
+		this.setLayout(new BorderLayout());
+		// this.add(panel);
+
+		setIgnoreRepaint(true);
+
+	}
+
+	protected String getExampleDescription(String file) {
+		InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(file);
+
+		StringBuilder stringBuilder = new StringBuilder();
+
+		try {
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+			char[] buffer = new char[8192];
+
+			int read;
+			while ((read = bufferedReader.read(buffer, 0, buffer.length)) > 0) {
+				stringBuilder.append(buffer, 0, read);
+			}
+			return stringBuilder.toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				in.close();
+			} catch (Exception e) {
+
+			}
+		}
+
+		return "";
 	}
 
 	public void gameLoop() {
@@ -137,6 +212,10 @@ public class AlternateDirectionExample extends JFrame {
 	private void drawStuff() {
 		BufferStrategy bf = this.getBufferStrategy();
 		Graphics g = null;
+
+		if (bf == null)
+			return;
+
 		g = bf.getDrawGraphics();
 
 		try {
@@ -144,6 +223,14 @@ public class AlternateDirectionExample extends JFrame {
 			Graphics2D graphics2d = (Graphics2D) g;
 			graphics2d.setBackground(Color.black);
 			graphics2d.clearRect(0, 0, 640, 480);
+
+			// graphics2d.setFont(textFont);
+			// graphics2d.drawString("a", 100, 100);
+			try {
+				panel.paint(graphics2d);
+			} catch (Exception e) {
+				// e.printStackTrace();
+			}
 
 			graphics2d.setColor(Color.white);
 

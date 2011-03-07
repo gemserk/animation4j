@@ -101,7 +101,7 @@ public class TestApplicationJFrame1 extends JFrame {
 
 				if (e.getKeyCode() == KeyEvent.VK_D) {
 
-					System.out.println("direction: " + timelineAnimation.getDirection());
+					System.out.println("direction: " + timelineAnimation.getPlayingDirection());
 					System.out.println("currentTime: " + timelineAnimation.getCurrentTime());
 					System.out.println("iteration: " + timelineAnimation.getIteration());
 					System.out.println("duration: " + timelineAnimation.getDuration());
