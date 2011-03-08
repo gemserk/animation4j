@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 
+import com.gemserk.animation4j.event.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
@@ -49,7 +50,7 @@ public class Example1 extends Java2dDesktopApplication {
 	public void init() {
 		Injector injector = Guice.createInjector(new Java2dModule(), new BasicModule(), new ResourcesManagerModule());
 		injector.getInstance(InitJava2dRenderer.class).config();
-		Dimension resolution = new Dimension(800, 480);
+		Dimension resolution = new Dimension(640, 480);
 		Example1Game game = injector.getInstance(Example1Game.class);
 		createWindow("Example1", resolution, game, injector);
 	}
@@ -66,6 +67,9 @@ public class Example1 extends Java2dDesktopApplication {
 		@SuppressWarnings("rawtypes")
 		@Inject
 		ResourceManager resourceManager;
+		
+		@Inject
+		AnimationHandlerManager animationHandlerManager;
 
 		Resource<Image> critterImageResource;
 
@@ -92,7 +96,7 @@ public class Example1 extends Java2dDesktopApplication {
 					started(false);
 
 					value("x", new TimelineValueBuilder<Float>().keyFrame(0, 150f, new FloatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, 350f));
-					value("y", new TimelineValueBuilder<Float>().keyFrame(0, 300f));
+					value("y", new TimelineValueBuilder<Float>().keyFrame(0, 325f));
 					value("angle", new TimelineValueBuilder<Float>().keyFrame(0, 0f, new FloatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, (float) Math.PI / 2));
 				}
 			}.build();
@@ -102,20 +106,21 @@ public class Example1 extends Java2dDesktopApplication {
 			String html = new FileHelper("example1.html").read();
 			
 			panel = new JPanel();
-			panel.setSize(800, 480);
+			panel.setSize(640, 480);
 			panel.setLayout(new BorderLayout());
 			panel.setIgnoreRepaint(true);
 			panel.setOpaque(false);
 
 			JEditorPane comp = new JEditorPane("text/html", html);
 			comp.setLocation(10, 10);
-			comp.setSize(600, 420);
+			comp.setSize(610, 420);
 			comp.setForeground(Color.white);
 			comp.setOpaque(false);
 			comp.setEditable(false);
 			
 			panel.add(comp);
 			
+			animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(animation);
 		}
 		
 		@Inject
@@ -150,7 +155,11 @@ public class Example1 extends Java2dDesktopApplication {
 			animation.update(delta);
 			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
 				animation.restart();
+				animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(animation);
 			}
+			
+			animationHandlerManager.checkAnimationChanges();
+			
 		}
 		
 	}
