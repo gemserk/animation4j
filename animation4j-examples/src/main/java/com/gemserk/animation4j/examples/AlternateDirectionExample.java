@@ -94,7 +94,7 @@ public class AlternateDirectionExample extends JFrame {
 				value("y", new TimelineValueBuilder<Float>().keyFrame(0, 150f));
 				value("angle", new TimelineValueBuilder<Float>().keyFrame(0, 0f, new FloatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, (float) Math.PI / 2));
 			}
-		}.buildAnimation();
+		}.build();
 
 		timelineAnimation.start(2, true);
 

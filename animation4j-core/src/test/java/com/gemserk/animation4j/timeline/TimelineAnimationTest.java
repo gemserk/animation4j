@@ -57,7 +57,7 @@ public class TimelineAnimationTest {
 					}
 				});
 			}
-		}.buildAnimation();
+		}.build();
 
 		animation.resume();
 
@@ -80,7 +80,7 @@ public class TimelineAnimationTest {
 					}
 				});
 			}
-		}.buildAnimation();
+		}.build();
 
 		animation.start(2);
 
@@ -109,7 +109,7 @@ public class TimelineAnimationTest {
 					}
 				});
 			}
-		}.buildAnimation();
+		}.build();
 
 		animation.start(0);
 
@@ -144,7 +144,7 @@ public class TimelineAnimationTest {
 					}
 				});
 			}
-		}.buildAnimation();
+		}.build();
 
 		animation.start(2);
 		assertThat(animation.isStarted(), IsEqual.equalTo(false));
@@ -168,7 +168,7 @@ public class TimelineAnimationTest {
 					}
 				});
 			}
-		}.buildAnimation();
+		}.build();
 		
 		animation.setAlternateDirection(true);
 		animation.start(2);
@@ -210,7 +210,7 @@ public class TimelineAnimationTest {
 					}
 				});
 			}
-		}.buildAnimation();
+		}.build();
 
 		animation.start(2);
 		assertThat((Float) animation.getValue(valueName), IsNear.isNear(100f, 0.1f));

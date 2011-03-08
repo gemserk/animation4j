@@ -16,7 +16,7 @@ public class TimelineAnimationBuilder {
 
 	private float speed = 1f;
 
-	protected Timeline build() {
+	private Timeline buildTimeline() {
 
 		Map<String, TimelineValue> timelineValues = new HashMap<String, TimelineValue>();
 
@@ -30,8 +30,8 @@ public class TimelineAnimationBuilder {
 		return new Timeline(duration, delayTime, timelineValues);
 	}
 	
-	public TimelineAnimation buildAnimation() {
-		TimelineAnimation timelineAnimation = new TimelineAnimation(build(), started);
+	public TimelineAnimation build() {
+		TimelineAnimation timelineAnimation = new TimelineAnimation(buildTimeline(), started);
 		timelineAnimation.setSpeed(speed);
 		return timelineAnimation;
 	}

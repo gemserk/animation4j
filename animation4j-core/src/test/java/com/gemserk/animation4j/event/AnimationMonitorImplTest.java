@@ -163,7 +163,7 @@ public class AnimationMonitorImplTest {
 					}
 				});
 			}
-		}.buildAnimation();
+		}.build();
 
 		AnimationMonitor animationMonitor = new AnimationMonitorImpl(animation);
 		animationMonitor.addAnimationHandler(new AnimationEventHandler() {

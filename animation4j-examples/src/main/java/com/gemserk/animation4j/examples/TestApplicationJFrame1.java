@@ -66,7 +66,7 @@ public class TestApplicationJFrame1 extends JFrame {
 				value("x", new TimelineValueBuilder<Float>().keyFrame(0, 150f));
 				value("y", new TimelineValueBuilder<Float>().keyFrame(0, 150f));
 			}
-		}.buildAnimation();
+		}.build();
 
 		// timelineAnimation = new TimelineAnimation(timeline);
 		timelineAnimation.setSpeed(1f);
@@ -122,7 +122,7 @@ public class TestApplicationJFrame1 extends JFrame {
 
 							value("y", new TimelineValueBuilder<Float>().keyFrame(0, 150f));
 						}
-					}.buildAnimation();
+					}.build();
 
 					timelineAnimation.setSpeed(1f);
 					timelineAnimation.start(2, false);
@@ -146,7 +146,7 @@ public class TestApplicationJFrame1 extends JFrame {
 
 							value("y", new TimelineValueBuilder<Float>().keyFrame(0, 150f));
 						}
-					}.buildAnimation();
+					}.build();
 
 					timelineAnimation.setSpeed(1f);
 					timelineAnimation.start(2, true);
