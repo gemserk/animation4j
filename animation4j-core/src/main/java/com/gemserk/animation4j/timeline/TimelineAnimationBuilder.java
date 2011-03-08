@@ -36,21 +36,25 @@ public class TimelineAnimationBuilder {
 		return timelineAnimation;
 	}
 
-	public void value(String name, TimelineValueBuilder timelineValueBuilder) {
+	public TimelineAnimationBuilder value(String name, TimelineValueBuilder timelineValueBuilder) {
 		timelineValueBuilder.setName(name);
 		timelineValueBuilders.add(timelineValueBuilder);
+		return this;
 	}
 
-	public void delay(float time) {
+	public TimelineAnimationBuilder delay(float time) {
 		this.delayTime = time;
+		return this;
 	}
 	
-	public void started(boolean started) {
+	public TimelineAnimationBuilder started(boolean started) {
 		this.started = started;
+		return this;
 	}
 	
-	public void speed(float speed) {
+	public TimelineAnimationBuilder speed(float speed) {
 		this.speed = speed;
+		return this;
 	}
 	
 }
