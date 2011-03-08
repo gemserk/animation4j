@@ -1,5 +1,6 @@
 package com.gemserk.animation4j.examples;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -8,6 +9,8 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JEditorPane;
+import javax.swing.JPanel;
 
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
@@ -89,12 +92,29 @@ public class Example1 extends Java2dDesktopApplication {
 					started(false);
 
 					value("x", new TimelineValueBuilder<Float>().keyFrame(0, 150f, new FloatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, 350f));
-					value("y", new TimelineValueBuilder<Float>().keyFrame(0, 150f));
+					value("y", new TimelineValueBuilder<Float>().keyFrame(0, 300f));
 					value("angle", new TimelineValueBuilder<Float>().keyFrame(0, 0f, new FloatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, (float) Math.PI / 2));
 				}
 			}.build();
 
 			animation.start(2, true);
+			
+			String html = new FileHelper("example1.html").read();
+			
+			panel = new JPanel();
+			panel.setSize(800, 480);
+			panel.setLayout(new BorderLayout());
+			panel.setIgnoreRepaint(true);
+			panel.setOpaque(false);
+
+			JEditorPane comp = new JEditorPane("text/html", html);
+			comp.setLocation(10, 10);
+			comp.setSize(600, 420);
+			comp.setForeground(Color.white);
+			comp.setOpaque(false);
+			comp.setEditable(false);
+			
+			panel.add(comp);
 			
 		}
 		
@@ -105,6 +125,8 @@ public class Example1 extends Java2dDesktopApplication {
 		CurrentGraphicsProvider currentGraphicsProvider;
 		
 		private TimelineAnimation animation;
+
+		private JPanel panel;
 
 		@Override
 		public void render(Graphics2D graphics) {
@@ -117,6 +139,8 @@ public class Example1 extends Java2dDesktopApplication {
 			
 			currentGraphicsProvider.setGraphics(graphics);
 			java2dRenderer.render(new Java2dImageRenderObject(1, critterImageResource.get(), x, y, 1, 1, angle));
+			
+			panel.paint(graphics);
 			
 		}
 

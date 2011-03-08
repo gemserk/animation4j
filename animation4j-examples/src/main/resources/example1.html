@@ -1,7 +1,17 @@
 <html>
 <body>
-	<div style="color:white; background-color: black;">
-		This example shows how to make an animation ...
+	<div style="color:white;">
+		<p>This example shows a simple animation using an ease-in interpolator function for x and for the image angle.</p>
+		<div style="padding-left: 40px; font-family: monospace; font-style: normal;">
+		animation { <br>
+		&nbsp;&nbsp;&nbsp;&nbsp;alternateDirection<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;keyframe x, 0, 150, ease-in <br>
+		&nbsp;&nbsp;&nbsp;&nbsp;keyframe x, 1000, 350 <br>
+		&nbsp;&nbsp;&nbsp;&nbsp;keyframe angle, 0, 0, ease-in <br>
+		&nbsp;&nbsp;&nbsp;&nbsp;keyframe angle, 1000, PI/2 <br>
+		}
+		</div>
+		<p>Press Enter to restart the animation.</p>
 	</div>
 </body>
 </html>

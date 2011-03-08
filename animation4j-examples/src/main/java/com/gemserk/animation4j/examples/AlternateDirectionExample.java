@@ -14,10 +14,7 @@ import java.awt.event.WindowEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 import javax.swing.JEditorPane;
@@ -91,7 +88,7 @@ public class AlternateDirectionExample extends JFrame {
 				started(false);
 
 				value("x", new TimelineValueBuilder<Float>().keyFrame(0, 150f, new FloatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, 350f));
-				value("y", new TimelineValueBuilder<Float>().keyFrame(0, 150f));
+				value("y", new TimelineValueBuilder<Float>().keyFrame(0, 250f));
 				value("angle", new TimelineValueBuilder<Float>().keyFrame(0, 0f, new FloatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, (float) Math.PI / 2));
 			}
 		}.build();
@@ -149,7 +146,7 @@ public class AlternateDirectionExample extends JFrame {
 		// }
 		// };
 
-		String html = getExampleDescription("example1.html");
+		String html = getExampleHtml("example1.html");
 
 		panel = new JPanel();
 		panel.setSize(640, 120);
@@ -158,8 +155,8 @@ public class AlternateDirectionExample extends JFrame {
 		panel.setOpaque(false);
 
 		comp = new JEditorPane("text/html", html);
-		comp.setLocation(50, 50);
-		comp.setSize(250, 120);
+		comp.setLocation(20, 20);
+		comp.setSize(600, 200);
 		comp.setForeground(Color.white);
 		comp.setOpaque(false);
 		comp.setEditable(false);
@@ -182,32 +179,9 @@ public class AlternateDirectionExample extends JFrame {
 			throw new RuntimeException(e);
 		}
 	}
-
-	protected String getExampleDescription(String file) {
-		InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(file);
-
-		StringBuilder stringBuilder = new StringBuilder();
-
-		try {
-			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-			char[] buffer = new char[8192];
-
-			int read;
-			while ((read = bufferedReader.read(buffer, 0, buffer.length)) > 0) {
-				stringBuilder.append(buffer, 0, read);
-			}
-			return stringBuilder.toString();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				in.close();
-			} catch (Exception e) {
-
-			}
-		}
-
-		return "";
+	
+	protected String getExampleHtml(String file) {
+		return new FileHelper(file).read();
 	}
 
 	public void gameLoop() {
