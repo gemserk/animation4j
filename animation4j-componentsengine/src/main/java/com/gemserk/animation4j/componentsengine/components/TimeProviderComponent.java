@@ -12,12 +12,12 @@ import com.gemserk.componentsengine.properties.Property;
  * Component to update an UpdateableTimeProvider by handle update message.
  * @author acoppes
  */
-public class UpdateTimeProviderComponent extends ReferencePropertyComponent {
+public class TimeProviderComponent extends ReferencePropertyComponent {
 
 	@EntityProperty
 	Property<UpdateableTimeProvider> timeProvider;
 
-	public UpdateTimeProviderComponent(String id) {
+	public TimeProviderComponent(String id) {
 		super(id);
 	}
 
