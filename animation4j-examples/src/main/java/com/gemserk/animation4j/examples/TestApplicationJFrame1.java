@@ -17,9 +17,8 @@ import com.gemserk.animation4j.event.AnimationEventHandler;
 import com.gemserk.animation4j.event.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
-import com.gemserk.animation4j.timeline.Timeline;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
-import com.gemserk.animation4j.timeline.TimelineBuilder;
+import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
 
 public class TestApplicationJFrame1 extends JFrame {
@@ -62,14 +61,14 @@ public class TestApplicationJFrame1 extends JFrame {
 
 		animationHandlerManager = new AnimationHandlerManager();
 
-		Timeline timeline = new TimelineBuilder() {
+		timelineAnimation = new TimelineAnimationBuilder() {
 			{
 				value("x", new TimelineValueBuilder<Float>().keyFrame(0, 150f));
 				value("y", new TimelineValueBuilder<Float>().keyFrame(0, 150f));
 			}
-		}.build();
+		}.buildAnimation();
 
-		timelineAnimation = new TimelineAnimation(timeline);
+		// timelineAnimation = new TimelineAnimation(timeline);
 		timelineAnimation.setSpeed(1f);
 		timelineAnimation.start(1);
 
@@ -96,7 +95,7 @@ public class TestApplicationJFrame1 extends JFrame {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					timelineAnimation.restart();
-					animationHandlerManager.with(new  DumpAnimationStateHandler()).handleChangesOf(timelineAnimation);
+					animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(timelineAnimation);
 				}
 
 				if (e.getKeyCode() == KeyEvent.VK_D) {
@@ -110,7 +109,7 @@ public class TestApplicationJFrame1 extends JFrame {
 
 				if (e.getKeyCode() == KeyEvent.VK_1) {
 
-					Timeline timeline = new TimelineBuilder() {
+					timelineAnimation = new TimelineAnimationBuilder() {
 						{
 							delay(1000);
 
@@ -123,9 +122,8 @@ public class TestApplicationJFrame1 extends JFrame {
 
 							value("y", new TimelineValueBuilder<Float>().keyFrame(0, 150f));
 						}
-					}.build();
+					}.buildAnimation();
 
-					timelineAnimation = new TimelineAnimation(timeline);
 					timelineAnimation.setSpeed(1f);
 					timelineAnimation.start(2, false);
 
@@ -135,7 +133,7 @@ public class TestApplicationJFrame1 extends JFrame {
 
 				if (e.getKeyCode() == KeyEvent.VK_2) {
 
-					Timeline timeline = new TimelineBuilder() {
+					timelineAnimation = new TimelineAnimationBuilder() {
 						{
 							value("x", new TimelineValueBuilder<Float>() {
 								{
@@ -148,12 +146,11 @@ public class TestApplicationJFrame1 extends JFrame {
 
 							value("y", new TimelineValueBuilder<Float>().keyFrame(0, 150f));
 						}
-					}.build();
+					}.buildAnimation();
 
-					timelineAnimation = new TimelineAnimation(timeline);
 					timelineAnimation.setSpeed(1f);
 					timelineAnimation.start(2, true);
-					
+
 					animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(timelineAnimation);
 
 				}

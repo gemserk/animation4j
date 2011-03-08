@@ -29,9 +29,8 @@ import com.gemserk.animation4j.event.AnimationEventHandler;
 import com.gemserk.animation4j.event.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
-import com.gemserk.animation4j.timeline.Timeline;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
-import com.gemserk.animation4j.timeline.TimelineBuilder;
+import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
 
 public class AlternateDirectionExample extends JFrame {
@@ -86,17 +85,17 @@ public class AlternateDirectionExample extends JFrame {
 		
 		bufferedImage = getImage("critter.png");
 
-		Timeline timeline = new TimelineBuilder() {
+		timelineAnimation = new TimelineAnimationBuilder() {
 			{
+				speed(2f);
+				started(false);
+
 				value("x", new TimelineValueBuilder<Float>().keyFrame(0, 150f, new FloatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, 350f));
 				value("y", new TimelineValueBuilder<Float>().keyFrame(0, 150f));
-				
 				value("angle", new TimelineValueBuilder<Float>().keyFrame(0, 0f, new FloatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, (float) Math.PI / 2));
 			}
-		}.build();
+		}.buildAnimation();
 
-		timelineAnimation = new TimelineAnimation(timeline);
-		timelineAnimation.setSpeed(2f);
 		timelineAnimation.start(2, true);
 
 		animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(timelineAnimation);

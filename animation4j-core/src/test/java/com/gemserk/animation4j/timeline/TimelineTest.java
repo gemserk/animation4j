@@ -8,7 +8,7 @@ public class TimelineTest {
 
 	@Test
 	public void testGetValueForAGivenTime() {
-		Timeline timeline = new TimelineBuilder() {
+		Timeline timeline = new TimelineAnimationBuilder() {
 			{
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
@@ -25,7 +25,7 @@ public class TimelineTest {
 
 	@Test
 	public void testGetValueForAGivenTimeWithDelay() {
-		Timeline timeline = new TimelineBuilder() {
+		Timeline timeline = new TimelineAnimationBuilder() {
 			{
 				delay(100);
 				value("myvalue", new TimelineValueBuilder<Float>() {

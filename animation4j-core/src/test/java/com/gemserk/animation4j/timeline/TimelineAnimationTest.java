@@ -46,8 +46,9 @@ public class TimelineAnimationTest {
 	@Test
 	public void shouldNotBeStartedBeforeDelay() {
 
-		TimelineAnimation animation = new TimelineAnimation(new TimelineBuilder() {
+		TimelineAnimation animation = new TimelineAnimationBuilder() {
 			{
+				started(true);
 				delay(100);
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
@@ -56,7 +57,7 @@ public class TimelineAnimationTest {
 					}
 				});
 			}
-		}.build());
+		}.buildAnimation();
 
 		animation.resume();
 
@@ -70,7 +71,7 @@ public class TimelineAnimationTest {
 	@Test
 	public void shouldIterateIterationCountTimes() {
 
-		TimelineAnimation animation = new TimelineAnimation(new TimelineBuilder() {
+		TimelineAnimation animation = new TimelineAnimationBuilder() {
 			{
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
@@ -79,7 +80,7 @@ public class TimelineAnimationTest {
 					}
 				});
 			}
-		}.build());
+		}.buildAnimation();
 
 		animation.start(2);
 
@@ -99,7 +100,7 @@ public class TimelineAnimationTest {
 	@Test
 	public void shouldIterateAnIndefiniteNumberOfTimes() {
 
-		TimelineAnimation animation = new TimelineAnimation(new TimelineBuilder() {
+		TimelineAnimation animation = new TimelineAnimationBuilder() {
 			{
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
@@ -108,7 +109,7 @@ public class TimelineAnimationTest {
 					}
 				});
 			}
-		}.build());
+		}.buildAnimation();
 
 		animation.start(0);
 
@@ -133,7 +134,7 @@ public class TimelineAnimationTest {
 	@Test
 	public void shouldBeStartedBetweenIterationsWithDelays() {
 
-		TimelineAnimation animation = new TimelineAnimation(new TimelineBuilder() {
+		TimelineAnimation animation = new TimelineAnimationBuilder() {
 			{
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
@@ -143,7 +144,7 @@ public class TimelineAnimationTest {
 					}
 				});
 			}
-		}.build());
+		}.buildAnimation();
 
 		animation.start(2);
 		assertThat(animation.isStarted(), IsEqual.equalTo(false));
@@ -156,7 +157,7 @@ public class TimelineAnimationTest {
 	@Test
 	public void shouldPlayInReversIfAlternateDirection() {
 
-		TimelineAnimation animation = new TimelineAnimation(new TimelineBuilder() {
+		TimelineAnimation animation = new TimelineAnimationBuilder() {
 			{
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
@@ -167,7 +168,7 @@ public class TimelineAnimationTest {
 					}
 				});
 			}
-		}.build());
+		}.buildAnimation();
 		
 		animation.setAlternateDirection(true);
 		animation.start(2);
@@ -199,7 +200,7 @@ public class TimelineAnimationTest {
 
 		final String valueName = "myvalue";
 		
-		TimelineAnimation animation = new TimelineAnimation(new TimelineBuilder() {
+		TimelineAnimation animation = new TimelineAnimationBuilder() {
 			{
 				value(valueName, new TimelineValueBuilder<Float>() {
 					{
@@ -209,7 +210,7 @@ public class TimelineAnimationTest {
 					}
 				});
 			}
-		}.build());
+		}.buildAnimation();
 
 		animation.start(2);
 		assertThat((Float) animation.getValue(valueName), IsNear.isNear(100f, 0.1f));

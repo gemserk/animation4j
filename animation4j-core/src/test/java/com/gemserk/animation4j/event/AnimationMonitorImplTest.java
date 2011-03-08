@@ -6,8 +6,7 @@ import org.junit.Test;
 
 import com.gemserk.animation4j.Animation;
 import com.gemserk.animation4j.MockAnimation;
-import com.gemserk.animation4j.timeline.TimelineAnimation;
-import com.gemserk.animation4j.timeline.TimelineBuilder;
+import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
 
 public class AnimationMonitorImplTest {
@@ -155,7 +154,7 @@ public class AnimationMonitorImplTest {
 	@Test
 	public void testAnimationHandlerManagerWithTimelineAnimation() {
 
-		Animation animation = new TimelineAnimation(new TimelineBuilder() {
+		Animation animation = new TimelineAnimationBuilder() {
 			{
 				value("myvalue", new TimelineValueBuilder<Float>() {
 					{
@@ -164,7 +163,7 @@ public class AnimationMonitorImplTest {
 					}
 				});
 			}
-		}.build());
+		}.buildAnimation();
 
 		AnimationMonitor animationMonitor = new AnimationMonitorImpl(animation);
 		animationMonitor.addAnimationHandler(new AnimationEventHandler() {
