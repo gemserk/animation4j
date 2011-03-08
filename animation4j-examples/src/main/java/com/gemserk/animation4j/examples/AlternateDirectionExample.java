@@ -5,16 +5,21 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import javax.imageio.ImageIO;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -71,21 +76,27 @@ public class AlternateDirectionExample extends JFrame {
 
 	private JEditorPane comp;
 
+	private BufferedImage bufferedImage;
+	
 	public AlternateDirectionExample() {
 
 		textFont = new Font("Arial", Font.PLAIN, 16);
 
 		animationHandlerManager = new AnimationHandlerManager();
+		
+		bufferedImage = getImage("critter.png");
 
 		Timeline timeline = new TimelineBuilder() {
 			{
 				value("x", new TimelineValueBuilder<Float>().keyFrame(0, 150f, new FloatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, 350f));
 				value("y", new TimelineValueBuilder<Float>().keyFrame(0, 150f));
+				
+				value("angle", new TimelineValueBuilder<Float>().keyFrame(0, 0f, new FloatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, (float) Math.PI / 2));
 			}
 		}.build();
 
 		timelineAnimation = new TimelineAnimation(timeline);
-		timelineAnimation.setSpeed(1f);
+		timelineAnimation.setSpeed(2f);
 		timelineAnimation.start(2, true);
 
 		animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(timelineAnimation);
@@ -165,6 +176,14 @@ public class AlternateDirectionExample extends JFrame {
 
 	}
 
+	protected BufferedImage getImage(String imageFileName) {
+		try {
+			return ImageIO.read(Thread.currentThread().getContextClassLoader().getResourceAsStream(imageFileName));
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	protected String getExampleDescription(String file) {
 		InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(file);
 
@@ -231,7 +250,7 @@ public class AlternateDirectionExample extends JFrame {
 			} catch (Exception e) {
 				// e.printStackTrace();
 			}
-
+			
 			graphics2d.setColor(Color.white);
 
 			Float xvalue = timelineAnimation.getValue("x");
@@ -239,8 +258,35 @@ public class AlternateDirectionExample extends JFrame {
 
 			int x = xvalue.intValue();
 			int y = yvalue.intValue();
+			
+			Float angle = timelineAnimation.getValue("angle");
 
-			graphics2d.fillOval(x, y, 10, 10);
+			AffineTransform pushTransform = graphics2d.getTransform();
+			
+			AffineTransform tx = new AffineTransform();
+
+			int width = bufferedImage.getWidth(null);
+			int height = bufferedImage.getHeight(null);
+
+			float x1 = (float) (x + ((float) -width) / 2f);
+			float y1 = (float) (y + ((float) -height) / 2f);
+
+			tx.concatenate(AffineTransform.getTranslateInstance(x1 + width / 2, y1 + height / 2));
+			tx.concatenate(AffineTransform.getRotateInstance(angle.doubleValue()));
+			tx.concatenate(AffineTransform.getScaleInstance(1, 1));
+			tx.concatenate(AffineTransform.getTranslateInstance(-width / 2, -height / 2));
+			
+			RenderingHints renderingHints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			renderingHints.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			graphics2d.setRenderingHints(renderingHints);
+
+			graphics2d.transform(tx);
+
+			graphics2d.drawImage(bufferedImage, 0, 0, null);
+			
+			graphics2d.setTransform(pushTransform);
+			
+			// graphics2d.fillOval(x, y, 10, 10);
 
 		} finally {
 			// It is best to dispose() a Graphics object when done with it.

@@ -17,6 +17,10 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>animation4j-core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.gemserk.componentsengine</groupId>
+			<artifactId>core</artifactId>
+		</dependency>
 	</dependencies>
 
 </project>

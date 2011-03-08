@@ -79,12 +79,15 @@ public class MockAnimation implements Animation {
 	public void start(int iterationCount, boolean alternateDirection) {
 		start(iterationCount);
 	}
+	
+	PlayingDirection playingDirection = PlayingDirection.Normal;
+	
+	public void setPlayingDirection(PlayingDirection playingDirection) {
+		this.playingDirection = playingDirection;
+	}
 
-	@Override
 	public PlayingDirection getPlayingDirection() {
-		// TODO Auto-generated function stub
-		return null;
-		
+		return playingDirection;
 	}
 
 }
