@@ -6,9 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 
@@ -31,7 +29,8 @@ import com.gemserk.componentsengine.modules.BasicModule;
 import com.gemserk.componentsengine.modules.ResourcesManagerModule;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
-import com.gemserk.resources.dataloaders.DataLoader;
+import com.gemserk.resources.datasources.ClassPathDataSource;
+import com.gemserk.resources.java2d.dataloaders.ImageLoader;
 import com.gemserk.resources.resourceloaders.CachedResourceLoader;
 import com.gemserk.resources.resourceloaders.ResourceLoaderImpl;
 import com.google.inject.Guice;
@@ -51,11 +50,11 @@ public class Example1 extends Java2dDesktopApplication {
 		Injector injector = Guice.createInjector(new Java2dModule(), new BasicModule(), new ResourcesManagerModule());
 		injector.getInstance(InitJava2dRenderer.class).config();
 		Dimension resolution = new Dimension(640, 480);
-		Example1Game game = injector.getInstance(Example1Game.class);
+		ExampleInternalGame game = injector.getInstance(ExampleInternalGame.class);
 		createWindow("Example1", resolution, game, injector);
 	}
 	
-	static class Example1Game implements Java2dGame {
+	static class ExampleInternalGame implements Java2dGame {
 		
 		@Inject
 		KeyboardInput keyboardInput;
@@ -76,17 +75,7 @@ public class Example1 extends Java2dDesktopApplication {
 		@Override
 		public void init() {
 			
-			resourceManager.add("Critter", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new DataLoader<Image>() {
-
-				@Override
-				public Image load() {
-					try {
-						return ImageIO.read(Thread.currentThread().getContextClassLoader().getResourceAsStream("critter.png"));
-					} catch (IOException e) {
-						throw new RuntimeException(e);
-					}
-				}
-			})));
+			resourceManager.add("Critter", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("critter.png")))));
 			
 			critterImageResource = resourceManager.get("Critter");
 			

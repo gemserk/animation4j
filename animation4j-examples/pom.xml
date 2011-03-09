@@ -49,6 +49,11 @@
 			<groupId>com.gemserk.componentsengine</groupId>
 			<artifactId>core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.gemserk.resources</groupId>
+			<artifactId>resourcesmanager-java2dmodule</artifactId>
+			<version>0.0.8-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 </project>
