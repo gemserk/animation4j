@@ -54,6 +54,10 @@ public class Example1 extends Java2dDesktopApplication {
 		createWindow("Example1", resolution, game, injector);
 	}
 	
+	public void stop() {
+		System.exit(0);
+	}
+	
 	static class ExampleInternalGame implements Java2dGame {
 		
 		@Inject
