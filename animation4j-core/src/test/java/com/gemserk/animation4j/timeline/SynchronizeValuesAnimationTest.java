@@ -1,8 +1,5 @@
 package com.gemserk.animation4j.timeline;
 
-import static org.junit.Assert.assertThat;
-
-import org.hamcrest.core.IsEqual;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -42,15 +39,15 @@ public class SynchronizeValuesAnimationTest {
 		
 	}
 	
-	public static abstract class Synchronizer {
+	public static class Synchronizer {
 		
 		private final SynchronizerIterator synchronizerIterator;
 		
-		protected final Object object;
+		private final ObjectSynchronizer objectSynchronizer;
 
-		public Synchronizer(SynchronizerIterator synchronizerIterator, Object object) {
+		public Synchronizer(SynchronizerIterator synchronizerIterator, ObjectSynchronizer objectSynchronizer) {
 			this.synchronizerIterator = synchronizerIterator;
-			this.object = object;
+			this.objectSynchronizer = objectSynchronizer;
 		}
 
 		/**
@@ -62,12 +59,15 @@ public class SynchronizeValuesAnimationTest {
 				TimelineValue<Object> timelineValue = synchronizerIterator.next();
 				String name = timelineValue.getName();
 				Object value = timelineValue.getValue(time);
-				setValue(name, value);
+				objectSynchronizer.setValue(name, value);
 			}
 		}
 
-		// TODO: move to another class 
-		protected abstract void setValue(String name, Object value);
+	}
+	
+	public static interface ObjectSynchronizer {
+		
+		void setValue(String name, Object value);
 		
 	}
 	
@@ -77,8 +77,9 @@ public class SynchronizeValuesAnimationTest {
 		
 		final SynchronizerIterator synchronizerIterator = mockery.mock(SynchronizerIterator.class);
 		final TimelineValue timelineValue = mockery.mock(TimelineValue.class);
+		final ObjectSynchronizer objectSynchronizer = mockery.mock(ObjectSynchronizer.class);
 		
-		TestObject testObject = new TestObject();
+		// TestObject testObject = new TestObject();
 		
 		mockery.checking(new Expectations() {
 			{
@@ -94,22 +95,18 @@ public class SynchronizeValuesAnimationTest {
 				oneOf(timelineValue).getValue(10);
 				will(returnValue(100f));
 				
+				oneOf(objectSynchronizer).setValue("x", 100f);
+				
 				oneOf(synchronizerIterator).hasNext();
 				will(returnValue(false));
 			}
 		});
 		
-		Synchronizer synchronizer = new Synchronizer(synchronizerIterator, testObject) {
-			@Override
-			protected void setValue(String name, Object value) {
-				TestObject testObject =(TestObject) object;
-				testObject.setX((Float) value);
-			}
-		};
+		Synchronizer synchronizer = new Synchronizer(synchronizerIterator, objectSynchronizer);
 		
 		synchronizer.syncrhonize(10);
 		
-		assertThat(testObject.getX(), IsEqual.equalTo(100f));
+		// assertThat(testObject.getX(), IsEqual.equalTo(100f));
 		
 	}
 	
