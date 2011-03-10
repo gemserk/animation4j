@@ -168,6 +168,9 @@ public class Example2 extends Java2dDesktopApplication {
 			java2dRenderer.render(new Java2dImageRenderObject(1, houseImageResource.get(), 320, 400, 1, 1, 0f));
 			java2dRenderer.render(new Java2dImageRenderObject(1, globeImageResource.get(), (float) position.getX(), (float) position.getY(), 1, 1, 0f, new Color(1f, 1f, 1f, alpha)));
 			java2dRenderer.render(new Java2dImageRenderObject(1, textImageResource.get(), (float) position.getX()+10, (float) position.getY()+10, 1, 1, 0f, new Color(1f, 1f, 1f, textAlpha)));
+			
+			graphics.setColor(Color.white);
+			graphics.drawString("Press Enter to go on with the animation.", 100, 100);
 
 		}
 
