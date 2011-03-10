@@ -42,13 +42,13 @@ public class SynchronizeValuesAnimationTest {
 		
 	}
 	
-	public static class Synchronizer {
+	public static abstract class Synchronizer {
 		
 		private final SynchronizerIterator synchronizerIterator;
 		
-		private final TestObject object;
+		protected final Object object;
 
-		public Synchronizer(SynchronizerIterator synchronizerIterator, TestObject object) {
+		public Synchronizer(SynchronizerIterator synchronizerIterator, Object object) {
 			this.synchronizerIterator = synchronizerIterator;
 			this.object = object;
 		}
@@ -59,10 +59,16 @@ public class SynchronizeValuesAnimationTest {
 		 */
 		public void syncrhonize(int time) {
 			while(synchronizerIterator.hasNext()) {
-				TimelineValue<Float> timelineValue = synchronizerIterator.next();
-				object.setX(timelineValue.getValue(time));
+				TimelineValue<Object> timelineValue = synchronizerIterator.next();
+				String name = timelineValue.getName();
+				Object value = timelineValue.getValue(time);
+				setValue(name, value);
 			}
 		}
+
+		// TODO: move to another class 
+		protected abstract void setValue(String name, Object value);
+		
 	}
 	
 	@Test
@@ -82,16 +88,24 @@ public class SynchronizeValuesAnimationTest {
 				oneOf(synchronizerIterator).next();
 				will(returnValue(timelineValue));
 				
+				oneOf(timelineValue).getName();
+				will(returnValue("x"));
+				
 				oneOf(timelineValue).getValue(10);
 				will(returnValue(100f));
 				
 				oneOf(synchronizerIterator).hasNext();
 				will(returnValue(false));
-
 			}
 		});
 		
-		Synchronizer synchronizer = new Synchronizer(synchronizerIterator, testObject);
+		Synchronizer synchronizer = new Synchronizer(synchronizerIterator, testObject) {
+			@Override
+			protected void setValue(String name, Object value) {
+				TestObject testObject =(TestObject) object;
+				testObject.setX((Float) value);
+			}
+		};
 		
 		synchronizer.syncrhonize(10);
 		
