@@ -17,20 +17,6 @@ public class SynchronizeValuesAnimationTest {
 		}
 	};
 	
-	public static class TestObject {
-
-		private float x;
-		
-		public void setX(float x) {
-			this.x = x;
-		}
-		
-		public float getX() {
-			return x;
-		}
-		
-	}
-	
 	public static interface SynchronizerIterator {
 		
 		<T> TimelineValue<T> next();
@@ -39,13 +25,13 @@ public class SynchronizeValuesAnimationTest {
 		
 	}
 	
-	public static class Synchronizer {
+	public static class TimelineSynchronizer {
 		
 		private final SynchronizerIterator synchronizerIterator;
 		
 		private final ObjectSynchronizer objectSynchronizer;
 
-		public Synchronizer(SynchronizerIterator synchronizerIterator, ObjectSynchronizer objectSynchronizer) {
+		public TimelineSynchronizer(SynchronizerIterator synchronizerIterator, ObjectSynchronizer objectSynchronizer) {
 			this.synchronizerIterator = synchronizerIterator;
 			this.objectSynchronizer = objectSynchronizer;
 		}
@@ -71,6 +57,10 @@ public class SynchronizeValuesAnimationTest {
 		
 	}
 	
+	// TODO: reflection implementation of ObjectSynchronizer.
+	
+	// TODO: PropertiesHolder implementation of ObjectSynchronizer.
+	
 	@Test
 	@SuppressWarnings("rawtypes")
 	public void shouldGetValuesFromIteratorAndSetToObject() {
@@ -78,8 +68,6 @@ public class SynchronizeValuesAnimationTest {
 		final SynchronizerIterator synchronizerIterator = mockery.mock(SynchronizerIterator.class);
 		final TimelineValue timelineValue = mockery.mock(TimelineValue.class);
 		final ObjectSynchronizer objectSynchronizer = mockery.mock(ObjectSynchronizer.class);
-		
-		// TestObject testObject = new TestObject();
 		
 		mockery.checking(new Expectations() {
 			{
@@ -102,11 +90,9 @@ public class SynchronizeValuesAnimationTest {
 			}
 		});
 		
-		Synchronizer synchronizer = new Synchronizer(synchronizerIterator, objectSynchronizer);
+		TimelineSynchronizer timelineSynchronizer = new TimelineSynchronizer(synchronizerIterator, objectSynchronizer);
 		
-		synchronizer.syncrhonize(10);
-		
-		// assertThat(testObject.getX(), IsEqual.equalTo(100f));
+		timelineSynchronizer.syncrhonize(10);
 		
 	}
 	
