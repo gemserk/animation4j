@@ -16,7 +16,7 @@ public class TimelineSynchronizer {
 	 * Synchronizes the values of the time line with the current object. 
 	 * @param time
 	 */
-	public void syncrhonize(int time) {
+	public void syncrhonize(float time) {
 		while(timelineSynchronizerIterator.hasNext()) {
 			TimelineValue<Object> timelineValue = timelineSynchronizerIterator.next();
 			String name = timelineValue.getName();
