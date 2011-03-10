@@ -3,7 +3,6 @@ package com.gemserk.animation4j.timeline;
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 import org.hamcrest.core.AnyOf;
 import org.hamcrest.core.IsNull;
@@ -24,38 +23,6 @@ public class TimelineSynchronizerIteratorTest {
 			setImposteriser(ClassImposteriser.INSTANCE);
 		}
 	};
-	
-	public static interface TimelineSynchronizerIterator {
-		
-		<T> TimelineValue<T> next();
-		
-		boolean hasNext(); 
-		
-	}
-	
-	public static class TimelineSynchronizerIteratorImpl implements TimelineSynchronizerIterator {
-
-		private final Timeline timeline;
-		
-		private Iterator<String> iterator;
-
-		public TimelineSynchronizerIteratorImpl(Timeline timeline) {
-			this.timeline = timeline;
-			iterator = timeline.getTimelineValues().keySet().iterator();
-		}
-		
-		@SuppressWarnings("unchecked")
-		@Override
-		public <T> TimelineValue<T> next() {
-			return timeline.getTimelineValues().get(iterator.next());
-		}
-
-		@Override
-		public boolean hasNext() {
-			return iterator.hasNext();
-		}
-		
-	}
 	
 	@Test
 	public void hasNextShouldBeFalseWithEmptyValues() {
