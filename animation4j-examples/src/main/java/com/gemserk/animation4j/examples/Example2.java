@@ -13,8 +13,11 @@ import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
+import com.gemserk.animation4j.timeline.ObjectSynchronizer;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
+import com.gemserk.animation4j.timeline.TimelineSynchronizer;
+import com.gemserk.animation4j.timeline.TimelineSynchronizerIteratorImpl;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
 import com.gemserk.componentsengine.java2d.Java2dGame;
@@ -96,6 +99,18 @@ public class Example2 extends Java2dDesktopApplication {
 		AnimationHandlerManager animationHandlerManager;
 
 		Resource<Image> globeImageResource;
+		
+		class Element {
+			
+			Point2D position;
+			
+			float alpha;
+			
+			float textAlpha;
+			
+		}
+		
+		Element element = new Element();
 
 		@Override
 		public void init() {
@@ -107,6 +122,10 @@ public class Example2 extends Java2dDesktopApplication {
 			globeImageResource = resourceManager.get("Globe");
 			houseImageResource = resourceManager.get("House");
 			textImageResource = resourceManager.get("Text");
+			
+			element.position = new Point(100,100);
+			element.alpha = 0f;
+			element.textAlpha = 0f;
 
 			showGlobeAnimation = new TimelineAnimationBuilder() {
 				{
@@ -130,12 +149,13 @@ public class Example2 extends Java2dDesktopApplication {
 							.keyFrame(500, 0f));
 				}
 			}.build();
-
+			
 			currentAnimation = showGlobeAnimation;
 
 			currentAnimation.start(1, false);
 
 			animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(currentAnimation);
+			
 		}
 
 		@Inject
@@ -161,13 +181,11 @@ public class Example2 extends Java2dDesktopApplication {
 
 			currentGraphicsProvider.setGraphics(graphics);
 
-			Point2D position = currentAnimation.getValue("position");
-			Float alpha = currentAnimation.getValue("alpha");
-			Float textAlpha = currentAnimation.getValue("textAlpha");
+			Point2D position = element.position;
 			
 			java2dRenderer.render(new Java2dImageRenderObject(1, houseImageResource.get(), 320, 400, 1, 1, 0f));
-			java2dRenderer.render(new Java2dImageRenderObject(1, globeImageResource.get(), (float) position.getX(), (float) position.getY(), 1, 1, 0f, new Color(1f, 1f, 1f, alpha)));
-			java2dRenderer.render(new Java2dImageRenderObject(1, textImageResource.get(), (float) position.getX()+10, (float) position.getY()+10, 1, 1, 0f, new Color(1f, 1f, 1f, textAlpha)));
+			java2dRenderer.render(new Java2dImageRenderObject(1, globeImageResource.get(), (float) position.getX(), (float) position.getY(), 1, 1, 0f, new Color(1f, 1f, 1f, element.alpha)));
+			java2dRenderer.render(new Java2dImageRenderObject(1, textImageResource.get(), (float) position.getX()+10, (float) position.getY()+10, 1, 1, 0f, new Color(1f, 1f, 1f, element.textAlpha)));
 			
 			graphics.setColor(Color.white);
 			graphics.drawString("Press Enter to go on with the animation.", 100, 100);
@@ -178,6 +196,20 @@ public class Example2 extends Java2dDesktopApplication {
 		public void update(int delta) {
 
 			currentAnimation.update(delta);
+			
+			new TimelineSynchronizer(new TimelineSynchronizerIteratorImpl(currentAnimation.getTimeline()), new ObjectSynchronizer() {
+				@Override
+				public void setValue(String name, Object value) {
+					if ("position".equals(name)) {
+						element.position = (Point2D) value;
+					} else if ("alpha".equals(name)) {
+						element.alpha = (Float) value;
+					} else if ("textAlpha".equals(name)) {
+						element.textAlpha = (Float) value;
+					}
+				}
+			}).syncrhonize(currentAnimation.getCurrentTime());
+			
 			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
 
 				// switch animations
