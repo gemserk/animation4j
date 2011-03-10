@@ -41,6 +41,7 @@ public class TimelineValueBuilder<T> {
 	}
 
 	public TimelineValue<T> build() {
+		timelineValue.setName(name);
 		return timelineValue;
 	}
 

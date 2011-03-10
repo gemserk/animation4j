@@ -65,7 +65,17 @@ public class TimelineValue<T> {
 	public void addKeyFrame(float time, T value) {
 		addKeyFrame(time, value, new NullInterpolator<T>());
 	}
+	
+	String name;
+	
+	public void setName(String name) {
+		this.name = name;
+	}
 
+	public String getName() {
+		return name;
+	}
+	
 	public T getValue(float time) {
 
 		KeyFrame<T> firstKeyFrame = keyFrames.getFirst();
