@@ -1,5 +1,7 @@
 package com.gemserk.animation4j.timeline;
 
+import com.gemserk.animation4j.timeline.sync.ObjectSynchronizer;
+
 
 public class TimelineSynchronizer {
 	

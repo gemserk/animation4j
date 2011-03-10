@@ -1,4 +1,4 @@
-package com.gemserk.animation4j.timeline;
+package com.gemserk.animation4j.timeline.sync;
 
 public interface ObjectSynchronizer {
 	

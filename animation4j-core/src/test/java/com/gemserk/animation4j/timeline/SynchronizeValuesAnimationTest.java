@@ -7,6 +7,8 @@ import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.gemserk.animation4j.timeline.sync.ObjectSynchronizer;
+
 
 
 @RunWith(JMock.class)
