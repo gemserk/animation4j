@@ -23,19 +23,10 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>com.gemserk.animation4j.examples.Example1</mainClass>
+							<mainClass>com.gemserk.animation4j.examples.ExamplesLoader</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
