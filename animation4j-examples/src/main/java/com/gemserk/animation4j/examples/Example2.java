@@ -18,7 +18,7 @@ import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineSynchronizer;
 import com.gemserk.animation4j.timeline.TimelineSynchronizerIteratorImpl;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
-import com.gemserk.animation4j.timeline.sync.ObjectSynchronizer;
+import com.gemserk.animation4j.timeline.sync.ReflectionObjectSynchronizer;
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
 import com.gemserk.componentsengine.java2d.Java2dGame;
 import com.gemserk.componentsengine.java2d.Java2dModule;
@@ -78,7 +78,7 @@ public class Example2 extends Java2dDesktopApplication {
 		ExampleInternalGame game = injector.getInstance(ExampleInternalGame.class);
 		createWindow("Example2", resolution, game, injector);
 	}
-	
+
 	public void stop() {
 		System.exit(0);
 	}
@@ -99,17 +99,41 @@ public class Example2 extends Java2dDesktopApplication {
 		AnimationHandlerManager animationHandlerManager;
 
 		Resource<Image> globeImageResource;
-		
-		class Element {
-			
+
+		public static class Element {
+
 			Point2D position;
-			
+
 			float alpha;
-			
+
 			float textAlpha;
-			
+
+			public void setPosition(Point2D position) {
+				this.position = position;
+			}
+
+			public Point2D getPosition() {
+				return position;
+			}
+
+			public void setAlpha(float alpha) {
+				this.alpha = alpha;
+			}
+
+			public float getAlpha() {
+				return alpha;
+			}
+
+			public void setTextAlpha(float textAlpha) {
+				this.textAlpha = textAlpha;
+			}
+
+			public float getTextAlpha() {
+				return textAlpha;
+			}
+
 		}
-		
+
 		Element element = new Element();
 
 		@Override
@@ -122,8 +146,8 @@ public class Example2 extends Java2dDesktopApplication {
 			globeImageResource = resourceManager.get("Globe");
 			houseImageResource = resourceManager.get("House");
 			textImageResource = resourceManager.get("Text");
-			
-			element.position = new Point(100,100);
+
+			element.position = new Point(100, 100);
 			element.alpha = 0f;
 			element.textAlpha = 0f;
 
@@ -149,13 +173,13 @@ public class Example2 extends Java2dDesktopApplication {
 							.keyFrame(500, 0f));
 				}
 			}.build();
-			
+
 			currentAnimation = showGlobeAnimation;
 
 			currentAnimation.start(1, false);
 
 			animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(currentAnimation);
-			
+
 		}
 
 		@Inject
@@ -182,11 +206,11 @@ public class Example2 extends Java2dDesktopApplication {
 			currentGraphicsProvider.setGraphics(graphics);
 
 			Point2D position = element.position;
-			
+
 			java2dRenderer.render(new Java2dImageRenderObject(1, houseImageResource.get(), 320, 400, 1, 1, 0f));
 			java2dRenderer.render(new Java2dImageRenderObject(1, globeImageResource.get(), (float) position.getX(), (float) position.getY(), 1, 1, 0f, new Color(1f, 1f, 1f, element.alpha)));
-			java2dRenderer.render(new Java2dImageRenderObject(1, textImageResource.get(), (float) position.getX()+10, (float) position.getY()+10, 1, 1, 0f, new Color(1f, 1f, 1f, element.textAlpha)));
-			
+			java2dRenderer.render(new Java2dImageRenderObject(1, textImageResource.get(), (float) position.getX() + 10, (float) position.getY() + 10, 1, 1, 0f, new Color(1f, 1f, 1f, element.textAlpha)));
+
 			graphics.setColor(Color.white);
 			graphics.drawString("Press Enter to go on with the animation.", 100, 100);
 
@@ -196,20 +220,11 @@ public class Example2 extends Java2dDesktopApplication {
 		public void update(int delta) {
 
 			currentAnimation.update(delta);
-			
-			new TimelineSynchronizer(new TimelineSynchronizerIteratorImpl(currentAnimation.getTimeline()), new ObjectSynchronizer() {
-				@Override
-				public void setValue(String name, Object value) {
-					if ("position".equals(name)) {
-						element.position = (Point2D) value;
-					} else if ("alpha".equals(name)) {
-						element.alpha = (Float) value;
-					} else if ("textAlpha".equals(name)) {
-						element.textAlpha = (Float) value;
-					}
-				}
-			}).syncrhonize(currentAnimation.getCurrentTime());
-			
+
+			new TimelineSynchronizer(new TimelineSynchronizerIteratorImpl(currentAnimation.getTimeline()), //
+					new ReflectionObjectSynchronizer(element)). //
+					syncrhonize(currentAnimation.getCurrentTime());
+
 			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
 
 				// switch animations

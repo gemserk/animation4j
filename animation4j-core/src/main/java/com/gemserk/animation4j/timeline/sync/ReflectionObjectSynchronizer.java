@@ -15,7 +15,7 @@ public class ReflectionObjectSynchronizer implements ObjectSynchronizer {
 		try {
 			BeanUtils.setProperty(object, name, value);
 		} catch (Exception e) {
-			throw new RuntimeException("failed to set value " + value.toString() + " to field " + name);
+			throw new RuntimeException("failed to set value " + value.toString() + " to field " + name, e);
 		}
 	}
 
