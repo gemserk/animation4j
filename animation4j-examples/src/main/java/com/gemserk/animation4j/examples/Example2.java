@@ -229,13 +229,6 @@ public class Example2 extends Java2dDesktopApplication {
 
 			currentAnimation.update(delta);
 
-			// use the timeline synchronizer to synchronize with the object values with the timeline values
-
-//			TimelineIterator iterator = currentAnimation.getTimeline().getIterator();
-//			float currentTime = currentAnimation.getCurrentTime();
-//			
-//			timelineSynchronizer.syncrhonize(iterator, currentTime);
-
 			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
 
 				// switch animations
