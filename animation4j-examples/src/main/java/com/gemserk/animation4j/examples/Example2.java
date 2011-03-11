@@ -182,7 +182,7 @@ public class Example2 extends Java2dDesktopApplication {
 			animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(currentAnimation);
 
 			// create the synchronizers
-			
+
 			ObjectSynchronizer objectSynchronizer = new ReflectionObjectSynchronizer(element);
 			timelineSynchronizer = new TimelineSynchronizer(objectSynchronizer);
 
@@ -229,11 +229,12 @@ public class Example2 extends Java2dDesktopApplication {
 
 			currentAnimation.update(delta);
 
-			TimelineSynchronizerIterator iterator = new TimelineSynchronizerIterator(currentAnimation.getTimeline());
-
 			// use the timeline synchronizer to synchronize with the object values with the timeline values
 
-			timelineSynchronizer.syncrhonize(iterator, currentAnimation.getCurrentTime());
+			TimelineSynchronizerIterator iterator = currentAnimation.getTimeline().getIterator();
+			float currentTime = currentAnimation.getCurrentTime();
+			
+			timelineSynchronizer.syncrhonize(iterator, currentTime);
 
 			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
 

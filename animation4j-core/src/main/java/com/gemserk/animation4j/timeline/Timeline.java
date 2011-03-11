@@ -32,4 +32,8 @@ public class Timeline {
 	public Map<String, TimelineValue> getTimelineValues() {
 		return timelineValues;
 	}
+	
+	public TimelineSynchronizerIterator getIterator() {
+		return new TimelineSynchronizerIterator(this);
+	}
 }

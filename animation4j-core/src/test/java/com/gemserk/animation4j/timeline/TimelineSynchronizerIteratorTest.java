@@ -103,4 +103,6 @@ public class TimelineSynchronizerIteratorTest {
 		
 	}
 	
+	// TODO: implement iterator remove 
+	
 }
