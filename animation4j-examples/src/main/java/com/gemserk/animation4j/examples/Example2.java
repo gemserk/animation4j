@@ -8,17 +8,17 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 
+import com.gemserk.animation4j.Animation;
 import com.gemserk.animation4j.event.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
-import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
-import com.gemserk.animation4j.timeline.TimelineIterator;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
 import com.gemserk.animation4j.timeline.sync.ObjectSynchronizer;
 import com.gemserk.animation4j.timeline.sync.ReflectionObjectSynchronizer;
+import com.gemserk.animation4j.timeline.sync.SynchrnonizedAnimation;
 import com.gemserk.animation4j.timeline.sync.TimelineSynchronizer;
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
 import com.gemserk.componentsengine.java2d.Java2dGame;
@@ -151,8 +151,13 @@ public class Example2 extends Java2dDesktopApplication {
 			element.position = new Point(100, 100);
 			element.alpha = 0f;
 			element.textAlpha = 0f;
+			
+			// create the synchronizers
 
-			showGlobeAnimation = new TimelineAnimationBuilder() {
+			ObjectSynchronizer objectSynchronizer = new ReflectionObjectSynchronizer(element);
+			timelineSynchronizer = new TimelineSynchronizer(objectSynchronizer);
+
+			showGlobeAnimation = new SynchrnonizedAnimation(new TimelineAnimationBuilder() {
 				{
 					speed(1f);
 					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 320), new Point2DInterpolator(InterpolatorFunctionFactory.easeIn())) //
@@ -163,9 +168,9 @@ public class Example2 extends Java2dDesktopApplication {
 							.keyFrame(1500, 1f));
 					// show text...
 				}
-			}.build();
+			}.build(), timelineSynchronizer);
 
-			hideGlobeAnimation = new TimelineAnimationBuilder() {
+			hideGlobeAnimation = new SynchrnonizedAnimation(new TimelineAnimationBuilder() {
 				{
 					speed(1f);
 					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 280)));
@@ -173,18 +178,13 @@ public class Example2 extends Java2dDesktopApplication {
 					value("textAlpha", new TimelineValueBuilder<Float>().keyFrame(0, 1f, new FloatInterpolator(InterpolatorFunctionFactory.easeOut())) //
 							.keyFrame(500, 0f));
 				}
-			}.build();
+			}.build(), timelineSynchronizer);
 
 			currentAnimation = showGlobeAnimation;
 
 			currentAnimation.start(1, false);
 
 			animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(currentAnimation);
-
-			// create the synchronizers
-
-			ObjectSynchronizer objectSynchronizer = new ReflectionObjectSynchronizer(element);
-			timelineSynchronizer = new TimelineSynchronizer(objectSynchronizer);
 
 		}
 
@@ -194,13 +194,13 @@ public class Example2 extends Java2dDesktopApplication {
 		@Inject
 		CurrentGraphicsProvider currentGraphicsProvider;
 
-		private TimelineAnimation showGlobeAnimation;
+		private Animation showGlobeAnimation;
 
 		private Resource<Image> houseImageResource;
 
-		private TimelineAnimation hideGlobeAnimation;
+		private Animation hideGlobeAnimation;
 
-		private TimelineAnimation currentAnimation;
+		private Animation currentAnimation;
 
 		private Resource<Image> textImageResource;
 
@@ -231,10 +231,10 @@ public class Example2 extends Java2dDesktopApplication {
 
 			// use the timeline synchronizer to synchronize with the object values with the timeline values
 
-			TimelineIterator iterator = currentAnimation.getTimeline().getIterator();
-			float currentTime = currentAnimation.getCurrentTime();
-			
-			timelineSynchronizer.syncrhonize(iterator, currentTime);
+//			TimelineIterator iterator = currentAnimation.getTimeline().getIterator();
+//			float currentTime = currentAnimation.getCurrentTime();
+//			
+//			timelineSynchronizer.syncrhonize(iterator, currentTime);
 
 			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
 
