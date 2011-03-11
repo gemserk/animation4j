@@ -6,6 +6,6 @@ public interface AnimationMonitor {
 	
 	void removeAnimationHandler(AnimationEventHandler animationEventHandler);
 
-	void checkAnimationChanges();
+	void checkAnimationChanges(AnimationHandlerManager animationHandlerManager);
 	
 }

@@ -28,7 +28,7 @@ public class AnimationHandlerManager {
 
 	public void checkAnimationChanges() {
 		for (int i = 0; i < animationMonitors.size(); i++)
-			animationMonitors.get(i).checkAnimationChanges();
+			animationMonitors.get(i).checkAnimationChanges(this);
 		animationMonitors.removeAll(animationMonitorsToRemove);
 		animationMonitorsToRemove.clear();
 	}

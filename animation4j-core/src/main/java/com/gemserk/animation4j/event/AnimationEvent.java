@@ -10,7 +10,7 @@ public class AnimationEvent {
 		return animation;
 	}
 
-	public AnimationEvent(Animation animation) {
+	public AnimationEvent(Animation animation, AnimationHandlerManager animationHandlerManager) {
 		this.animation = animation;
 	}
 }

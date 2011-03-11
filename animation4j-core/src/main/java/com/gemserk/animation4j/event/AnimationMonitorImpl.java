@@ -39,7 +39,7 @@ public class AnimationMonitorImpl implements AnimationMonitor {
 		animationEventHandlers.remove(animationEventHandler);
 	}
 
-	public void checkAnimationChanges() {
+	public void checkAnimationChanges(AnimationHandlerManager animationHandlerManager) {
 
 		boolean callOnStart = animation.isStarted() && !wasStarted && !animation.isFinished();
 		boolean callOnFinish = animation.isFinished() && !wasFinished;
@@ -54,11 +54,11 @@ public class AnimationMonitorImpl implements AnimationMonitor {
 
 		for (AnimationEventHandler animationEventHandler : animationEventHandlers) {
 			if (callOnFinish)
-				animationEventHandler.onAnimationFinished(new AnimationEvent(animation));
+				animationEventHandler.onAnimationFinished(new AnimationEvent(animation, animationHandlerManager));
 			if (callOnStart)
-				animationEventHandler.onAnimationStarted(new AnimationEvent(animation));
+				animationEventHandler.onAnimationStarted(new AnimationEvent(animation, animationHandlerManager));
 			if (callOnIterationChanged)
-				animationEventHandler.onIterationChanged(new AnimationEvent(animation));
+				animationEventHandler.onIterationChanged(new AnimationEvent(animation, animationHandlerManager));
 		}
 
 	}
