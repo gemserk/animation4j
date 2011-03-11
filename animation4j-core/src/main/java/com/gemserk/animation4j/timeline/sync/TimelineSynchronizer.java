@@ -1,11 +1,19 @@
-package com.gemserk.animation4j.timeline;
+package com.gemserk.animation4j.timeline.sync;
 
-import com.gemserk.animation4j.timeline.sync.ObjectSynchronizer;
+import com.gemserk.animation4j.timeline.TimelineIterator;
+import com.gemserk.animation4j.timeline.TimelineValue;
 
+/**
+ * Synchronizes all values of a time line with an object using the specified ObjectSynchronizer.
+ * @author acoppes
+ */
 public class TimelineSynchronizer {
 	
 	private final ObjectSynchronizer objectSynchronizer;
 
+	/**
+	 * @param objectSynchronizer - The ObjectSynchronizer to use to synchronize the time line values.
+	 */
 	public TimelineSynchronizer(ObjectSynchronizer objectSynchronizer) {
 		this.objectSynchronizer = objectSynchronizer;
 	}

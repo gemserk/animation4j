@@ -1,4 +1,4 @@
-package com.gemserk.animation4j.timeline;
+package com.gemserk.animation4j.timeline.sync;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -7,7 +7,10 @@ import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.gemserk.animation4j.timeline.TimelineIterator;
+import com.gemserk.animation4j.timeline.TimelineValue;
 import com.gemserk.animation4j.timeline.sync.ObjectSynchronizer;
+import com.gemserk.animation4j.timeline.sync.TimelineSynchronizer;
 
 
 
