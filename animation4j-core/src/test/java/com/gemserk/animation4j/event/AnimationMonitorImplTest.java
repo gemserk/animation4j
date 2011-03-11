@@ -168,12 +168,12 @@ public class AnimationMonitorImplTest {
 		AnimationMonitor animationMonitor = new AnimationMonitorImpl(animation);
 		animationMonitor.addAnimationHandler(new AnimationEventHandler() {
 			@Override
-			public void onAnimationStarted(Animation animation) {
+			public void onAnimationStarted(AnimationEvent e) {
 				System.out.println("animation playing!!");
 			}
 
 			@Override
-			public void onAnimationFinished(Animation animation) {
+			public void onAnimationFinished(AnimationEvent e) {
 				System.out.println("animation stopped!!");
 			}
 		});

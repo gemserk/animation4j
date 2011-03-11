@@ -54,11 +54,11 @@ public class AnimationMonitorImpl implements AnimationMonitor {
 
 		for (AnimationEventHandler animationEventHandler : animationEventHandlers) {
 			if (callOnFinish)
-				animationEventHandler.onAnimationFinished(animation);
+				animationEventHandler.onAnimationFinished(new AnimationEvent(animation));
 			if (callOnStart)
-				animationEventHandler.onAnimationStarted(animation);
+				animationEventHandler.onAnimationStarted(new AnimationEvent(animation));
 			if (callOnIterationChanged)
-				animationEventHandler.onIterationChanged(animation);
+				animationEventHandler.onIterationChanged(new AnimationEvent(animation));
 		}
 
 	}

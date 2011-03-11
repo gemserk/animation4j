@@ -40,7 +40,7 @@ public class AnimationHandlerManager {
 		// Not sure about this yet... 
 		animationMonitor.addAnimationHandler(new AnimationEventHandler() {
 			@Override
-			public void onAnimationFinished(Animation animation) {
+			public void onAnimationFinished(AnimationEvent e) {
 				animationMonitorsToRemove.add(animationMonitor);
 			}
 		});

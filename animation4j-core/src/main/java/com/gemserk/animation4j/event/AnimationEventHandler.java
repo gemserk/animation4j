@@ -1,18 +1,17 @@
 package com.gemserk.animation4j.event;
 
-import com.gemserk.animation4j.Animation;
 
 public class AnimationEventHandler {
 
-	public void onAnimationStarted(Animation animation) {
+	public void onAnimationStarted(AnimationEvent e) {
 		
 	}
 
-	public void onAnimationFinished(Animation animation) {
+	public void onAnimationFinished(AnimationEvent e) {
 		
 	}
 	
-	public void onIterationChanged(Animation animation) {
+	public void onIterationChanged(AnimationEvent e) {
 		
 	}
 
