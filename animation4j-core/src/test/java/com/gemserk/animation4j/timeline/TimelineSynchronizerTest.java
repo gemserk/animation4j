@@ -12,7 +12,7 @@ import com.gemserk.animation4j.timeline.sync.ObjectSynchronizer;
 
 
 @RunWith(JMock.class)
-public class SynchronizeValuesAnimationTest {
+public class TimelineSynchronizerTest {
 
 	Mockery mockery = new Mockery() {
 		{

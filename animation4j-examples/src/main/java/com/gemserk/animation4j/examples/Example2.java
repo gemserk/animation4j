@@ -221,9 +221,9 @@ public class Example2 extends Java2dDesktopApplication {
 
 			currentAnimation.update(delta);
 
-			new TimelineSynchronizer(new TimelineSynchronizerIteratorImpl(currentAnimation.getTimeline()), //
-					new ReflectionObjectSynchronizer(element)). //
-					syncrhonize(currentAnimation.getCurrentTime());
+			TimelineSynchronizer timelineSynchronizer = new TimelineSynchronizer(new TimelineSynchronizerIteratorImpl(currentAnimation.getTimeline()), //
+					new ReflectionObjectSynchronizer(element));
+			timelineSynchronizer.syncrhonize(currentAnimation.getCurrentTime());
 
 			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
 
