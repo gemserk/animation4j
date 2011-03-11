@@ -42,7 +42,7 @@ public class AnimationMonitor {
 
 		boolean callOnStart = animation.isStarted() && !wasStarted && !animation.isFinished();
 		boolean callOnFinish = animation.isFinished() && !wasFinished;
-		boolean callOnIterationChanged = animation.getIteration() != lastIteration && !animation.isFinished();
+		boolean callOnIterationChanged = animation.getIteration() != lastIteration && !animation.isFinished() && animation.getIteration() > 1;
 
 		wasStarted = animation.isStarted();
 		wasFinished = animation.isFinished();

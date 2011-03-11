@@ -303,4 +303,31 @@ public class AnimationMonitorImplTest {
 
 
 	}
+	
+	@Test
+	public void shouldNotCallIterationChangedOnAnimationRestart() {
+
+		MockAnimation animation = new MockAnimation() {
+			{
+				setStarted(true);
+				setFinished(true);
+				setIteration(2);
+			}
+		};
+
+		MockAnimationEventHandler animationEventHandler = new MockAnimationEventHandler();
+
+		AnimationMonitor animationMonitor = new AnimationMonitor(animation);
+		animationMonitor.addAnimationHandler(animationEventHandler);
+		animationMonitor.checkAnimationChanges(null);
+
+		assertEquals(false, animationEventHandler.onIterationChangedCalled);
+		
+		animation.restart();
+		animationEventHandler.reset();
+		animationMonitor.checkAnimationChanges(null);
+
+		assertEquals(false, animationEventHandler.onIterationChangedCalled);
+
+	}
 }

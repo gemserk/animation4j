@@ -46,6 +46,7 @@ public class MockAnimation implements Animation {
 	public void restart() {
 		started = false;
 		finished = false;
+		this.iteration = 1;
 	}
 
 	@Override
@@ -79,9 +80,9 @@ public class MockAnimation implements Animation {
 	public void start(int iterationCount, boolean alternateDirection) {
 		start(iterationCount);
 	}
-	
+
 	PlayingDirection playingDirection = PlayingDirection.Normal;
-	
+
 	public void setPlayingDirection(PlayingDirection playingDirection) {
 		this.playingDirection = playingDirection;
 	}
