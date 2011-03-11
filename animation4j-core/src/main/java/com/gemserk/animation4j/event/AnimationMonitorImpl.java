@@ -9,7 +9,7 @@ import com.gemserk.animation4j.Animation;
  * Monitors an Animation and call to an AnimationHandler when the animation starts and when the animation ends.
  * @author acoppes
  */
-public class AnimationMonitorImpl implements AnimationMonitor {
+public class AnimationMonitorImpl {
 
 	boolean wasFinished = false;
 
@@ -34,7 +34,6 @@ public class AnimationMonitorImpl implements AnimationMonitor {
 		animationEventHandlers.add(animationEventHandler);
 	}
 
-	@Override
 	public void removeAnimationHandler(AnimationEventHandler animationEventHandler) {
 		animationEventHandlers.remove(animationEventHandler);
 	}

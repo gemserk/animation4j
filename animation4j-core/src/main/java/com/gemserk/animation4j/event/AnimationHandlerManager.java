@@ -24,7 +24,7 @@ public class AnimationHandlerManager {
 		
 	}
 
-	ArrayList<AnimationMonitor> animationMonitors = new ArrayList<AnimationMonitor>();
+	ArrayList<AnimationMonitorImpl> animationMonitors = new ArrayList<AnimationMonitorImpl>();
 
 	public void checkAnimationChanges() {
 		for (int i = 0; i < animationMonitors.size(); i++)
@@ -33,9 +33,9 @@ public class AnimationHandlerManager {
 		animationMonitorsToRemove.clear();
 	}
 
-	ArrayList<AnimationMonitor> animationMonitorsToRemove = new ArrayList<AnimationMonitor>();
+	ArrayList<AnimationMonitorImpl> animationMonitorsToRemove = new ArrayList<AnimationMonitorImpl>();
 
-	public void handleAnimationChanges(final AnimationMonitor animationMonitor) {
+	public void handleAnimationChanges(final AnimationMonitorImpl animationMonitor) {
 		animationMonitors.add(animationMonitor);
 		// Not sure about this yet... 
 		animationMonitor.addAnimationHandler(new AnimationEventHandler() {
@@ -44,6 +44,10 @@ public class AnimationHandlerManager {
 				animationMonitorsToRemove.add(animationMonitor);
 			}
 		});
+	}
+	
+	public void remove(AnimationEventHandler animationEventHandler) {
+		throw new RuntimeException("not implemented yet");
 	}
 
 	public Action with(AnimationEventHandler animationEventHandler) {
