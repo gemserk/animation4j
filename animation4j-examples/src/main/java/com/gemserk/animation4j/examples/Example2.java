@@ -6,7 +6,10 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+
+import javax.swing.JEditorPane;
 
 import com.gemserk.animation4j.Animation;
 import com.gemserk.animation4j.event.AnimationHandlerManager;
@@ -160,8 +163,8 @@ public class Example2 extends Java2dDesktopApplication {
 			showAnimation = new SynchrnonizedAnimation(new TimelineAnimationBuilder() {
 				{
 					speed(1f);
-					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 320), new Point2DInterpolator(InterpolatorFunctionFactory.easeIn())) //
-							.keyFrame(1000, new Point(320, 280)));
+					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 260), new Point2DInterpolator(InterpolatorFunctionFactory.easeIn())) //
+							.keyFrame(1000, new Point(320, 220)));
 					value("alpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f, new FloatInterpolator(InterpolatorFunctionFactory.easeOut())).keyFrame(1000, 1f));
 					value("textAlpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f, new FloatInterpolator(InterpolatorFunctionFactory.easeOut())) //
 							.keyFrame(500, 0f, new FloatInterpolator(InterpolatorFunctionFactory.easeOut())) //
@@ -173,7 +176,7 @@ public class Example2 extends Java2dDesktopApplication {
 			hideAnimation = new SynchrnonizedAnimation(new TimelineAnimationBuilder() {
 				{
 					speed(1f);
-					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 280)));
+					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 220)));
 					value("alpha", new TimelineValueBuilder<Float>().keyFrame(0, 1f).keyFrame(500, 1f, new FloatInterpolator(InterpolatorFunctionFactory.easeOut())).keyFrame(1000, 0f));
 					value("textAlpha", new TimelineValueBuilder<Float>().keyFrame(0, 1f, new FloatInterpolator(InterpolatorFunctionFactory.easeOut())) //
 							.keyFrame(500, 0f));
@@ -186,7 +189,15 @@ public class Example2 extends Java2dDesktopApplication {
 
 			animationHandlerManager.with(new DumpAnimationStateHandler("show")).handleChangesOf(showAnimation);
 			animationHandlerManager.with(new DumpAnimationStateHandler("hide")).handleChangesOf(hideAnimation);
-
+			
+			String html = new FileHelper("license-lostgarden.html").read();
+			
+			creditsPane = new JEditorPane("text/html", html) {{ 
+				setSize(600, 40);
+				setEditable(false);
+				setOpaque(false);
+			}};
+			
 		}
 
 		@Inject
@@ -207,6 +218,8 @@ public class Example2 extends Java2dDesktopApplication {
 
 		private TimelineSynchronizer timelineSynchronizer;
 
+		private JEditorPane creditsPane;
+
 		@Override
 		public void render(Graphics2D graphics) {
 			graphics.setBackground(Color.black);
@@ -216,13 +229,20 @@ public class Example2 extends Java2dDesktopApplication {
 
 			Point2D position = element.position;
 
-			java2dRenderer.render(new Java2dImageRenderObject(1, houseImageResource.get(), 320, 400, 1, 1, 0f));
+			java2dRenderer.render(new Java2dImageRenderObject(1, houseImageResource.get(), 320, 340, 1, 1, 0f));
 			java2dRenderer.render(new Java2dImageRenderObject(1, globeImageResource.get(), (float) position.getX(), (float) position.getY(), 1, 1, 0f, new Color(1f, 1f, 1f, element.alpha)));
 			java2dRenderer.render(new Java2dImageRenderObject(1, textImageResource.get(), (float) position.getX() + 10, (float) position.getY() + 10, 1, 1, 0f, new Color(1f, 1f, 1f, element.textAlpha)));
 
 			graphics.setColor(Color.white);
-			graphics.drawString("Press Enter to go on with the animation.", 100, 100);
-
+			graphics.drawString("Press Enter to go on with the animation.", 20, 50);
+			
+			AffineTransform previousTransform = graphics.getTransform();
+			
+			graphics.translate(20, 400);
+			creditsPane.paint(graphics);
+			
+			graphics.setTransform(previousTransform);
+			
 		}
 
 		@Override
@@ -241,7 +261,7 @@ public class Example2 extends Java2dDesktopApplication {
 			}
 
 			animationHandlerManager.checkAnimationChanges();
-
+			
 		}
 
 	}
