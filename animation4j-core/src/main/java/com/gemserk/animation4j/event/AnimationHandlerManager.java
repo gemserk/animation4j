@@ -37,17 +37,15 @@ public class AnimationHandlerManager {
 
 	public void handleAnimationChanges(final AnimationMonitor animationMonitor) {
 		animationMonitors.add(animationMonitor);
-		// Not sure about this yet... 
-		animationMonitor.addAnimationHandler(new AnimationEventHandler() {
-			@Override
-			public void onAnimationFinished(AnimationEvent e) {
-				animationMonitorsToRemove.add(animationMonitor);
-			}
-		});
 	}
 	
 	public void remove(AnimationEventHandler animationEventHandler) {
-		throw new RuntimeException("not implemented yet");
+		for (int i = 0; i < animationMonitors.size(); i++) {
+			AnimationMonitor animationMonitor = animationMonitors.get(i);
+			animationMonitor.removeAnimationHandler(animationEventHandler);
+			if (!animationMonitor.hasAnimationHandlers())
+				animationMonitorsToRemove.add(animationMonitor);
+		}
 	}
 
 	public Action with(AnimationEventHandler animationEventHandler) {

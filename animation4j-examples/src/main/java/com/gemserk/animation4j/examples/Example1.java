@@ -148,7 +148,7 @@ public class Example1 extends Java2dDesktopApplication {
 			animation.update(delta);
 			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
 				animation.restart();
-				animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(animation);
+				// animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(animation);
 			}
 			
 			animationHandlerManager.checkAnimationChanges();

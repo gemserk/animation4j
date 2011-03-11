@@ -157,7 +157,7 @@ public class Example2 extends Java2dDesktopApplication {
 			ObjectSynchronizer objectSynchronizer = new ReflectionObjectSynchronizer(element);
 			timelineSynchronizer = new TimelineSynchronizer(objectSynchronizer);
 
-			showGlobeAnimation = new SynchrnonizedAnimation(new TimelineAnimationBuilder() {
+			showAnimation = new SynchrnonizedAnimation(new TimelineAnimationBuilder() {
 				{
 					speed(1f);
 					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 320), new Point2DInterpolator(InterpolatorFunctionFactory.easeIn())) //
@@ -170,7 +170,7 @@ public class Example2 extends Java2dDesktopApplication {
 				}
 			}.build(), timelineSynchronizer);
 
-			hideGlobeAnimation = new SynchrnonizedAnimation(new TimelineAnimationBuilder() {
+			hideAnimation = new SynchrnonizedAnimation(new TimelineAnimationBuilder() {
 				{
 					speed(1f);
 					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 280)));
@@ -180,11 +180,12 @@ public class Example2 extends Java2dDesktopApplication {
 				}
 			}.build(), timelineSynchronizer);
 
-			currentAnimation = showGlobeAnimation;
+			currentAnimation = showAnimation;
 
 			currentAnimation.start(1, false);
 
-			animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(currentAnimation);
+			animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(showAnimation);
+			animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(hideAnimation);
 
 		}
 
@@ -194,11 +195,11 @@ public class Example2 extends Java2dDesktopApplication {
 		@Inject
 		CurrentGraphicsProvider currentGraphicsProvider;
 
-		private Animation showGlobeAnimation;
+		private Animation showAnimation;
 
 		private Resource<Image> houseImageResource;
 
-		private Animation hideGlobeAnimation;
+		private Animation hideAnimation;
 
 		private Animation currentAnimation;
 
@@ -233,13 +234,13 @@ public class Example2 extends Java2dDesktopApplication {
 
 				// switch animations
 
-				if (currentAnimation == showGlobeAnimation)
-					currentAnimation = hideGlobeAnimation;
+				if (currentAnimation == showAnimation)
+					currentAnimation = hideAnimation;
 				else
-					currentAnimation = showGlobeAnimation;
+					currentAnimation = showAnimation;
 
 				currentAnimation.restart();
-				animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(currentAnimation);
+				// animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(currentAnimation);
 			}
 
 			animationHandlerManager.checkAnimationChanges();

@@ -62,4 +62,8 @@ public class AnimationMonitor {
 
 	}
 
+	public boolean hasAnimationHandlers() {
+		return animationEventHandlers.size() > 0;
+	}
+
 }
