@@ -184,8 +184,8 @@ public class Example2 extends Java2dDesktopApplication {
 
 			currentAnimation.start(1, false);
 
-			animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(showAnimation);
-			animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(hideAnimation);
+			animationHandlerManager.with(new DumpAnimationStateHandler("show")).handleChangesOf(showAnimation);
+			animationHandlerManager.with(new DumpAnimationStateHandler("hide")).handleChangesOf(hideAnimation);
 
 		}
 
@@ -232,15 +232,12 @@ public class Example2 extends Java2dDesktopApplication {
 
 			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
 
-				// switch animations
-
 				if (currentAnimation == showAnimation)
 					currentAnimation = hideAnimation;
 				else
 					currentAnimation = showAnimation;
 
 				currentAnimation.restart();
-				// animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(currentAnimation);
 			}
 
 			animationHandlerManager.checkAnimationChanges();
