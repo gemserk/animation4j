@@ -54,6 +54,7 @@
 							<artifacts>
 								<artifact>
 									<file>${project.build.directory}/animation4j-examples-${project.version}-jar-with-dependencies.jar</file>
+									<alternativeFileName>animation4j-examples-runnable.jar</alternativeFileName>
 									<description>Latest runnable jar with examples of animation4j
 										library </description>
 									<override>true</override>
