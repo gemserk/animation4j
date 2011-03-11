@@ -8,7 +8,7 @@ import org.junit.Test;
 import com.gemserk.animation4j.Animation;
 import com.gemserk.animation4j.MockAnimation;
 import com.gemserk.animation4j.event.AnimationHandlerManager;
-import com.gemserk.animation4j.event.AnimationMonitorImpl;
+import com.gemserk.animation4j.event.AnimationMonitor;
 
 public class AnimationHandlerManagerTest {
 
@@ -22,7 +22,7 @@ public class AnimationHandlerManagerTest {
 			}
 		};
 
-		AnimationMonitorImpl animationMonitor = new AnimationMonitorImpl(animation);
+		AnimationMonitor animationMonitor = new AnimationMonitor(animation);
 
 		AnimationHandlerManager animationHandlerManager = new AnimationHandlerManager();
 		animationHandlerManager.handleAnimationChanges(animationMonitor);
@@ -44,7 +44,7 @@ public class AnimationHandlerManagerTest {
 			}
 		};
 
-		AnimationMonitorImpl animationMonitor = new AnimationMonitorImpl(animation);
+		AnimationMonitor animationMonitor = new AnimationMonitor(animation);
 
 		AnimationHandlerManager animationHandlerManager = new AnimationHandlerManager();
 		animationHandlerManager.handleAnimationChanges(animationMonitor);

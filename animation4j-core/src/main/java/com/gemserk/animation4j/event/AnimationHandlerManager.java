@@ -18,13 +18,13 @@ public class AnimationHandlerManager {
 		}
 		
 		public Action handleChangesOf(Animation animation) {
-			animationHandlerManager.handleAnimationChanges(new AnimationMonitorImpl(animation, animationEventHandler));
+			animationHandlerManager.handleAnimationChanges(new AnimationMonitor(animation, animationEventHandler));
 			return this;
 		}
 		
 	}
 
-	ArrayList<AnimationMonitorImpl> animationMonitors = new ArrayList<AnimationMonitorImpl>();
+	ArrayList<AnimationMonitor> animationMonitors = new ArrayList<AnimationMonitor>();
 
 	public void checkAnimationChanges() {
 		for (int i = 0; i < animationMonitors.size(); i++)
@@ -33,9 +33,9 @@ public class AnimationHandlerManager {
 		animationMonitorsToRemove.clear();
 	}
 
-	ArrayList<AnimationMonitorImpl> animationMonitorsToRemove = new ArrayList<AnimationMonitorImpl>();
+	ArrayList<AnimationMonitor> animationMonitorsToRemove = new ArrayList<AnimationMonitor>();
 
-	public void handleAnimationChanges(final AnimationMonitorImpl animationMonitor) {
+	public void handleAnimationChanges(final AnimationMonitor animationMonitor) {
 		animationMonitors.add(animationMonitor);
 		// Not sure about this yet... 
 		animationMonitor.addAnimationHandler(new AnimationEventHandler() {
