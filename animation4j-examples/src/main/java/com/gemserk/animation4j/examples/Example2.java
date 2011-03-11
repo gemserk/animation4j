@@ -1,5 +1,6 @@
 package com.gemserk.animation4j.examples;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -12,6 +13,8 @@ import java.awt.geom.Point2D;
 import javax.swing.JEditorPane;
 
 import com.gemserk.animation4j.Animation;
+import com.gemserk.animation4j.event.AnimationEvent;
+import com.gemserk.animation4j.event.AnimationEventHandler;
 import com.gemserk.animation4j.event.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
@@ -145,11 +148,9 @@ public class Example2 extends Java2dDesktopApplication {
 
 			resourceManager.add("Globe", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("globe-256x176.png")))));
 			resourceManager.add("House", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("house-128x92.png")))));
-			resourceManager.add("Text", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("text-256x184.png")))));
 
 			globeImageResource = resourceManager.get("Globe");
 			houseImageResource = resourceManager.get("House");
-			textImageResource = resourceManager.get("Text");
 
 			element.position = new Point(100, 100);
 			element.alpha = 0f;
@@ -162,7 +163,7 @@ public class Example2 extends Java2dDesktopApplication {
 
 			showAnimation = new SynchrnonizedAnimation(new TimelineAnimationBuilder() {
 				{
-					speed(1f);
+					speed(1.5f);
 					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 260), new Point2DInterpolator(InterpolatorFunctionFactory.easeIn())) //
 							.keyFrame(1000, new Point(320, 220)));
 					value("alpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f, new FloatInterpolator(InterpolatorFunctionFactory.easeOut())).keyFrame(1000, 1f));
@@ -175,7 +176,7 @@ public class Example2 extends Java2dDesktopApplication {
 
 			hideAnimation = new SynchrnonizedAnimation(new TimelineAnimationBuilder() {
 				{
-					speed(1f);
+					speed(2f);
 					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 220)));
 					value("alpha", new TimelineValueBuilder<Float>().keyFrame(0, 1f).keyFrame(500, 1f, new FloatInterpolator(InterpolatorFunctionFactory.easeOut())).keyFrame(1000, 0f));
 					value("textAlpha", new TimelineValueBuilder<Float>().keyFrame(0, 1f, new FloatInterpolator(InterpolatorFunctionFactory.easeOut())) //
@@ -198,6 +199,36 @@ public class Example2 extends Java2dDesktopApplication {
 				setOpaque(false);
 			}};
 			
+			textPane = new JEditorPane("text/html", "") {{ 
+				setSize(226, 156);
+				setEditable(false);
+				setOpaque(false);
+			}};
+			
+			texts = new String[] {"<div>We need help! The enemies are near, we cannot let them conquer our lands</div>", 
+					"<div>Now is the time, gather your forces and prepare for the battle!</div>", 
+					"<div>People <strong>trust</strong> in you!</div>", 
+					"<div>You are our last hope!</div>"};
+			
+			currentText = 0;
+			
+			animationHandlerManager.with(new AnimationEventHandler(){
+				
+				@Override
+				public void onAnimationStarted(AnimationEvent e) {
+					textPane.setText(texts[currentText]);
+				}
+				
+				@Override
+				public void onAnimationFinished(AnimationEvent e) {
+					currentText++;
+					if (currentText < texts.length)
+						return;
+					currentText = 0;
+				}
+				
+			}).handleChangesOf(showAnimation);
+			
 		}
 
 		@Inject
@@ -214,11 +245,15 @@ public class Example2 extends Java2dDesktopApplication {
 
 		private Animation currentAnimation;
 
-		private Resource<Image> textImageResource;
-
 		private TimelineSynchronizer timelineSynchronizer;
 
 		private JEditorPane creditsPane;
+
+		private JEditorPane textPane;
+
+		private int currentText;
+
+		private String[] texts;
 
 		@Override
 		public void render(Graphics2D graphics) {
@@ -226,20 +261,30 @@ public class Example2 extends Java2dDesktopApplication {
 			graphics.clearRect(0, 0, 800, 600);
 
 			currentGraphicsProvider.setGraphics(graphics);
-
-			Point2D position = element.position;
-
-			java2dRenderer.render(new Java2dImageRenderObject(1, houseImageResource.get(), 320, 340, 1, 1, 0f));
-			java2dRenderer.render(new Java2dImageRenderObject(1, globeImageResource.get(), (float) position.getX(), (float) position.getY(), 1, 1, 0f, new Color(1f, 1f, 1f, element.alpha)));
-			java2dRenderer.render(new Java2dImageRenderObject(1, textImageResource.get(), (float) position.getX() + 10, (float) position.getY() + 10, 1, 1, 0f, new Color(1f, 1f, 1f, element.textAlpha)));
-
+			
 			graphics.setColor(Color.white);
 			graphics.drawString("Press Enter to go on with the animation.", 20, 50);
 			
 			AffineTransform previousTransform = graphics.getTransform();
 			
 			graphics.translate(20, 400);
+			
+			// graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, element.textAlpha));
 			creditsPane.paint(graphics);
+			
+			graphics.setTransform(previousTransform);
+
+			Point2D position = element.position;
+			
+			java2dRenderer.render(new Java2dImageRenderObject(1, houseImageResource.get(), 320, 340, 1, 1, 0f));
+			java2dRenderer.render(new Java2dImageRenderObject(1, globeImageResource.get(), (float) position.getX(), (float) position.getY(), 1, 1, 0f, new Color(1f, 1f, 1f, element.alpha)));
+			
+			previousTransform = graphics.getTransform();
+			
+			graphics.translate( position.getX() + 10 - 110, position.getY() + 10 - 70);
+			
+			graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, element.textAlpha));
+			textPane.paint(graphics);
 			
 			graphics.setTransform(previousTransform);
 			
