@@ -37,7 +37,7 @@ public class TimelineSynchronizerIteratorTest {
 			}
 		});
 		
-		TimelineSynchronizerIteratorImpl timelineSynchronizerIterator = new TimelineSynchronizerIteratorImpl(timeline);
+		TimelineSynchronizerIterator timelineSynchronizerIterator = new TimelineSynchronizerIterator(timeline);
 		
 		assertFalse(timelineSynchronizerIterator.hasNext());
 		
@@ -58,7 +58,7 @@ public class TimelineSynchronizerIteratorTest {
 			}
 		});
 		
-		TimelineSynchronizerIteratorImpl timelineSynchronizerIterator = new TimelineSynchronizerIteratorImpl(timeline);
+		TimelineSynchronizerIterator timelineSynchronizerIterator = new TimelineSynchronizerIterator(timeline);
 		
 		assertTrue(timelineSynchronizerIterator.hasNext());
 		
@@ -84,7 +84,7 @@ public class TimelineSynchronizerIteratorTest {
 			}
 		});
 		
-		TimelineSynchronizerIteratorImpl timelineSynchronizerIterator = new TimelineSynchronizerIteratorImpl(timeline);
+		TimelineSynchronizerIterator timelineSynchronizerIterator = new TimelineSynchronizerIterator(timeline);
 		
 		assertTrue(timelineSynchronizerIterator.hasNext());
 		TimelineValue<Object> currentElement = timelineSynchronizerIterator.next();

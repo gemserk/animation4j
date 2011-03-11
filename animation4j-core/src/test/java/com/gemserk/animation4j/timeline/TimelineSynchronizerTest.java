@@ -24,7 +24,7 @@ public class TimelineSynchronizerTest {
 	@SuppressWarnings("rawtypes")
 	public void shouldGetValuesFromIteratorAndSetToObject() {
 		
-		final TimelineSynchronizerIteratorImpl timelineSynchronizerIterator = mockery.mock(TimelineSynchronizerIteratorImpl.class);
+		final TimelineSynchronizerIterator timelineSynchronizerIterator = mockery.mock(TimelineSynchronizerIterator.class);
 		final TimelineValue timelineValue = mockery.mock(TimelineValue.class);
 		final ObjectSynchronizer objectSynchronizer = mockery.mock(ObjectSynchronizer.class);
 		
