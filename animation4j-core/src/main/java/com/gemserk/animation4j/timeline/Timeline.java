@@ -33,7 +33,7 @@ public class Timeline {
 		return timelineValues;
 	}
 	
-	public TimelineSynchronizerIterator getIterator() {
-		return new TimelineSynchronizerIterator(this);
+	public TimelineIterator getIterator() {
+		return new TimelineIterator(this);
 	}
 }

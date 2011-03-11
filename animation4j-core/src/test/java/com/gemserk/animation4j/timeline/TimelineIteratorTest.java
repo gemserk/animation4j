@@ -16,7 +16,8 @@ import org.junit.runner.RunWith;
 
 
 @RunWith(JMock.class)
-public class TimelineSynchronizerIteratorTest {
+@SuppressWarnings("rawtypes")
+public class TimelineIteratorTest {
 
 	Mockery mockery = new Mockery() {
 		{
@@ -37,9 +38,9 @@ public class TimelineSynchronizerIteratorTest {
 			}
 		});
 		
-		TimelineSynchronizerIterator timelineSynchronizerIterator = new TimelineSynchronizerIterator(timeline);
+		TimelineIterator timelineIterator = new TimelineIterator(timeline);
 		
-		assertFalse(timelineSynchronizerIterator.hasNext());
+		assertFalse(timelineIterator.hasNext());
 		
 	}
 	
@@ -58,9 +59,9 @@ public class TimelineSynchronizerIteratorTest {
 			}
 		});
 		
-		TimelineSynchronizerIterator timelineSynchronizerIterator = new TimelineSynchronizerIterator(timeline);
+		TimelineIterator timelineIterator = new TimelineIterator(timeline);
 		
-		assertTrue(timelineSynchronizerIterator.hasNext());
+		assertTrue(timelineIterator.hasNext());
 		
 	}
 	
@@ -84,22 +85,22 @@ public class TimelineSynchronizerIteratorTest {
 			}
 		});
 		
-		TimelineSynchronizerIterator timelineSynchronizerIterator = new TimelineSynchronizerIterator(timeline);
+		TimelineIterator timelineIterator = new TimelineIterator(timeline);
 		
-		assertTrue(timelineSynchronizerIterator.hasNext());
-		TimelineValue<Object> currentElement = timelineSynchronizerIterator.next();
+		assertTrue(timelineIterator.hasNext());
+		TimelineValue<Object> currentElement = timelineIterator.next();
 		
 		assertThat(currentElement, IsNull.notNullValue());
 		assertThat(currentElement, AnyOf.anyOf(IsSame.sameInstance(firstTimelineValue), IsSame.sameInstance(secondTimelineValue)));
 		
-		assertTrue(timelineSynchronizerIterator.hasNext());
+		assertTrue(timelineIterator.hasNext());
 
-		currentElement = timelineSynchronizerIterator.next();
+		currentElement = timelineIterator.next();
 		
 		assertThat(currentElement, IsNull.notNullValue());
 		assertThat(currentElement, AnyOf.anyOf(IsSame.sameInstance(firstTimelineValue), IsSame.sameInstance(secondTimelineValue)));
 		
-		assertFalse(timelineSynchronizerIterator.hasNext());
+		assertFalse(timelineIterator.hasNext());
 		
 	}
 	

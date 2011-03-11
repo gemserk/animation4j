@@ -24,16 +24,16 @@ public class TimelineSynchronizerTest {
 	@SuppressWarnings("rawtypes")
 	public void shouldGetValuesFromIteratorAndSetToObject() {
 		
-		final TimelineSynchronizerIterator timelineSynchronizerIterator = mockery.mock(TimelineSynchronizerIterator.class);
+		final TimelineIterator timelineIterator = mockery.mock(TimelineIterator.class);
 		final TimelineValue timelineValue = mockery.mock(TimelineValue.class);
 		final ObjectSynchronizer objectSynchronizer = mockery.mock(ObjectSynchronizer.class);
 		
 		mockery.checking(new Expectations() {
 			{
-				oneOf(timelineSynchronizerIterator).hasNext();
+				oneOf(timelineIterator).hasNext();
 				will(returnValue(true));
 				
-				oneOf(timelineSynchronizerIterator).next();
+				oneOf(timelineIterator).next();
 				will(returnValue(timelineValue));
 				
 				oneOf(timelineValue).getName();
@@ -44,14 +44,14 @@ public class TimelineSynchronizerTest {
 				
 				oneOf(objectSynchronizer).setValue("x", 100f);
 				
-				oneOf(timelineSynchronizerIterator).hasNext();
+				oneOf(timelineIterator).hasNext();
 				will(returnValue(false));
 			}
 		});
 		
 		TimelineSynchronizer timelineSynchronizer = new TimelineSynchronizer(objectSynchronizer);
 		
-		timelineSynchronizer.syncrhonize(timelineSynchronizerIterator,  10);
+		timelineSynchronizer.syncrhonize(timelineIterator,  10);
 		
 	}
 	

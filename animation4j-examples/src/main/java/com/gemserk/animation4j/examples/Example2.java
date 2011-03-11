@@ -16,7 +16,7 @@ import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineSynchronizer;
-import com.gemserk.animation4j.timeline.TimelineSynchronizerIterator;
+import com.gemserk.animation4j.timeline.TimelineIterator;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
 import com.gemserk.animation4j.timeline.sync.ObjectSynchronizer;
 import com.gemserk.animation4j.timeline.sync.ReflectionObjectSynchronizer;
@@ -231,7 +231,7 @@ public class Example2 extends Java2dDesktopApplication {
 
 			// use the timeline synchronizer to synchronize with the object values with the timeline values
 
-			TimelineSynchronizerIterator iterator = currentAnimation.getTimeline().getIterator();
+			TimelineIterator iterator = currentAnimation.getTimeline().getIterator();
 			float currentTime = currentAnimation.getCurrentTime();
 			
 			timelineSynchronizer.syncrhonize(iterator, currentTime);

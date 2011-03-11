@@ -3,13 +3,13 @@ package com.gemserk.animation4j.timeline;
 import java.util.Iterator;
 
 @SuppressWarnings("rawtypes")
-public class TimelineSynchronizerIterator implements Iterator<TimelineValue> {
+public class TimelineIterator implements Iterator<TimelineValue> {
 
 	private final Timeline timeline;
 	
 	private Iterator<String> iterator;
 
-	public TimelineSynchronizerIterator(Timeline timeline) {
+	public TimelineIterator(Timeline timeline) {
 		this.timeline = timeline;
 		iterator = timeline.getTimelineValues().keySet().iterator();
 	}
