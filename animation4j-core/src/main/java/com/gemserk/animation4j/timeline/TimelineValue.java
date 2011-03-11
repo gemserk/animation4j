@@ -6,7 +6,12 @@ import java.util.LinkedList;
 import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.interpolator.NullInterpolator;
 
-@SuppressWarnings("rawtypes")
+/**
+ * Represents all the progress of a value inside a time line.
+ * @author acoppes
+ *
+ * @param <T> The type of the value.
+ */
 public class TimelineValue<T> {
 
 	/**
@@ -14,6 +19,7 @@ public class TimelineValue<T> {
 	 * 
 	 * @author acoppes
 	 */
+	@SuppressWarnings("rawtypes")
 	static class KeyFrameComparator implements Comparator<TimelineValue.KeyFrame> {
 		@Override
 		public int compare(TimelineValue.KeyFrame o1, TimelineValue.KeyFrame o2) {

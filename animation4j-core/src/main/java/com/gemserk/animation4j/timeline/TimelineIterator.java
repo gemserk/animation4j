@@ -2,8 +2,11 @@ package com.gemserk.animation4j.timeline;
 
 import java.util.Iterator;
 
-@SuppressWarnings("rawtypes")
-public class TimelineIterator implements Iterator<TimelineValue> {
+/**
+ * Provides a way to iterate through items of a time line.
+ * @author acoppes
+ */
+public class TimelineIterator implements Iterator<TimelineValue<Object>> {
 
 	private final Timeline timeline;
 	
@@ -14,8 +17,9 @@ public class TimelineIterator implements Iterator<TimelineValue> {
 		iterator = timeline.getTimelineValues().keySet().iterator();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public TimelineValue next() {
+	public TimelineValue<Object> next() {
 		return timeline.getTimelineValues().get(iterator.next());
 	}
 
@@ -26,7 +30,7 @@ public class TimelineIterator implements Iterator<TimelineValue> {
 
 	@Override
 	public void remove() {
-		throw new RuntimeException("not implemented yet");
+		throw new RuntimeException("not implemented yet, dunno if we should let remove items from a time line");
 	}
 	
 }
