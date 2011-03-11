@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.gemserk.animation4j</groupId>
@@ -10,7 +11,56 @@
 	<name>Core module of Animations project</name>
 	<version>0.0.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	
+
+	<profiles>
+		<profile>
+			<id>github</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.github.maven.plugin</groupId>
+						<artifactId>maven-github-plugin</artifactId>
+						<version>1.0-SNAPSHOT</version>
+						<configuration>
+							<alternativeLogin>gemserk</alternativeLogin>
+							<repository>animation4j</repository>
+							<artifacts>
+								<artifact>
+									<file>${project.build.directory}/${project.artifactId}-${project.version}.jar</file>
+									<description>Core module of animation4j library.</description>
+									<override>true</override>
+								</artifact>
+								<artifact>
+									<file>${project.build.directory}/${project.artifactId}-${project.version}-javadoc.jar</file>
+									<description>Javadoc of core module of animation4j library.</description>
+									<override>true</override>
+								</artifact>
+								<artifact>
+									<file>${project.build.directory}/${project.artifactId}-${project.version}-sources.jar</file>
+									<description>Sources of core module of animation4j library.</description>
+									<override>true</override>
+								</artifact>
+							</artifacts>
+						</configuration>
+						<executions>
+							<execution>
+								<id>upload-artifacts</id>
+								<phase>install</phase>
+								<goals>
+									<goal>upload</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
