@@ -62,7 +62,7 @@ public class TimelineAnimationTest {
 		animation.resume();
 
 		assertFalse(animation.isStarted());
-		animation.update(100);
+		animation.update(101);
 		assertTrue(animation.isStarted());
 		animation.update(100);
 		assertTrue(animation.isFinished());
@@ -148,7 +148,7 @@ public class TimelineAnimationTest {
 
 		animation.start(2);
 		assertThat(animation.isStarted(), IsEqual.equalTo(false));
-		animation.update(100);
+		animation.update(101);
 		assertThat(animation.isStarted(), IsEqual.equalTo(true));
 		animation.update(101);
 		assertThat(animation.isStarted(), IsEqual.equalTo(true));

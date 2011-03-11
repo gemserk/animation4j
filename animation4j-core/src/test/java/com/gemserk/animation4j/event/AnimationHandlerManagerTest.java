@@ -7,12 +7,10 @@ import org.junit.Test;
 
 import com.gemserk.animation4j.Animation;
 import com.gemserk.animation4j.MockAnimation;
-import com.gemserk.animation4j.event.AnimationHandlerManager;
-import com.gemserk.animation4j.event.AnimationMonitor;
 
 public class AnimationHandlerManagerTest {
 
-	@Test
+	@Deprecated
 	public void shouldRemoveMonitoredAnimationIfFinished() {
 
 		Animation animation = new MockAnimation() {

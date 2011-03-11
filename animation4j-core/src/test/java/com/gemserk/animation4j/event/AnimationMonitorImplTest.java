@@ -245,4 +245,62 @@ public class AnimationMonitorImplTest {
 		assertEquals(false, animationEventHandler.onIterationChangedCalled);
 
 	}
+	
+	@Test
+	public void shouldCallStartAgainIfAnimationRestarted() {
+
+		MockAnimation animation = new MockAnimation() {
+			{
+				setStarted(false);
+				setFinished(false);
+				setIteration(1);
+			}
+		};
+
+		MockAnimationEventHandler animationEventHandler = new MockAnimationEventHandler();
+
+		AnimationMonitor animationMonitor = new AnimationMonitor(animation);
+		animationMonitor.addAnimationHandler(animationEventHandler);
+		animationMonitor.checkAnimationChanges(null);
+
+		assertEquals(false, animationEventHandler.onStartCalled);
+		assertEquals(false, animationEventHandler.onFinishCalled);
+		
+		animation.setStarted(true);
+		animationEventHandler.reset();
+		animationMonitor.checkAnimationChanges(null);
+
+		assertEquals(true, animationEventHandler.onStartCalled);
+		assertEquals(false, animationEventHandler.onFinishCalled);
+
+		animation.setFinished(true);
+		animationEventHandler.reset();
+		animationMonitor.checkAnimationChanges(null);
+
+		assertEquals(false, animationEventHandler.onStartCalled);
+		assertEquals(true, animationEventHandler.onFinishCalled);
+		
+		animation.restart();
+		animationEventHandler.reset();
+		animationMonitor.checkAnimationChanges(null);
+
+		assertEquals(false, animationEventHandler.onStartCalled);
+		assertEquals(false, animationEventHandler.onFinishCalled);
+		
+		animation.setStarted(true);
+		animationEventHandler.reset();
+		animationMonitor.checkAnimationChanges(null);
+
+		assertEquals(true, animationEventHandler.onStartCalled);
+		assertEquals(false, animationEventHandler.onFinishCalled);
+
+		animation.setFinished(true);
+		animationEventHandler.reset();
+		animationMonitor.checkAnimationChanges(null);
+
+		assertEquals(false, animationEventHandler.onStartCalled);
+		assertEquals(true, animationEventHandler.onFinishCalled);
+
+
+	}
 }
