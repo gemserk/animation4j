@@ -49,9 +49,9 @@ public class TimelineSynchronizerTest {
 			}
 		});
 		
-		TimelineSynchronizer timelineSynchronizer = new TimelineSynchronizer(timelineSynchronizerIterator, objectSynchronizer);
+		TimelineSynchronizer timelineSynchronizer = new TimelineSynchronizer();
 		
-		timelineSynchronizer.syncrhonize(10);
+		timelineSynchronizer.syncrhonize(timelineSynchronizerIterator, objectSynchronizer, 10);
 		
 	}
 	
