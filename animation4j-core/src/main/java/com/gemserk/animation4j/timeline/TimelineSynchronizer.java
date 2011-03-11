@@ -4,11 +4,17 @@ import com.gemserk.animation4j.timeline.sync.ObjectSynchronizer;
 
 public class TimelineSynchronizer {
 	
+	private final ObjectSynchronizer objectSynchronizer;
+
+	public TimelineSynchronizer(ObjectSynchronizer objectSynchronizer) {
+		this.objectSynchronizer = objectSynchronizer;
+	}
+	
 	/**
 	 * Synchronizes the values of the time line with the current object. 
 	 * @param time
 	 */
-	public void syncrhonize(TimelineSynchronizerIterator timelineSynchronizerIterator, ObjectSynchronizer objectSynchronizer, float time) {
+	public void syncrhonize(TimelineSynchronizerIterator timelineSynchronizerIterator, float time) {
 		while(timelineSynchronizerIterator.hasNext()) {
 			TimelineValue<Object> timelineValue = timelineSynchronizerIterator.next();
 			String name = timelineValue.getName();

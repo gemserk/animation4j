@@ -2,6 +2,11 @@ package com.gemserk.animation4j.timeline.sync;
 
 import org.apache.commons.beanutils.BeanUtils;
 
+/**
+ * ObjectSynchronizer implementation using reflection to set the values to an object fields.
+ * 
+ * @author acoppes
+ */
 public class ReflectionObjectSynchronizer implements ObjectSynchronizer {
 
 	private final Object object;

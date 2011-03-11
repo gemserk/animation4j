@@ -4,6 +4,10 @@ import com.gemserk.animation4j.timeline.sync.ObjectSynchronizer;
 import com.gemserk.componentsengine.properties.PropertiesHolder;
 import com.gemserk.componentsengine.properties.Property;
 
+/**
+ * PropertiesHolder implementation of the ObjectSynchronier, setting values to the PropetiesHolder properties.
+ * @author acoppes
+ */
 public class PropertiesHolderSynchronizer implements ObjectSynchronizer {
 
 	private final PropertiesHolder propertiesHolder;

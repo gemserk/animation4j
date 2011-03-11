@@ -18,6 +18,7 @@ import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineSynchronizer;
 import com.gemserk.animation4j.timeline.TimelineSynchronizerIteratorImpl;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
+import com.gemserk.animation4j.timeline.sync.ObjectSynchronizer;
 import com.gemserk.animation4j.timeline.sync.ReflectionObjectSynchronizer;
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
 import com.gemserk.componentsengine.java2d.Java2dGame;
@@ -180,10 +181,10 @@ public class Example2 extends Java2dDesktopApplication {
 
 			animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(currentAnimation);
 
-			// create the synchronizers 
+			// create the synchronizers
 			
-			objectSynchronizer = new ReflectionObjectSynchronizer(element);
-			timelineSynchronizer = new TimelineSynchronizer();
+			ObjectSynchronizer objectSynchronizer = new ReflectionObjectSynchronizer(element);
+			timelineSynchronizer = new TimelineSynchronizer(objectSynchronizer);
 
 		}
 
@@ -202,8 +203,6 @@ public class Example2 extends Java2dDesktopApplication {
 		private TimelineAnimation currentAnimation;
 
 		private Resource<Image> textImageResource;
-
-		private ReflectionObjectSynchronizer objectSynchronizer;
 
 		private TimelineSynchronizer timelineSynchronizer;
 
@@ -233,9 +232,8 @@ public class Example2 extends Java2dDesktopApplication {
 			TimelineSynchronizerIteratorImpl iterator = new TimelineSynchronizerIteratorImpl(currentAnimation.getTimeline());
 
 			// use the timeline synchronizer to synchronize with the object values with the timeline values
-			
-			timelineSynchronizer.syncrhonize(iterator,
-					objectSynchronizer, currentAnimation.getCurrentTime());
+
+			timelineSynchronizer.syncrhonize(iterator, currentAnimation.getCurrentTime());
 
 			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
 
