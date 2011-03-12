@@ -1,6 +1,6 @@
 package com.gemserk.animation4j.transitions;
 
-import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
+import com.gemserk.animation4j.interpolator.FloatInterpolator;
 
 /**
  * Implementation of a transition of a float based on <a href="http://www.w3.org/TR/2009/WD-css3-transitions-20090320/">CSS3 transitions spec</a>.
@@ -8,8 +8,6 @@ import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
  */
 public class FloatTransition {
 
-	private final InterpolatorFunction interpolatorFunction;
-	
 	private float startValue;
 
 	private float desiredValue;
@@ -20,10 +18,12 @@ public class FloatTransition {
 
 	private float currentValue;
 
-	public FloatTransition(float startValue, InterpolatorFunction interpolatorFunction) {
+	private FloatInterpolator floatInterpolator;
+
+	public FloatTransition(float startValue, FloatInterpolator floatInterpolator) {
 		this.startValue = startValue;
-		this.interpolatorFunction = interpolatorFunction;
 		this.currentValue = startValue;
+		this.floatInterpolator = floatInterpolator;
 	}
 
 	public float getValue() {
@@ -58,7 +58,7 @@ public class FloatTransition {
 		
 		float alpha = (float) currentTime / (float) totalTime;
 		
-		currentValue = startValue + (desiredValue - startValue) * interpolatorFunction.interpolate(alpha);
+		currentValue = floatInterpolator.interpolate(startValue, desiredValue, alpha);
 		
 	}
 
