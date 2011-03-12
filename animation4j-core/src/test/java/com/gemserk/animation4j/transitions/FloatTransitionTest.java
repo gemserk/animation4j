@@ -86,5 +86,31 @@ public class FloatTransitionTest {
 		floatTransition.update(1001);
 		assertThat(floatTransition.getValue(), IsEqual.equalTo(200f));
 	}
+	
+	@Test
+	public void shouldInterpolateBetweenCurrentValueAndDesiredValueOnSet() {
+		float initialValue = 100f;
+		final InterpolatorFunction interpolatorFunction = mockery.mock(InterpolatorFunction.class);
+
+		mockery.checking(new Expectations() {
+			{
+				oneOf(interpolatorFunction).interpolate(0.5f);
+				will(returnValue(0.5f));
+				oneOf(interpolatorFunction).interpolate(0.5f);
+				will(returnValue(0.5f));
+			}
+		});
+
+		FloatTransition floatTransition = new FloatTransition(initialValue, interpolatorFunction);
+		floatTransition.set(200f, 1000);
+		floatTransition.update(500);
+		assertThat(floatTransition.getValue(), IsEqual.equalTo(150f));
+		
+		floatTransition.set(300f, 1000);
+		assertThat(floatTransition.getValue(), IsEqual.equalTo(150f));
+		
+		floatTransition.update(500);
+		assertThat(floatTransition.getValue(), IsEqual.equalTo(225f));
+	}
 
 }

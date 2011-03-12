@@ -38,6 +38,7 @@ public class FloatTransition {
 	public void set(float desiredValue, int time) {
 		this.desiredValue = desiredValue;
 		this.totalTime = time;
+		this.startValue = currentValue;
 		this.currentTime = 0;
 	}
 
