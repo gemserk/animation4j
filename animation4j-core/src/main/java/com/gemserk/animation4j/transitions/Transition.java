@@ -6,27 +6,27 @@ import com.gemserk.animation4j.interpolator.Interpolator;
  * Implementation of a transition of a float based on <a href="http://www.w3.org/TR/2009/WD-css3-transitions-20090320/">CSS3 transitions spec</a>.
  * @author acoppes
  */
-public class Transition {
+public class Transition<T> {
 
-	private float startValue;
+	private T startValue;
 
-	private float desiredValue;
+	private T desiredValue;
 
 	private int totalTime;
 
 	private int currentTime;
 
-	private float currentValue;
+	private T currentValue;
 
-	private Interpolator<Float> floatInterpolator;
+	private Interpolator<T> floatInterpolator;
 
-	public Transition(float startValue, Interpolator<Float> floatInterpolator) {
+	public Transition(T startValue, Interpolator<T> floatInterpolator) {
 		this.startValue = startValue;
 		this.currentValue = startValue;
 		this.floatInterpolator = floatInterpolator;
 	}
 
-	public float getValue() {
+	public T getValue() {
 		return currentValue;
 	}
 
@@ -35,7 +35,7 @@ public class Transition {
 	 * @param desiredValue - The wanted new value.
 	 * @param time - The time to set the new value.
 	 */
-	public void set(float desiredValue, int time) {
+	public void set(T desiredValue, int time) {
 		this.desiredValue = desiredValue;
 		this.totalTime = time;
 		this.startValue = currentValue;
