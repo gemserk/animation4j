@@ -14,7 +14,7 @@ import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
 
 @RunWith(JMock.class)
-public class FloatTransitionTest {
+public class TransitionTest {
 
 	Mockery mockery = new Mockery() {
 		{
@@ -26,8 +26,8 @@ public class FloatTransitionTest {
 	public void shouldReturnInitialWhenCreatedAndNotUpdated() {
 		float initialValue = 100f;
 		InterpolatorFunction interpolatorFunction = mockery.mock(InterpolatorFunction.class);
-		FloatTransition floatTransition = new FloatTransition(initialValue, new FloatInterpolator(interpolatorFunction));
-		float value = floatTransition.getValue();
+		Transition transition = new Transition(initialValue, new FloatInterpolator(interpolatorFunction));
+		float value = transition.getValue();
 		assertThat(value, IsEqual.equalTo(initialValue));
 	}
 
@@ -35,11 +35,11 @@ public class FloatTransitionTest {
 	public void shouldNotModifyValueWhenSetIfNotUpdateCalled() {
 		float initialValue = 100f;
 		InterpolatorFunction interpolatorFunction = mockery.mock(InterpolatorFunction.class);
-		FloatTransition floatTransition = new FloatTransition(initialValue, new FloatInterpolator(interpolatorFunction));
+		Transition transition = new Transition(initialValue, new FloatInterpolator(interpolatorFunction));
 		float newValue = 200f;
 		int time = 1000;
-		floatTransition.set(newValue, time);
-		float value = floatTransition.getValue();
+		transition.set(newValue, time);
+		float value = transition.getValue();
 		assertThat(value, IsEqual.equalTo(initialValue));
 	}
 
@@ -58,13 +58,13 @@ public class FloatTransitionTest {
 			}
 		});
 
-		FloatTransition floatTransition = new FloatTransition(initialValue, new FloatInterpolator(interpolatorFunction));
-		floatTransition.set(200f, 1000);
-		floatTransition.update(250);
-		assertThat(floatTransition.getValue(), IsEqual.equalTo(125f));
+		Transition transition = new Transition(initialValue, new FloatInterpolator(interpolatorFunction));
+		transition.set(200f, 1000);
+		transition.update(250);
+		assertThat(transition.getValue(), IsEqual.equalTo(125f));
 
-		floatTransition.update(250);
-		assertThat(floatTransition.getValue(), IsEqual.equalTo(150f));
+		transition.update(250);
+		assertThat(transition.getValue(), IsEqual.equalTo(150f));
 	}
 	
 	@Test
@@ -79,13 +79,13 @@ public class FloatTransitionTest {
 			}
 		});
 
-		FloatTransition floatTransition = new FloatTransition(initialValue, new FloatInterpolator(interpolatorFunction));
-		floatTransition.set(200f, 1000);
-		floatTransition.update(1001);
-		assertThat(floatTransition.getValue(), IsEqual.equalTo(200f));
+		Transition transition = new Transition(initialValue, new FloatInterpolator(interpolatorFunction));
+		transition.set(200f, 1000);
+		transition.update(1001);
+		assertThat(transition.getValue(), IsEqual.equalTo(200f));
 		
-		floatTransition.update(1001);
-		assertThat(floatTransition.getValue(), IsEqual.equalTo(200f));
+		transition.update(1001);
+		assertThat(transition.getValue(), IsEqual.equalTo(200f));
 	}
 	
 	@Test
@@ -102,16 +102,16 @@ public class FloatTransitionTest {
 			}
 		});
 
-		FloatTransition floatTransition = new FloatTransition(initialValue, new FloatInterpolator(interpolatorFunction));
-		floatTransition.set(200f, 1000);
-		floatTransition.update(500);
-		assertThat(floatTransition.getValue(), IsEqual.equalTo(150f));
+		Transition transition = new Transition(initialValue, new FloatInterpolator(interpolatorFunction));
+		transition.set(200f, 1000);
+		transition.update(500);
+		assertThat(transition.getValue(), IsEqual.equalTo(150f));
 		
-		floatTransition.set(300f, 1000);
-		assertThat(floatTransition.getValue(), IsEqual.equalTo(150f));
+		transition.set(300f, 1000);
+		assertThat(transition.getValue(), IsEqual.equalTo(150f));
 		
-		floatTransition.update(500);
-		assertThat(floatTransition.getValue(), IsEqual.equalTo(225f));
+		transition.update(500);
+		assertThat(transition.getValue(), IsEqual.equalTo(225f));
 	}
 
 }
