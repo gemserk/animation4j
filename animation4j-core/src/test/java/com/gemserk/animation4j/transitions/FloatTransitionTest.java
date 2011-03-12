@@ -20,7 +20,7 @@ public class FloatTransitionTest {
 			setImposteriser(ClassImposteriser.INSTANCE);
 		}
 	};
-	
+
 	@Test
 	public void shouldReturnInitialWhenCreatedAndNotUpdated() {
 		float initialValue = 100f;
@@ -41,24 +41,50 @@ public class FloatTransitionTest {
 		float value = floatTransition.getValue();
 		assertThat(value, IsEqual.equalTo(initialValue));
 	}
-	
+
 	@Test
 	public void shouldModifyValueUsingInterpolatorWhenUpdate() {
 		float initialValue = 100f;
 		final InterpolatorFunction interpolatorFunction = mockery.mock(InterpolatorFunction.class);
-		
+
 		mockery.checking(new Expectations() {
 			{
+				oneOf(interpolatorFunction).interpolate(0.25f);
+				will(returnValue(0.25f));
+				
 				oneOf(interpolatorFunction).interpolate(0.5f);
 				will(returnValue(0.5f));
 			}
 		});
-		
+
 		FloatTransition floatTransition = new FloatTransition(initialValue, interpolatorFunction);
 		floatTransition.set(200f, 1000);
-		floatTransition.update(500);
-		float value = floatTransition.getValue();
-		assertThat(value, IsEqual.equalTo(150f));
+		floatTransition.update(250);
+		assertThat(floatTransition.getValue(), IsEqual.equalTo(125f));
+
+		floatTransition.update(250);
+		assertThat(floatTransition.getValue(), IsEqual.equalTo(150f));
+	}
+	
+	@Test
+	public void shouldReturnNewValueWhenUpdateTimeGreaterThanTransitionTime() {
+		float initialValue = 100f;
+		final InterpolatorFunction interpolatorFunction = mockery.mock(InterpolatorFunction.class);
+
+		mockery.checking(new Expectations() {
+			{
+				oneOf(interpolatorFunction).interpolate(1f);
+				will(returnValue(1f));
+			}
+		});
+
+		FloatTransition floatTransition = new FloatTransition(initialValue, interpolatorFunction);
+		floatTransition.set(200f, 1000);
+		floatTransition.update(1001);
+		assertThat(floatTransition.getValue(), IsEqual.equalTo(200f));
+		
+		floatTransition.update(1001);
+		assertThat(floatTransition.getValue(), IsEqual.equalTo(200f));
 	}
 
 }

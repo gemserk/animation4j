@@ -47,7 +47,15 @@ public class FloatTransition {
 	 */
 	public void update(int time) {
 		
-		float alpha = (float) time / (float) totalTime;
+		if (currentTime == totalTime) 
+			return;
+		
+		currentTime += time;
+		
+		if (currentTime > totalTime) 
+			currentTime = totalTime;
+		
+		float alpha = (float) currentTime / (float) totalTime;
 		
 		currentValue = startValue + (desiredValue - startValue) * interpolatorFunction.interpolate(alpha);
 		
