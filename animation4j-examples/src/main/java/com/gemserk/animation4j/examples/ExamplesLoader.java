@@ -59,6 +59,7 @@ public class ExamplesLoader {
 		options = new Option[] { //
 				new Option("Example1", new Example1()), //
 				new Option("Example2", new Example2()), //
+				new Option("Example3", new Example3()), //
 		};
 
 		selectedOption = options[0];
