@@ -76,13 +76,17 @@ public class Example3 extends Java2dDesktopApplication {
 		@Override
 		public void init() {
 
-			resourceManager.add("Button", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("superbutton-148x139.png")))));
-			resourceManager.add("ButtonGlow", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("superbutton-glow-157x156.png")))));
+			resourceManager.add("House", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("house-128x92.png")))));
 
-			buttonImageResource = resourceManager.get("Button");
-			buttonGlowImageResource = resourceManager.get("ButtonGlow");
+			houseImageResource = resourceManager.get("House");
 
 			colorTransition = new Transition<Float>(0.3f, new FloatInterpolator(InterpolatorFunctionFactory.linear()));
+			
+			creditsPane = new JEditorPane("text/html", new FileHelper("license-lostgarden.html").read()) {{ 
+				setSize(600, 40);
+				setEditable(false);
+				setOpaque(false);
+			}};
 			
 			textPane = new JEditorPane("text/html", new FileHelper("example3.html").read()) {{ 
 				setSize(600, 240);
@@ -98,7 +102,7 @@ public class Example3 extends Java2dDesktopApplication {
 		@Inject
 		CurrentGraphicsProvider currentGraphicsProvider;
 
-		private Resource<Image> buttonGlowImageResource;
+		private Resource<Image> houseImageResource;
 
 		private Transition<Float> colorTransition;
 
@@ -111,19 +115,24 @@ public class Example3 extends Java2dDesktopApplication {
 
 			Color color = new Color(colorTransition.get(), colorTransition.get(), colorTransition.get(), 1f);
 
-			java2dRenderer.render(new Java2dImageRenderObject(1, buttonImageResource.get(), 320, 340, 1, 1, 0f));
-			java2dRenderer.render(new Java2dImageRenderObject(1, buttonGlowImageResource.get(), 320, 340, 1, 1, 0f, color));
+			java2dRenderer.render(new Java2dImageRenderObject(1, houseImageResource.get(), 320, 340, 1, 1, 0f, color));
 			
 			AffineTransform previousTransform = graphics.getTransform();
 			graphics.translate( 40, 20 );
 			textPane.paint(graphics);
 			graphics.setTransform(previousTransform);
-
+			
+			previousTransform = graphics.getTransform();
+			graphics.translate(20, 400);
+			creditsPane.paint(graphics);
+			graphics.setTransform(previousTransform);
 		}
 
 		boolean mouseInside = false;
 
 		private JEditorPane textPane;
+
+		private JEditorPane creditsPane;
 
 		@Override
 		public void update(int delta) {
