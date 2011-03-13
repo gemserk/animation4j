@@ -109,7 +109,7 @@ public class Example3 extends Java2dDesktopApplication {
 
 			currentGraphicsProvider.setGraphics(graphics);
 
-			Color color = new Color(colorTransition.getValue(), colorTransition.getValue(), colorTransition.getValue(), 1f);
+			Color color = new Color(colorTransition.get(), colorTransition.get(), colorTransition.get(), 1f);
 
 			java2dRenderer.render(new Java2dImageRenderObject(1, buttonImageResource.get(), 320, 340, 1, 1, 0f));
 			java2dRenderer.render(new Java2dImageRenderObject(1, buttonGlowImageResource.get(), 320, 340, 1, 1, 0f, color));

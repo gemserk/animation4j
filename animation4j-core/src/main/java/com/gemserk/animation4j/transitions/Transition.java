@@ -26,7 +26,7 @@ public class Transition<T> {
 		this.floatInterpolator = floatInterpolator;
 	}
 
-	public T getValue() {
+	public T get() {
 		return currentValue;
 	}
 

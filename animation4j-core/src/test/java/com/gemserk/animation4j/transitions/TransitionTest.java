@@ -27,7 +27,7 @@ public class TransitionTest {
 		float initialValue = 100f;
 		InterpolatorFunction interpolatorFunction = mockery.mock(InterpolatorFunction.class);
 		Transition<Float> transition = new Transition<Float>(initialValue, new FloatInterpolator(interpolatorFunction));
-		float value = transition.getValue();
+		float value = transition.get();
 		assertThat(value, IsEqual.equalTo(initialValue));
 	}
 
@@ -39,7 +39,7 @@ public class TransitionTest {
 		float newValue = 200f;
 		int time = 1000;
 		transition.set(newValue, time);
-		float value = transition.getValue();
+		float value = transition.get();
 		assertThat(value, IsEqual.equalTo(initialValue));
 	}
 
@@ -61,10 +61,10 @@ public class TransitionTest {
 		Transition<Float> transition = new Transition<Float>(initialValue, new FloatInterpolator(interpolatorFunction));
 		transition.set(200f, 1000);
 		transition.update(250);
-		assertThat(transition.getValue(), IsEqual.equalTo(125f));
+		assertThat(transition.get(), IsEqual.equalTo(125f));
 
 		transition.update(250);
-		assertThat(transition.getValue(), IsEqual.equalTo(150f));
+		assertThat(transition.get(), IsEqual.equalTo(150f));
 	}
 	
 	@Test
@@ -82,10 +82,10 @@ public class TransitionTest {
 		Transition<Float> transition = new Transition<Float>(initialValue, new FloatInterpolator(interpolatorFunction));
 		transition.set(200f, 1000);
 		transition.update(1001);
-		assertThat(transition.getValue(), IsEqual.equalTo(200f));
+		assertThat(transition.get(), IsEqual.equalTo(200f));
 		
 		transition.update(1001);
-		assertThat(transition.getValue(), IsEqual.equalTo(200f));
+		assertThat(transition.get(), IsEqual.equalTo(200f));
 	}
 	
 	@Test
@@ -105,13 +105,13 @@ public class TransitionTest {
 		Transition<Float> transition = new Transition<Float>(initialValue, new FloatInterpolator(interpolatorFunction));
 		transition.set(200f, 1000);
 		transition.update(500);
-		assertThat(transition.getValue(), IsEqual.equalTo(150f));
+		assertThat(transition.get(), IsEqual.equalTo(150f));
 		
 		transition.set(300f, 1000);
-		assertThat(transition.getValue(), IsEqual.equalTo(150f));
+		assertThat(transition.get(), IsEqual.equalTo(150f));
 		
 		transition.update(500);
-		assertThat(transition.getValue(), IsEqual.equalTo(225f));
+		assertThat(transition.get(), IsEqual.equalTo(225f));
 	}
 
 }
