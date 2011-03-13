@@ -1,0 +1,17 @@
+<html>
+<body>
+	<div style="color:white;">
+		<p>This example shows a color transition over time made using Transition&lt;Color&gt; class.</p>
+		<div style="padding: 10px 10px 10px 40px; font-family: monospace; font-style: normal; background-color: black;">
+		{ <br>
+		&nbsp;&nbsp;&nbsp;&nbsp;Transition&lt;Color&gt; colorTransition = ....<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;int time = 500; // time in ms <br>
+		&nbsp;&nbsp;&nbsp;&nbsp;colorTransition.set(someColor, time);<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;image.setColor(colorTransition.get());<br>
+		}
+		</div>
+		<p>Move the mouse over the image to see the results</p>
+	</div>
+</body>
+</html>

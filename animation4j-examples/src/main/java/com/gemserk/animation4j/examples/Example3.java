@@ -6,6 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+
+import javax.swing.JEditorPane;
 
 import com.gemserk.animation4j.event.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
@@ -73,13 +76,19 @@ public class Example3 extends Java2dDesktopApplication {
 		@Override
 		public void init() {
 
-			resourceManager.add("Button", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("globe-256x176.png")))));
-			resourceManager.add("ButtonGlow", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("house-128x92.png")))));
+			resourceManager.add("Button", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("superbutton-148x139.png")))));
+			resourceManager.add("ButtonGlow", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("superbutton-glow-157x156.png")))));
 
 			buttonImageResource = resourceManager.get("Button");
 			buttonGlowImageResource = resourceManager.get("ButtonGlow");
 
 			colorTransition = new Transition<Float>(0.3f, new FloatInterpolator(InterpolatorFunctionFactory.linear()));
+			
+			textPane = new JEditorPane("text/html", new FileHelper("example3.html").read()) {{ 
+				setSize(600, 240);
+				setEditable(false);
+				setOpaque(false);
+			}};
 
 		}
 
@@ -102,12 +111,19 @@ public class Example3 extends Java2dDesktopApplication {
 
 			Color color = new Color(colorTransition.getValue(), colorTransition.getValue(), colorTransition.getValue(), 1f);
 
-			// java2dRenderer.render(new Java2dImageRenderObject(1, buttonImageResource.get(), 320, 240, 1, 1, 0f));
-			java2dRenderer.render(new Java2dImageRenderObject(1, buttonGlowImageResource.get(), 320, 240, 2, 2, 0f, color));
+			java2dRenderer.render(new Java2dImageRenderObject(1, buttonImageResource.get(), 320, 340, 1, 1, 0f));
+			java2dRenderer.render(new Java2dImageRenderObject(1, buttonGlowImageResource.get(), 320, 340, 1, 1, 0f, color));
+			
+			AffineTransform previousTransform = graphics.getTransform();
+			graphics.translate( 40, 20 );
+			textPane.paint(graphics);
+			graphics.setTransform(previousTransform);
 
 		}
 
 		boolean mouseInside = false;
+
+		private JEditorPane textPane;
 
 		@Override
 		public void update(int delta) {
@@ -116,15 +132,15 @@ public class Example3 extends Java2dDesktopApplication {
 
 			Point mousePosition = mouseInput.getPosition();
 
-			if (new Rectangle(320 - 128, 240 - 88, 256, 176).contains(mousePosition.x, mousePosition.y)) {
+			if (new Rectangle(320 - 128, 340 - 88, 256, 176).contains(mousePosition.x, mousePosition.y)) {
 				if (!mouseInside) {
 					mouseInside = true;
-					colorTransition.set(1f, 500);
+					colorTransition.set(1f, 400);
 				}
 			} else {
 				if (mouseInside) {
 					mouseInside = false;
-					colorTransition.set(0.3f, 500);
+					colorTransition.set(0.3f, 400);
 				}
 			}
 
