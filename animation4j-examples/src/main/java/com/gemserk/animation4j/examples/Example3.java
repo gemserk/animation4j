@@ -16,7 +16,6 @@ import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.transitions.AutoUpdateableTransition;
 import com.gemserk.animation4j.transitions.Transition;
-import com.gemserk.animation4j.transitions.UpdateableTransition;
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
 import com.gemserk.componentsengine.java2d.Java2dGame;
 import com.gemserk.componentsengine.java2d.Java2dModule;
@@ -113,7 +112,7 @@ public class Example3 extends Java2dDesktopApplication {
 
 			// Creates a Color transition using a color interpolator with a linear interpolation function.
 			InterpolatorFunction linearInterpolationFunction = InterpolatorFunctionFactory.linear();
-			colorTransition = new AutoUpdateableTransition<Color>(new UpdateableTransition<Color>(new Color(0.3f, 0.3f, 0.8f, 1f), new ColorInterpolator(linearInterpolationFunction)), 0.001f);
+			colorTransition = new AutoUpdateableTransition<Color>(new Color(0.3f, 0.3f, 0.8f, 1f), new ColorInterpolator(linearInterpolationFunction), 0.001f);
 		}
 
 		@Override

@@ -1,11 +1,10 @@
 package com.gemserk.animation4j.transitions;
 
+import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.time.SystemTimeProvider;
 import com.gemserk.animation4j.time.TimeProvider;
 
-public class AutoUpdateableTransition<T> implements Transition<T> {
-
-	private final UpdateableTransition<T> updateableTransition;
+public class AutoUpdateableTransition<T> extends UpdateableTransition<T> {
 
 	private final float speed;
 
@@ -16,16 +15,15 @@ public class AutoUpdateableTransition<T> implements Transition<T> {
 	// make a provider of custom transitions which returns the transition already configured for a time provider?
 	
 	// use total time instead of speed? or some easier way to calculate speed. Maybe specifying speed in milliseconds instead of seconds?
-
-	public AutoUpdateableTransition(UpdateableTransition<T> transition, float speed, TimeProvider timeProvider) {
-		this.updateableTransition = transition;
-		this.speed = speed;
-		this.timeProvider = timeProvider;
-		lastTime = timeProvider.getTime();
+	
+	public AutoUpdateableTransition(T startValue, Interpolator<T> interpolator, float speed) {
+		this(startValue, interpolator, speed, new SystemTimeProvider());
 	}
 
-	public AutoUpdateableTransition(UpdateableTransition<T> transition, float speed) {
-		this(transition, speed, new SystemTimeProvider());
+	public AutoUpdateableTransition(T startValue, Interpolator<T> interpolator, float speed, TimeProvider timeProvider) {
+		super(startValue, interpolator);
+		this.speed = speed;
+		this.timeProvider = timeProvider;
 	}
 
 	public T get() {
@@ -33,12 +31,12 @@ public class AutoUpdateableTransition<T> implements Transition<T> {
 		long delta = currentTime - lastTime;
 		
 		if (delta <= 0)
-			return updateableTransition.get();
+			return super.get();
 		
 		float time = ((float) delta) * speed;
-		updateableTransition.update((int) (time * 1000f));
+		super.update((int) (time * 1000f));
 		lastTime = currentTime;
-		return updateableTransition.get();
+		return super.get();
 	}
 
 	public void set(T t) {
@@ -47,6 +45,6 @@ public class AutoUpdateableTransition<T> implements Transition<T> {
 
 	public void set(T t, int time) {
 		lastTime = timeProvider.getTime();
-		updateableTransition.set(t, time);
+		super.set(t, time);
 	}
 }
