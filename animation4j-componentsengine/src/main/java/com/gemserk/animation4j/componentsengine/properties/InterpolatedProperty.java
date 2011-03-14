@@ -12,13 +12,13 @@ import com.gemserk.componentsengine.properties.Property;
  */
 public class InterpolatedProperty<T> implements Property<T> {
 
-	private final TimeProvider timeProvider;
+	private final Transition<T> transition;
 
 	private final float speed;
 
-	private long lastTime = 0;
+	private final TimeProvider timeProvider;
 	
-	private Transition<T> transition;
+	private long lastTime = 0;
 
 	// TODO: Use total time instead of speed? or some easier way to calculate speed. Maybe specifying speed in milliseconds instead of seconds.
 	
