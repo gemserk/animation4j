@@ -19,9 +19,7 @@ public class Point2DInterpolator implements Interpolator<Point2D> {
 		double newx = (1 - x) * a.getX() + x * b.getX();
 		double newy = (1 - x) * a.getY() + x * b.getY();
 
-		Point2D interpolatedPoint = new Point2D.Float((float) newx, (float) newy);
-
-		return interpolatedPoint;
+		return new Point2D.Float((float) newx, (float) newy);
 	}
 
 }

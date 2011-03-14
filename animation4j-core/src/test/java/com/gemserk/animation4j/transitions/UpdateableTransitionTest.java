@@ -14,7 +14,7 @@ import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
 
 @RunWith(JMock.class)
-public class TransitionTest {
+public class UpdateableTransitionTest {
 
 	Mockery mockery = new Mockery() {
 		{

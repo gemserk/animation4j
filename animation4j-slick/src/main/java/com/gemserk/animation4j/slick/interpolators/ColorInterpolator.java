@@ -9,21 +9,21 @@ import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory
 
 public class ColorInterpolator implements Interpolator<Color> {
 	
-	private Interpolator<Float> floatInterpolator;
+	private Interpolator<Float> interpolator;
 	
 	public ColorInterpolator() {
 		this(InterpolatorFunctionFactory.linear());
 	}
 	
 	public ColorInterpolator(InterpolatorFunction interpolatorFunction) {
-		floatInterpolator = new FloatInterpolator(interpolatorFunction);
+		interpolator = new FloatInterpolator(interpolatorFunction);
 	}
 
 	@Override
 	public Color interpolate(Color a, Color b, float weight) {
-		return new Color(floatInterpolator.interpolate(a.r, b.r, weight), // 
-				floatInterpolator.interpolate(a.g, b.g, weight), // 
-				floatInterpolator.interpolate(a.b, b.b, weight), // 
-				floatInterpolator.interpolate(a.a, b.a, weight));
+		return new Color(interpolator.interpolate(a.r, b.r, weight), // 
+				interpolator.interpolate(a.g, b.g, weight), // 
+				interpolator.interpolate(a.b, b.b, weight), // 
+				interpolator.interpolate(a.a, b.a, weight));
 	}
 }
