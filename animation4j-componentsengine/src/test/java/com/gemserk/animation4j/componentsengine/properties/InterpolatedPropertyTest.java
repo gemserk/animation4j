@@ -3,18 +3,30 @@ package com.gemserk.animation4j.componentsengine.properties;
 import static org.junit.Assert.assertThat;
 
 import org.hamcrest.core.IsEqual;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.gemserk.animation4j.componentsengine.UpdateableTimeProvider;
-import com.gemserk.animation4j.values.FloatInterpolatedValue;
-
+import com.gemserk.animation4j.interpolator.FloatInterpolator;
+import com.gemserk.animation4j.interpolator.Interpolator;
+import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
+import com.gemserk.animation4j.transitions.Transition;
 
 public class InterpolatedPropertyTest {
 	
+	private Interpolator<Float> interpolator;
+	
+	private UpdateableTimeProvider timeProvider;
+	
+	@Before
+	public void setUp() {
+		timeProvider = new UpdateableTimeProvider();
+		interpolator = new FloatInterpolator(InterpolatorFunctionFactory.linear());
+	}
+	
 	@Test
 	public void shouldReturnFirstValueWhenNoTimePassed() {
-		UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
-		InterpolatedProperty<Float> interpolatedProperty = new InterpolatedProperty<Float>(new FloatInterpolatedValue(100f), 1f, timeProvider);
+		InterpolatedProperty<Float> interpolatedProperty = new InterpolatedProperty<Float>(new Transition<Float>(100f, interpolator), 1f, timeProvider);
 		assertThat(interpolatedProperty.get(), IsEqual.equalTo(100f));
 		interpolatedProperty.set(200f);
 		assertThat(interpolatedProperty.get(), IsEqual.equalTo(100f));
@@ -22,8 +34,7 @@ public class InterpolatedPropertyTest {
 	
 	@Test
 	public void shouldReturnSecondValueWhenTimePassed() {
-		UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
-		InterpolatedProperty<Float> interpolatedProperty = new InterpolatedProperty<Float>(new FloatInterpolatedValue(100f), 1f, timeProvider);
+		InterpolatedProperty<Float> interpolatedProperty = new InterpolatedProperty<Float>(new Transition<Float>(100f, interpolator), 1f, timeProvider);
 		assertThat(interpolatedProperty.get(), IsEqual.equalTo(100f));
 		interpolatedProperty.set(200f);
 		timeProvider.update(10000);
@@ -32,12 +43,13 @@ public class InterpolatedPropertyTest {
 	
 	@Test
 	public void shouldReturnInterpolatedValue() {
-		UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
-		InterpolatedProperty<Float> interpolatedProperty = new InterpolatedProperty<Float>(new FloatInterpolatedValue(100f), 0.01f, timeProvider);
+		InterpolatedProperty<Float> interpolatedProperty = new InterpolatedProperty<Float>(new Transition<Float>(100f, interpolator), 0.01f, timeProvider);
 		assertThat(interpolatedProperty.get(), IsEqual.equalTo(100f));
 		interpolatedProperty.set(200f);
 		timeProvider.update(50);
 		assertThat(interpolatedProperty.get(), IsEqual.equalTo(150f));
+		timeProvider.update(25);
+		assertThat(interpolatedProperty.get(), IsEqual.equalTo(175f));
 	}
 
 }

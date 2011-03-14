@@ -16,6 +16,10 @@ public abstract class InterpolatedValue<T>  {
 	protected T b;
 
 	private float alpha;
+	
+	public Interpolator<T> getInterpolator() {
+		return interpolator;
+	}
 
 	public void setA(T a) {
 		this.a = a;
