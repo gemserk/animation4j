@@ -26,6 +26,10 @@ public class Transition<T> {
 		this.interpolator = interpolator;
 	}
 
+	/**
+	 * Returns the current value of the transition.
+	 * @return - The current value of the transition.
+	 */
 	public T get() {
 		return currentValue;
 	}
