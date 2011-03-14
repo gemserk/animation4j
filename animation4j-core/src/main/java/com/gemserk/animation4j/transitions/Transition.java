@@ -19,11 +19,27 @@ public class Transition<T> {
 	private int currentTime;
 
 	private Interpolator<T> interpolator;
+	
+	private int defaultTime;
 
+	/**
+	 * @param startValue - The starting value of the transition.
+	 * @param interpolator - The interpolator to use when updating the value.
+	 */
 	public Transition(T startValue, Interpolator<T> interpolator) {
+		this(startValue, interpolator, 0);
+	}
+
+	/**
+	 * @param startValue - The starting value of the transition.
+	 * @param interpolator - The interpolator to use when updating the value.
+	 * @param defaultTime - The default time to use when calling set without specifying the time.
+	 */
+	public Transition(T startValue, Interpolator<T> interpolator, int defaultTime) {
 		this.startValue = startValue;
 		this.currentValue = startValue;
 		this.interpolator = interpolator;
+		this.defaultTime = defaultTime;
 	}
 
 	/**
@@ -33,14 +49,22 @@ public class Transition<T> {
 	public T get() {
 		return currentValue;
 	}
+	
+	/**
+	 * Start an interpolation from a to b in the specified default time.
+	 * @param t - The wanted new value.
+	 */
+	public void set(T t) {
+		this.set(t, defaultTime);
+	}
 
 	/**
 	 * Start an interpolation from a to b in the specified time.
-	 * @param desiredValue - The wanted new value.
+	 * @param t - The wanted new value.
 	 * @param time - The time to set the new value.
 	 */
-	public void set(T desiredValue, int time) {
-		this.desiredValue = desiredValue;
+	public void set(T t, int time) {
+		this.desiredValue = t;
 		this.totalTime = time;
 		this.startValue = currentValue;
 		this.currentTime = 0;
