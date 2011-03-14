@@ -114,4 +114,18 @@ public class UpdateableTransitionTest {
 		assertThat(transition.get(), IsEqual.equalTo(225f));
 	}
 
+	@Test
+	public void shouldNotInterpolateWhenDesiredValueNotSetOrNull() {
+		float initialValue = 100f;
+		final InterpolatorFunction interpolatorFunction = mockery.mock(InterpolatorFunction.class);
+
+		UpdateableTransition<Float> transition = new UpdateableTransition<Float>(initialValue, new FloatInterpolator(interpolatorFunction));
+		transition.update(500);
+		assertThat(transition.get(), IsEqual.equalTo(initialValue));
+
+		transition.set(null, 100);
+		transition.update(500);
+		assertThat(transition.get(), IsEqual.equalTo(initialValue));
+	}
+	
 }
