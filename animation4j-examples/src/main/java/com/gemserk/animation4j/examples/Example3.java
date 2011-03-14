@@ -11,7 +11,8 @@ import java.awt.geom.AffineTransform;
 import javax.swing.JEditorPane;
 
 import com.gemserk.animation4j.event.AnimationHandlerManager;
-import com.gemserk.animation4j.interpolator.FloatInterpolator;
+import com.gemserk.animation4j.interpolator.ColorInterpolator;
+import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
@@ -77,23 +78,25 @@ public class Example3 extends Java2dDesktopApplication {
 		public void init() {
 
 			resourceManager.add("House", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("house-128x92.png")))));
-
 			houseImageResource = resourceManager.get("House");
+			creditsPane = new JEditorPane("text/html", new FileHelper("license-lostgarden.html").read()) {
+				{
+					setSize(600, 40);
+					setEditable(false);
+					setOpaque(false);
+				}
+			};
+			textPane = new JEditorPane("text/html", new FileHelper("example3.html").read()) {
+				{
+					setSize(600, 240);
+					setEditable(false);
+					setOpaque(false);
+				}
+			};
 
-			colorTransition = new Transition<Float>(0.3f, new FloatInterpolator(InterpolatorFunctionFactory.linear()));
-			
-			creditsPane = new JEditorPane("text/html", new FileHelper("license-lostgarden.html").read()) {{ 
-				setSize(600, 40);
-				setEditable(false);
-				setOpaque(false);
-			}};
-			
-			textPane = new JEditorPane("text/html", new FileHelper("example3.html").read()) {{ 
-				setSize(600, 240);
-				setEditable(false);
-				setOpaque(false);
-			}};
-
+			// Creates a Color transition using a color interpolator with a linear interpolation function.
+			InterpolatorFunction linearInterpolationFunction = InterpolatorFunctionFactory.linear();
+			colorTransition = new Transition<Color>(new Color(0.3f, 0.3f, 0.8f, 1f), new ColorInterpolator(linearInterpolationFunction));
 		}
 
 		@Inject
@@ -104,7 +107,7 @@ public class Example3 extends Java2dDesktopApplication {
 
 		private Resource<Image> houseImageResource;
 
-		private Transition<Float> colorTransition;
+		private Transition<Color> colorTransition;
 
 		@Override
 		public void render(Graphics2D graphics) {
@@ -113,15 +116,15 @@ public class Example3 extends Java2dDesktopApplication {
 
 			currentGraphicsProvider.setGraphics(graphics);
 
-			Color color = new Color(colorTransition.get(), colorTransition.get(), colorTransition.get(), 1f);
+			Color color = colorTransition.get();
 
 			java2dRenderer.render(new Java2dImageRenderObject(1, houseImageResource.get(), 320, 340, 1, 1, 0f, color));
-			
+
 			AffineTransform previousTransform = graphics.getTransform();
-			graphics.translate( 40, 20 );
+			graphics.translate(40, 20);
 			textPane.paint(graphics);
 			graphics.setTransform(previousTransform);
-			
+
 			previousTransform = graphics.getTransform();
 			graphics.translate(20, 400);
 			creditsPane.paint(graphics);
@@ -144,12 +147,12 @@ public class Example3 extends Java2dDesktopApplication {
 			if (new Rectangle(320 - 128, 340 - 88, 256, 176).contains(mousePosition.x, mousePosition.y)) {
 				if (!mouseInside) {
 					mouseInside = true;
-					colorTransition.set(1f, 400);
+					colorTransition.set(new Color(1f, 1f, 1f, 1f), 400);
 				}
 			} else {
 				if (mouseInside) {
 					mouseInside = false;
-					colorTransition.set(0.3f, 400);
+					colorTransition.set(new Color(0.3f, 0.3f, 0.8f, 1f), 400);
 				}
 			}
 
