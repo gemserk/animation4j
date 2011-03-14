@@ -1,4 +1,4 @@
-package com.gemserk.animation4j.componentsengine;
+package com.gemserk.animation4j.time;
 
 /**
  * Default implementation of TimeProvider using system timer.

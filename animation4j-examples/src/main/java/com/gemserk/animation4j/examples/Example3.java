@@ -111,7 +111,7 @@ public class Example3 extends Java2dDesktopApplication {
 
 			// Creates a Color transition using a color interpolator with a linear interpolation function.
 			InterpolatorFunction linearInterpolationFunction = InterpolatorFunctionFactory.linear();
-			colorTransition = new Transition<Color>(new Color(0.3f, 0.3f, 0.8f, 1f), new ColorInterpolator(linearInterpolationFunction));
+			colorTransition = new Transition<Color>(new Color(0.3f, 0.3f, 0.8f, 1f), new ColorInterpolator(linearInterpolationFunction), 500);
 		}
 
 		@Override
@@ -150,12 +150,16 @@ public class Example3 extends Java2dDesktopApplication {
 			if (new Rectangle(320 - 128, 340 - 88, 256, 176).contains(mousePosition.x, mousePosition.y)) {
 				if (!mouseInside) {
 					mouseInside = true;
-					colorTransition.set(new Color(1f, 1f, 1f, 1f), 400);
+					
+					// when the mouse is over the image, we set the color to white
+					colorTransition.set(new Color(1f, 1f, 1f, 1f));
 				}
 			} else {
 				if (mouseInside) {
 					mouseInside = false;
-					colorTransition.set(new Color(0.3f, 0.3f, 0.8f, 1f), 400);
+
+					// when the mouse left the image, we set again the color to the previous color.
+					colorTransition.set(new Color(0.3f, 0.3f, 0.8f, 1f));
 				}
 			}
 

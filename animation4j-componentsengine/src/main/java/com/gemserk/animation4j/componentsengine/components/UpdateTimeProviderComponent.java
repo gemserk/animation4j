@@ -1,6 +1,6 @@
 package com.gemserk.animation4j.componentsengine.components;
 
-import com.gemserk.animation4j.componentsengine.UpdateableTimeProvider;
+import com.gemserk.animation4j.time.UpdateableTimeProvider;
 import com.gemserk.componentsengine.components.ReferencePropertyComponent;
 import com.gemserk.componentsengine.components.annotations.EntityProperty;
 import com.gemserk.componentsengine.components.annotations.Handles;

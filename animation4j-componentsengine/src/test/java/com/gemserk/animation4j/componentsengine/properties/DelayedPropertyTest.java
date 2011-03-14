@@ -6,8 +6,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.gemserk.animation4j.componentsengine.TimeProvider;
-import com.gemserk.animation4j.componentsengine.UpdateableTimeProvider;
+import com.gemserk.animation4j.time.TimeProvider;
+import com.gemserk.animation4j.time.UpdateableTimeProvider;
 import com.gemserk.componentsengine.properties.Property;
 
 

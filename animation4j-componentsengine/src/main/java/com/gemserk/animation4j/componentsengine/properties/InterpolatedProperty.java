@@ -1,7 +1,7 @@
 package com.gemserk.animation4j.componentsengine.properties;
 
-import com.gemserk.animation4j.componentsengine.SystemTimeProvider;
-import com.gemserk.animation4j.componentsengine.TimeProvider;
+import com.gemserk.animation4j.time.SystemTimeProvider;
+import com.gemserk.animation4j.time.TimeProvider;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.componentsengine.properties.Property;
 

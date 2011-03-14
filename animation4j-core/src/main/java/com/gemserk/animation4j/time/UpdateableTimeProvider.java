@@ -1,4 +1,4 @@
-package com.gemserk.animation4j.componentsengine;
+package com.gemserk.animation4j.time;
 
 public class UpdateableTimeProvider implements TimeProvider {
 
