@@ -26,7 +26,7 @@ public class TransitionTest {
 	public void shouldReturnInitialWhenCreatedAndNotUpdated() {
 		float initialValue = 100f;
 		InterpolatorFunction interpolatorFunction = mockery.mock(InterpolatorFunction.class);
-		UpdateableTransition<Float> transition = new UpdateableTransition<Float>(initialValue, new FloatInterpolator(interpolatorFunction));
+		Transition<Float> transition = new UpdateableTransition<Float>(initialValue, new FloatInterpolator(interpolatorFunction));
 		float value = transition.get();
 		assertThat(value, IsEqual.equalTo(initialValue));
 	}
@@ -35,7 +35,7 @@ public class TransitionTest {
 	public void shouldNotModifyValueWhenSetIfNotUpdateCalled() {
 		float initialValue = 100f;
 		InterpolatorFunction interpolatorFunction = mockery.mock(InterpolatorFunction.class);
-		UpdateableTransition<Float> transition = new UpdateableTransition<Float>(initialValue, new FloatInterpolator(interpolatorFunction));
+		Transition<Float> transition = new UpdateableTransition<Float>(initialValue, new FloatInterpolator(interpolatorFunction));
 		float newValue = 200f;
 		int time = 1000;
 		transition.set(newValue, time);

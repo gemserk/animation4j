@@ -15,6 +15,7 @@ import com.gemserk.animation4j.interpolator.ColorInterpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.transitions.AutoUpdateableTransition;
+import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.UpdateableTransition;
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
 import com.gemserk.componentsengine.java2d.Java2dGame;
@@ -82,7 +83,7 @@ public class Example3 extends Java2dDesktopApplication {
 
 		private Resource<Image> houseImageResource;
 
-		private AutoUpdateableTransition<Color> colorTransition;
+		private Transition<Color> colorTransition;
 		
 		boolean mouseInside = false;
 
@@ -143,9 +144,6 @@ public class Example3 extends Java2dDesktopApplication {
 
 		@Override
 		public void update(int delta) {
-
-			// updates the transition so the next time we call get(), it will return an updated value
-			// colorTransition.update(delta);
 
 			Point mousePosition = mouseInput.getPosition();
 			if (new Rectangle(320 - 128, 340 - 88, 256, 176).contains(mousePosition.x, mousePosition.y)) {

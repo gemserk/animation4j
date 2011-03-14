@@ -6,7 +6,7 @@ import com.gemserk.animation4j.interpolator.Interpolator;
  * Implementation of a transition of a float based on <a href="http://www.w3.org/TR/2009/WD-css3-transitions-20090320/">CSS3 transitions spec</a>.
  * @author acoppes
  */
-public class UpdateableTransition<T> {
+public class UpdateableTransition<T> implements Transition<T> {
 
 	private T startValue;
 
@@ -42,27 +42,17 @@ public class UpdateableTransition<T> {
 		this.defaultTime = defaultTime;
 	}
 
-	/**
-	 * Returns the current value of the transition.
-	 * @return - The current value of the transition.
-	 */
+	@Override
 	public T get() {
 		return currentValue;
 	}
 	
-	/**
-	 * Start an interpolation from a to b in the specified default time.
-	 * @param t - The wanted new value.
-	 */
+	@Override
 	public void set(T t) {
 		this.set(t, defaultTime);
 	}
 
-	/**
-	 * Start an interpolation from a to b in the specified time.
-	 * @param t - The wanted new value.
-	 * @param time - The time to set the new value.
-	 */
+	@Override
 	public void set(T t, int time) {
 		this.desiredValue = t;
 		this.totalTime = time;

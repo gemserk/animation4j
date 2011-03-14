@@ -3,7 +3,7 @@ package com.gemserk.animation4j.transitions;
 import com.gemserk.animation4j.time.SystemTimeProvider;
 import com.gemserk.animation4j.time.TimeProvider;
 
-public class AutoUpdateableTransition<T> {
+public class AutoUpdateableTransition<T> implements Transition<T> {
 
 	private final UpdateableTransition<T> updateableTransition;
 
@@ -12,7 +12,7 @@ public class AutoUpdateableTransition<T> {
 	private final TimeProvider timeProvider;
 
 	private long lastTime;
-	
+
 	// make a provider of custom transitions which returns the transition already configured for a time provider.
 
 	public AutoUpdateableTransition(UpdateableTransition<T> transition, float speed, TimeProvider timeProvider) {
@@ -28,7 +28,12 @@ public class AutoUpdateableTransition<T> {
 
 	public T get() {
 		long currentTime = timeProvider.getTime();
-		float time = ((float) (currentTime - lastTime)) * speed;
+		long delta = currentTime - lastTime;
+		
+		if (delta <= 0)
+			return updateableTransition.get();
+		
+		float time = ((float) delta) * speed;
 		updateableTransition.update((int) (time * 1000f));
 		lastTime = currentTime;
 		return updateableTransition.get();
