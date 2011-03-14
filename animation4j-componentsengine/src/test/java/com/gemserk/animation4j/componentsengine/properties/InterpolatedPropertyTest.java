@@ -10,7 +10,7 @@ import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.time.UpdateableTimeProvider;
-import com.gemserk.animation4j.transitions.Transition;
+import com.gemserk.animation4j.transitions.UpdateableTransition;
 
 public class InterpolatedPropertyTest {
 	
@@ -26,7 +26,7 @@ public class InterpolatedPropertyTest {
 	
 	@Test
 	public void shouldReturnFirstValueWhenNoTimePassed() {
-		InterpolatedProperty<Float> interpolatedProperty = new InterpolatedProperty<Float>(new Transition<Float>(100f, interpolator), 1f, timeProvider);
+		InterpolatedProperty<Float> interpolatedProperty = new InterpolatedProperty<Float>(new UpdateableTransition<Float>(100f, interpolator), 1f, timeProvider);
 		assertThat(interpolatedProperty.get(), IsEqual.equalTo(100f));
 		interpolatedProperty.set(200f);
 		assertThat(interpolatedProperty.get(), IsEqual.equalTo(100f));
@@ -34,7 +34,7 @@ public class InterpolatedPropertyTest {
 	
 	@Test
 	public void shouldReturnSecondValueWhenTimePassed() {
-		InterpolatedProperty<Float> interpolatedProperty = new InterpolatedProperty<Float>(new Transition<Float>(100f, interpolator), 1f, timeProvider);
+		InterpolatedProperty<Float> interpolatedProperty = new InterpolatedProperty<Float>(new UpdateableTransition<Float>(100f, interpolator), 1f, timeProvider);
 		assertThat(interpolatedProperty.get(), IsEqual.equalTo(100f));
 		interpolatedProperty.set(200f);
 		timeProvider.update(10000);
@@ -43,7 +43,7 @@ public class InterpolatedPropertyTest {
 	
 	@Test
 	public void shouldReturnInterpolatedValue() {
-		InterpolatedProperty<Float> interpolatedProperty = new InterpolatedProperty<Float>(new Transition<Float>(100f, interpolator), 0.01f, timeProvider);
+		InterpolatedProperty<Float> interpolatedProperty = new InterpolatedProperty<Float>(new UpdateableTransition<Float>(100f, interpolator), 0.01f, timeProvider);
 		assertThat(interpolatedProperty.get(), IsEqual.equalTo(100f));
 		interpolatedProperty.set(200f);
 		timeProvider.update(50);

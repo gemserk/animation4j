@@ -2,7 +2,7 @@ package com.gemserk.animation4j.componentsengine.properties;
 
 import com.gemserk.animation4j.time.SystemTimeProvider;
 import com.gemserk.animation4j.time.TimeProvider;
-import com.gemserk.animation4j.transitions.Transition;
+import com.gemserk.animation4j.transitions.UpdateableTransition;
 import com.gemserk.componentsengine.properties.Property;
 
 /**
@@ -12,7 +12,7 @@ import com.gemserk.componentsengine.properties.Property;
  */
 public class InterpolatedProperty<T> implements Property<T> {
 
-	private final Transition<T> transition;
+	private final UpdateableTransition<T> updateableTransition;
 
 	private final float speed;
 
@@ -27,10 +27,10 @@ public class InterpolatedProperty<T> implements Property<T> {
 	 * @param speed - The speed is specified in seconds and it is used to advance from one value to another value of the interpolated value.
 	 * @param timeProvider - The TimeProvider from where to get the time when updated needed for the transition.
 	 */
-	public InterpolatedProperty(Transition<T> transition, float speed, TimeProvider timeProvider) {
+	public InterpolatedProperty(UpdateableTransition<T> transition, float speed, TimeProvider timeProvider) {
 		this.timeProvider = timeProvider;
 		this.speed = speed;
-		this.transition = transition;
+		this.updateableTransition = transition;
 		lastTime = timeProvider.getTime();
 	}
 	
@@ -38,7 +38,7 @@ public class InterpolatedProperty<T> implements Property<T> {
 	 * @param transition - The transition to be used to set and get values for the property.
 	 * @param speed - The speed is specified in seconds and it is used to advance from one value to another value of the interpolated value.
 	 */
-	public InterpolatedProperty(Transition<T> transition, float speed) {
+	public InterpolatedProperty(UpdateableTransition<T> transition, float speed) {
 		this(transition, speed, new SystemTimeProvider());
 	}
 
@@ -46,14 +46,14 @@ public class InterpolatedProperty<T> implements Property<T> {
 	public T get() {
 		long currentTime = timeProvider.getTime();
 		float time = ((float) (currentTime - lastTime)) * speed;
-		transition.update((int) (time * 1000f));
+		updateableTransition.update((int) (time * 1000f));
 		lastTime = currentTime;
-		return transition.get();
+		return updateableTransition.get();
 	}
 
 	@Override
 	public void set(T value) {
 		lastTime = timeProvider.getTime();
-		transition.set(value, 1000);
+		updateableTransition.set(value, 1000);
 	}
 }
