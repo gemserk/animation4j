@@ -65,7 +65,6 @@ public class Example3 extends Java2dDesktopApplication {
 		@Inject
 		MouseInput mouseInput;
 
-		@SuppressWarnings("rawtypes")
 		@Inject
 		ResourceManager resourceManager;
 
@@ -73,6 +72,22 @@ public class Example3 extends Java2dDesktopApplication {
 		AnimationHandlerManager animationHandlerManager;
 
 		Resource<Image> buttonImageResource;
+		
+		@Inject
+		Java2dRenderer java2dRenderer;
+
+		@Inject
+		CurrentGraphicsProvider currentGraphicsProvider;
+
+		private Resource<Image> houseImageResource;
+
+		private Transition<Color> colorTransition;
+		
+		boolean mouseInside = false;
+
+		private JEditorPane textPane;
+
+		private JEditorPane creditsPane;
 
 		@Override
 		public void init() {
@@ -99,51 +114,39 @@ public class Example3 extends Java2dDesktopApplication {
 			colorTransition = new Transition<Color>(new Color(0.3f, 0.3f, 0.8f, 1f), new ColorInterpolator(linearInterpolationFunction));
 		}
 
-		@Inject
-		Java2dRenderer java2dRenderer;
-
-		@Inject
-		CurrentGraphicsProvider currentGraphicsProvider;
-
-		private Resource<Image> houseImageResource;
-
-		private Transition<Color> colorTransition;
-
 		@Override
 		public void render(Graphics2D graphics) {
 			graphics.setBackground(Color.black);
 			graphics.clearRect(0, 0, 800, 600);
-
 			currentGraphicsProvider.setGraphics(graphics);
 
-			Color color = colorTransition.get();
+			{
+				// get the new color of the transition
+				Color color = colorTransition.get();
+				java2dRenderer.render(new Java2dImageRenderObject(1, houseImageResource.get(), 320, 340, 1, 1, 0f, color));
+			}
 
-			java2dRenderer.render(new Java2dImageRenderObject(1, houseImageResource.get(), 320, 340, 1, 1, 0f, color));
+			{
+				// render texts in the screen
+				AffineTransform previousTransform = graphics.getTransform();
+				graphics.translate(40, 20);
+				textPane.paint(graphics);
+				graphics.setTransform(previousTransform);
 
-			AffineTransform previousTransform = graphics.getTransform();
-			graphics.translate(40, 20);
-			textPane.paint(graphics);
-			graphics.setTransform(previousTransform);
-
-			previousTransform = graphics.getTransform();
-			graphics.translate(20, 400);
-			creditsPane.paint(graphics);
-			graphics.setTransform(previousTransform);
+				previousTransform = graphics.getTransform();
+				graphics.translate(20, 400);
+				creditsPane.paint(graphics);
+				graphics.setTransform(previousTransform);
+			}
 		}
-
-		boolean mouseInside = false;
-
-		private JEditorPane textPane;
-
-		private JEditorPane creditsPane;
 
 		@Override
 		public void update(int delta) {
 
+			// updates the transition so the next time we call get(), it will return an updated value
 			colorTransition.update(delta);
 
 			Point mousePosition = mouseInput.getPosition();
-
 			if (new Rectangle(320 - 128, 340 - 88, 256, 176).contains(mousePosition.x, mousePosition.y)) {
 				if (!mouseInside) {
 					mouseInside = true;
