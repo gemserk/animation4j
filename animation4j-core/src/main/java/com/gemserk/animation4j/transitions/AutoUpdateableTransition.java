@@ -13,7 +13,9 @@ public class AutoUpdateableTransition<T> implements Transition<T> {
 
 	private long lastTime;
 
-	// make a provider of custom transitions which returns the transition already configured for a time provider.
+	// make a provider of custom transitions which returns the transition already configured for a time provider?
+	
+	// use total time instead of speed? or some easier way to calculate speed. Maybe specifying speed in milliseconds instead of seconds?
 
 	public AutoUpdateableTransition(UpdateableTransition<T> transition, float speed, TimeProvider timeProvider) {
 		this.updateableTransition = transition;
