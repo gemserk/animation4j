@@ -122,9 +122,8 @@ public class Example3 extends Java2dDesktopApplication {
 			currentGraphicsProvider.setGraphics(graphics);
 
 			{
-				// get the new color of the transition
-				Color color = colorTransition.get();
-				java2dRenderer.render(new Java2dImageRenderObject(1, houseImageResource.get(), 320, 340, 1, 1, 0f, color));
+				// render the image using the color of the transition
+				java2dRenderer.render(new Java2dImageRenderObject(1, houseImageResource.get(), 320, 340, 1, 1, 0f, colorTransition.get()));
 			}
 
 			{
@@ -145,19 +144,19 @@ public class Example3 extends Java2dDesktopApplication {
 		public void update(int delta) {
 
 			Point mousePosition = mouseInput.getPosition();
-			if (new Rectangle(320 - 128, 340 - 88, 256, 176).contains(mousePosition.x, mousePosition.y)) {
+			if (new Rectangle(320 - 64, 340 - 46, 128, 92).contains(mousePosition.x, mousePosition.y)) {
 				if (!mouseInside) {
 					mouseInside = true;
 					
 					// when the mouse is over the image, we set the color to white
-					colorTransition.set(new Color(1f, 1f, 1f, 1f), 400);
+					colorTransition.set(new Color(1f, 1f, 1f, 1f), 300);
 				}
 			} else {
 				if (mouseInside) {
 					mouseInside = false;
 
 					// when the mouse left the image, we set again the color to the previous color.
-					colorTransition.set(new Color(0.3f, 0.3f, 0.8f, 1f), 400);
+					colorTransition.set(new Color(0.3f, 0.3f, 0.8f, 1f), 300);
 				}
 			}
 
