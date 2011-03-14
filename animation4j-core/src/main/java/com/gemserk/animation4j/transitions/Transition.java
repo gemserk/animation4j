@@ -10,20 +10,20 @@ public class Transition<T> {
 
 	private T startValue;
 
+	private T currentValue;
+
 	private T desiredValue;
 
 	private int totalTime;
-
+	
 	private int currentTime;
 
-	private T currentValue;
+	private Interpolator<T> interpolator;
 
-	private Interpolator<T> floatInterpolator;
-
-	public Transition(T startValue, Interpolator<T> floatInterpolator) {
+	public Transition(T startValue, Interpolator<T> interpolator) {
 		this.startValue = startValue;
 		this.currentValue = startValue;
-		this.floatInterpolator = floatInterpolator;
+		this.interpolator = interpolator;
 	}
 
 	public T get() {
@@ -44,7 +44,7 @@ public class Transition<T> {
 
 	/**
 	 * Updates the current value to the new value.
-	 * @param time
+	 * @param time - The time to update the current value.
 	 */
 	public void update(int time) {
 		
@@ -58,7 +58,7 @@ public class Transition<T> {
 		
 		float alpha = (float) currentTime / (float) totalTime;
 		
-		currentValue = floatInterpolator.interpolate(startValue, desiredValue, alpha);
+		currentValue = interpolator.interpolate(startValue, desiredValue, alpha);
 		
 	}
 
