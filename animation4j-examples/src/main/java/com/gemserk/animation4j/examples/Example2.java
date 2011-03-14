@@ -17,8 +17,7 @@ import com.gemserk.animation4j.event.AnimationEvent;
 import com.gemserk.animation4j.event.AnimationEventHandler;
 import com.gemserk.animation4j.event.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
-import com.gemserk.animation4j.interpolator.Interpolator;
-import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
+import com.gemserk.animation4j.interpolator.Point2DInterpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
@@ -48,28 +47,6 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 public class Example2 extends Java2dDesktopApplication {
-
-	public static class Point2DInterpolator implements Interpolator<Point2D> {
-
-		InterpolatorFunction interpolatorFunction;
-
-		public Point2DInterpolator(InterpolatorFunction interpolatorFunction) {
-			this.interpolatorFunction = interpolatorFunction;
-		}
-
-		@Override
-		public Point2D interpolate(Point2D a, Point2D b, float t) {
-			float x = interpolatorFunction.interpolate(t);
-
-			double newx = (1 - x) * a.getX() + x * b.getX();
-			double newy = (1 - x) * a.getY() + x * b.getY();
-
-			Point2D interpolatedPoint = new Point2D.Float((float) newx, (float) newy);
-
-			return interpolatedPoint;
-		}
-
-	}
 
 	public static void main(String[] args) {
 		Java2dDesktopApplication java2dDesktopApplication = new Example2();

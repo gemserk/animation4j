@@ -11,7 +11,7 @@ public interface Transition<T> {
 	/**
 	 * Returns the current value of the transition.
 	 * 
-	 * @return - The current value of the transition.
+	 * @return The current value of the transition.
 	 */
 	T get();
 
