@@ -20,10 +20,21 @@ public class AutoUpdateableTransition<T> extends UpdateableTransition<T> {
 		this(startValue, interpolator, speed, new SystemTimeProvider());
 	}
 
+	public AutoUpdateableTransition(T startValue, T endValue, Interpolator<T> interpolator, float speed) {
+		this(startValue, endValue, interpolator, speed, new SystemTimeProvider());
+	}
+	
 	public AutoUpdateableTransition(T startValue, Interpolator<T> interpolator, float speed, TimeProvider timeProvider) {
 		super(startValue, interpolator);
 		this.speed = speed;
 		this.timeProvider = timeProvider;
+	}
+	
+	public AutoUpdateableTransition(T startValue, T endValue, Interpolator<T> interpolator, float speed, TimeProvider timeProvider) {
+		super(startValue, interpolator, 1000);
+		this.speed = speed;
+		this.timeProvider = timeProvider;
+		set(endValue);
 	}
 
 	public T get() {

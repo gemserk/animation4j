@@ -41,7 +41,7 @@ public class UpdateableTransition<T> implements Transition<T> {
 		this.interpolator = interpolator;
 		this.defaultTime = defaultTime;
 	}
-
+	
 	@Override
 	public T get() {
 		return currentValue;
