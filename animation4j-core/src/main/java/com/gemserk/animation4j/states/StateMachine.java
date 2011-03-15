@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class StateMachine<K, T> {
 
-	static class Transition<T> {
+	public static class StateTransition<T> {
 
 		private final T sourceState;
 
@@ -19,7 +19,7 @@ public class StateMachine<K, T> {
 			return targetState;
 		}
 
-		public Transition(T sourceState, T targetState) {
+		public StateTransition(T sourceState, T targetState) {
 			this.sourceState = sourceState;
 			this.targetState = targetState;
 
@@ -29,7 +29,7 @@ public class StateMachine<K, T> {
 
 	Map<K, T> states = new HashMap<K, T>();
 
-	Map<K, Transition<T>> transitions = new HashMap<K, Transition<T>>();
+	Map<K, StateTransition<T>> stateTransitions = new HashMap<K, StateTransition<T>>();
 
 	T currentState;
 
@@ -43,14 +43,21 @@ public class StateMachine<K, T> {
 		return currentState;
 	}
 
-	public void handleTransitionCondition(String transitionId) {
-		Transition<T> transition = transitions.get(transitionId);
+	/**
+	 * Given a transition condition, it tries to handle the transition, if it exists.
+	 * @param transitionCondition - The transition condition to transit to another state.
+	 */
+	public void handleTransitionCondition(String transitionCondition) {
+		StateTransition<T> transition = stateTransitions.get(transitionCondition);
 		if (transition != null)
 			currentState = transition.getTargetState();
 	}
 
-	public void addTransition(K transitionId, K sourceStateId, K targetStateId) {
-		transitions.put(transitionId, new Transition<T>(states.get(sourceStateId), states.get(targetStateId)));
+	public void addTransition(K transitionCondition, K sourceStateId, K targetStateId) {
+		this.addTransition(transitionCondition, new StateTransition<T>(states.get(sourceStateId), states.get(targetStateId)));
 	}
 
+	public void addTransition(K transitionCondition, StateTransition<T> transition) {
+		stateTransitions.put(transitionCondition, transition);
+	}
 }

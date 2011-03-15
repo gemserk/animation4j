@@ -20,6 +20,7 @@ import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.Point2DInterpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.states.AnimationStateMachine;
+import com.gemserk.animation4j.states.StateMachine.StateTransition;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
 import com.gemserk.animation4j.timeline.sync.ObjectSynchronizer;
@@ -208,9 +209,9 @@ public class Example2 extends Java2dDesktopApplication {
 			animationStateMachine = new AnimationStateMachine();
 			animationStateMachine.addState("show", showAnimation);
 			animationStateMachine.addState("hide", hideAnimation);
-			animationStateMachine.addTransition("show", "show", "show");
-			animationStateMachine.addTransition("hide", "show", "hide");
-			animationStateMachine.addTransition("show", "hide", "show");
+			animationStateMachine.addTransition("show", new StateTransition<Animation>(showAnimation, showAnimation));
+			animationStateMachine.addTransition("hide", new StateTransition<Animation>(showAnimation, hideAnimation));
+			animationStateMachine.addTransition("show", new StateTransition<Animation>(hideAnimation, showAnimation));
 		}
 
 		@Inject
