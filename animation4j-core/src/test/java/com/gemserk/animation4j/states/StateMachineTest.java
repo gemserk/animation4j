@@ -13,7 +13,7 @@ import com.gemserk.animation4j.Animation;
 import com.gemserk.animation4j.MockAnimation;
 
 @RunWith(JMock.class)
-public class AnimationStateTest {
+public class StateMachineTest {
 
 	Mockery mockery = new Mockery() {
 		{
