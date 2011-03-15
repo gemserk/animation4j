@@ -2,6 +2,7 @@ package com.gemserk.animation4j.states;
 
 import static org.junit.Assert.assertThat;
 
+import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsSame;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -11,6 +12,8 @@ import org.junit.runner.RunWith;
 
 import com.gemserk.animation4j.Animation;
 import com.gemserk.animation4j.MockAnimation;
+import com.gemserk.animation4j.states.StateMachine.StateCondition;
+import com.gemserk.animation4j.states.StateMachine.StateTransition;
 
 @RunWith(JMock.class)
 public class StateMachineTest {
@@ -20,7 +23,7 @@ public class StateMachineTest {
 			setImposteriser(ClassImposteriser.INSTANCE);
 		}
 	};
-	
+
 	@Test
 	public void shouldReturnFirstAddedState() {
 		Animation animation1 = new MockAnimation();
@@ -30,27 +33,77 @@ public class StateMachineTest {
 	}
 
 	@Test
-	public void shouldReturnCurrentSelectedState() {
+	public void shouldReturnNextStateWhenTransitionConditionMatches() {
 		Animation animation1 = new MockAnimation();
 		Animation animation2 = new MockAnimation();
 		AnimationStateMachine animationState = new AnimationStateMachine();
 		animationState.addState("show", animation1);
 		animationState.addState("hide", animation2);
-		animationState.addTransition("transition1", "show", "hide");
-		animationState.handleTransitionCondition("transition1");
+
+		animationState.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
+			@Override
+			public boolean matches(Animation sourceState, Animation targetState) {
+				return true;
+			}
+		}, animation1, animation2));
+
+		assertThat(animationState.getCurrentState(), IsSame.sameInstance(animation1));
+		animationState.checkTransitionConditions();
 		assertThat(animationState.getCurrentState(), IsSame.sameInstance(animation2));
 	}
 	
 	@Test
-	public void shouldKeepOnCurrentStateIfTransitionDoesntExists() {
+	public void shouldReturnAnotherStateWhenAnotherTransitionConditionMatches() {
 		Animation animation1 = new MockAnimation();
 		Animation animation2 = new MockAnimation();
+		Animation animation3 = new MockAnimation();
+		
 		AnimationStateMachine animationState = new AnimationStateMachine();
 		animationState.addState("show", animation1);
 		animationState.addState("hide", animation2);
-		animationState.addTransition("transition1", "show", "hide");
-		animationState.handleTransitionCondition("unexpectedTransition");
+		animationState.addState("third", animation3);
+
+		animationState.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
+			@Override
+			public boolean matches(Animation sourceState, Animation targetState) {
+				return false;
+			}
+		}, animation1, animation2));
+
+		animationState.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
+			@Override
+			public boolean matches(Animation sourceState, Animation targetState) {
+				return true;
+			}
+		}, animation1, animation3));
+
 		assertThat(animationState.getCurrentState(), IsSame.sameInstance(animation1));
+		animationState.checkTransitionConditions();
+		assertThat(animationState.getCurrentState(), IsSame.sameInstance(animation3));
+	}
+	
+	boolean performCalled = false;
+	
+	@Test
+	public void souldCallPerformWhenTransitionConditionMatches() {
+		Animation animation1 = new MockAnimation();
+		AnimationStateMachine animationState = new AnimationStateMachine();
+		
+		animationState.addState("show", animation1);
+		
+		animationState.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
+			@Override
+			public boolean matches(Animation sourceState, Animation targetState) {
+				return true;
+			}
+			@Override
+			public void perform(Animation sourceState, Animation targetState) {
+				performCalled = true;
+			}
+		}, animation1, animation1));
+
+		animationState.checkTransitionConditions();
+		assertThat(performCalled, IsEqual.equalTo(true));
 	}
 
 }

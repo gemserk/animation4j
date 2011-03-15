@@ -20,6 +20,7 @@ import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.Point2DInterpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.states.AnimationStateMachine;
+import com.gemserk.animation4j.states.StateMachine.StateCondition;
 import com.gemserk.animation4j.states.StateMachine.StateTransition;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
@@ -193,25 +194,53 @@ public class Example2 extends Java2dDesktopApplication {
 			currentText = 0;
 
 			animationHandlerManager.with(new AnimationEventHandler() {
-
 				@Override
 				public void onAnimationStarted(AnimationEvent e) {
-					textPane.setText(texts[currentText]);
+					if (currentText < texts.length)
+						textPane.setText(texts[currentText]);
+					else
+						textPane.setText("");
 				}
-
-				@Override
-				public void onAnimationFinished(AnimationEvent e) {
-
-				}
-
 			}).handleChangesOf(showAnimation);
+			
+//			animationHandlerManager.with(new AnimationEventHandler() {
+//				@Override
+//				public void onAnimationFinished(AnimationEvent e) {
+//					currentText = 0;
+//				}
+//			}).handleChangesOf(hideAnimation);
 
 			animationStateMachine = new AnimationStateMachine();
+
 			animationStateMachine.addState("show", showAnimation);
 			animationStateMachine.addState("hide", hideAnimation);
-			animationStateMachine.addTransition("show", new StateTransition<Animation>(showAnimation, showAnimation));
-			animationStateMachine.addTransition("hide", new StateTransition<Animation>(showAnimation, hideAnimation));
-			animationStateMachine.addTransition("show", new StateTransition<Animation>(hideAnimation, showAnimation));
+
+			animationStateMachine.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
+				@Override
+				public boolean matches(Animation sourceState, Animation targetState) {
+					return keyboardInput.keyDownOnce(KeyEvent.VK_ENTER) && currentText < texts.length;
+				}
+			}, showAnimation, showAnimation));
+
+			animationStateMachine.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
+				@Override
+				public boolean matches(Animation sourceState, Animation targetState) {
+					return keyboardInput.keyDownOnce(KeyEvent.VK_ENTER) && currentText >= texts.length;
+				}
+			}, showAnimation, hideAnimation));
+			
+			animationStateMachine.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
+				@Override
+				public boolean matches(Animation sourceState, Animation targetState) {
+					boolean shouldShow = keyboardInput.keyDownOnce(KeyEvent.VK_ENTER);
+					if (shouldShow) 
+						currentText = 0;
+					return shouldShow;
+				}
+			}, hideAnimation, showAnimation));
+
+			// animationStateMachine.addTransition(new StateTransition<Animation>(null, showAnimation, hideAnimation));
+			// animationStateMachine.addTransition(new StateTransition<Animation>(null, hideAnimation, showAnimation));
 		}
 
 		@Inject
@@ -281,27 +310,34 @@ public class Example2 extends Java2dDesktopApplication {
 			currentAnimation.update(delta);
 
 			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
-
-				if (currentText < texts.length) {
-
-					currentText++;
-
-					if (currentText < texts.length)
-						animationStateMachine.handleTransitionCondition("show");
-					else
-						animationStateMachine.handleTransitionCondition("hide");
-
-					currentAnimation = animationStateMachine.getCurrentState();
-
-					currentAnimation.restart();
-
-				} else {
-					currentText = 0;
-					animationStateMachine.handleTransitionCondition("show");
-					currentAnimation = animationStateMachine.getCurrentState();
-					currentAnimation.restart();
-				}
 				
+				currentText++;
+				
+				animationStateMachine.checkTransitionConditions();
+				
+				currentAnimation = animationStateMachine.getCurrentState();
+				currentAnimation.restart();
+				
+//				if (currentText < texts.length) {
+//
+//					currentText++;
+//
+////					if (currentText < texts.length)
+////						animationStateMachine.handleTransitionCondition("show");
+////					else
+////						animationStateMachine.handleTransitionCondition("hide");
+//
+//					currentAnimation = animationStateMachine.getCurrentState();
+//
+//					currentAnimation.restart();
+//
+//				} else {
+//					currentText = 0;
+////					animationStateMachine.handleTransitionCondition("show");
+//					currentAnimation = animationStateMachine.getCurrentState();
+//					currentAnimation.restart();
+//				}
+
 			}
 
 			animationHandlerManager.checkAnimationChanges();
