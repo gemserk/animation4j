@@ -63,10 +63,10 @@
 							<artifacts>
 								<artifact>
 									<file>${project.build.directory}/animation4j-examples-${project.version}-jar-with-dependencies.jar</file>
-									<fileName>animation4j-examples-runnable.jar</fileName>
 									<description>Latest runnable jar with examples of animation4j
 										library </description>
 									<override>true</override>
+									<finalName>animation4j-examples-runnable.jar</finalName>
 								</artifact>
 							</artifacts>
 						</configuration>
