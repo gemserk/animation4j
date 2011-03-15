@@ -25,7 +25,7 @@ public class AnimationStateTest {
 	public void shouldReturnFirstAddedState() {
 		Animation animation1 = new MockAnimation();
 		AnimationState animationState = new AnimationState();
-		animationState.add("show", animation1);
+		animationState.addState("show", animation1);
 		assertThat(animationState.getCurrentState(), IsSame.sameInstance(animation1));
 	}
 
@@ -34,10 +34,23 @@ public class AnimationStateTest {
 		Animation animation1 = new MockAnimation();
 		Animation animation2 = new MockAnimation();
 		AnimationState animationState = new AnimationState();
-		animationState.add("show", animation1);
-		animationState.add("hide", animation2);
-		animationState.goToState("hide");
+		animationState.addState("show", animation1);
+		animationState.addState("hide", animation2);
+		animationState.addTransition("transition1", "show", "hide");
+		animationState.handleTransitionCondition("transition1");
 		assertThat(animationState.getCurrentState(), IsSame.sameInstance(animation2));
+	}
+	
+	@Test
+	public void shouldKeepOnCurrentStateIfTransitionDoesntExists() {
+		Animation animation1 = new MockAnimation();
+		Animation animation2 = new MockAnimation();
+		AnimationState animationState = new AnimationState();
+		animationState.addState("show", animation1);
+		animationState.addState("hide", animation2);
+		animationState.addTransition("transition1", "show", "hide");
+		animationState.handleTransitionCondition("unexpectedTransition");
+		assertThat(animationState.getCurrentState(), IsSame.sameInstance(animation1));
 	}
 
 }

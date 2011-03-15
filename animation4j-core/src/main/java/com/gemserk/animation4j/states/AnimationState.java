@@ -6,23 +6,53 @@ import java.util.Map;
 import com.gemserk.animation4j.Animation;
 
 public class AnimationState {
+	
+	static class Transition {
+		
+		private final Animation sourceState;
+		
+		private final Animation targetState;
+		
+		public Animation getSourceState() {
+			return sourceState;
+		}
+		
+		public Animation getTargetState() {
+			return targetState;
+		}
 
-	Map<String, Animation> animations = new HashMap<String, Animation>();
+		public Transition(Animation sourceState, Animation targetState) {
+			this.sourceState = sourceState;
+			this.targetState = targetState;
+			
+		}
+		
+	}
+
+	Map<String, Animation> states = new HashMap<String, Animation>();
 	
-	String currentId = null;
+	Map<String, Transition> transitions = new HashMap<String, AnimationState.Transition>();
 	
-	public void add(String id, Animation animation) {
-		animations.put(id, animation);
-		if (currentId == null)
-			currentId = id;
+	Animation currentState;
+	
+	public void addState(String id, Animation state) {
+		states.put(id, state);
+		if (currentState == null)
+			currentState = state;
 	}
 
 	public Animation getCurrentState() {
-		return animations.get(currentId);
+		return currentState;
 	}
 
-	public void goToState(String id) {
-		this.currentId = id;
+	public void handleTransitionCondition(String transitionId) {
+		Transition transition = transitions.get(transitionId);
+		if (transition != null)
+			currentState = transition.getTargetState();
+	}
+
+	public void addTransition(String transitionId, String sourceStateId, String targetStateId) {
+		transitions.put(transitionId, new Transition(states.get(sourceStateId), states.get(targetStateId)));
 	}
 
 }
