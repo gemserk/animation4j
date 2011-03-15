@@ -203,17 +203,9 @@ public class Example2 extends Java2dDesktopApplication {
 				}
 			}).handleChangesOf(showAnimation);
 			
-//			animationHandlerManager.with(new AnimationEventHandler() {
-//				@Override
-//				public void onAnimationFinished(AnimationEvent e) {
-//					currentText = 0;
-//				}
-//			}).handleChangesOf(hideAnimation);
-
 			animationStateMachine = new AnimationStateMachine();
 
-			animationStateMachine.addState("show", showAnimation);
-			animationStateMachine.addState("hide", hideAnimation);
+			animationStateMachine.setCurrentState(showAnimation);
 
 			animationStateMachine.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
 				@Override
@@ -232,15 +224,14 @@ public class Example2 extends Java2dDesktopApplication {
 			animationStateMachine.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
 				@Override
 				public boolean matches(Animation sourceState, Animation targetState) {
-					boolean shouldShow = keyboardInput.keyDownOnce(KeyEvent.VK_ENTER);
-					if (shouldShow) 
-						currentText = 0;
-					return shouldShow;
+					return keyboardInput.keyDownOnce(KeyEvent.VK_ENTER);
+				}
+				@Override
+				public void perform(Animation sourceState, Animation targetState) {
+					currentText = 0;					
 				}
 			}, hideAnimation, showAnimation));
 
-			// animationStateMachine.addTransition(new StateTransition<Animation>(null, showAnimation, hideAnimation));
-			// animationStateMachine.addTransition(new StateTransition<Animation>(null, hideAnimation, showAnimation));
 		}
 
 		@Inject
@@ -317,26 +308,6 @@ public class Example2 extends Java2dDesktopApplication {
 				
 				currentAnimation = animationStateMachine.getCurrentState();
 				currentAnimation.restart();
-				
-//				if (currentText < texts.length) {
-//
-//					currentText++;
-//
-////					if (currentText < texts.length)
-////						animationStateMachine.handleTransitionCondition("show");
-////					else
-////						animationStateMachine.handleTransitionCondition("hide");
-//
-//					currentAnimation = animationStateMachine.getCurrentState();
-//
-//					currentAnimation.restart();
-//
-//				} else {
-//					currentText = 0;
-////					animationStateMachine.handleTransitionCondition("show");
-//					currentAnimation = animationStateMachine.getCurrentState();
-//					currentAnimation.restart();
-//				}
 
 			}
 

@@ -1,8 +1,6 @@
 package com.gemserk.animation4j.states;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class StateMachine<K, T> {
 
@@ -46,16 +44,12 @@ public class StateMachine<K, T> {
 		
 	}
 
-	Map<K, T> states = new HashMap<K, T>();
-
 	ArrayList<StateTransition<T>> stateTransitions = new ArrayList<StateTransition<T>>();
 
 	T currentState;
-
-	public void addState(K id, T state) {
-		states.put(id, state);
-		if (currentState == null)
-			currentState = state;
+	
+	public void setCurrentState(T state) {
+		currentState = state;
 	}
 
 	public T getCurrentState() {
