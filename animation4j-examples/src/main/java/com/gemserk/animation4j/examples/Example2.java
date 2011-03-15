@@ -19,6 +19,7 @@ import com.gemserk.animation4j.event.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.Point2DInterpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
+import com.gemserk.animation4j.states.AnimationStateMachine;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
 import com.gemserk.animation4j.timeline.sync.ObjectSynchronizer;
@@ -132,7 +133,7 @@ public class Example2 extends Java2dDesktopApplication {
 			element.position = new Point(100, 100);
 			element.alpha = 0f;
 			element.textAlpha = 0f;
-			
+
 			// create the synchronizers
 
 			ObjectSynchronizer objectSynchronizer = new ReflectionObjectSynchronizer(element);
@@ -167,45 +168,49 @@ public class Example2 extends Java2dDesktopApplication {
 
 			animationHandlerManager.with(new DumpAnimationStateHandler("show")).handleChangesOf(showAnimation);
 			animationHandlerManager.with(new DumpAnimationStateHandler("hide")).handleChangesOf(hideAnimation);
-			
+
 			String html = new FileHelper("license-lostgarden.html").read();
-			
-			creditsPane = new JEditorPane("text/html", html) {{ 
-				setSize(600, 40);
-				setEditable(false);
-				setOpaque(false);
-			}};
-			
-			textPane = new JEditorPane("text/html", "") {{ 
-				setSize(226, 156);
-				setEditable(false);
-				setOpaque(false);
-			}};
-			
-			texts = new String[] {"<div>We need help! The enemies are near, we cannot let them conquer our lands</div>", 
-					"<div>Now is the time, gather your forces and prepare for the battle!</div>", 
-					"<div>People <strong>trust</strong> in you!</div>", 
-					"<div>You are our last hope!</div>"};
-			
+
+			creditsPane = new JEditorPane("text/html", html) {
+				{
+					setSize(600, 40);
+					setEditable(false);
+					setOpaque(false);
+				}
+			};
+
+			textPane = new JEditorPane("text/html", "") {
+				{
+					setSize(226, 156);
+					setEditable(false);
+					setOpaque(false);
+				}
+			};
+
+			texts = new String[] { "<div>We need help! The enemies are near, we cannot let them conquer our lands</div>", "<div>Now is the time, gather your forces and prepare for the battle!</div>", "<div>People <strong>trust</strong> in you!</div>", "<div>You are our last hope!</div>" };
+
 			currentText = 0;
-			
-			animationHandlerManager.with(new AnimationEventHandler(){
-				
+
+			animationHandlerManager.with(new AnimationEventHandler() {
+
 				@Override
 				public void onAnimationStarted(AnimationEvent e) {
 					textPane.setText(texts[currentText]);
 				}
-				
+
 				@Override
 				public void onAnimationFinished(AnimationEvent e) {
-					currentText++;
-					if (currentText < texts.length)
-						return;
-					currentText = 0;
+
 				}
-				
+
 			}).handleChangesOf(showAnimation);
-			
+
+			animationStateMachine = new AnimationStateMachine();
+			animationStateMachine.addState("show", showAnimation);
+			animationStateMachine.addState("hide", hideAnimation);
+			animationStateMachine.addTransition("show", "show", "show");
+			animationStateMachine.addTransition("hide", "show", "hide");
+			animationStateMachine.addTransition("show", "hide", "show");
 		}
 
 		@Inject
@@ -232,39 +237,41 @@ public class Example2 extends Java2dDesktopApplication {
 
 		private String[] texts;
 
+		private AnimationStateMachine animationStateMachine;
+
 		@Override
 		public void render(Graphics2D graphics) {
 			graphics.setBackground(Color.black);
 			graphics.clearRect(0, 0, 800, 600);
 
 			currentGraphicsProvider.setGraphics(graphics);
-			
+
 			graphics.setColor(Color.white);
 			graphics.drawString("Press Enter to go on with the animation.", 20, 50);
-			
+
 			AffineTransform previousTransform = graphics.getTransform();
-			
+
 			graphics.translate(20, 400);
-			
+
 			// graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, element.textAlpha));
 			creditsPane.paint(graphics);
-			
+
 			graphics.setTransform(previousTransform);
 
 			Point2D position = element.position;
-			
+
 			java2dRenderer.render(new Java2dImageRenderObject(1, houseImageResource.get(), 320, 340, 1, 1, 0f));
 			java2dRenderer.render(new Java2dImageRenderObject(1, globeImageResource.get(), (float) position.getX(), (float) position.getY(), 1, 1, 0f, new Color(1f, 1f, 1f, element.alpha)));
-			
+
 			previousTransform = graphics.getTransform();
-			
-			graphics.translate( position.getX() + 10 - 110, position.getY() + 10 - 70);
-			
+
+			graphics.translate(position.getX() + 10 - 110, position.getY() + 10 - 70);
+
 			graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, element.textAlpha));
 			textPane.paint(graphics);
-			
+
 			graphics.setTransform(previousTransform);
-			
+
 		}
 
 		@Override
@@ -274,16 +281,30 @@ public class Example2 extends Java2dDesktopApplication {
 
 			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
 
-				if (currentAnimation == showAnimation)
-					currentAnimation = hideAnimation;
-				else
-					currentAnimation = showAnimation;
+				if (currentText < texts.length) {
 
-				currentAnimation.restart();
+					currentText++;
+
+					if (currentText < texts.length)
+						animationStateMachine.handleTransitionCondition("show");
+					else
+						animationStateMachine.handleTransitionCondition("hide");
+
+					currentAnimation = animationStateMachine.getCurrentState();
+
+					currentAnimation.restart();
+
+				} else {
+					currentText = 0;
+					animationStateMachine.handleTransitionCondition("show");
+					currentAnimation = animationStateMachine.getCurrentState();
+					currentAnimation.restart();
+				}
+				
 			}
 
 			animationHandlerManager.checkAnimationChanges();
-			
+
 		}
 
 	}
