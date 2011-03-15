@@ -214,9 +214,9 @@ public class Example2 extends Java2dDesktopApplication {
 				}
 			}, showAnimation, showAnimation) {
 				@Override
-				protected void leaveState(Animation sourceState, Animation targetState) {
+				protected void enterState(Animation sourceState, Animation targetState) {
 					targetState.restart();
-					currentText++;
+					// currentText++;
 				}
 			} );
 
@@ -312,13 +312,13 @@ public class Example2 extends Java2dDesktopApplication {
 		public void update(int delta) {
 
 			currentAnimation.update(delta);
-
+			
+			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
+				 currentText++;
+			}
+			
 			animationStateMachine.checkTransitionConditions();
 			currentAnimation = animationStateMachine.getCurrentState();
-			
-//			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
-//				// currentText++;
-//			}
 
 			animationHandlerManager.checkAnimationChanges();
 
