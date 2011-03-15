@@ -97,12 +97,12 @@ public class StateMachineTest {
 			}
 		}, animation1, animation1) {
 			@Override
-			public void enterState(Animation sourceState, Animation targetState) {
+			public void afterTransition(Animation sourceState, Animation targetState) {
 				enterStateCalled = true;
 			}
 
 			@Override
-			public void leaveState(Animation sourceState, Animation targetState) {
+			public void beforeTransition(Animation sourceState, Animation targetState) {
 				leaveStateCalled = true;
 			}
 		});

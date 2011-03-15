@@ -214,9 +214,8 @@ public class Example2 extends Java2dDesktopApplication {
 				}
 			}, showAnimation, showAnimation) {
 				@Override
-				protected void enterState(Animation sourceState, Animation targetState) {
+				protected void afterTransition(Animation sourceState, Animation targetState) {
 					targetState.restart();
-					// currentText++;
 				}
 			} );
 
@@ -227,7 +226,7 @@ public class Example2 extends Java2dDesktopApplication {
 				}
 			}, showAnimation, hideAnimation) {
 				@Override
-				protected void enterState(Animation sourceState, Animation targetState) {
+				protected void afterTransition(Animation sourceState, Animation targetState) {
 					targetState.restart();
 				}
 			});
@@ -239,7 +238,7 @@ public class Example2 extends Java2dDesktopApplication {
 				}
 			}, hideAnimation, showAnimation) {
 				@Override
-				public void enterState(Animation sourceState, Animation targetState) {
+				public void afterTransition(Animation sourceState, Animation targetState) {
 					targetState.restart();
 					currentText = 0;
 				}
