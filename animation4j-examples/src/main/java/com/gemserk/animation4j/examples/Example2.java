@@ -202,7 +202,7 @@ public class Example2 extends Java2dDesktopApplication {
 						textPane.setText("");
 				}
 			}).handleChangesOf(showAnimation);
-			
+
 			animationStateMachine = new AnimationStateMachine();
 
 			animationStateMachine.setCurrentState(showAnimation);
@@ -212,25 +212,38 @@ public class Example2 extends Java2dDesktopApplication {
 				public boolean matches(Animation sourceState, Animation targetState) {
 					return keyboardInput.keyDownOnce(KeyEvent.VK_ENTER) && currentText < texts.length;
 				}
-			}, showAnimation, showAnimation));
+			}, showAnimation, showAnimation) {
+				@Override
+				protected void leaveState(Animation sourceState, Animation targetState) {
+					targetState.restart();
+					currentText++;
+				}
+			} );
 
 			animationStateMachine.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
 				@Override
 				public boolean matches(Animation sourceState, Animation targetState) {
 					return keyboardInput.keyDownOnce(KeyEvent.VK_ENTER) && currentText >= texts.length;
 				}
-			}, showAnimation, hideAnimation));
-			
+			}, showAnimation, hideAnimation) {
+				@Override
+				protected void enterState(Animation sourceState, Animation targetState) {
+					targetState.restart();
+				}
+			});
+
 			animationStateMachine.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
 				@Override
 				public boolean matches(Animation sourceState, Animation targetState) {
 					return keyboardInput.keyDownOnce(KeyEvent.VK_ENTER);
 				}
+			}, hideAnimation, showAnimation) {
 				@Override
-				public void perform(Animation sourceState, Animation targetState) {
-					currentText = 0;					
+				public void enterState(Animation sourceState, Animation targetState) {
+					targetState.restart();
+					currentText = 0;
 				}
-			}, hideAnimation, showAnimation));
+			});
 
 		}
 
@@ -300,16 +313,12 @@ public class Example2 extends Java2dDesktopApplication {
 
 			currentAnimation.update(delta);
 
-			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
-				
-				currentText++;
-				
-				animationStateMachine.checkTransitionConditions();
-				
-				currentAnimation = animationStateMachine.getCurrentState();
-				currentAnimation.restart();
-
-			}
+			animationStateMachine.checkTransitionConditions();
+			currentAnimation = animationStateMachine.getCurrentState();
+			
+//			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
+//				// currentText++;
+//			}
 
 			animationHandlerManager.checkAnimationChanges();
 

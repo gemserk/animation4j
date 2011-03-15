@@ -50,13 +50,13 @@ public class StateMachineTest {
 		animationState.checkTransitionConditions();
 		assertThat(animationState.getCurrentState(), IsSame.sameInstance(animation2));
 	}
-	
+
 	@Test
 	public void shouldReturnAnotherStateWhenAnotherTransitionConditionMatches() {
 		Animation animation1 = new MockAnimation();
 		Animation animation2 = new MockAnimation();
 		Animation animation3 = new MockAnimation();
-		
+
 		AnimationStateMachine animationState = new AnimationStateMachine();
 		animationState.setCurrentState(animation1);
 
@@ -78,29 +78,38 @@ public class StateMachineTest {
 		animationState.checkTransitionConditions();
 		assertThat(animationState.getCurrentState(), IsSame.sameInstance(animation3));
 	}
-	
-	boolean performCalled = false;
-	
+
+	boolean enterStateCalled = false;
+
+	boolean leaveStateCalled = false;
+
 	@Test
 	public void souldCallPerformWhenTransitionConditionMatches() {
 		Animation animation1 = new MockAnimation();
 		AnimationStateMachine animationState = new AnimationStateMachine();
-		
+
 		animationState.setCurrentState(animation1);
-		
+
 		animationState.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
 			@Override
 			public boolean matches(Animation sourceState, Animation targetState) {
 				return true;
 			}
+		}, animation1, animation1) {
 			@Override
-			public void perform(Animation sourceState, Animation targetState) {
-				performCalled = true;
+			public void enterState(Animation sourceState, Animation targetState) {
+				enterStateCalled = true;
 			}
-		}, animation1, animation1));
+
+			@Override
+			public void leaveState(Animation sourceState, Animation targetState) {
+				leaveStateCalled = true;
+			}
+		});
 
 		animationState.checkTransitionConditions();
-		assertThat(performCalled, IsEqual.equalTo(true));
+		assertThat(enterStateCalled, IsEqual.equalTo(true));
+		assertThat(leaveStateCalled, IsEqual.equalTo(true));
 	}
 
 }

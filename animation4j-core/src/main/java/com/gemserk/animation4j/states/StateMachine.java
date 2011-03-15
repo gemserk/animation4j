@@ -29,17 +29,39 @@ public class StateMachine<K, T> {
 			this.sourceState = sourceState;
 			this.targetState = targetState;
 		}
+		
+		private void enterState() {
+			enterState(sourceState, targetState);
+		}
+		
+		/**
+		 * Called after entered targetState, after sourceState was left.
+		 * @param sourceState
+		 * @param targetState
+		 */
+		protected void enterState(T sourceState, T targetState) {
+			
+		}
 
+		private void leaveState() {
+			leaveState(sourceState, targetState);
+		}
+
+		/**
+		 * Called before sourceState was left, and targetState will be the next state.
+		 * @param sourceState
+		 * @param targetState
+		 */
+		protected void leaveState(T sourceState, T targetState) {
+			
+		}
+		
 	}
 	
 	public static class StateCondition<T> {
 		
 		public boolean matches(T sourceState, T targetState) {
 			return false;
-		}
-		
-		public void perform(T sourceState, T targetState) {
-			
 		}
 		
 	}
@@ -65,8 +87,11 @@ public class StateMachine<K, T> {
 			StateCondition<T> stateCondition = transition.getCondition();
 			if (!stateCondition.matches(getCurrentState(), transition.getTargetState()))
 				continue;
-			transition.condition.perform(getCurrentState(), transition.getTargetState());
+
+			transition.leaveState();
 			currentState = transition.getTargetState();
+			transition.enterState();
+			
 			return;
 		}
 	}
