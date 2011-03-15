@@ -8,7 +8,6 @@ import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -41,7 +40,7 @@ public class ExamplesLoader {
 
 	public static void main(String[] arguments) {
 
-		final JDialog mainFrame = new JDialog() {
+		final JFrame mainFrame = new JFrame() {
 			{
 
 				setSize(340, 140);
@@ -115,6 +114,8 @@ public class ExamplesLoader {
 
 			}
 		});
+		
+		mainFrame.repaint();
 		
 	}
 
