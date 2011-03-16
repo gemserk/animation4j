@@ -91,6 +91,10 @@
 			<artifactId>animation4j-core</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>animation4j-componentsengine</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.gemserk.componentsengine</groupId>
 			<artifactId>core</artifactId>
 		</dependency>
