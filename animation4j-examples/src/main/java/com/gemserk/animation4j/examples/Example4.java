@@ -122,7 +122,7 @@ public class Example4 extends Java2dDesktopApplication {
 					position = new AutoUpdateableTransition<Point2D>(new Point2D.Float(320, 625), new Point2DInterpolator(linearInterpolationFunction), 0.001f);
 					colorTransition = new AutoUpdateableTransition<Color>(new Color(1f, 1f, 1f, 1f), new ColorInterpolator(linearInterpolationFunction), 0.001f);
 					glowColorTransition = new AutoUpdateableTransition<Color>(new Color(1f, 0f, 0f, 0f), new ColorInterpolator(linearInterpolationFunction), 0.001f);
-					position.set(new Point2D.Float(320,125), 1500);
+					position.set(new Point2D.Float(320,125), 1000);
 					
 					size = new AutoUpdateableTransition<Point2D>(new Point2D.Float(1f, 1f), new Point2DInterpolator(linearInterpolationFunction), 0.001f);
 				}
@@ -134,7 +134,7 @@ public class Example4 extends Java2dDesktopApplication {
 					position = new AutoUpdateableTransition<Point2D>(new Point2D.Float(320, 725), new Point2DInterpolator(linearInterpolationFunction), 0.001f);
 					colorTransition = new AutoUpdateableTransition<Color>(new Color(1f, 1f, 1f, 1f), new ColorInterpolator(linearInterpolationFunction), 0.001f);
 					glowColorTransition = new AutoUpdateableTransition<Color>(new Color(0f, 1f, 0f, 0f), new ColorInterpolator(linearInterpolationFunction), 0.001f);
-					position.set(new Point2D.Float(320,225), 1500);
+					position.set(new Point2D.Float(320,225), 1000);
 					
 					size = new AutoUpdateableTransition<Point2D>(new Point2D.Float(1f, 1f), new Point2DInterpolator(linearInterpolationFunction), 0.001f);
 				}
@@ -146,24 +146,27 @@ public class Example4 extends Java2dDesktopApplication {
 					position = new AutoUpdateableTransition<Point2D>(new Point2D.Float(320, 825), new Point2DInterpolator(linearInterpolationFunction), 0.001f);
 					colorTransition = new AutoUpdateableTransition<Color>(new Color(1f, 1f, 1f, 1f), new ColorInterpolator(linearInterpolationFunction), 0.001f);
 					glowColorTransition = new AutoUpdateableTransition<Color>(new Color(0f, 0f, 1f, 0f), new ColorInterpolator(linearInterpolationFunction), 0.001f);
-					position.set(new Point2D.Float(320,325), 1500);
+					position.set(new Point2D.Float(320,325), 1000);
 					
 					size = new AutoUpdateableTransition<Point2D>(new Point2D.Float(1f, 1f), new Point2DInterpolator(linearInterpolationFunction), 0.001f);
 				}
 			});
 			
+			backgroundColor = new AutoUpdateableTransition<Color>(new Color(0.4f, 0.4f, 0.4f, 0f), new ColorInterpolator(linearInterpolationFunction), 0.001f);
+			backgroundColor.set(new Color(0.4f,0.4f, 0.4f, 0.6f), 1000);
 		}
+		
+		Transition<Color> backgroundColor;
 
 		@Override
 		public void render(Graphics2D graphics) {
-//			graphics.setBackground(Color.black);
-//			graphics.clearRect(0, 0, 800, 600);
+
 			currentGraphicsProvider.setGraphics(graphics);
 
 			Resource<BufferedImage> backgroundResource = resourceManager.get("Background");
 			java2dRenderer.render(new Java2dImageRenderObject(0, backgroundResource.get(), 320, 240, 1, 1, 0f));
 			
-			graphics.setColor(new Color(0.4f, 0.4f, 0.4f, 0.6f));
+			graphics.setColor(backgroundColor.get());
 			graphics.fillRect(0, 0, 640, 480);
 			
 			// render the image using the color of the transition
