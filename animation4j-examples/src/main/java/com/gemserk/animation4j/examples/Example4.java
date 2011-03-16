@@ -2,6 +2,7 @@ package com.gemserk.animation4j.examples;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
@@ -113,7 +114,7 @@ public class Example4 extends Java2dDesktopApplication {
 			buttons.add(new Button() {
 				{
 					text = "Play";
-					position = new Point2D.Float(320, 150);
+					position = new Point2D.Float(320, 125);
 					colorTransition = new AutoUpdateableTransition<Color>(new Color(0.3f, 0.3f, 0.3f, 0.8f), new ColorInterpolator(linearInterpolationFunction), 0.001f);
 					glowColorTransition = new AutoUpdateableTransition<Color>(new Color(0.3f, 0.3f, 1f, 0f), new ColorInterpolator(linearInterpolationFunction), 0.001f);
 				}
@@ -122,7 +123,7 @@ public class Example4 extends Java2dDesktopApplication {
 			buttons.add(new Button() {
 				{
 					text = "Settings";
-					position = new Point2D.Float(320, 250);
+					position = new Point2D.Float(320, 225);
 					colorTransition = new AutoUpdateableTransition<Color>(new Color(0.3f, 0.3f, 0.3f, 0.8f), new ColorInterpolator(linearInterpolationFunction), 0.001f);
 					glowColorTransition = new AutoUpdateableTransition<Color>(new Color(0.3f, 0.3f, 1f, 0f), new ColorInterpolator(linearInterpolationFunction), 0.001f);
 				}
@@ -131,12 +132,12 @@ public class Example4 extends Java2dDesktopApplication {
 			buttons.add(new Button() {
 				{
 					text = "Exit";
-					position = new Point2D.Float(320, 350);
+					position = new Point2D.Float(320, 325);
 					colorTransition = new AutoUpdateableTransition<Color>(new Color(0.3f, 0.3f, 0.3f, 0.8f), new ColorInterpolator(linearInterpolationFunction), 0.001f);
 					glowColorTransition = new AutoUpdateableTransition<Color>(new Color(0.3f, 0.3f, 1f, 0f), new ColorInterpolator(linearInterpolationFunction), 0.001f);
 				}
 			});
-
+			
 		}
 
 		@Override
@@ -156,6 +157,14 @@ public class Example4 extends Java2dDesktopApplication {
 				
 				java2dRenderer.render(new Java2dImageRenderObject(1, buttonImageResource.get(), x, y, 1, 1, 0f, color));
 				java2dRenderer.render(new Java2dImageRenderObject(1, buttonGlowImageResource.get(), x, y, 1, 1, 0f, button.glowColorTransition.get()));
+				
+				Font previousFont = graphics.getFont();
+				
+				graphics.setFont(previousFont.deriveFont(16f));
+				graphics.setColor(button.glowColorTransition.get());
+				graphics.drawString(button.text, x - button.text.length() * 3, y);
+				
+				graphics.setFont(previousFont);
 			}
 			
 		}
@@ -182,14 +191,14 @@ public class Example4 extends Java2dDesktopApplication {
 						button.mouseInside = true;
 						// when the mouse is over the image, we set the color to white
 						button.colorTransition.set(new Color(0.3f, 0.3f, 1f, 1f), 200);
-						button.glowColorTransition.set(new Color(0.5f, 0.5f, 1f, 1f), 300);
+						button.glowColorTransition.set(new Color(1f, 0.5f, 1f, 1f), 300);
 					}
 				} else {
 					if (button.mouseInside) {
 						button.mouseInside = false;
 						// when the mouse left the image, we set again the color to the previous color.
 						button.colorTransition.set(new Color(0.3f, 0.3f, 0.3f, 0.8f), 200);
-						button.glowColorTransition.set(new Color(0.3f, 0.3f, 1f, 0f), 600);
+						button.glowColorTransition.set(new Color(0.3f, 0.3f, 0.3f, 0f), 600);
 					}
 				}
 				
