@@ -30,15 +30,17 @@ public class SyncrhonizedAnimationTest {
 
 		mockery.checking(new Expectations() {
 			{
-				oneOf(animation).update(10f);
 				oneOf(animation).getTimeline();
 				will(returnValue(timeline));
 
 				oneOf(timeline).getIterator();
 				will(returnValue(timelineIterator));
 
+				oneOf(animation).update(10f);
 				oneOf(animation).getCurrentTime();
 				will(returnValue(200f));
+				
+				oneOf(timelineIterator).restart();
 
 				oneOf(timelineSynchronizer).syncrhonize(timelineIterator, 200f);
 			}
@@ -47,6 +49,27 @@ public class SyncrhonizedAnimationTest {
 		SynchrnonizedAnimation synchrnonizedAnimation = new SynchrnonizedAnimation(animation, timelineSynchronizer);
 
 		synchrnonizedAnimation.update(10f);
+
+	}
+	
+	@Test
+	public void shouldAskForIteratorOnConstructor() {
+
+		final TimelineAnimation animation = mockery.mock(TimelineAnimation.class);
+		final TimelineSynchronizer timelineSynchronizer = mockery.mock(TimelineSynchronizer.class);
+		final Timeline timeline = mockery.mock(Timeline.class);
+		final TimelineIterator timelineIterator = mockery.mock(TimelineIterator.class);
+
+		mockery.checking(new Expectations() {
+			{
+				oneOf(animation).getTimeline();
+				will(returnValue(timeline));
+				oneOf(timeline).getIterator();
+				will(returnValue(timelineIterator));
+			}
+		});
+
+		new SynchrnonizedAnimation(animation, timelineSynchronizer);
 
 	}
 

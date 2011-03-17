@@ -28,5 +28,9 @@ public class TimelineIterator {
 	public boolean hasNext() {
 		return currentKey < keys.size();
 	}
+	
+	public void restart() {
+		currentKey = 0;
+	}
 
 }

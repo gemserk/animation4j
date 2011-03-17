@@ -10,13 +10,17 @@ import com.gemserk.animation4j.timeline.TimelineIterator;
  */
 public class SynchrnonizedAnimation implements Animation {
 
-	private TimelineAnimation animation;
+	private final TimelineAnimation animation;
 	
 	private final TimelineSynchronizer timelineSynchronizer;
+
+	private final TimelineIterator iterator;
 
 	public SynchrnonizedAnimation(TimelineAnimation animation, TimelineSynchronizer timelineSynchronizer) {
 		this.animation = animation;
 		this.timelineSynchronizer = timelineSynchronizer;
+		
+		iterator = animation.getTimeline().getIterator();
 	}
 
 	public void start() {
@@ -65,7 +69,7 @@ public class SynchrnonizedAnimation implements Animation {
 
 	public void update(float delta) {
 		animation.update(delta);
-		TimelineIterator iterator = animation.getTimeline().getIterator();
+		iterator.restart();
 		float time = animation.getCurrentTime();
 		timelineSynchronizer.syncrhonize(iterator, time);
 	}
