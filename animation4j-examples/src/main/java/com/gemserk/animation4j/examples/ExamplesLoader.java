@@ -94,7 +94,7 @@ public class ExamplesLoader {
 						System.out.println("Starting " + selectedOption.name);
 
 						try {
-							mainFrame.setVisible(false);
+							// mainFrame.setVisible(false);
 
 							final Java2dDesktopApplication exampleInstance = selectedOption.app;
 							

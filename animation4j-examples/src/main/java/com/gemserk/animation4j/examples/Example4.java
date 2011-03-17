@@ -47,7 +47,13 @@ import com.google.inject.Injector;
 public class Example4 extends Java2dDesktopApplication {
 
 	public static void main(String[] args) {
-		Java2dDesktopApplication java2dDesktopApplication = new Example4();
+		Java2dDesktopApplication java2dDesktopApplication = new Example4() {
+			@Override
+			public void stop() {
+				super.stop();
+				System.exit(0);
+			}
+		};
 		java2dDesktopApplication.init();
 		java2dDesktopApplication.start();
 	}
@@ -61,10 +67,6 @@ public class Example4 extends Java2dDesktopApplication {
 		createWindow("Example4", resolution, game, injector);
 	}
 
-	public void stop() {
-		System.exit(0);
-	}
-	
 	static class ExampleInternalGame implements Java2dGame {
 
 		@Inject
