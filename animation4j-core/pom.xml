@@ -15,7 +15,7 @@
 
 	<profiles>
 		<profile>
-			<id>github-upload</id>
+			<id>github-upload-artifacts</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
@@ -31,7 +31,7 @@
 						<executions>
 							<execution>
 								<id>upload-artifacts</id>
-								<phase>install</phase>
+								<phase>package</phase>
 								<goals>
 									<goal>upload</goal>
 								</goals>
