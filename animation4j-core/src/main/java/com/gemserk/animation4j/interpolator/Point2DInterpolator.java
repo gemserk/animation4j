@@ -3,10 +3,15 @@ package com.gemserk.animation4j.interpolator;
 import java.awt.geom.Point2D;
 
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
+import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 
 public class Point2DInterpolator implements Interpolator<Point2D> {
 
-	InterpolatorFunction interpolatorFunction;
+	private final InterpolatorFunction interpolatorFunction;
+
+	public Point2DInterpolator() {
+		this(InterpolatorFunctionFactory.linear());
+	}
 
 	public Point2DInterpolator(InterpolatorFunction interpolatorFunction) {
 		this.interpolatorFunction = interpolatorFunction;

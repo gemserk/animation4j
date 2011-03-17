@@ -3,10 +3,15 @@ package com.gemserk.animation4j.interpolator;
 import java.awt.Color;
 
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
+import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 
 public class ColorInterpolator implements Interpolator<Color> {
 
 	private final InterpolatorFunction interpolatorFunction;
+	
+	public ColorInterpolator() {
+		this(InterpolatorFunctionFactory.linear());
+	}
 
 	public ColorInterpolator(InterpolatorFunction interpolatorFunction) {
 		this.interpolatorFunction = interpolatorFunction;
