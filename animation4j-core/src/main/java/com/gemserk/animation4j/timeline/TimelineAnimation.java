@@ -103,6 +103,7 @@ public class TimelineAnimation implements Animation {
 	public void stop() {
 		currentTime = 0;
 		iteration = 1;
+		playingDirection = PlayingDirection.Normal;
 		pause();
 	}
 
