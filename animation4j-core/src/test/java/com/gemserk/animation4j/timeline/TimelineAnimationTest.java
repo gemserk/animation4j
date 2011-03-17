@@ -8,6 +8,8 @@ import org.hamcrest.Matcher;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
+import com.gemserk.animation4j.Animation;
+
 public class TimelineAnimationTest {
 
 	public static class IsNear {
@@ -234,5 +236,35 @@ public class TimelineAnimationTest {
 	// test restart is not setting iteration to 0? (fixed without test)
 	
 	// test: restart should restart delay?
+	
+	@Test
+	public void bugWhenRestartAnimationPlayingInReverseItWasStillInReverse() {
+		final String valueName = "myvalue";
+		
+		TimelineAnimation animation = new TimelineAnimationBuilder() {
+			{
+				value(valueName, new TimelineValueBuilder<Float>() {
+					{
+						keyFrame(0, 100f);
+						keyFrame(100, 200f);
+					}
+				});
+			}
+		}.build();
+
+		animation.start(2, true);
+		assertThat(animation.getIteration(), IsEqual.equalTo(1));
+		assertThat(animation.getPlayingDirection(), IsEqual.equalTo(Animation.PlayingDirection.Normal));
+		animation.update(101);
+		assertThat(animation.getIteration(), IsEqual.equalTo(2));
+		assertThat(animation.getPlayingDirection(), IsEqual.equalTo(Animation.PlayingDirection.Reverse));
+		animation.restart();
+		assertThat(animation.getIteration(), IsEqual.equalTo(1));
+		assertThat(animation.getPlayingDirection(), IsEqual.equalTo(Animation.PlayingDirection.Normal));
+		animation.update(20);
+		assertThat(animation.getIteration(), IsEqual.equalTo(1));
+		assertThat(animation.getPlayingDirection(), IsEqual.equalTo(Animation.PlayingDirection.Normal));
+		
+	}
 
 }
