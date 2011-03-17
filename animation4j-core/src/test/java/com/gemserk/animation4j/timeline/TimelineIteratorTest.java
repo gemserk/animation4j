@@ -72,14 +72,20 @@ public class TimelineIteratorTest {
 		final Timeline timeline = mockery.mock(Timeline.class);
 		final HashMap<String, TimelineValue> values = new HashMap<String, TimelineValue>();
 		
-		TimelineValue firstTimelineValue = new TimelineValue();
-		TimelineValue secondTimelineValue = new TimelineValue();
+		final TimelineValue firstTimelineValue = new TimelineValue();
+		final TimelineValue secondTimelineValue = new TimelineValue();
 		
 		values.put("a", firstTimelineValue);
 		values.put("b", secondTimelineValue);
 		
 		mockery.checking(new Expectations() {
 			{
+				ignoring(timeline).getTimelineValue("a");
+				will(returnValue(firstTimelineValue));
+				
+				ignoring(timeline).getTimelineValue("b");
+				will(returnValue(secondTimelineValue));
+				
 				ignoring(timeline).getTimelineValues();
 				will(returnValue(values));
 			}

@@ -1,36 +1,32 @@
 package com.gemserk.animation4j.timeline;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 
 /**
  * Provides a way to iterate through items of a time line.
  * @author acoppes
  */
-public class TimelineIterator implements Iterator<TimelineValue<Object>> {
+public class TimelineIterator {
 
 	private final Timeline timeline;
 	
-	private Iterator<String> iterator;
+	private ArrayList<String> keys = new ArrayList<String>();
+
+	private int currentKey;
 
 	public TimelineIterator(Timeline timeline) {
 		this.timeline = timeline;
-		iterator = timeline.getTimelineValues().keySet().iterator();
+		keys.addAll(timeline.getTimelineValues().keySet());
+		currentKey = 0;
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Override
 	public TimelineValue<Object> next() {
-		return timeline.getTimelineValues().get(iterator.next());
+		return timeline.getTimelineValue(keys.get(currentKey++));
 	}
 
-	@Override
 	public boolean hasNext() {
-		return iterator.hasNext();
+		return currentKey < keys.size();
 	}
 
-	@Override
-	public void remove() {
-		throw new RuntimeException("not implemented yet, dunno if we should let remove items from a time line");
-	}
-	
 }

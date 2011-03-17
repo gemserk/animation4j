@@ -36,4 +36,8 @@ public class Timeline {
 	public TimelineIterator getIterator() {
 		return new TimelineIterator(this);
 	}
+
+	public TimelineValue getTimelineValue(String key) {
+		return timelineValues.get(key);
+	}
 }
