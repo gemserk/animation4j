@@ -8,11 +8,13 @@ package com.gemserk.animation4j.interpolator;
  */
 public class CustomInterpolator<T> implements Interpolator<T> {
 
-	private float[] a;
-
-	private float[] b;
-
 	private final TypeConverter<T> converter;
+
+	private float[] a;
+	
+	private float[] b;
+	
+	private T tmp;
 
 	private FloatArrayInterpolator floatArrayInterpolator;
 	
@@ -30,7 +32,8 @@ public class CustomInterpolator<T> implements Interpolator<T> {
 	public T interpolate(T t1, T t2, float t) {
 		a = converter.copyFromObject(t1, a);
 		b = converter.copyFromObject(t2, b);
-		return converter.copyToObject(null, floatArrayInterpolator.interpolate(a, b, t));
+		tmp = converter.copyToObject(tmp, floatArrayInterpolator.interpolate(a, b, t));
+		return tmp;
 	}
 
 }
