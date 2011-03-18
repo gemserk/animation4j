@@ -9,7 +9,7 @@ import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 
-public class ArrayInterpolatorTest {
+public class CustomInterpolatorTest {
 
 	@Test
 	public void test() {
@@ -31,7 +31,7 @@ public class ArrayInterpolatorTest {
 			}
 		};
 
-		ArrayInterpolator<Color> arrayInterpolator = new ArrayInterpolator<Color>(colorConverter, new FloatArrayInterpolator(4));
+		CustomInterpolator<Color> arrayInterpolator = new CustomInterpolator<Color>(colorConverter, new FloatArrayInterpolator(4));
 
 		Color startColor = new Color(0f, 0f, 0f, 0f);
 		Color endColor = new Color(1f, 1f, 1f, 1f);
@@ -109,7 +109,7 @@ public class ArrayInterpolatorTest {
 			
 		};
 
-		ArrayInterpolator<Vector2f> arrayInterpolator = new ArrayInterpolator<Vector2f>(converter, new FloatArrayInterpolator(2));
+		CustomInterpolator<Vector2f> arrayInterpolator = new CustomInterpolator<Vector2f>(converter, new FloatArrayInterpolator(2));
 
 		Vector2f t1 = new Vector2f(100f, 100f);
 		Vector2f t2 = new Vector2f(200f, 200f);

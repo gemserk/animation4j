@@ -1,6 +1,6 @@
 package com.gemserk.animation4j.interpolator;
 
-public class ArrayInterpolator<T> {
+public class CustomInterpolator<T> {
 
 	private float[] a;
 
@@ -10,7 +10,7 @@ public class ArrayInterpolator<T> {
 
 	private FloatArrayInterpolator floatArrayInterpolator;
 	
-	public ArrayInterpolator(TypeConverter<T> converter, FloatArrayInterpolator floatArrayInterpolator) {
+	public CustomInterpolator(TypeConverter<T> converter, FloatArrayInterpolator floatArrayInterpolator) {
 		this.converter = converter;
 		this.floatArrayInterpolator = floatArrayInterpolator;
 		a = new float[floatArrayInterpolator.getLength()];
