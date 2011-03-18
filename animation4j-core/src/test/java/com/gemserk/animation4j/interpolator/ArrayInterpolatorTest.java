@@ -16,7 +16,7 @@ public class ArrayInterpolatorTest {
 	@Test
 	public void test() {
 		
-		ArrayInterpolator<Color> arrayInterpolator = new ArrayInterpolator<Color>(InterpolatorFunctionFactory.linear()) {
+		ArrayInterpolator<Color> arrayInterpolator = new ArrayInterpolator<Color>(InterpolatorFunctionFactory.linear(), 4) {
 
 			@Override
 			public void copyFromObject(Color color, float[] x) {
@@ -26,11 +26,6 @@ public class ArrayInterpolatorTest {
 			@Override
 			public Color copyToObject(Color color, float[] x) {
 				return new Color(x[0], x[1], x[2], x[3]);
-			}
-
-			@Override
-			public int getVariableQuantity() {
-				return 4;
 			}
 			
 		};

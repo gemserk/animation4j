@@ -16,16 +16,13 @@ public abstract class ArrayInterpolator<T> {
 	
 	private T value;
 
-	public ArrayInterpolator(InterpolatorFunction function) {
+	public ArrayInterpolator(InterpolatorFunction function, int length) {
 		this.function = function;
-		int length = getVariableQuantity();
 		a = new float[length];
 		b = new float[length];
 		out = new float[length];
 	}
 	
-	public abstract int getVariableQuantity();
-
 	public abstract void copyFromObject(T object, float[] x);
 
 	public abstract T copyToObject(T object, float[] x);
