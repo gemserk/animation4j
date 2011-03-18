@@ -52,7 +52,7 @@ public class ArrayInterpolatorTest {
 	@Test
 	public void test2() {
 
-		FloatArrayInterpolator interpolator = new FloatArrayInterpolator(new float[4], InterpolatorFunctionFactory.linear());
+		FloatArrayInterpolator interpolator = new FloatArrayInterpolator(new float[4]);
 
 		float[] a = new float[] { 0f, 0f, 0f, 0f };
 		float[] b = new float[] { 1f, 1f, 1f, 1f };
