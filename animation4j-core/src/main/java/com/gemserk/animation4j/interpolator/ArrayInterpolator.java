@@ -5,7 +5,7 @@ import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory
 
 // T should be mutable elements
 
-public abstract class ArrayInterpolator<T> {
+public class ArrayInterpolator<T> {
 
 	private float[] a;
 
@@ -14,6 +14,8 @@ public abstract class ArrayInterpolator<T> {
 	private T value;
 
 	private MultipleVariableInterpolator multipleVariableInterpolator;
+
+	private final TypeConverter<T> converter;
 	
 	public static class MultipleVariableInterpolator {
 		
@@ -38,23 +40,33 @@ public abstract class ArrayInterpolator<T> {
 		}
 		
 	}
+	
+	/**
+	 * Provides a way to convert an object in a float[] array and vice versa, for interpolation purposes. 
+	 * @param <T> - The type to convert.
+	 * @author acoppes
+	 */
+	public static interface TypeConverter<T> {
+		
+		float[] copyFromObject(T object, float[] x);
 
-	public ArrayInterpolator(InterpolatorFunction function, int length) {
+		T copyToObject(T object, float[] x);
+		
+	}
+
+	public ArrayInterpolator(InterpolatorFunction function, TypeConverter<T> converter, int length) {
+		this.converter = converter;
 		multipleVariableInterpolator = new MultipleVariableInterpolator(function, new float[length]);
 		a = new float[length];
 		b = new float[length];
 	}
 	
-	public abstract void copyFromObject(T object, float[] x);
-
-	public abstract T copyToObject(float[] x);
-
 	public T interpolate(T t1, T t2, float t) {
 
-		copyFromObject(t1, a);
-		copyFromObject(t2, b);
-
-		value = copyToObject(multipleVariableInterpolator.interpolate(a, b, t));
+		a = converter.copyFromObject(t1, a);
+		b = converter.copyFromObject(t2, b);
+		
+		value = converter.copyToObject(value, multipleVariableInterpolator.interpolate(a, b, t));
 		
 		return value;
 	}
