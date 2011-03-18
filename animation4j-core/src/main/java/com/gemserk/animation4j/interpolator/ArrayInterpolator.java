@@ -25,7 +25,7 @@ public abstract class ArrayInterpolator<T> {
 	
 	public abstract void copyFromObject(T object, float[] x);
 
-	public abstract T copyToObject(T object, float[] x);
+	public abstract T copyToObject(float[] x);
 
 	public T interpolate(T t1, T t2, float t) {
 
@@ -37,7 +37,7 @@ public abstract class ArrayInterpolator<T> {
 		for (int i = 0; i < out.length; i++) 
 			out[i] = a[i] * (1 - t) + b[i] * t;
 		
-		value = copyToObject(value, out);
+		value = copyToObject(out);
 		
 		return value;
 	}
