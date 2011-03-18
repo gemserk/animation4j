@@ -8,8 +8,6 @@ import java.awt.Color;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
-import com.gemserk.animation4j.interpolator.ArrayInterpolator.TypeConverter;
-import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 
 public class ArrayInterpolatorTest {
 
@@ -33,7 +31,7 @@ public class ArrayInterpolatorTest {
 			}
 		};
 
-		ArrayInterpolator<Color> arrayInterpolator = new ArrayInterpolator<Color>(InterpolatorFunctionFactory.linear(), colorConverter, 4);
+		ArrayInterpolator<Color> arrayInterpolator = new ArrayInterpolator<Color>(colorConverter, 4);
 
 		Color startColor = new Color(0f, 0f, 0f, 0f);
 		Color endColor = new Color(1f, 1f, 1f, 1f);
@@ -64,6 +62,68 @@ public class ArrayInterpolatorTest {
 		assertThat(out[2], IsEqual.equalTo(0.5f));
 		assertThat(out[3], IsEqual.equalTo(0.5f));
 
+	}
+	
+	static class Vector2f {
+		
+		float x,y;
+		
+		public Vector2f(float x, float y) {
+			set(x,y);
+			System.out.println("vector2f created!!");
+		}
+		
+		public void set(float x, float y) {
+			this.x = x;
+			this.y = y;
+		}
+		
+	}
+	
+	@Test
+	public void test3() {
+
+		// converter uses a temporary vector to return
+		// WARNING: if converter is used multiple times, it will modify the vector already returned.
+		
+		TypeConverter<Vector2f> converter = new TypeConverter<Vector2f>() {
+			
+			Vector2f tmp = new Vector2f(0, 0);
+
+			@Override
+			public float[] copyFromObject(Vector2f v, float[] x) {
+				x[0] = v.x;
+				x[1] = v.y;
+				return x;
+				
+			}
+
+			@Override
+			public Vector2f copyToObject(Vector2f v, float[] x) {
+				if (v == null)
+					v = tmp;
+				v.x = x[0];
+				v.y = x[1];
+				return v;
+			}
+			
+		};
+
+		ArrayInterpolator<Vector2f> arrayInterpolator = new ArrayInterpolator<Vector2f>(converter, 4);
+
+		Vector2f t1 = new Vector2f(100f, 100f);
+		Vector2f t2 = new Vector2f(200f, 200f);
+		
+		Vector2f result = arrayInterpolator.interpolate(t1, t2, 0.5f);
+		result = arrayInterpolator.interpolate(t1, t2, 0.5f);
+		result = arrayInterpolator.interpolate(t1, t2, 0.5f);
+		result = arrayInterpolator.interpolate(t1, t2, 0.5f);
+		result = arrayInterpolator.interpolate(t1, t2, 0.5f);
+
+		assertNotNull(result);
+		assertThat(result.x, IsEqual.equalTo(150f));
+		assertThat(result.y, IsEqual.equalTo(150f));
+		
 	}
 
 }
