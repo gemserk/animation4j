@@ -8,6 +8,7 @@ import java.awt.Color;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
+import com.gemserk.animation4j.interpolator.ArrayInterpolator.MultipleVariableInterpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 
 
@@ -45,6 +46,23 @@ public class ArrayInterpolatorTest {
 		assertThat(rgb[1], IsEqual.equalTo(0.5f));
 		assertThat(rgb[2], IsEqual.equalTo(0.5f));
 		assertThat(rgb[3], IsEqual.equalTo(0.5f));
+		
+	}
+	
+	@Test
+	public void test2() {
+		
+		MultipleVariableInterpolator interpolator = new MultipleVariableInterpolator(InterpolatorFunctionFactory.linear(), new float[4]);
+		
+		float[] a = new float[]{0f, 0f, 0f, 0f};
+		float[] b = new float[]{1f, 1f, 1f, 1f};
+		
+		float[] out = interpolator.interpolate(a, b, 0.5f);
+		
+		assertThat(out[0], IsEqual.equalTo(0.5f));
+		assertThat(out[1], IsEqual.equalTo(0.5f));
+		assertThat(out[2], IsEqual.equalTo(0.5f));
+		assertThat(out[3], IsEqual.equalTo(0.5f));
 		
 	}
 	
