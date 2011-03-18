@@ -10,11 +10,11 @@ public class ArrayInterpolator<T> {
 
 	private FloatArrayInterpolator floatArrayInterpolator;
 	
-	public ArrayInterpolator(TypeConverter<T> converter, int length, FloatArrayInterpolator floatArrayInterpolator) {
+	public ArrayInterpolator(TypeConverter<T> converter, FloatArrayInterpolator floatArrayInterpolator) {
 		this.converter = converter;
 		this.floatArrayInterpolator = floatArrayInterpolator;
-		a = new float[length];
-		b = new float[length];
+		a = new float[floatArrayInterpolator.getLength()];
+		b = new float[floatArrayInterpolator.getLength()];
 	}
 	
 	public T interpolate(T t1, T t2, float t) {

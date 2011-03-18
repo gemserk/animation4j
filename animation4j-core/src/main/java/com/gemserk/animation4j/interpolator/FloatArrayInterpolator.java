@@ -9,8 +9,16 @@ public class FloatArrayInterpolator {
 	
 	private final float[] out;
 	
-	public FloatArrayInterpolator(float[] out) {
-		this(out, InterpolatorFunctionFactory.linear());
+	public int getLength() {
+		return out.length;
+	}
+	
+	public FloatArrayInterpolator(int length) {
+		this(new float[length]);
+	}
+	
+	public FloatArrayInterpolator(int length, InterpolatorFunction ...functions) {
+		this(new float[length], functions);
 	}
 	
 	public FloatArrayInterpolator(float[] out, InterpolatorFunction ...functions) {
