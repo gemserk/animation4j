@@ -8,7 +8,6 @@ import java.awt.Color;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
-import com.gemserk.animation4j.interpolator.ArrayInterpolator.MultipleVariableInterpolator;
 import com.gemserk.animation4j.interpolator.ArrayInterpolator.TypeConverter;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 
@@ -53,7 +52,7 @@ public class ArrayInterpolatorTest {
 	@Test
 	public void test2() {
 
-		MultipleVariableInterpolator interpolator = new MultipleVariableInterpolator(InterpolatorFunctionFactory.linear(), new float[4]);
+		FloatArrayInterpolator interpolator = new FloatArrayInterpolator(new float[4], InterpolatorFunctionFactory.linear());
 
 		float[] a = new float[] { 0f, 0f, 0f, 0f };
 		float[] b = new float[] { 1f, 1f, 1f, 1f };
