@@ -101,7 +101,7 @@
 		<dependency>
 			<groupId>com.gemserk.resources</groupId>
 			<artifactId>resourcesmanager-java2dmodule</artifactId>
-			<version>0.0.8-SNAPSHOT</version>
+			<version>0.0.8</version>
 		</dependency>
 	</dependencies>
 
