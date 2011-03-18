@@ -10,9 +10,9 @@ public class ArrayInterpolator<T> {
 
 	private FloatArrayInterpolator floatArrayInterpolator;
 	
-	public ArrayInterpolator(TypeConverter<T> converter, int length) {
+	public ArrayInterpolator(TypeConverter<T> converter, int length, FloatArrayInterpolator floatArrayInterpolator) {
 		this.converter = converter;
-		floatArrayInterpolator = new FloatArrayInterpolator(new float[length]);
+		this.floatArrayInterpolator = floatArrayInterpolator;
 		a = new float[length];
 		b = new float[length];
 	}
