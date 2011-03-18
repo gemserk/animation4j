@@ -1,6 +1,12 @@
 package com.gemserk.animation4j.interpolator;
 
-public class CustomInterpolator<T> {
+/**
+ * Provides an implementation of the Interpolator interface using a TypeConverter to convert from the object to a float[] and vice versa.
+ * 
+ * @param <T>
+ * @author acoppes
+ */
+public class CustomInterpolator<T> implements Interpolator<T> {
 
 	private float[] a;
 
@@ -10,13 +16,17 @@ public class CustomInterpolator<T> {
 
 	private FloatArrayInterpolator floatArrayInterpolator;
 	
+	public CustomInterpolator(TypeConverter<T> converter, int length) {
+		this(converter, new FloatArrayInterpolator(length));
+	}
+
 	public CustomInterpolator(TypeConverter<T> converter, FloatArrayInterpolator floatArrayInterpolator) {
 		this.converter = converter;
 		this.floatArrayInterpolator = floatArrayInterpolator;
 		a = new float[floatArrayInterpolator.getLength()];
 		b = new float[floatArrayInterpolator.getLength()];
 	}
-	
+
 	public T interpolate(T t1, T t2, float t) {
 		a = converter.copyFromObject(t1, a);
 		b = converter.copyFromObject(t2, b);
