@@ -50,13 +50,34 @@ public class GenericInterpolatorTest {
 
 	}
 	
+	static class Vector2fConverter implements TypeConverter<Vector2f> {
+
+		@Override
+		public float[] copyFromObject(Vector2f v, float[] x) {
+			if (x == null)
+				x = new float[2];
+			x[0] = v.x;
+			x[1] = v.y;
+			return x;
+			
+		}
+
+		@Override
+		public Vector2f copyToObject(Vector2f v, float[] x) {
+			if (v == null)
+				v = new Vector2f(0, 0);
+			v.x = x[0];
+			v.y = x[1];
+			return v;
+		}
+	}
+
 	static class Vector2f {
 		
 		float x,y;
 		
 		public Vector2f(float x, float y) {
 			set(x,y);
-			System.out.println("vector2f created!!");
 		}
 		
 		public void set(float x, float y) {
@@ -72,30 +93,7 @@ public class GenericInterpolatorTest {
 		// converter uses a temporary vector to return
 		// WARNING: if converter is used multiple times, it will modify the vector already returned.
 		
-		TypeConverter<Vector2f> converter = new TypeConverter<Vector2f>() {
-			
-			Vector2f tmp = new Vector2f(0, 0);
-
-			@Override
-			public float[] copyFromObject(Vector2f v, float[] x) {
-				if (x == null)
-					x = new float[2];
-				x[0] = v.x;
-				x[1] = v.y;
-				return x;
-				
-			}
-
-			@Override
-			public Vector2f copyToObject(Vector2f v, float[] x) {
-				if (v == null)
-					v = tmp;
-				v.x = x[0];
-				v.y = x[1];
-				return v;
-			}
-			
-		};
+		TypeConverter<Vector2f> converter = new Vector2fConverter();
 
 		GenericInterpolator<Vector2f> arrayInterpolator = new GenericInterpolator<Vector2f>(converter, new FloatArrayInterpolator(2));
 
@@ -112,6 +110,29 @@ public class GenericInterpolatorTest {
 		assertThat(result.x, IsEqual.equalTo(150f));
 		assertThat(result.y, IsEqual.equalTo(150f));
 		
+	}
+	
+	@Test
+	public void testGarbageGenerationWhenCallingGenericInterpolatorInterpolate() {
+
+		Interpolator<Vector2f> interpolator = new GenericInterpolator<Vector2f>(new Vector2fConverter(), new FloatArrayInterpolator(2));
+
+		System.out.println("total memory: " + Runtime.getRuntime().totalMemory());
+		System.out.println("free memory before: " + Runtime.getRuntime().freeMemory());
+
+		Vector2f a = new Vector2f(100, 100);
+		Vector2f b = new Vector2f(200, 200);
+
+		int interpolationsQuantity = 10000;
+		
+		System.out.println("running " + interpolationsQuantity + " interpolations.");
+
+		for (int i = 0; i < interpolationsQuantity; i++) {
+			interpolator.interpolate(a, b, 0.5f);
+		}
+
+		System.out.println("free memory after: " + Runtime.getRuntime().freeMemory());
+
 	}
 
 }
