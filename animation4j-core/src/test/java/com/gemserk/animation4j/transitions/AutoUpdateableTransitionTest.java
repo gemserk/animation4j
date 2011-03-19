@@ -21,7 +21,7 @@ public class AutoUpdateableTransitionTest {
 	@Before
 	public void setUp() {
 		timeProvider = new UpdateableTimeProvider();
-		interpolator = new FloatInterpolator(InterpolatorFunctionFactory.linear());
+		interpolator = FloatInterpolator.floatInterpolator(InterpolatorFunctionFactory.linear());
 	}
 	
 	@Test

@@ -10,7 +10,7 @@ import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory
 
 public class InterpolatedValueTest {
 
-	static Interpolator<Float> linearFloatInterpolator = new FloatInterpolator(InterpolatorFunctionFactory.linear());
+	static Interpolator<Float> linearFloatInterpolator = FloatInterpolator.floatInterpolator(InterpolatorFunctionFactory.linear());
 
 	@Test
 	public void shouldStartNotFinished() {

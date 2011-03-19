@@ -90,9 +90,9 @@ public class Example1 extends Java2dDesktopApplication {
 					speed(2f);
 					started(false);
 
-					value("x", new TimelineValueBuilder<Float>().keyFrame(0, 150f, new FloatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, 350f));
+					value("x", new TimelineValueBuilder<Float>().keyFrame(0, 150f, FloatInterpolator.floatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, 350f));
 					value("y", new TimelineValueBuilder<Float>().keyFrame(0, 325f));
-					value("angle", new TimelineValueBuilder<Float>().keyFrame(0, 0f, new FloatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, (float) Math.PI / 2));
+					value("angle", new TimelineValueBuilder<Float>().keyFrame(0, 0f, FloatInterpolator.floatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, (float) Math.PI / 2));
 				}
 			}.build();
 

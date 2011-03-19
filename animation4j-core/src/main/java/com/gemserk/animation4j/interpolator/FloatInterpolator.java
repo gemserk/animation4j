@@ -6,7 +6,7 @@ public class FloatInterpolator implements Interpolator<Float> {
 
 	InterpolatorFunction interpolatorFunction;
 	
-	public FloatInterpolator(InterpolatorFunction interpolatorFunction) {
+	private FloatInterpolator(InterpolatorFunction interpolatorFunction) {
 		this.interpolatorFunction = interpolatorFunction;
 	}
 
@@ -16,4 +16,7 @@ public class FloatInterpolator implements Interpolator<Float> {
 		return (1 - x) * a + x * b;
 	}
 
+	public static Interpolator<Float> floatInterpolator(InterpolatorFunction function) {
+		return new FloatInterpolator(function);
+	}
 }

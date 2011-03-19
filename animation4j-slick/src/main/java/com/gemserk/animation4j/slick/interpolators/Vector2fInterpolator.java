@@ -16,7 +16,7 @@ public class Vector2fInterpolator implements Interpolator<Vector2f> {
 	}
 
 	public Vector2fInterpolator(InterpolatorFunction interpolatorFunction) {
-		interpolator = new FloatInterpolator(interpolatorFunction);
+		interpolator = FloatInterpolator.floatInterpolator(interpolatorFunction);
 	}
 
 	@Override

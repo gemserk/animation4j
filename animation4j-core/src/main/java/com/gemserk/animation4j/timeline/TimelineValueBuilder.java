@@ -33,7 +33,7 @@ public class TimelineValueBuilder<T> {
 	}
 	
 	private InterpolatorProvider interpolatorProvider = new InterpolatorProvider() {{
-		register(Float.class, new FloatInterpolator(InterpolatorFunctionFactory.linear()));
+		register(Float.class, FloatInterpolator.floatInterpolator(InterpolatorFunctionFactory.linear()));
 	}};
 	
 	public void setInterpolatorProvider(InterpolatorProvider interpolatorProvider) {

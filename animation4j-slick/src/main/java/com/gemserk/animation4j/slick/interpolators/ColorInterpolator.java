@@ -16,7 +16,7 @@ public class ColorInterpolator implements Interpolator<Color> {
 	}
 	
 	public ColorInterpolator(InterpolatorFunction interpolatorFunction) {
-		interpolator = new FloatInterpolator(interpolatorFunction);
+		interpolator = FloatInterpolator.floatInterpolator(interpolatorFunction);
 	}
 
 	@Override
