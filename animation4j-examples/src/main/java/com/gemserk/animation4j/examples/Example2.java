@@ -13,7 +13,6 @@ import java.awt.geom.Point2D;
 import javax.swing.JEditorPane;
 
 import com.gemserk.animation4j.Animation;
-import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.event.AnimationEvent;
 import com.gemserk.animation4j.event.AnimationEventHandler;
 import com.gemserk.animation4j.event.AnimationHandlerManager;
@@ -140,27 +139,7 @@ public class Example2 extends Java2dDesktopApplication {
 			element.alpha = 0f;
 			element.textAlpha = 0f;
 			
-			TypeConverter<Point2D> point2dConverter = new TypeConverter<Point2D>() {
-
-				Point2D tmp = new Point2D.Float(0f, 0f);
-
-				@Override
-				public float[] copyFromObject(Point2D p, float[] x) {
-					x[0] = (float) p.getX();
-					x[1] = (float) p.getY();
-					return x;
-				}
-
-				@Override
-				public Point2D copyToObject(Point2D p, float[] x) {
-					if (p == null) 
-						p = tmp;
-					p.setLocation(x[0], x[1]);
-					return p;
-				}
-			};
-
-			final CustomInterpolator<Point2D> point2dInterpolator = new CustomInterpolator<Point2D>(point2dConverter, // 
+			final CustomInterpolator<Point2D> point2dInterpolator = new CustomInterpolator<Point2D>(Converters.point2d(), // 
 					new FloatArrayInterpolator(2, InterpolatorFunctionFactory.easeIn(), InterpolatorFunctionFactory.easeIn()));
 
 			// create the synchronizers
