@@ -8,6 +8,8 @@
 	<name>Parent module for Animations 4 Java</name>
 	<description>Parent module for Animations 4 Java</description>
 
+	<url>https://github.com/gemserk/animation4j</url>
+
 	<organization>
 		<name>Gemserk</name>
 		<url>http://www.gemserk.com</url>
@@ -28,18 +30,24 @@
 		</developer>
 	</developers>
 
-	<url>https://github.com/gemserk/animation4j</url>
+	<issueManagement>
+		<system>Github</system>
+		<url>https://github.com/gemserk/animation4j/issues</url>
+	</issueManagement>
+
+	<licenses>
+		<license>
+			<name>Apache License 2</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
 	<scm>
 		<url>https://github.com/gemserk/animation4j</url>
 		<connection>scm:git://github.com/gemserk/animation4j.git</connection>
 		<developerConnection>scm:git:git@github.com:gemserk/animation4j.git</developerConnection>
 	</scm>
-
-	<issueManagement>
-		<system>Github</system>
-		<url>https://github.com/gemserk/animation4j/issues</url>
-	</issueManagement>
 
 	<distributionManagement>
 		<repository>
@@ -65,10 +73,12 @@
 	<properties>
 		<compiler.version>1.6</compiler.version>
 		<componentsengine.version>0.0.9-SNAPSHOT</componentsengine.version>
+		<maven.version>2.0.10</maven.version>
 	</properties>
 
 	<build>
 		<plugins>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -93,15 +103,15 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 				<version>2.1.2</version>
-				<configuration>
-					<encoding>UTF-8</encoding>
-				</configuration>
 				<executions>
 					<execution>
-						<phase>install</phase>
+						<id>attach-sources</id>
 						<goals>
-							<goal>jar</goal>
+							<goal>jar-no-fork</goal>
 						</goals>
+						<configuration>
+							<encoding>UTF-8</encoding>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -112,10 +122,13 @@
 				<version>2.7</version>
 				<executions>
 					<execution>
-						<phase>install</phase>
+						<id>attach-javadocs</id>
 						<goals>
 							<goal>jar</goal>
 						</goals>
+						<configuration>
+							<encoding>UTF-8</encoding>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -124,10 +137,38 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
 				<version>2.1</version>
+				<configuration>
+					<mavenExecutorId>forked-path</mavenExecutorId>
+					<useReleaseProfile>false</useReleaseProfile>
+					<arguments>-Pgpgsign,animation4jgpg</arguments>
+				</configuration>
 			</plugin>
-
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>gpgsign</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.1</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<dependencyManagement>
 		<dependencies>
