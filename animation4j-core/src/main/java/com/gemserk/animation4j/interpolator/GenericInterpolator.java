@@ -20,9 +20,14 @@ public class GenericInterpolator<T> implements Interpolator<T> {
 
 	private Interpolator<float[]> interpolator;
 
-	public GenericInterpolator(TypeConverter<T> converter, Interpolator<float[]> floatArrayInterpolator) {
+	/**
+	 * Creates a new GenericInterpolator using a type converter to map between T and float[] and vice versa and an Interpolator<float[]> to interpolate the values.
+	 * @param converter - The TypeConverter to be used to convert between T and float[].
+	 * @param interpolator - The interpolator to be used to interpolate the float[] values.
+	 */
+	public GenericInterpolator(TypeConverter<T> converter, Interpolator<float[]> interpolator) {
 		this.converter = converter;
-		this.interpolator = floatArrayInterpolator;
+		this.interpolator = interpolator;
 	}
 
 	public T interpolate(T t1, T t2, float t) {
