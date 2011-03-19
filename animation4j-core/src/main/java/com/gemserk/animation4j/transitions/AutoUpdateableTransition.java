@@ -4,6 +4,11 @@ import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.time.SystemTimeProvider;
 import com.gemserk.animation4j.time.TimeProvider;
 
+/**
+ * Provides a modified implementation of UpdateableTransition which calls update(..) each time get() method is called.
+ * 
+ * @author acoppes
+ */
 public class AutoUpdateableTransition<T> extends UpdateableTransition<T> {
 
 	private final float speed;
@@ -13,9 +18,9 @@ public class AutoUpdateableTransition<T> extends UpdateableTransition<T> {
 	private long lastTime;
 
 	// make a provider of custom transitions which returns the transition already configured for a time provider?
-	
+
 	// use total time instead of speed? or some easier way to calculate speed. Maybe specifying speed in milliseconds instead of seconds?
-	
+
 	public AutoUpdateableTransition(T startValue, Interpolator<T> interpolator, float speed) {
 		this(startValue, interpolator, speed, new SystemTimeProvider());
 	}
@@ -23,13 +28,13 @@ public class AutoUpdateableTransition<T> extends UpdateableTransition<T> {
 	public AutoUpdateableTransition(T startValue, T endValue, Interpolator<T> interpolator, float speed) {
 		this(startValue, endValue, interpolator, speed, new SystemTimeProvider());
 	}
-	
+
 	public AutoUpdateableTransition(T startValue, Interpolator<T> interpolator, float speed, TimeProvider timeProvider) {
 		super(startValue, interpolator);
 		this.speed = speed;
 		this.timeProvider = timeProvider;
 	}
-	
+
 	public AutoUpdateableTransition(T startValue, T endValue, Interpolator<T> interpolator, float speed, TimeProvider timeProvider) {
 		super(startValue, interpolator, 1000);
 		this.speed = speed;
@@ -40,10 +45,10 @@ public class AutoUpdateableTransition<T> extends UpdateableTransition<T> {
 	public T get() {
 		long currentTime = timeProvider.getTime();
 		long delta = currentTime - lastTime;
-		
+
 		if (delta <= 0)
 			return super.get();
-		
+
 		float time = ((float) delta) * speed;
 		super.update((int) (time * 1000f));
 		lastTime = currentTime;

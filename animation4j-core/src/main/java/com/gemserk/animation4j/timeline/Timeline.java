@@ -14,7 +14,7 @@ public class Timeline {
 	public float getDuration() {
 		return duration;
 	}
-	
+
 	public float getDelay() {
 		return delay;
 	}
@@ -32,7 +32,7 @@ public class Timeline {
 	public Map<String, TimelineValue> getTimelineValues() {
 		return timelineValues;
 	}
-	
+
 	public TimelineIterator getIterator() {
 		return new TimelineIterator(this);
 	}

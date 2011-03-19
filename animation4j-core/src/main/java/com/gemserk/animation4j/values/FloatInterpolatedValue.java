@@ -6,6 +6,7 @@ import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory
 
 /**
  * An implementation of InterpolatedValue using Float as the specific type.
+ * 
  * @author acoppes
  */
 public class FloatInterpolatedValue extends InterpolatedValue<Float> {

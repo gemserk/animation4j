@@ -5,54 +5,63 @@ import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory
 
 /**
  * Interpolates an array of floats using multiple interpolator functions (linear by default).
+ * 
  * @author acoppes
  */
 public class FloatArrayInterpolator implements Interpolator<float[]> {
-	
+
 	private final InterpolatorFunction[] functions;
-	
+
 	private final float[] x;
-	
+
 	/**
 	 * Creates a new interpolator with an internal array of float with the length specified.
-	 * @param length - The length of the float array to interpolate.
+	 * 
+	 * @param length
+	 *            The length of the float array to interpolate.
 	 */
 	public FloatArrayInterpolator(int length) {
 		this(new float[length]);
 	}
-	
+
 	/**
 	 * Creates a new interpolator with an internal array of float with the length specified.
-	 * @param length - The length of the float array to interpolate.
-	 * @param functions - The interpolator functions to be used to interpolate each variable of the array.
+	 * 
+	 * @param length
+	 *            The length of the float array to interpolate.
+	 * @param functions
+	 *            The interpolator functions to be used to interpolate each variable of the array.
 	 */
-	public FloatArrayInterpolator(int length, InterpolatorFunction ...functions) {
+	public FloatArrayInterpolator(int length, InterpolatorFunction... functions) {
 		this(new float[length], functions);
 	}
-	
+
 	/**
 	 * Creates a new interpolator using the float array specified.
-	 * @param x - The float array to be used.
-	 * @param functions - The interpolator functions to be used to interpolate each variable of the array.
+	 * 
+	 * @param x
+	 *            The float array to be used.
+	 * @param functions
+	 *            The interpolator functions to be used to interpolate each variable of the array.
 	 */
-	public FloatArrayInterpolator(float[] x, InterpolatorFunction ...functions) {
+	public FloatArrayInterpolator(float[] x, InterpolatorFunction... functions) {
 		this.x = x;
 		this.functions = new InterpolatorFunction[x.length];
-		
+
 		int i = 0;
-		for (i = 0; i < functions.length; i++) 
+		for (i = 0; i < functions.length; i++)
 			this.functions[i] = functions[i];
 		for (; i < this.functions.length; i++)
 			this.functions[i] = InterpolatorFunctionFactory.linear();
 	}
-	
+
 	@Override
 	public float[] interpolate(float[] a, float[] b, float t) {
 		for (int i = 0; i < x.length; i++) {
-			t = functions[i].interpolate(t);	
+			t = functions[i].interpolate(t);
 			x[i] = a[i] * (1 - t) + b[i] * t;
 		}
 		return x;
 	}
-	
+
 }

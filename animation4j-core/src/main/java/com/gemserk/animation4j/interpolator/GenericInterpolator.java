@@ -4,8 +4,6 @@ import com.gemserk.animation4j.converters.TypeConverter;
 
 /**
  * Provides an implementation of the Interpolator interface using a TypeConverter to convert from the object to a float[] and vice versa, and a Interpolator<float[]> to interpolate float[] values.
- * 
- * @param <T>
  * @author acoppes
  */
 public class GenericInterpolator<T> implements Interpolator<T> {
@@ -15,15 +13,18 @@ public class GenericInterpolator<T> implements Interpolator<T> {
 	private float[] a;
 
 	private float[] b;
-	
+
 	private T object;
 
 	private Interpolator<float[]> interpolator;
 
 	/**
 	 * Creates a new GenericInterpolator using a type converter to map between T and float[] and vice versa and an Interpolator<float[]> to interpolate the values.
-	 * @param converter - The TypeConverter to be used to convert between T and float[].
-	 * @param interpolator - The interpolator to be used to interpolate the float[] values.
+	 * 
+	 * @param converter
+	 *            The TypeConverter to be used to convert between T and float[].
+	 * @param interpolator
+	 *            The interpolator to be used to interpolate the float[] values.
 	 */
 	public GenericInterpolator(TypeConverter<T> converter, Interpolator<float[]> interpolator) {
 		this.converter = converter;

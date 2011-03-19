@@ -4,10 +4,12 @@ import com.gemserk.animation4j.interpolator.Interpolator;
 
 /**
  * Used to simplify interpolated values management. You simply create an interpolated value with an interpolator and two values, and then move the alpha between 0 and 1 to get an interpolated value.
- * @param <T> the type of the variable to interpolate
+ * 
+ * @param <T>
+ *            the type of the variable to interpolate
  * @author acoppes
  */
-public abstract class InterpolatedValue<T>  {
+public abstract class InterpolatedValue<T> {
 
 	private Interpolator<T> interpolator;
 
@@ -16,7 +18,7 @@ public abstract class InterpolatedValue<T>  {
 	protected T b;
 
 	private float alpha;
-	
+
 	public Interpolator<T> getInterpolator() {
 		return interpolator;
 	}
@@ -43,7 +45,9 @@ public abstract class InterpolatedValue<T>  {
 
 	/**
 	 * Sets alpha between 0 and 1.
+	 * 
 	 * @param alpha
+	 *            A real number between [0,1] interval.
 	 */
 	public void setAlpha(float alpha) {
 		if (alpha < 0)
@@ -75,15 +79,19 @@ public abstract class InterpolatedValue<T>  {
 
 	/**
 	 * Sets alpha by normalizing d between a and b based on segment length.
-	 * @param d - The value between a and b to be used.
+	 * 
+	 * @param d
+	 *            The value between a and b to be used.
 	 */
 	public void setNormalizedAlpha(float d) {
 		setAlpha(normalize(d));
 	}
-	
+
 	/**
 	 * Returns a value normalized by the distance between a and b.
-	 * @param d - The value between a and b to be normalized.
+	 * 
+	 * @param d
+	 *            The value between a and b to be normalized.
 	 * @return The normalized value;
 	 */
 	public float normalize(float d) {
@@ -94,8 +102,8 @@ public abstract class InterpolatedValue<T>  {
 	}
 
 	/**
-	 * @return The distance between the two points a and b. Depends on the variable type so must be implemented in a subclass. 
+	 * @return The distance between the two points a and b. Depends on the variable type so must be implemented in a subclass.
 	 */
 	protected abstract float getLength();
-	
+
 }
