@@ -1,5 +1,7 @@
 package com.gemserk.animation4j.interpolator;
 
+import com.gemserk.animation4j.converters.TypeConverter;
+
 /**
  * Provides an implementation of the Interpolator interface using a TypeConverter to convert from the object to a float[] and vice versa.
  * 

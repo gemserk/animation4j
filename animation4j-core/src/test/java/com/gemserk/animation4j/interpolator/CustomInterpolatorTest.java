@@ -8,6 +8,8 @@ import java.awt.Color;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
+import com.gemserk.animation4j.converters.TypeConverter;
+
 
 public class CustomInterpolatorTest {
 

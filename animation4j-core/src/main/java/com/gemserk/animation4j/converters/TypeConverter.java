@@ -1,4 +1,4 @@
-package com.gemserk.animation4j.interpolator;
+package com.gemserk.animation4j.converters;
 
 /**
  * Provides a way to convert an object in a float[] array and vice versa, for interpolation purposes. 

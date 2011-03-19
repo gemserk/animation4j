@@ -13,13 +13,13 @@ import java.awt.geom.Point2D;
 import javax.swing.JEditorPane;
 
 import com.gemserk.animation4j.Animation;
+import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.event.AnimationEvent;
 import com.gemserk.animation4j.event.AnimationEventHandler;
 import com.gemserk.animation4j.event.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.CustomInterpolator;
 import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
-import com.gemserk.animation4j.interpolator.TypeConverter;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.states.AnimationStateMachine;
 import com.gemserk.animation4j.states.StateMachine.StateCondition;
