@@ -17,7 +17,6 @@ import com.gemserk.animation4j.event.AnimationEvent;
 import com.gemserk.animation4j.event.AnimationEventHandler;
 import com.gemserk.animation4j.event.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
-import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.states.AnimationStateMachine;
 import com.gemserk.animation4j.states.StateMachine.StateCondition;
@@ -138,17 +137,14 @@ public class Example2 extends Java2dDesktopApplication {
 			element.alpha = 0f;
 			element.textAlpha = 0f;
 			
-			final Interpolator<Point2D> point2dInterpolator = Interpolators.point2dInterpolator(InterpolatorFunctionFactory.easeIn(), InterpolatorFunctionFactory.easeIn());
-			
-			// create the synchronizers
-
 			ObjectSynchronizer objectSynchronizer = new ReflectionObjectSynchronizer(element);
 			timelineSynchronizer = new TimelineSynchronizer(objectSynchronizer);
 
 			showAnimation = new SynchrnonizedAnimation(new TimelineAnimationBuilder() {
 				{
 					speed(1.5f);
-					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 260), point2dInterpolator) //
+					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 260), // 
+							Interpolators.point2dInterpolator(InterpolatorFunctionFactory.easeIn(), InterpolatorFunctionFactory.easeIn())) //
 							.keyFrame(1000, new Point(320, 220)));
 					value("alpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f, new FloatInterpolator(InterpolatorFunctionFactory.easeOut())).keyFrame(1000, 1f));
 					value("textAlpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f, new FloatInterpolator(InterpolatorFunctionFactory.easeOut())) //
