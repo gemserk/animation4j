@@ -14,8 +14,11 @@ public class Converters {
 		// not recommended to use, it will be boxing and unboxing from float to Float and vice versa. 
 		
 		return new TypeConverter<Float>() {
+			
 			@Override
 			public float[] copyFromObject(Float f, float[] x) {
+				if (x == null)
+					x = new float[1];
 				x[0] = f.floatValue();
 				return x;
 			}
@@ -34,11 +37,13 @@ public class Converters {
 		// use a new type converter for each new transition
 
 		return new TypeConverter<Point2D>() {
-
+			
 			Point2D tmp = new Point2D.Float(0f, 0f);
 
 			@Override
 			public float[] copyFromObject(Point2D p, float[] x) {
+				if (x == null)
+					x = new float[2];
 				x[0] = (float) p.getX();
 				x[1] = (float) p.getY();
 				return x;
@@ -60,9 +65,11 @@ public class Converters {
 		// in this case, as color is not mutable, we have to return a new color each time. 
 		
 		return new TypeConverter<Color>() {
-
+			
 			@Override
 			public float[] copyFromObject(Color object, float[] x) {
+				if (x == null)
+					x = new float[4];
 				object.getRGBComponents(x);
 				return x;
 			}

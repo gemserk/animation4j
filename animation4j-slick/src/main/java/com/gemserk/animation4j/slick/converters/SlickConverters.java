@@ -15,6 +15,8 @@ public class SlickConverters {
 			
 			@Override
 			public float[] copyFromObject(Vector2f v, float[] x) {
+				if (x == null)
+					x = new float[2];
 				x[0] = v.x;
 				x[1] = v.y;
 				return x;
@@ -40,6 +42,8 @@ public class SlickConverters {
 			
 			@Override
 			public float[] copyFromObject(Color color, float[] x) {
+				if (x == null)
+					x = new float[4];
 				x[0] = color.r;
 				x[1] = color.g;
 				x[2] = color.b;

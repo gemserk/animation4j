@@ -78,6 +78,8 @@ public class GenericInterpolatorTest {
 
 			@Override
 			public float[] copyFromObject(Vector2f v, float[] x) {
+				if (x == null)
+					x = new float[2];
 				x[0] = v.x;
 				x[1] = v.y;
 				return x;

@@ -16,19 +16,17 @@ public class GenericInterpolator<T> implements Interpolator<T> {
 
 	private float[] b;
 
-	private FloatArrayInterpolator floatArrayInterpolator;
+	private Interpolator<float[]> interpolator;
 
-	public GenericInterpolator(TypeConverter<T> converter, FloatArrayInterpolator floatArrayInterpolator) {
+	public GenericInterpolator(TypeConverter<T> converter, Interpolator<float[]> floatArrayInterpolator) {
 		this.converter = converter;
-		this.floatArrayInterpolator = floatArrayInterpolator;
-		a = new float[floatArrayInterpolator.getLength()];
-		b = new float[floatArrayInterpolator.getLength()];
+		this.interpolator = floatArrayInterpolator;
 	}
 
 	public T interpolate(T t1, T t2, float t) {
 		a = converter.copyFromObject(t1, a);
 		b = converter.copyFromObject(t2, b);
-		return converter.copyToObject(null, floatArrayInterpolator.interpolate(a, b, t));
+		return converter.copyToObject(null, interpolator.interpolate(a, b, t));
 	}
 
 }
