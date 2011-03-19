@@ -1,6 +1,5 @@
 package com.gemserk.animation4j.event;
 
-import com.gemserk.animation4j.event.AnimationEventHandler;
 
 public class MockAnimationEventHandler extends AnimationEventHandler {
 

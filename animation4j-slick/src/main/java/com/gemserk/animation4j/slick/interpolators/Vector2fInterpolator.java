@@ -2,7 +2,6 @@ package com.gemserk.animation4j.slick.interpolators;
 
 import org.newdawn.slick.geom.Vector2f;
 
-import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.interpolator.Interpolators;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;

@@ -1,6 +1,5 @@
 package com.gemserk.animation4j.timeline;
 
-import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.interpolator.InterpolatorProvider;
 import com.gemserk.animation4j.interpolator.Interpolators;

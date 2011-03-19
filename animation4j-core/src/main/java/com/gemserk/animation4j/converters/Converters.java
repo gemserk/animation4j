@@ -8,6 +8,23 @@ import java.awt.geom.Point2D;
  * @author acoppes
  */
 public class Converters {
+	
+	public static TypeConverter<Float> floatConverter() {
+		
+		return new TypeConverter<Float>() {
+			@Override
+			public float[] copyFromObject(Float f, float[] x) {
+				x[0] = f;
+				return x;
+			}
+
+			@Override
+			public Float copyToObject(Float f, float[] x) {
+				return x[0];
+			}
+		};
+		
+	}
 
 	public static TypeConverter<Point2D> point2d() {
 

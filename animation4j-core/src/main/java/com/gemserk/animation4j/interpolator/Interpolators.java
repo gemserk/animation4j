@@ -4,45 +4,16 @@ import java.awt.Color;
 import java.awt.geom.Point2D;
 
 import com.gemserk.animation4j.converters.Converters;
-import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
 
 public class Interpolators {
 
 	public static Interpolator<Float> floatInterpolator() {
-		return new CustomInterpolator<Float>(new TypeConverter<Float>() {
-
-			@Override
-			public float[] copyFromObject(Float f, float[] x) {
-				x[0] = f;
-				return x;
-			}
-
-			@Override
-			public Float copyToObject(Float f, float[] x) {
-				return x[0];
-			}
-
-		}, new FloatArrayInterpolator(1));
+		return new CustomInterpolator<Float>(Converters.floatConverter(), new FloatArrayInterpolator(1));
 	}
 
 	public static Interpolator<Float> floatInterpolator(InterpolatorFunction function) {
-
-		return new CustomInterpolator<Float>(new TypeConverter<Float>() {
-
-			@Override
-			public float[] copyFromObject(Float f, float[] x) {
-				x[0] = f;
-				return x;
-			}
-
-			@Override
-			public Float copyToObject(Float f, float[] x) {
-				return x[0];
-			}
-
-		}, new FloatArrayInterpolator(1, function));
-
+		return new CustomInterpolator<Float>(Converters.floatConverter(), new FloatArrayInterpolator(1, function));
 	}
 
 	public static Interpolator<Point2D> point2dInterpolator() {
