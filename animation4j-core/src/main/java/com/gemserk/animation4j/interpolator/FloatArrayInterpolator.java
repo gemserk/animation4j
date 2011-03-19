@@ -13,10 +13,6 @@ public class FloatArrayInterpolator implements Interpolator<float[]> {
 	
 	private final float[] x;
 	
-	public int getLength() {
-		return x.length;
-	}
-	
 	/**
 	 * Creates a new interpolator with an internal array of float with the length specified.
 	 * @param length - The length of the float array to interpolate.

@@ -38,8 +38,6 @@ public class Converters {
 
 		return new TypeConverter<Point2D>() {
 			
-			Point2D tmp = new Point2D.Float(0f, 0f);
-
 			@Override
 			public float[] copyFromObject(Point2D p, float[] x) {
 				if (x == null)
@@ -52,7 +50,7 @@ public class Converters {
 			@Override
 			public Point2D copyToObject(Point2D p, float[] x) {
 				if (p == null)
-					p = tmp;
+					p = new Point2D.Float(0f, 0f);;
 				p.setLocation(x[0], x[1]);
 				return p;
 			}

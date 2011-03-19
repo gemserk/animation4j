@@ -15,6 +15,8 @@ public class GenericInterpolator<T> implements Interpolator<T> {
 	private float[] a;
 
 	private float[] b;
+	
+	private T object;
 
 	private Interpolator<float[]> interpolator;
 
@@ -26,7 +28,8 @@ public class GenericInterpolator<T> implements Interpolator<T> {
 	public T interpolate(T t1, T t2, float t) {
 		a = converter.copyFromObject(t1, a);
 		b = converter.copyFromObject(t2, b);
-		return converter.copyToObject(null, interpolator.interpolate(a, b, t));
+		object = converter.copyToObject(object, interpolator.interpolate(a, b, t));
+		return object;
 	}
 
 }

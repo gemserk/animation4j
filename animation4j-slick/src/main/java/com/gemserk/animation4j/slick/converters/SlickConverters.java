@@ -11,8 +11,6 @@ public class SlickConverters {
 		
 		return new TypeConverter<Vector2f>() {
 			
-			Vector2f tmp = new Vector2f();
-			
 			@Override
 			public float[] copyFromObject(Vector2f v, float[] x) {
 				if (x == null)
@@ -25,7 +23,7 @@ public class SlickConverters {
 			@Override
 			public Vector2f copyToObject(Vector2f v, float[] x) {
 				if (v == null)
-					v = tmp;
+					v = new Vector2f();
 				v.x = x[0];
 				v.y = x[1];
 				return v;
@@ -37,8 +35,6 @@ public class SlickConverters {
 	public static TypeConverter<Color> color() {
 
 		return new TypeConverter<Color>() {
-			
-			Color tmp = new Color(0);
 			
 			@Override
 			public float[] copyFromObject(Color color, float[] x) {
@@ -54,7 +50,7 @@ public class SlickConverters {
 			@Override
 			public Color copyToObject(Color color, float[] x) {
 				if (color == null)
-					color = tmp;
+					color = new Color(0);
 				color.r = x[0];
 				color.g = x[1];
 				color.b = x[2];
