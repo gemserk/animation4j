@@ -18,10 +18,6 @@ public class CustomInterpolator<T> implements Interpolator<T> {
 	
 	private FloatArrayInterpolator floatArrayInterpolator;
 	
-	public CustomInterpolator(TypeConverter<T> converter, int length) {
-		this(converter, new FloatArrayInterpolator(length));
-	}
-
 	public CustomInterpolator(TypeConverter<T> converter, FloatArrayInterpolator floatArrayInterpolator) {
 		this.converter = converter;
 		this.floatArrayInterpolator = floatArrayInterpolator;
