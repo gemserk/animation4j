@@ -11,7 +11,7 @@ import org.junit.Test;
 import com.gemserk.animation4j.converters.TypeConverter;
 
 
-public class CustomInterpolatorTest {
+public class GenericInterpolatorTest {
 
 	@Test
 	public void test() {
@@ -33,7 +33,7 @@ public class CustomInterpolatorTest {
 			}
 		};
 
-		CustomInterpolator<Color> arrayInterpolator = new CustomInterpolator<Color>(colorConverter, new FloatArrayInterpolator(4));
+		GenericInterpolator<Color> arrayInterpolator = new GenericInterpolator<Color>(colorConverter, new FloatArrayInterpolator(4));
 
 		Color startColor = new Color(0f, 0f, 0f, 0f);
 		Color endColor = new Color(1f, 1f, 1f, 1f);
@@ -111,7 +111,7 @@ public class CustomInterpolatorTest {
 			
 		};
 
-		CustomInterpolator<Vector2f> arrayInterpolator = new CustomInterpolator<Vector2f>(converter, new FloatArrayInterpolator(2));
+		GenericInterpolator<Vector2f> arrayInterpolator = new GenericInterpolator<Vector2f>(converter, new FloatArrayInterpolator(2));
 
 		Vector2f t1 = new Vector2f(100f, 100f);
 		Vector2f t2 = new Vector2f(200f, 200f);
