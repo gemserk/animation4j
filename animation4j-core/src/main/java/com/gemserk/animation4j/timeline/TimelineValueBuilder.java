@@ -8,8 +8,9 @@ import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory
 /**
  * Provides an easy way to create TimelineValues.
  * 
- * @param <T> - The type of the variable of the TimelineValue.
- *
+ * @param <T>
+ *            The type of the variable of the TimelineValue.
+ * 
  * @author acoppes
  */
 public class TimelineValueBuilder<T> {
@@ -31,11 +32,13 @@ public class TimelineValueBuilder<T> {
 	public float getDuration() {
 		return duration;
 	}
-	
-	private InterpolatorProvider interpolatorProvider = new InterpolatorProvider() {{
-		register(Float.class, Interpolators.floatInterpolator(InterpolatorFunctionFactory.linear()));
-	}};
-	
+
+	private InterpolatorProvider interpolatorProvider = new InterpolatorProvider() {
+		{
+			register(Float.class, Interpolators.floatInterpolator(InterpolatorFunctionFactory.linear()));
+		}
+	};
+
 	public void setInterpolatorProvider(InterpolatorProvider interpolatorProvider) {
 		this.interpolatorProvider = interpolatorProvider;
 	}
@@ -47,9 +50,13 @@ public class TimelineValueBuilder<T> {
 
 	/**
 	 * Defines a new key frame in the timeline value.
-	 * @param time - The time when the key frame starts.
-	 * @param value - The value the variable should have in the key frame.
-	 * @param interpolator - The interpolator to use between the key frame and the next key frame.
+	 * 
+	 * @param time
+	 *            The time when the key frame starts.
+	 * @param value
+	 *            The value the variable should have in the key frame.
+	 * @param interpolator
+	 *            The interpolator to use between the key frame and the next key frame.
 	 */
 	public TimelineValueBuilder<T> keyFrame(float time, T value, Interpolator<T> interpolator) {
 		if (interpolator == null)
@@ -61,8 +68,11 @@ public class TimelineValueBuilder<T> {
 
 	/**
 	 * Defines a new key frame in the timeline value, infering an interpolator based on the type of the value.
-	 * @param time - The time when the key frame starts.
-	 * @param value - The value the variable should have in the key frame.
+	 * 
+	 * @param time
+	 *            The time when the key frame starts.
+	 * @param value
+	 *            The value the variable should have in the key frame.
 	 */
 	public TimelineValueBuilder<T> keyFrame(float time, T value) {
 		return keyFrame(time, value, interpolatorProvider.inferInterpolator(value));

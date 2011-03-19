@@ -162,7 +162,7 @@ public class TimelineAnimation implements Animation {
 	public void switchDirection() {
 		if (playingDirection == PlayingDirection.Normal)
 			playingDirection = PlayingDirection.Reverse;
-		else 
+		else
 			playingDirection = PlayingDirection.Normal;
 	}
 

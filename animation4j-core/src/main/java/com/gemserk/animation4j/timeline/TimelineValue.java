@@ -8,9 +8,11 @@ import com.gemserk.animation4j.interpolator.NullInterpolator;
 
 /**
  * Represents all the progress of a value inside a time line.
+ * 
  * @author acoppes
- *
- * @param <T> The type of the value.
+ * 
+ * @param <T>
+ *            The type of the value.
  */
 public class TimelineValue<T> {
 
@@ -31,7 +33,7 @@ public class TimelineValue<T> {
 	 * A key frame specifies a specific value the variable should have in a specific time.
 	 * 
 	 * @param <T>
-	 *            the type of the variable
+	 *            The type of the variable
 	 * @author acoppes
 	 */
 	static class KeyFrame<T> {
@@ -71,9 +73,9 @@ public class TimelineValue<T> {
 	public void addKeyFrame(float time, T value) {
 		addKeyFrame(time, value, new NullInterpolator<T>());
 	}
-	
+
 	String name;
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -81,7 +83,7 @@ public class TimelineValue<T> {
 	public String getName() {
 		return name;
 	}
-	
+
 	public T getValue(float time) {
 
 		KeyFrame<T> firstKeyFrame = keyFrames.getFirst();

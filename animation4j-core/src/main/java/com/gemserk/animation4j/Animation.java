@@ -20,7 +20,7 @@ public interface Animation {
 	 * Starts the animation and repeats it the specified number of times.
 	 * 
 	 * @param iterationCount
-	 *            - The number of times to repeat the animation. Use 0 or negative number to repeat the Animation an infinite number of times.
+	 *            The number of times to repeat the animation. Use 0 or negative number to repeat the Animation an infinite number of times.
 	 */
 	void start(int iterationCount);
 
@@ -28,9 +28,9 @@ public interface Animation {
 	 * Starts the animation and repeats it the specified number of times.
 	 * 
 	 * @param iterationCount
-	 *            - The number of times to repeat the animation. Use 0 or negative number to repeat the Animation an infinite number of times.
+	 *            The number of times to repeat the animation. Use 0 or negative number to repeat the Animation an infinite number of times.
 	 * @param alternateDirection
-	 *            - Specify if the animation should alternate between normal and reverse playing direction each time an iteration ends.
+	 *            Specify if the animation should alternate between normal and reverse playing direction each time an iteration ends.
 	 */
 	void start(int iterationCount, boolean alternateDirection);
 

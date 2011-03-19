@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class StateMachine<K, T> {
 
 	public static class StateTransition<T> {
-		
+
 		private final T sourceState;
 
 		private final T targetState;
@@ -19,7 +19,7 @@ public class StateMachine<K, T> {
 		public T getTargetState() {
 			return targetState;
 		}
-		
+
 		public StateCondition<T> getCondition() {
 			return condition;
 		}
@@ -29,18 +29,21 @@ public class StateMachine<K, T> {
 			this.sourceState = sourceState;
 			this.targetState = targetState;
 		}
-		
+
 		private void afterTransition() {
 			afterTransition(sourceState, targetState);
 		}
-		
+
 		/**
 		 * Called after transition was performed, after entered targetState and sourceState was left.
-		 * @param sourceState - The source state.
-		 * @param currentState - The current state.
+		 * 
+		 * @param sourceState
+		 *            The source state.
+		 * @param currentState
+		 *            The current state.
 		 */
 		protected void afterTransition(T sourceState, T currentState) {
-			
+
 		}
 
 		private void beforeTransition() {
@@ -49,27 +52,30 @@ public class StateMachine<K, T> {
 
 		/**
 		 * Called before the transition was performed, before sourceState was left.
-		 * @param currentState - The current state.
-		 * @param targetState - The target state.
+		 * 
+		 * @param currentState
+		 *            The current state.
+		 * @param targetState
+		 *            The target state.
 		 */
 		protected void beforeTransition(T currentState, T targetState) {
-			
+
 		}
-		
+
 	}
-	
+
 	public static class StateCondition<T> {
-		
+
 		public boolean matches(T sourceState, T targetState) {
 			return false;
 		}
-		
+
 	}
 
 	ArrayList<StateTransition<T>> stateTransitions = new ArrayList<StateTransition<T>>();
 
 	T currentState;
-	
+
 	public void setCurrentState(T state) {
 		currentState = state;
 	}
@@ -79,7 +85,7 @@ public class StateMachine<K, T> {
 	}
 
 	public void checkTransitionConditions() {
-		
+
 		for (int i = 0; i < stateTransitions.size(); i++) {
 			StateTransition<T> transition = stateTransitions.get(i);
 			if (transition.getSourceState() != getCurrentState())
@@ -91,11 +97,11 @@ public class StateMachine<K, T> {
 			transition.beforeTransition();
 			currentState = transition.getTargetState();
 			transition.afterTransition();
-			
+
 			return;
 		}
 	}
-	
+
 	public void addTransition(StateTransition<T> transition) {
 		stateTransitions.add(transition);
 	}

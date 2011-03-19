@@ -5,13 +5,14 @@ import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineIterator;
 
 /**
- * Animation implementation which decorates the TimelineAnimation using a synchronizer to synchronize time line values with an object. 
+ * Animation implementation which decorates the TimelineAnimation using a synchronizer to synchronize time line values with an object.
+ * 
  * @author acoppes
  */
 public class SynchrnonizedAnimation implements Animation {
 
 	private final TimelineAnimation animation;
-	
+
 	private final TimelineSynchronizer timelineSynchronizer;
 
 	private final TimelineIterator iterator;
@@ -19,7 +20,7 @@ public class SynchrnonizedAnimation implements Animation {
 	public SynchrnonizedAnimation(TimelineAnimation animation, TimelineSynchronizer timelineSynchronizer) {
 		this.animation = animation;
 		this.timelineSynchronizer = timelineSynchronizer;
-		
+
 		iterator = animation.getTimeline().getIterator();
 	}
 
