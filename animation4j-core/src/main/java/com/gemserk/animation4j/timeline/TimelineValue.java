@@ -93,7 +93,7 @@ public class TimelineValue<T> {
 			KeyFrame<T> secondKeyFrame = keyFrames.get(1);
 
 			Interpolator<T> interpolator = firstKeyFrame.getInterpolator();
-			return interpolator.interpolate(firstKeyFrame.getValue(), secondKeyFrame.getValue(), null, 0f);
+			return interpolator.interpolate(firstKeyFrame.getValue(), secondKeyFrame.getValue(), 0f);
 		}
 
 		for (int i = 0; i < keyFrames.size(); i++) {
@@ -112,7 +112,7 @@ public class TimelineValue<T> {
 				float weight = (time - previousKeyFrame.getTime()) / interval;
 
 				Interpolator<T> interpolator = previousKeyFrame.getInterpolator();
-				return interpolator.interpolate(previousKeyFrame.getValue(), currentKeyFrame.getValue(), null, weight);
+				return interpolator.interpolate(previousKeyFrame.getValue(), currentKeyFrame.getValue(), weight);
 
 			}
 
@@ -126,7 +126,7 @@ public class TimelineValue<T> {
 
 		Interpolator<T> interpolator = secondLastFrame.getInterpolator();
 
-		return interpolator.interpolate(secondLastFrame.getValue(), lastFrame.getValue(), null, 1f);
+		return interpolator.interpolate(secondLastFrame.getValue(), lastFrame.getValue(), 1f);
 	}
 
 }

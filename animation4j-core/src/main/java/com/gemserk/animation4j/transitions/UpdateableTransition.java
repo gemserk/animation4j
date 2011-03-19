@@ -84,7 +84,7 @@ public class UpdateableTransition<T> implements Transition<T> {
 
 		float alpha = (float) currentTime / (float) totalTime;
 		
-		currentValue = interpolator.interpolate(startValue, desiredValue, currentValue, alpha);
+		currentValue = interpolator.interpolate(startValue, desiredValue, alpha);
 		
 	}
 

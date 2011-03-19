@@ -7,7 +7,7 @@ package com.gemserk.animation4j.interpolator;
 public class NullInterpolator<T> implements Interpolator<T> {
 
 	@Override
-	public T interpolate(T a, T b, T out, float weight) {
+	public T interpolate(T a, T b, float weight) {
 		return a;
 	}
 

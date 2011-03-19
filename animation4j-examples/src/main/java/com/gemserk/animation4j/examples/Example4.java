@@ -176,10 +176,8 @@ public class Example4 extends Java2dDesktopApplication {
 
 				@Override
 				public Point2D copyToObject(Point2D p, float[] x) {
-					if (p == null) {
-						System.out.println("creating new point for interpolator");
+					if (p == null) 
 						p = tmp;
-					}
 					p.setLocation(x[0], x[1]);
 					return p;
 				}

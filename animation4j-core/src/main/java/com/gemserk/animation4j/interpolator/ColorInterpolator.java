@@ -18,7 +18,7 @@ public class ColorInterpolator implements Interpolator<Color> {
 	}
 
 	@Override
-	public Color interpolate(Color a, Color b, Color out, float t) {
+	public Color interpolate(Color a, Color b, float t) {
 		float x = interpolatorFunction.interpolate(t);
 		float newR = a.getRed() * (1 - x) + b.getRed() * x;
 		float newG = a.getGreen() * (1 - x) + b.getGreen() * x;

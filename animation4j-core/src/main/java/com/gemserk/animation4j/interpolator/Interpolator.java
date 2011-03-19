@@ -7,6 +7,6 @@ package com.gemserk.animation4j.interpolator;
  */
 public interface Interpolator<T> {
 
-	T interpolate(T a, T b, T out, float weight);
+	T interpolate(T a, T b, float weight);
 
 }

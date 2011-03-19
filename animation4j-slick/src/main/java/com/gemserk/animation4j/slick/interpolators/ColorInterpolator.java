@@ -20,13 +20,12 @@ public class ColorInterpolator implements Interpolator<Color> {
 	}
 
 	@Override
-	public Color interpolate(Color a, Color b, Color out, float weight) {
-		if (out == null)
-			out = new Color(0);
-		out.r = interpolator.interpolate(a.r, b.r, null, weight);
-		out.g = interpolator.interpolate(a.g, b.g, null, weight);
-		out.b = interpolator.interpolate(a.b, b.b, null, weight);
-		out.a = interpolator.interpolate(a.a, b.a, null, weight);
+	public Color interpolate(Color a, Color b, float weight) {
+		Color out = new Color(0);
+		out.r = interpolator.interpolate(a.r, b.r, weight);
+		out.g = interpolator.interpolate(a.g, b.g, weight);
+		out.b = interpolator.interpolate(a.b, b.b, weight);
+		out.a = interpolator.interpolate(a.a, b.a, weight);
 		return out;
 	}
 }

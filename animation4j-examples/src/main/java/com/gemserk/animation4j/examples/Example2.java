@@ -153,9 +153,8 @@ public class Example2 extends Java2dDesktopApplication {
 
 				@Override
 				public Point2D copyToObject(Point2D p, float[] x) {
-					if (p == null) {
+					if (p == null) 
 						p = tmp;
-					}
 					p.setLocation(x[0], x[1]);
 					return p;
 				}
