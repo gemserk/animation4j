@@ -11,16 +11,18 @@ public class Converters {
 	
 	public static TypeConverter<Float> floatConverter() {
 		
+		// not recommended to use, it will be boxing and unboxing from float to Float and vice versa. 
+		
 		return new TypeConverter<Float>() {
 			@Override
 			public float[] copyFromObject(Float f, float[] x) {
-				x[0] = f;
+				x[0] = f.floatValue();
 				return x;
 			}
 
 			@Override
 			public Float copyToObject(Float f, float[] x) {
-				return x[0];
+				return Float.valueOf(x[0]);
 			}
 		};
 		
