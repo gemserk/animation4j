@@ -8,6 +8,7 @@ import java.awt.Color;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
+import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.converters.TypeConverter;
 
 
@@ -16,24 +17,7 @@ public class GenericInterpolatorTest {
 	@Test
 	public void test() {
 
-		// if Color wasn't immutable then we could maintain a local color :
-		// Color color;
-		// the problem is, the interpolator could not be reused for multiple objects.
-		
-		TypeConverter<Color> colorConverter = new TypeConverter<Color>() {
-			@Override
-			public float[] copyFromObject(Color color, float[] x) {
-				color.getRGBComponents(x);
-				return x;
-			}
-
-			@Override
-			public Color copyToObject(Color color, float[] x) {
-				return new Color(x[0], x[1], x[2], x[3]);
-			}
-		};
-
-		GenericInterpolator<Color> arrayInterpolator = new GenericInterpolator<Color>(colorConverter, new FloatArrayInterpolator(4));
+		GenericInterpolator<Color> arrayInterpolator = new GenericInterpolator<Color>(Converters.color(), new FloatArrayInterpolator(4));
 
 		Color startColor = new Color(0f, 0f, 0f, 0f);
 		Color endColor = new Color(1f, 1f, 1f, 1f);
