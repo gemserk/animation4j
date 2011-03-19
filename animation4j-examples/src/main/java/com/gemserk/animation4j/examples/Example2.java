@@ -16,9 +16,8 @@ import com.gemserk.animation4j.Animation;
 import com.gemserk.animation4j.event.AnimationEvent;
 import com.gemserk.animation4j.event.AnimationEventHandler;
 import com.gemserk.animation4j.event.AnimationHandlerManager;
-import com.gemserk.animation4j.interpolator.CustomInterpolator;
-import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
+import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.states.AnimationStateMachine;
 import com.gemserk.animation4j.states.StateMachine.StateCondition;
@@ -139,9 +138,8 @@ public class Example2 extends Java2dDesktopApplication {
 			element.alpha = 0f;
 			element.textAlpha = 0f;
 			
-			final CustomInterpolator<Point2D> point2dInterpolator = new CustomInterpolator<Point2D>(Converters.point2d(), // 
-					new FloatArrayInterpolator(2, InterpolatorFunctionFactory.easeIn(), InterpolatorFunctionFactory.easeIn()));
-
+			final Interpolator<Point2D> point2dInterpolator = Interpolators.point2dInterpolator(InterpolatorFunctionFactory.easeIn(), InterpolatorFunctionFactory.easeIn());
+			
 			// create the synchronizers
 
 			ObjectSynchronizer objectSynchronizer = new ReflectionObjectSynchronizer(element);
