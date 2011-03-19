@@ -6,13 +6,18 @@ import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 import org.newdawn.slick.geom.Vector2f;
 
+import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
+import com.gemserk.animation4j.interpolator.GenericInterpolator;
+import com.gemserk.animation4j.interpolator.Interpolator;
+import com.gemserk.animation4j.slick.converters.SlickConverters;
+
 
 public class Vector2fInterpolatorTest {
 	
 	@Test
 	public void testVector2fInterpolator() {
 		
-		Vector2fInterpolator vector2fInterpolator = new Vector2fInterpolator();
+		Interpolator<Vector2f> vector2fInterpolator = new GenericInterpolator<Vector2f>(SlickConverters.vector2f(), new FloatArrayInterpolator(2));
 		
 		Vector2f interpolatedVector = vector2fInterpolator.interpolate(new Vector2f(100,100), new Vector2f(200,200), 0f);
 		

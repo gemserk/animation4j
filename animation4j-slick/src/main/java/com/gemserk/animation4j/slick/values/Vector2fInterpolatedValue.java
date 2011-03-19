@@ -2,8 +2,10 @@ package com.gemserk.animation4j.slick.values;
 
 import org.newdawn.slick.geom.Vector2f;
 
+import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
+import com.gemserk.animation4j.interpolator.GenericInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
-import com.gemserk.animation4j.slick.interpolators.Vector2fInterpolator;
+import com.gemserk.animation4j.slick.converters.SlickConverters;
 import com.gemserk.animation4j.values.InterpolatedValue;
 
 public class Vector2fInterpolatedValue extends InterpolatedValue<Vector2f> {
@@ -15,7 +17,7 @@ public class Vector2fInterpolatedValue extends InterpolatedValue<Vector2f> {
 	}
 	
 	public Vector2fInterpolatedValue(Vector2f a, Vector2f b) {
-		this(new Vector2fInterpolator(), a , b);
+		this(new GenericInterpolator<Vector2f>(SlickConverters.vector2f(), new FloatArrayInterpolator(2)), a , b);
 	}
 	
 	public Vector2fInterpolatedValue(Vector2f a) {

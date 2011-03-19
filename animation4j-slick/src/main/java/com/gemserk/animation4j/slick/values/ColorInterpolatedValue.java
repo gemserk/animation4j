@@ -2,8 +2,10 @@ package com.gemserk.animation4j.slick.values;
 
 import org.newdawn.slick.Color;
 
+import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
+import com.gemserk.animation4j.interpolator.GenericInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
-import com.gemserk.animation4j.slick.interpolators.ColorInterpolator;
+import com.gemserk.animation4j.slick.converters.SlickConverters;
 import com.gemserk.animation4j.values.InterpolatedValue;
 
 public class ColorInterpolatedValue extends InterpolatedValue<Color> {
@@ -13,7 +15,7 @@ public class ColorInterpolatedValue extends InterpolatedValue<Color> {
 	}
 
 	public ColorInterpolatedValue(Color a, Color b) {
-		this(new ColorInterpolator(), a, b);
+		this(new GenericInterpolator<Color>(SlickConverters.color(), new FloatArrayInterpolator(4)), a, b);
 	}
 
 	public ColorInterpolatedValue(Color a) {
