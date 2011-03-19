@@ -3,6 +3,7 @@ package com.gemserk.animation4j.examples;
 import java.awt.Color;
 import java.awt.geom.Point2D;
 
+import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.interpolator.CustomInterpolator;
 import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;

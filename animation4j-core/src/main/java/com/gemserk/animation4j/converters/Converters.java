@@ -1,10 +1,12 @@
-package com.gemserk.animation4j.examples;
+package com.gemserk.animation4j.converters;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
 
-import com.gemserk.animation4j.converters.TypeConverter;
-
+/**
+ * Provides type converters for common classes like Color and Point2D. 
+ * @author acoppes
+ */
 public class Converters {
 
 	public static TypeConverter<Point2D> point2d() {
