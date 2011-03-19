@@ -18,12 +18,10 @@ public class Point2DInterpolator implements Interpolator<Point2D> {
 	}
 
 	@Override
-	public Point2D interpolate(Point2D a, Point2D b, float t) {
+	public Point2D interpolate(Point2D a, Point2D b, Point2D out, float t) {
 		float x = interpolatorFunction.interpolate(t);
-
 		double newx = (1 - x) * a.getX() + x * b.getX();
 		double newy = (1 - x) * a.getY() + x * b.getY();
-
 		return new Point2D.Float((float) newx, (float) newy);
 	}
 

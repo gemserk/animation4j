@@ -11,7 +11,7 @@ public class FloatInterpolator implements Interpolator<Float> {
 	}
 
 	@Override
-	public Float interpolate(Float a, Float b, float t) {
+	public Float interpolate(Float a, Float b, Float out, float t) {
 		float x = interpolatorFunction.interpolate(t);
 		return (1 - x) * a + x * b;
 	}

@@ -16,8 +16,8 @@ import java.util.ArrayList;
 
 import com.gemserk.animation4j.event.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.ColorInterpolator;
-import com.gemserk.animation4j.interpolator.Interpolator;
-import com.gemserk.animation4j.interpolator.Point2DInterpolator;
+import com.gemserk.animation4j.interpolator.CustomInterpolator;
+import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.interpolator.TypeConverter;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
@@ -121,9 +121,51 @@ public class Example4 extends Java2dDesktopApplication {
 
 			final InterpolatorFunction linearInterpolationFunction = InterpolatorFunctionFactory.linear();
 
-			TypeConverter<Point2D> point2dConverter = new TypeConverter<Point2D>() {
+//			final CustomInterpolator<Point2D> point2dInterpolator = new CustomInterpolator<Point2D>(createPoint2dConverter(), new FloatArrayInterpolator(2));
 
-				// Point2D tmp = new Point2D.Float(0f, 0f);
+			// final Interpolator<Point2D> point2dInterpolator = new Point2DInterpolator();
+
+			buttons.add(new Button() {
+				{
+					position = interpolatedProperty(transition(new Point2D.Float(320, 625), new CustomInterpolator<Point2D>(createPoint2dConverter(), new FloatArrayInterpolator(2)), 0.001f));
+					size = interpolatedProperty(transition(new Point2D.Float(1f, 1f), new CustomInterpolator<Point2D>(createPoint2dConverter(), new FloatArrayInterpolator(2)), 0.005f));
+					color = interpolatedProperty(transition(new Color(1f, 1f, 1f, 1f), colorInterpolator(), 0.005f));
+					glowColor = interpolatedProperty(transition(new Color(1f, 0f, 0f, 0f), colorInterpolator(), 0.002f));
+
+					position.set(new Point2D.Float(320, 125));
+				}
+			});
+
+			buttons.add(new Button() {
+				{
+					position = interpolatedProperty(transition(new Point2D.Float(320, 725), new CustomInterpolator<Point2D>(createPoint2dConverter(), new FloatArrayInterpolator(2)), 0.001f));
+					size = interpolatedProperty(transition(new Point2D.Float(1f, 1f), new CustomInterpolator<Point2D>(createPoint2dConverter(), new FloatArrayInterpolator(2)), 0.005f));
+					color = interpolatedProperty(transition(new Color(1f, 1f, 1f, 1f), new ColorInterpolator(), 0.005f));
+					glowColor = interpolatedProperty(transition(new Color(1f, 0f, 0f, 0f), new ColorInterpolator(), 0.002f));
+
+					position.set(new Point2D.Float(320, 225));
+				}
+			});
+
+			buttons.add(new Button() {
+				{
+					position = interpolatedProperty(transition(new Point2D.Float(320, 825), new CustomInterpolator<Point2D>(createPoint2dConverter(), new FloatArrayInterpolator(2)), 0.001f));
+					size = interpolatedProperty(transition(new Point2D.Float(1f, 1f), new CustomInterpolator<Point2D>(createPoint2dConverter(), new FloatArrayInterpolator(2)), 0.005f));
+					color = interpolatedProperty(transition(new Color(1f, 1f, 1f, 1f), new ColorInterpolator(), 0.005f));
+					glowColor = interpolatedProperty(transition(new Color(1f, 0f, 0f, 0f), new ColorInterpolator(), 0.002f));
+
+					position.set(new Point2D.Float(320, 325));
+				}
+			});
+
+			backgroundColor = transition(new Color(0.4f, 0.4f, 0.4f, 0f), colorInterpolator(), 0.001f);
+			backgroundColor.set(new Color(0.4f, 0.4f, 0.4f, 0.6f), 1000);
+		}
+
+		protected TypeConverter<Point2D> createPoint2dConverter() {
+			return new TypeConverter<Point2D>() {
+
+				Point2D tmp = new Point2D.Float(0f, 0f);
 
 				@Override
 				public float[] copyFromObject(Point2D p, float[] x) {
@@ -136,52 +178,12 @@ public class Example4 extends Java2dDesktopApplication {
 				public Point2D copyToObject(Point2D p, float[] x) {
 					if (p == null) {
 						System.out.println("creating new point for interpolator");
-						p = new Point2D.Float(0f, 0f);
+						p = tmp;
 					}
 					p.setLocation(x[0], x[1]);
 					return p;
 				}
 			};
-
-			// final CustomInterpolator<Point2D> point2dInterpolator = new CustomInterpolator<Point2D>(point2dConverter, new FloatArrayInterpolator(2));
-
-			final Interpolator<Point2D> point2dInterpolator = new Point2DInterpolator();
-
-			buttons.add(new Button() {
-				{
-					position = interpolatedProperty(transition(new Point2D.Float(320, 625), point2dInterpolator, 0.001f));
-					size = interpolatedProperty(transition(new Point2D.Float(1f, 1f), point2dInterpolator, 0.005f));
-					color = interpolatedProperty(transition(new Color(1f, 1f, 1f, 1f), colorInterpolator(), 0.005f));
-					glowColor = interpolatedProperty(transition(new Color(1f, 0f, 0f, 0f), colorInterpolator(), 0.002f));
-
-					position.set(new Point2D.Float(320, 125));
-				}
-			});
-
-			buttons.add(new Button() {
-				{
-					position = interpolatedProperty(transition(new Point2D.Float(320, 725), point2dInterpolator, 0.001f));
-					size = interpolatedProperty(transition(new Point2D.Float(1f, 1f), point2dInterpolator, 0.005f));
-					color = interpolatedProperty(transition(new Color(1f, 1f, 1f, 1f), new ColorInterpolator(), 0.005f));
-					glowColor = interpolatedProperty(transition(new Color(1f, 0f, 0f, 0f), new ColorInterpolator(), 0.002f));
-
-					position.set(new Point2D.Float(320, 225));
-				}
-			});
-
-			buttons.add(new Button() {
-				{
-					position = interpolatedProperty(transition(new Point2D.Float(320, 825), point2dInterpolator, 0.001f));
-					size = interpolatedProperty(transition(new Point2D.Float(1f, 1f), point2dInterpolator, 0.005f));
-					color = interpolatedProperty(transition(new Color(1f, 1f, 1f, 1f), new ColorInterpolator(), 0.005f));
-					glowColor = interpolatedProperty(transition(new Color(1f, 0f, 0f, 0f), new ColorInterpolator(), 0.002f));
-
-					position.set(new Point2D.Float(320, 325));
-				}
-			});
-
-			backgroundColor = transition(new Color(0.4f, 0.4f, 0.4f, 0f), colorInterpolator(), 0.001f);
-			backgroundColor.set(new Color(0.4f, 0.4f, 0.4f, 0.6f), 1000);
 		}
 
 		Transition<Color> backgroundColor;

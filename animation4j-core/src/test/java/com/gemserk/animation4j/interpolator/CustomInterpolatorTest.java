@@ -36,7 +36,7 @@ public class CustomInterpolatorTest {
 		Color startColor = new Color(0f, 0f, 0f, 0f);
 		Color endColor = new Color(1f, 1f, 1f, 1f);
 
-		Color result = arrayInterpolator.interpolate(startColor, endColor, 0.5f);
+		Color result = arrayInterpolator.interpolate(startColor, endColor, null, 0.5f);
 
 		assertNotNull(result);
 		float[] rgb = result.getRGBComponents(null);
@@ -114,11 +114,11 @@ public class CustomInterpolatorTest {
 		Vector2f t1 = new Vector2f(100f, 100f);
 		Vector2f t2 = new Vector2f(200f, 200f);
 		
-		Vector2f result = arrayInterpolator.interpolate(t1, t2, 0.5f);
-		result = arrayInterpolator.interpolate(t1, t2, 0.5f);
-		result = arrayInterpolator.interpolate(t1, t2, 0.5f);
-		result = arrayInterpolator.interpolate(t1, t2, 0.5f);
-		result = arrayInterpolator.interpolate(t1, t2, 0.5f);
+		Vector2f result = arrayInterpolator.interpolate(t1, t2, null, 0.5f);
+		result = arrayInterpolator.interpolate(t1, t2, null, 0.5f);
+		result = arrayInterpolator.interpolate(t1, t2, null, 0.5f);
+		result = arrayInterpolator.interpolate(t1, t2, null, 0.5f);
+		result = arrayInterpolator.interpolate(t1, t2, null, 0.5f);
 
 		assertNotNull(result);
 		assertThat(result.x, IsEqual.equalTo(150f));

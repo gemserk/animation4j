@@ -16,8 +16,10 @@ import com.gemserk.animation4j.Animation;
 import com.gemserk.animation4j.event.AnimationEvent;
 import com.gemserk.animation4j.event.AnimationEventHandler;
 import com.gemserk.animation4j.event.AnimationHandlerManager;
+import com.gemserk.animation4j.interpolator.CustomInterpolator;
+import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
-import com.gemserk.animation4j.interpolator.Point2DInterpolator;
+import com.gemserk.animation4j.interpolator.TypeConverter;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.states.AnimationStateMachine;
 import com.gemserk.animation4j.states.StateMachine.StateCondition;
@@ -137,6 +139,30 @@ public class Example2 extends Java2dDesktopApplication {
 			element.position = new Point(100, 100);
 			element.alpha = 0f;
 			element.textAlpha = 0f;
+			
+			TypeConverter<Point2D> point2dConverter = new TypeConverter<Point2D>() {
+
+				Point2D tmp = new Point2D.Float(0f, 0f);
+
+				@Override
+				public float[] copyFromObject(Point2D p, float[] x) {
+					x[0] = (float) p.getX();
+					x[1] = (float) p.getY();
+					return x;
+				}
+
+				@Override
+				public Point2D copyToObject(Point2D p, float[] x) {
+					if (p == null) {
+						p = tmp;
+					}
+					p.setLocation(x[0], x[1]);
+					return p;
+				}
+			};
+
+			final CustomInterpolator<Point2D> point2dInterpolator = new CustomInterpolator<Point2D>(point2dConverter, // 
+					new FloatArrayInterpolator(2, InterpolatorFunctionFactory.easeIn(), InterpolatorFunctionFactory.easeIn()));
 
 			// create the synchronizers
 
@@ -146,7 +172,7 @@ public class Example2 extends Java2dDesktopApplication {
 			showAnimation = new SynchrnonizedAnimation(new TimelineAnimationBuilder() {
 				{
 					speed(1.5f);
-					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 260), new Point2DInterpolator(InterpolatorFunctionFactory.easeIn())) //
+					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 260), point2dInterpolator) //
 							.keyFrame(1000, new Point(320, 220)));
 					value("alpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f, new FloatInterpolator(InterpolatorFunctionFactory.easeOut())).keyFrame(1000, 1f));
 					value("textAlpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f, new FloatInterpolator(InterpolatorFunctionFactory.easeOut())) //

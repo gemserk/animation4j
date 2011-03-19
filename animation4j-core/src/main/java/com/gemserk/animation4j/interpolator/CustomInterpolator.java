@@ -14,8 +14,6 @@ public class CustomInterpolator<T> implements Interpolator<T> {
 	
 	private float[] b;
 	
-	private T tmp;
-
 	private FloatArrayInterpolator floatArrayInterpolator;
 	
 	public CustomInterpolator(TypeConverter<T> converter, int length) {
@@ -29,11 +27,11 @@ public class CustomInterpolator<T> implements Interpolator<T> {
 		b = new float[floatArrayInterpolator.getLength()];
 	}
 
-	public T interpolate(T t1, T t2, float t) {
+	public T interpolate(T t1, T t2, T out, float t) {
 		a = converter.copyFromObject(t1, a);
 		b = converter.copyFromObject(t2, b);
-		tmp = converter.copyToObject(tmp, floatArrayInterpolator.interpolate(a, b, t));
-		return tmp;
+		out = converter.copyToObject(out, floatArrayInterpolator.interpolate(a, b, t));
+		return out;
 	}
 
 }

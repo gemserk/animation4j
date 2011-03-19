@@ -37,13 +37,15 @@ public class UpdateableTransition<T> implements Transition<T> {
 	 */
 	public UpdateableTransition(T startValue, Interpolator<T> interpolator, int defaultTime) {
 		this.startValue = startValue;
-		this.currentValue = startValue;
+		this.currentValue = null;
 		this.interpolator = interpolator;
 		this.defaultTime = defaultTime;
 	}
 	
 	@Override
 	public T get() {
+		if (currentValue == null)
+			return startValue;
 		return currentValue;
 	}
 	
@@ -56,7 +58,10 @@ public class UpdateableTransition<T> implements Transition<T> {
 	public void set(T t, int time) {
 		this.desiredValue = t;
 		this.totalTime = time;
-		this.startValue = currentValue;
+		if (currentValue != null) {
+			this.startValue = currentValue;
+			this.currentValue = null;
+		}
 		this.currentTime = 0;
 	}
 
@@ -79,7 +84,7 @@ public class UpdateableTransition<T> implements Transition<T> {
 
 		float alpha = (float) currentTime / (float) totalTime;
 		
-		currentValue = interpolator.interpolate(startValue, desiredValue, alpha);
+		currentValue = interpolator.interpolate(startValue, desiredValue, currentValue, alpha);
 		
 	}
 

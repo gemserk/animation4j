@@ -66,7 +66,7 @@ public abstract class InterpolatedValue<T>  {
 	 * @return an interpolated value between a and b, using alpha as weight.
 	 */
 	public T getInterpolatedValue() {
-		return interpolator.interpolate(a, b, alpha);
+		return interpolator.interpolate(a, b, null, alpha);
 	}
 
 	public boolean isFinished() {
