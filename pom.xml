@@ -72,7 +72,6 @@
 
 	<properties>
 		<compiler.version>1.6</compiler.version>
-		<componentsengine.version>0.0.9-SNAPSHOT</componentsengine.version>
 		<maven.version>2.0.10</maven.version>
 	</properties>
 
@@ -213,18 +212,13 @@
 				<artifactId>animation4j-componentsengine</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-
-			<dependency>
-				<groupId>com.gemserk.componentsengine</groupId>
-				<artifactId>core</artifactId>
-				<version>${componentsengine.version}</version>
-			</dependency>
-
+			
 			<dependency>
 				<groupId>commons-beanutils</groupId>
 				<artifactId>commons-beanutils</artifactId>
 				<version>1.8.3</version>
 			</dependency>
+			
 		</dependencies>
 	</dependencyManagement>
 

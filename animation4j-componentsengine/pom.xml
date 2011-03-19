@@ -11,8 +11,12 @@
 	<name>Components Engine module of animation4j</name>
 	<version>0.0.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
-
 	<description>This module contains classes to use with componentsengine for easy use of animation4j.</description>
+	
+	<properties>
+		<componentsengine.version>0.0.9-SNAPSHOT</componentsengine.version>
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -36,6 +40,7 @@
 		<dependency>
 			<groupId>com.gemserk.componentsengine</groupId>
 			<artifactId>core</artifactId>
+			<version>${componentsengine.version}</version>
 		</dependency>
 	</dependencies>
 </project>
