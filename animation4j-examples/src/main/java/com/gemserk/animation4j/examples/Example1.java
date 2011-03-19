@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import com.gemserk.animation4j.event.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
+import com.gemserk.animation4j.interpolator.Interpolators;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
@@ -90,9 +91,9 @@ public class Example1 extends Java2dDesktopApplication {
 					speed(2f);
 					started(false);
 
-					value("x", new TimelineValueBuilder<Float>().keyFrame(0, 150f, FloatInterpolator.floatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, 350f));
+					value("x", new TimelineValueBuilder<Float>().keyFrame(0, 150f, Interpolators.floatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, 350f));
 					value("y", new TimelineValueBuilder<Float>().keyFrame(0, 325f));
-					value("angle", new TimelineValueBuilder<Float>().keyFrame(0, 0f, FloatInterpolator.floatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, (float) Math.PI / 2));
+					value("angle", new TimelineValueBuilder<Float>().keyFrame(0, 0f, Interpolators.floatInterpolator(InterpolatorFunctionFactory.easeIn())).keyFrame(1000, (float) Math.PI / 2));
 				}
 			}.build();
 

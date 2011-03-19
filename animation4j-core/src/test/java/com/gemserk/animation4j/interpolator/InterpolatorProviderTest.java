@@ -14,7 +14,7 @@ public class InterpolatorProviderTest {
 	public void shouldInferTypeForRegisteredLinearInterpolator() {
 		InterpolatorProvider interpolatorProvider = new InterpolatorProvider();
 		
-		Interpolator<Float> interpolator = FloatInterpolator.floatInterpolator(InterpolatorFunctionFactory.linear());
+		Interpolator<Float> interpolator = Interpolators.floatInterpolator(InterpolatorFunctionFactory.linear());
 		interpolatorProvider.register(Float.class, interpolator);
 		Interpolator<Float> interpolatorInfered = interpolatorProvider.inferInterpolator(new Float(100f));
 		

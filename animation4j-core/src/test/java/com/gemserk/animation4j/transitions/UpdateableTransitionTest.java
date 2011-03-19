@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
+import com.gemserk.animation4j.interpolator.Interpolators;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
 
 @RunWith(JMock.class)
@@ -26,7 +27,7 @@ public class UpdateableTransitionTest {
 	public void shouldReturnInitialWhenCreatedAndNotUpdated() {
 		float initialValue = 100f;
 		InterpolatorFunction interpolatorFunction = mockery.mock(InterpolatorFunction.class);
-		Transition<Float> transition = new UpdateableTransition<Float>(initialValue, FloatInterpolator.floatInterpolator(interpolatorFunction));
+		Transition<Float> transition = new UpdateableTransition<Float>(initialValue, Interpolators.floatInterpolator(interpolatorFunction));
 		float value = transition.get();
 		assertThat(value, IsEqual.equalTo(initialValue));
 	}
@@ -35,7 +36,7 @@ public class UpdateableTransitionTest {
 	public void shouldNotModifyValueWhenSetIfNotUpdateCalled() {
 		float initialValue = 100f;
 		InterpolatorFunction interpolatorFunction = mockery.mock(InterpolatorFunction.class);
-		Transition<Float> transition = new UpdateableTransition<Float>(initialValue, FloatInterpolator.floatInterpolator(interpolatorFunction));
+		Transition<Float> transition = new UpdateableTransition<Float>(initialValue, Interpolators.floatInterpolator(interpolatorFunction));
 		float newValue = 200f;
 		int time = 1000;
 		transition.set(newValue, time);
@@ -58,7 +59,7 @@ public class UpdateableTransitionTest {
 			}
 		});
 
-		UpdateableTransition<Float> transition = new UpdateableTransition<Float>(initialValue, FloatInterpolator.floatInterpolator(interpolatorFunction));
+		UpdateableTransition<Float> transition = new UpdateableTransition<Float>(initialValue, Interpolators.floatInterpolator(interpolatorFunction));
 		transition.set(200f, 1000);
 		transition.update(250);
 		assertThat(transition.get(), IsEqual.equalTo(125f));
@@ -79,7 +80,7 @@ public class UpdateableTransitionTest {
 			}
 		});
 
-		UpdateableTransition<Float> transition = new UpdateableTransition<Float>(initialValue, FloatInterpolator.floatInterpolator(interpolatorFunction));
+		UpdateableTransition<Float> transition = new UpdateableTransition<Float>(initialValue, Interpolators.floatInterpolator(interpolatorFunction));
 		transition.set(200f, 1000);
 		transition.update(1001);
 		assertThat(transition.get(), IsEqual.equalTo(200f));
@@ -102,7 +103,7 @@ public class UpdateableTransitionTest {
 			}
 		});
 
-		UpdateableTransition<Float> transition = new UpdateableTransition<Float>(initialValue, FloatInterpolator.floatInterpolator(interpolatorFunction));
+		UpdateableTransition<Float> transition = new UpdateableTransition<Float>(initialValue, Interpolators.floatInterpolator(interpolatorFunction));
 		transition.set(200f, 1000);
 		transition.update(500);
 		assertThat(transition.get(), IsEqual.equalTo(150f));
@@ -119,7 +120,7 @@ public class UpdateableTransitionTest {
 		float initialValue = 100f;
 		final InterpolatorFunction interpolatorFunction = mockery.mock(InterpolatorFunction.class);
 
-		UpdateableTransition<Float> transition = new UpdateableTransition<Float>(initialValue, FloatInterpolator.floatInterpolator(interpolatorFunction));
+		UpdateableTransition<Float> transition = new UpdateableTransition<Float>(initialValue, Interpolators.floatInterpolator(interpolatorFunction));
 		transition.update(500);
 		assertThat(transition.get(), IsEqual.equalTo(initialValue));
 

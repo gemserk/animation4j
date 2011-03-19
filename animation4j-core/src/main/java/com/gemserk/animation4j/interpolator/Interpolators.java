@@ -5,8 +5,17 @@ import java.awt.geom.Point2D;
 
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
+import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 
 public class Interpolators {
+
+	public static Interpolator<Float> floatInterpolator() {
+		return new FloatInterpolator(InterpolatorFunctionFactory.linear());
+	}
+
+	public static Interpolator<Float> floatInterpolator(InterpolatorFunction function) {
+		return new FloatInterpolator(function);
+	}
 	
 	public static Interpolator<Point2D> point2dInterpolator() {
 		return new CustomInterpolator<Point2D>(Converters.point2d(), new FloatArrayInterpolator(2));

@@ -6,11 +6,12 @@ import org.junit.Test;
 
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
+import com.gemserk.animation4j.interpolator.Interpolators;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 
 public class InterpolatedValueTest {
 
-	static Interpolator<Float> linearFloatInterpolator = FloatInterpolator.floatInterpolator(InterpolatorFunctionFactory.linear());
+	static Interpolator<Float> linearFloatInterpolator = Interpolators.floatInterpolator(InterpolatorFunctionFactory.linear());
 
 	@Test
 	public void shouldStartNotFinished() {

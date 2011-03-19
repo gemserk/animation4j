@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
+import com.gemserk.animation4j.interpolator.Interpolators;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.time.UpdateableTimeProvider;
 
@@ -21,7 +22,7 @@ public class AutoUpdateableTransitionTest {
 	@Before
 	public void setUp() {
 		timeProvider = new UpdateableTimeProvider();
-		interpolator = FloatInterpolator.floatInterpolator(InterpolatorFunctionFactory.linear());
+		interpolator = Interpolators.floatInterpolator(InterpolatorFunctionFactory.linear());
 	}
 	
 	@Test

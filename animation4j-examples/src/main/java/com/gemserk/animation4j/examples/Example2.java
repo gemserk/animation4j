@@ -147,9 +147,9 @@ public class Example2 extends Java2dDesktopApplication {
 					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 260), // 
 							Interpolators.point2dInterpolator(InterpolatorFunctionFactory.easeIn(), InterpolatorFunctionFactory.easeIn())) //
 							.keyFrame(1000, new Point(320, 220)));
-					value("alpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f, FloatInterpolator.floatInterpolator(InterpolatorFunctionFactory.easeOut())).keyFrame(1000, 1f));
-					value("textAlpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f, FloatInterpolator.floatInterpolator(InterpolatorFunctionFactory.easeOut())) //
-							.keyFrame(500, 0f, FloatInterpolator.floatInterpolator(InterpolatorFunctionFactory.easeOut())) //
+					value("alpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f, Interpolators.floatInterpolator(InterpolatorFunctionFactory.easeOut())).keyFrame(1000, 1f));
+					value("textAlpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f, Interpolators.floatInterpolator(InterpolatorFunctionFactory.easeOut())) //
+							.keyFrame(500, 0f, Interpolators.floatInterpolator(InterpolatorFunctionFactory.easeOut())) //
 							.keyFrame(1500, 1f));
 					// show text...
 				}
@@ -159,8 +159,8 @@ public class Example2 extends Java2dDesktopApplication {
 				{
 					speed(2f);
 					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 220)));
-					value("alpha", new TimelineValueBuilder<Float>().keyFrame(0, 1f).keyFrame(500, 1f, FloatInterpolator.floatInterpolator(InterpolatorFunctionFactory.easeOut())).keyFrame(1000, 0f));
-					value("textAlpha", new TimelineValueBuilder<Float>().keyFrame(0, 1f, FloatInterpolator.floatInterpolator(InterpolatorFunctionFactory.easeOut())) //
+					value("alpha", new TimelineValueBuilder<Float>().keyFrame(0, 1f).keyFrame(500, 1f, Interpolators.floatInterpolator(InterpolatorFunctionFactory.easeOut())).keyFrame(1000, 0f));
+					value("textAlpha", new TimelineValueBuilder<Float>().keyFrame(0, 1f, Interpolators.floatInterpolator(InterpolatorFunctionFactory.easeOut())) //
 							.keyFrame(500, 0f));
 				}
 			}.build(), timelineSynchronizer);
