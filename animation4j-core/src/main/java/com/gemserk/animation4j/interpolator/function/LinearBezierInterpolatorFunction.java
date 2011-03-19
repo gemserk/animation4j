@@ -1,5 +1,10 @@
 package com.gemserk.animation4j.interpolator.function;
 
+/**
+ * Linear Bézier curve implementation of an InterpolatorFunction.
+ * 
+ * @author acoppes
+ */
 public class LinearBezierInterpolatorFunction implements InterpolatorFunction {
 
 	private final float p0, p1;
