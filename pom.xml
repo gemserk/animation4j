@@ -36,6 +36,11 @@
 		<developerConnection>scm:git:git@github.com:gemserk/animation4j.git</developerConnection>
 	</scm>
 
+	<issueManagement>
+		<system>Github</system>
+		<url>https://github.com/gemserk/animation4j/issues</url>
+	</issueManagement>
+
 	<distributionManagement>
 		<repository>
 			<id>gemserk.releases</id>
