@@ -10,7 +10,7 @@ public class TimelineAnimationBuilder {
 
 	Collection<TimelineValueBuilder> timelineValueBuilders = new ArrayList<TimelineValueBuilder>();
 	
-	private float delayTime = 0;
+	private float delay = 0;
 
 	private boolean started = false;
 
@@ -27,12 +27,13 @@ public class TimelineAnimationBuilder {
 			duration = Math.max(duration, timelineValueBuilder.getDuration());
 		}
 
-		return new Timeline(duration, delayTime, timelineValues);
+		return new Timeline(duration, timelineValues);
 	}
 	
 	public TimelineAnimation build() {
 		TimelineAnimation timelineAnimation = new TimelineAnimation(buildTimeline(), started);
 		timelineAnimation.setSpeed(speed);
+		timelineAnimation.setDelay(delay);
 		return timelineAnimation;
 	}
 
@@ -43,7 +44,7 @@ public class TimelineAnimationBuilder {
 	}
 
 	public TimelineAnimationBuilder delay(float time) {
-		this.delayTime = time;
+		this.delay = time;
 		return this;
 	}
 	

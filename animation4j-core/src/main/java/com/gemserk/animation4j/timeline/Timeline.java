@@ -14,19 +14,12 @@ public class Timeline {
 
 	private float duration;
 
-	private float delay;
-
 	public float getDuration() {
 		return duration;
 	}
 
-	public float getDelay() {
-		return delay;
-	}
-
-	public Timeline(float duration, float delay, Map<String, TimelineValue> timelineValues) {
+	public Timeline(float duration, Map<String, TimelineValue> timelineValues) {
 		this.duration = duration;
-		this.delay = delay;
 		this.timelineValues = timelineValues;
 	}
 

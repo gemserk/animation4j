@@ -56,7 +56,7 @@ public class BuilderTest {
 			
 			HashMap<String, TimelineValue> timelineValues = new HashMap<String, TimelineValue>();
 			
-			return new TimelineAnimation(new Timeline(duration, 0, timelineValues));
+			return new TimelineAnimation(new Timeline(duration, timelineValues));
 		}
 	
 		void keyFrame(KeyFrame keyFrame) {
