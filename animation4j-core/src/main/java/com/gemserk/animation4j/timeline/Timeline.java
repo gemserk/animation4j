@@ -31,7 +31,7 @@ public class Timeline {
 	}
 
 	public Object getValue(float time, String name) {
-		return timelineValues.get(name).getValue(time - getDelay());
+		return timelineValues.get(name).getValue(time);
 	}
 
 	public Map<String, TimelineValue> getTimelineValues() {

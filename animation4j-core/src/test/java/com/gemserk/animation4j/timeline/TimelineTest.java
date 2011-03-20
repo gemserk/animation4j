@@ -16,8 +16,8 @@ public class TimelineTest {
 			put("myvalue", new TimelineValueBuilder<Float>().keyFrame(0, 100f).keyFrame(100, 200f).build());
 		}});
 		
-		assertEquals(100f, (Float) timeline.getValue(0, "myvalue"), 0.01f);
-		assertEquals(200f, (Float) timeline.getValue(100, "myvalue"), 0.01f);
+		assertEquals(100f, (Float) timeline.getValue(- timeline.getDelay(), "myvalue"), 0.01f);
+		assertEquals(200f, (Float) timeline.getValue(100 - timeline.getDelay(), "myvalue"), 0.01f);
 	}
 
 	@Test
@@ -28,10 +28,10 @@ public class TimelineTest {
 			put("myvalue", new TimelineValueBuilder<Float>().keyFrame(0, 100f).keyFrame(100, 200f).build());
 		}});
 		
-		assertEquals(100f, (Float) timeline.getValue(0, "myvalue"), 0.01f);
-		assertEquals(100f, (Float) timeline.getValue(100, "myvalue"), 0.01f);
-		assertEquals(150f, (Float) timeline.getValue(150, "myvalue"), 0.01f);
-		assertEquals(200f, (Float) timeline.getValue(200, "myvalue"), 0.01f);
+		assertEquals(100f, (Float) timeline.getValue(0 - timeline.getDelay(), "myvalue"), 0.01f);
+		assertEquals(100f, (Float) timeline.getValue(100 - timeline.getDelay(), "myvalue"), 0.01f);
+		assertEquals(150f, (Float) timeline.getValue(150 - timeline.getDelay(), "myvalue"), 0.01f);
+		assertEquals(200f, (Float) timeline.getValue(200 - timeline.getDelay(), "myvalue"), 0.01f);
 	}
 
 }
