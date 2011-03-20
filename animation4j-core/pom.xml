@@ -31,7 +31,7 @@
 						<executions>
 							<execution>
 								<id>upload-artifacts</id>
-								<phase>package</phase>
+								<phase>install</phase>
 								<goals>
 									<goal>upload</goal>
 								</goals>
