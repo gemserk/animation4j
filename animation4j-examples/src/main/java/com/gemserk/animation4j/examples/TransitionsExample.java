@@ -33,7 +33,7 @@ public class TransitionsExample {
 		@Override
 		public float[] copyFromObject(Vector2f v, float[] x) {
 			if (x == null)
-				x = new float[2];
+				x = new float[variables()];
 			x[0] = v.x;
 			x[1] = v.y;
 			return x;
@@ -47,6 +47,11 @@ public class TransitionsExample {
 			v.x = x[0];
 			v.y = x[1];
 			return v;
+		}
+
+		@Override
+		public int variables() {
+			return 2;
 		}
 
 	}

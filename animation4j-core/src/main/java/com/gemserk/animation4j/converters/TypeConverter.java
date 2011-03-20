@@ -10,6 +10,13 @@ package com.gemserk.animation4j.converters;
 public interface TypeConverter<T> {
 
 	/**
+	 * Returns the quantity of variables are used to convert the object to the float[] and vice versa.
+	 * 
+	 * @return the quantity of variables used.
+	 */
+	int variables();
+
+	/**
 	 * Copy the values of the object to the specified float array, if null it will create a new float array.
 	 * 
 	 * @param object
