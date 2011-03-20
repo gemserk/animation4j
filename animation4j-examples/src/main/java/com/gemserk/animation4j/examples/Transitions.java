@@ -5,7 +5,6 @@ import com.gemserk.animation4j.time.SystemTimeProvider;
 import com.gemserk.animation4j.time.TimeProvider;
 import com.gemserk.animation4j.transitions.AutoUpdateableTransition;
 import com.gemserk.animation4j.transitions.Transition;
-import com.gemserk.animation4j.transitions.UpdateableTransition;
 
 public class Transitions {
 
@@ -13,10 +12,6 @@ public class Transitions {
 	
 	public static TimeProvider timeProvider = new SystemTimeProvider();
 
-	public static <T> Transition<T> updateable(T startValue, Interpolator<T> interpolator) {
-		return new UpdateableTransition<T>(startValue, interpolator);
-	}
-	
 	public static <T> Transition<T> transition(T startValue, Interpolator<T> interpolator) {
 		return transition(startValue, interpolator, ms);
 	}

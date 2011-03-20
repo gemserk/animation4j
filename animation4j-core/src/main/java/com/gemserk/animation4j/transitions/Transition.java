@@ -1,7 +1,7 @@
 package com.gemserk.animation4j.transitions;
 
 /**
- * Provides an interface of a transition of a value.
+ * Provides an interface of a transition of a value. 
  * 
  * @param <T>
  *            The type of the transition value.
