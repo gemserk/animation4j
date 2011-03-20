@@ -49,10 +49,10 @@ public class TimelineValueBuilder<T> {
 	}
 
 	/**
-	 * Defines a new key frame in the timeline value.
+	 * Defines a new key frame in the time line value.
 	 * 
 	 * @param time
-	 *            The time when the key frame starts.
+	 *            The time when the key frame starts (in milliseconds).
 	 * @param value
 	 *            The value the variable should have in the key frame.
 	 * @param interpolator
