@@ -14,7 +14,7 @@ public class Converters {
 		@Override
 		public float[] copyFromObject(Float f, float[] x) {
 			if (x == null)
-				x = new float[1];
+				x = new float[variables()];
 			x[0] = f.floatValue();
 			return x;
 		}
@@ -24,6 +24,11 @@ public class Converters {
 			// as Float is immutable, it will return a new float each time.
 			return Float.valueOf(x[0]);
 		}
+
+		@Override
+		public int variables() {
+			return 1;
+		}
 		
 	};
 	private static TypeConverter<Point2D> point2dConverter = new TypeConverter<Point2D>() {
@@ -31,7 +36,7 @@ public class Converters {
 		@Override
 		public float[] copyFromObject(Point2D p, float[] x) {
 			if (x == null)
-				x = new float[2];
+				x = new float[variables()];
 			x[0] = (float) p.getX();
 			x[1] = (float) p.getY();
 			return x;
@@ -45,13 +50,18 @@ public class Converters {
 			return p;
 		}
 
+		@Override
+		public int variables() {
+			return 2;
+		}
+
 	};
 	private static TypeConverter<Color> colorConverter = new TypeConverter<Color>() {
 
 		@Override
 		public float[] copyFromObject(Color object, float[] x) {
 			if (x == null)
-				x = new float[4];
+				x = new float[variables()];
 			object.getRGBComponents(x);
 			return x;
 		}
@@ -62,13 +72,18 @@ public class Converters {
 			return new Color(x[0], x[1], x[2], x[3]);
 		}
 
+		@Override
+		public int variables() {
+			return 4;
+		}
+
 	};
 
 	/**
 	 * This converter will be boxing and unboxing from float to Float and vice versa each time a method is called, so it is not recommended to use, 
 	 * we recommend you to use a TypeConverter of a FloatValue mutable implementation instead.
 	 */
-	public static TypeConverter<Float> floatConverter() {
+	public static TypeConverter<Float> floatValue() {
 		// not recommended to use, it will be boxing and unboxing from float to Float and vice versa.
 		return floatConverter;
 	}

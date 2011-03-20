@@ -1,7 +1,7 @@
 package com.gemserk.animation4j;
 
 /**
- * Provides an abstraction of an animation with most common methods. It is based in some ideas from <a href="http://www.w3.org/TR/css3-animations/">http://www.w3.org/TR/css3-animations/</a>
+ * Provides an abstraction of an animation with most common methods. It is based in some aspects from <a href="http://www.w3.org/TR/css3-animations/">http://www.w3.org/TR/css3-animations/</a>
  * 
  * @author acoppes
  */

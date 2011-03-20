@@ -55,11 +55,10 @@ public class GenericInterpolatorTest {
 		@Override
 		public float[] copyFromObject(Vector2f v, float[] x) {
 			if (x == null)
-				x = new float[2];
+				x = new float[variables()];
 			x[0] = v.x;
 			x[1] = v.y;
 			return x;
-			
 		}
 
 		@Override
@@ -69,6 +68,11 @@ public class GenericInterpolatorTest {
 			v.x = x[0];
 			v.y = x[1];
 			return v;
+		}
+
+		@Override
+		public int variables() {
+			return 2;
 		}
 	}
 
@@ -123,7 +127,7 @@ public class GenericInterpolatorTest {
 		Vector2f a = new Vector2f(100, 100);
 		Vector2f b = new Vector2f(200, 200);
 
-		int interpolationsQuantity = 10000;
+		int interpolationsQuantity = 100000;
 		
 		System.out.println("running " + interpolationsQuantity + " interpolations.");
 
