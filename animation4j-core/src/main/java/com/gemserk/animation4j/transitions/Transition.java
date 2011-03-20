@@ -30,7 +30,7 @@ public interface Transition<T> {
 	 * @param t
 	 *            The wanted new value.
 	 * @param time
-	 *            The time to set the new value.
+	 *            The time to set the new value. If time is zero, then value is applied directly.
 	 */
 	void set(T t, int time);
 

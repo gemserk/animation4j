@@ -69,6 +69,10 @@ public class UpdateableTransition<T> implements Transition<T> {
 			this.currentValue = null;
 		}
 		this.currentTime = 0;
+		
+		if (time == 0) 
+			this.currentValue = interpolator.interpolate(startValue, desiredValue, 1f);
+		
 	}
 
 	/**
