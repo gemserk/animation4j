@@ -68,7 +68,7 @@ public class Converters {
 	 * This converter will be boxing and unboxing from float to Float and vice versa each time a method is called, so it is not recommended to use, 
 	 * we recommend you to use a TypeConverter of a FloatValue mutable implementation instead.
 	 */
-	public static TypeConverter<Float> floatConverter() {
+	public static TypeConverter<Float> floatValue() {
 		// not recommended to use, it will be boxing and unboxing from float to Float and vice versa.
 		return floatConverter;
 	}
