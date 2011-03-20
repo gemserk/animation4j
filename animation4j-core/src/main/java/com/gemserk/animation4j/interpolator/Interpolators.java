@@ -34,13 +34,11 @@ public class Interpolators {
 	}
 
 	public static <T> Interpolator<T> interpolator(TypeConverter<T> typeConverter) {
-		Interpolator<float[]> variablesInterpolator = new FloatArrayInterpolator(typeConverter.variables());
-		return new GenericInterpolator<T>(typeConverter, variablesInterpolator);
+		return new GenericInterpolator<T>(typeConverter);
 	}
 
 	public static <T> Interpolator<T> interpolator(TypeConverter<T> typeConverter, InterpolatorFunction... functions) {
-		Interpolator<float[]> variablesInterpolator = new FloatArrayInterpolator(typeConverter.variables(), functions);
-		return new GenericInterpolator<T>(typeConverter, variablesInterpolator);
+		return new GenericInterpolator<T>(typeConverter, functions);
 	}
-	
+
 }
