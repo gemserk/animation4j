@@ -8,6 +8,7 @@ import com.gemserk.animation4j.transitions.Transition;
 
 public class TransitionsExample {
 
+	// For a given class, for example a vector2f mutable class
 	static class Vector2f {
 
 		float x, y;
@@ -28,6 +29,7 @@ public class TransitionsExample {
 
 	}
 
+	// You will have to create a converter for your custom object, or use common converters provided by the library.
 	static class Vector2fConverter implements TypeConverter<Vector2f> {
 
 		@Override
@@ -57,26 +59,35 @@ public class TransitionsExample {
 	}
 
 	public static void main(String[] args) throws InterruptedException {
-
-		// this one could be reused any time we want, should be stateless.
+		// as converters are stateless, you could reuse it in several interpolators.
 		Vector2fConverter vector2fConverter = new Vector2fConverter();
 
-		Interpolator<Vector2f> vector2fInterpolator = Interpolators.interpolator(2, vector2fConverter, //
-				InterpolatorFunctionFactory.easeOut(), InterpolatorFunctionFactory.easeIn());
+		// create an interpolator specifying a converter and the functions to be used for each variable (x and y in the example)
+		Interpolator<Vector2f> vector2fInterpolator = Interpolators.interpolator(vector2fConverter, //
+				InterpolatorFunctionFactory.easeOut(), //
+				InterpolatorFunctionFactory.easeIn());
 
-		// By default, transitions use system time provider.
+		// you could also create interpolators using default linear interpolation functions ->
+		Interpolator<Vector2f> anotherInterpolator = Interpolators.interpolator(vector2fConverter);
+
+		// After the interpolator has been created, you could create a transition using it
+		// by default transitions will use a SystemTimeProvider.
 		Transition<Vector2f> transition = Transitions.transition(new Vector2f(0f, 0f), vector2fInterpolator);
 
 		System.out.println("Transition value: " + transition.get());
 
 		transition.set(new Vector2f(100f, 100f), 500);
 
+		// could have a different value from (0,0) since some time could have passed.
 		System.out.println("Transition value: " + transition.get());
 		Thread.sleep(300);
 		System.out.println("Transition value: " + transition.get());
 		Thread.sleep(200);
 		System.out.println("Transition value: " + transition.get());
-
+		
+		transition.set(new Vector2f(200f, 200f), 0);
+		Thread.sleep(1);
+		System.out.println("Transition value: " + transition.get());
 	}
 
 }

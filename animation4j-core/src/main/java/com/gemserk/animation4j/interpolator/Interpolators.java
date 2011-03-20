@@ -10,36 +10,36 @@ import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
 public class Interpolators {
 
 	public static Interpolator<Float> floatInterpolator() {
-		return interpolator(1, Converters.floatValue());
+		return interpolator(Converters.floatValue());
 	}
 
 	public static Interpolator<Float> floatInterpolator(InterpolatorFunction function) {
-		return interpolator(1, Converters.floatValue(), function);
+		return interpolator(Converters.floatValue(), function);
 	}
 
 	public static Interpolator<Point2D> point2dInterpolator() {
-		return interpolator(2, Converters.point2d());
+		return interpolator(Converters.point2d());
 	}
 
 	public static Interpolator<Point2D> point2dInterpolator(InterpolatorFunction... functions) {
-		return interpolator(2, Converters.point2d(), functions);
+		return interpolator(Converters.point2d(), functions);
 	}
 
 	public static Interpolator<Color> colorInterpolator() {
-		return interpolator(4, Converters.color());
+		return interpolator(Converters.color());
 	}
 
 	public static Interpolator<Color> colorInterpolator(InterpolatorFunction... functions) {
-		return interpolator(4, Converters.color(), functions);
+		return interpolator(Converters.color(), functions);
 	}
 
-	public static <T> Interpolator<T> interpolator(int variables, TypeConverter<T> typeConverter) {
-		Interpolator<float[]> variablesInterpolator = new FloatArrayInterpolator(variables);
+	public static <T> Interpolator<T> interpolator(TypeConverter<T> typeConverter) {
+		Interpolator<float[]> variablesInterpolator = new FloatArrayInterpolator(typeConverter.variables());
 		return new GenericInterpolator<T>(typeConverter, variablesInterpolator);
 	}
 
-	public static <T> Interpolator<T> interpolator(int variables, TypeConverter<T> typeConverter, InterpolatorFunction... functions) {
-		Interpolator<float[]> variablesInterpolator = new FloatArrayInterpolator(variables, functions);
+	public static <T> Interpolator<T> interpolator(TypeConverter<T> typeConverter, InterpolatorFunction... functions) {
+		Interpolator<float[]> variablesInterpolator = new FloatArrayInterpolator(typeConverter.variables(), functions);
 		return new GenericInterpolator<T>(typeConverter, variablesInterpolator);
 	}
 	
