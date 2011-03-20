@@ -2,6 +2,11 @@ package com.gemserk.animation4j.timeline;
 
 import java.util.Map;
 
+/**
+ * Represents the concept of a time line with a group of values.
+ * 
+ * @author acoppes
+ */
 @SuppressWarnings("rawtypes")
 public class Timeline {
 
@@ -26,7 +31,7 @@ public class Timeline {
 	}
 
 	public Object getValue(float time, String name) {
-		return timelineValues.get(name).getValue(time - delay);
+		return timelineValues.get(name).getValue(time - getDelay());
 	}
 
 	public Map<String, TimelineValue> getTimelineValues() {
