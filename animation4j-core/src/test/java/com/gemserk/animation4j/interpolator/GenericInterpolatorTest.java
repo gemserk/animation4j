@@ -127,7 +127,7 @@ public class GenericInterpolatorTest {
 		Vector2f a = new Vector2f(100, 100);
 		Vector2f b = new Vector2f(200, 200);
 
-		int interpolationsQuantity = 10000;
+		int interpolationsQuantity = 100000;
 		
 		System.out.println("running " + interpolationsQuantity + " interpolations.");
 
