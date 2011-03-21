@@ -8,6 +8,8 @@ import java.awt.Color;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
+import com.gemserk.animation4j.Vector2f;
+import com.gemserk.animation4j.Vector2fConverter;
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.converters.TypeConverter;
 
@@ -48,47 +50,6 @@ public class GenericInterpolatorTest {
 		assertThat(out[2], IsEqual.equalTo(0.5f));
 		assertThat(out[3], IsEqual.equalTo(0.5f));
 
-	}
-	
-	static class Vector2fConverter implements TypeConverter<Vector2f> {
-
-		@Override
-		public float[] copyFromObject(Vector2f v, float[] x) {
-			if (x == null)
-				x = new float[variables()];
-			x[0] = v.x;
-			x[1] = v.y;
-			return x;
-		}
-
-		@Override
-		public Vector2f copyToObject(Vector2f v, float[] x) {
-			if (v == null)
-				v = new Vector2f(0, 0);
-			v.x = x[0];
-			v.y = x[1];
-			return v;
-		}
-
-		@Override
-		public int variables() {
-			return 2;
-		}
-	}
-
-	static class Vector2f {
-		
-		float x,y;
-		
-		public Vector2f(float x, float y) {
-			set(x,y);
-		}
-		
-		public void set(float x, float y) {
-			this.x = x;
-			this.y = y;
-		}
-		
 	}
 	
 	@Test

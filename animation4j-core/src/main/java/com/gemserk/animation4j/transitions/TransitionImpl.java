@@ -1,5 +1,7 @@
 package com.gemserk.animation4j.transitions;
 
+import com.gemserk.animation4j.converters.TypeConverter;
+import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
 
 /**
@@ -7,13 +9,7 @@ import com.gemserk.animation4j.interpolator.Interpolator;
  * 
  * @author acoppes
  */
-public class UpdateableTransition<T> implements Transition<T> {
-
-	private T startValue;
-
-	private T currentValue;
-
-	private T desiredValue;
+public class TransitionImpl<T> implements Transition<T> {
 
 	private int totalTime;
 
@@ -21,17 +17,17 @@ public class UpdateableTransition<T> implements Transition<T> {
 
 	private int defaultTime;
 
-	private Interpolator<T> interpolator;
+	private Interpolator<float[]> interpolator;
 
-	/**
-	 * @param startValue
-	 *            The starting value of the transition.
-	 * @param interpolator
-	 *            The interpolator to use when updating the value.
-	 */
-	public UpdateableTransition(T startValue, Interpolator<T> interpolator) {
-		this(startValue, interpolator, 0);
-	}
+	private float[] startValue;
+
+	private float[] currentValue;
+
+	private float[] desiredValue;
+
+	private T currentObject;
+
+	private final TypeConverter<T> typeConverter;
 
 	/**
 	 * @param startValue
@@ -41,18 +37,21 @@ public class UpdateableTransition<T> implements Transition<T> {
 	 * @param defaultTime
 	 *            The default time to use when calling set without specifying the time.
 	 */
-	public UpdateableTransition(T startValue, Interpolator<T> interpolator, int defaultTime) {
-		this.startValue = startValue;
+	public TransitionImpl(T startValue, int defaultTime, TypeConverter<T> typeConverter) {
+		this.typeConverter = typeConverter;
+		this.startValue = typeConverter.copyFromObject(startValue, null);
 		this.currentValue = null;
-		this.interpolator = interpolator;
+		this.interpolator = new FloatArrayInterpolator(typeConverter.variables());
 		this.defaultTime = defaultTime;
 	}
 
 	@Override
 	public T get() {
 		if (currentValue == null)
-			return startValue;
-		return currentValue;
+			currentObject = typeConverter.copyToObject(currentObject, startValue);
+		else
+			currentObject = typeConverter.copyToObject(currentObject, currentValue);
+		return currentObject;
 	}
 
 	@Override
@@ -62,17 +61,17 @@ public class UpdateableTransition<T> implements Transition<T> {
 
 	@Override
 	public void set(T t, int time) {
-		this.desiredValue = t;
+		this.desiredValue = typeConverter.copyFromObject(t, desiredValue);
 		this.totalTime = time;
 		if (currentValue != null) {
 			this.startValue = currentValue;
 			this.currentValue = null;
 		}
 		this.currentTime = 0;
-		
-		if (time == 0) 
+
+		if (time == 0)
 			this.currentValue = interpolator.interpolate(startValue, desiredValue, 1f);
-		
+
 	}
 
 	/**
