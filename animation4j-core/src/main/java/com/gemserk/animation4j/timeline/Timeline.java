@@ -12,6 +12,9 @@ public class Timeline {
 
 	private Map<String, TimelineValue> values;
 
+	/**
+	 * Build a new time line using the specified values.
+	 */
 	public Timeline(Map<String, TimelineValue> values) {
 		this.values = values;
 	}

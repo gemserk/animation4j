@@ -64,15 +64,7 @@ public class TimelineValue<T> {
 
 	}
 
-	LinkedList<TimelineValue.KeyFrame<T>> keyFrames = new LinkedList<TimelineValue.KeyFrame<T>>();
-
-	public void addKeyFrame(float time, T value, Interpolator<T> interpolator) {
-		keyFrames.add(new TimelineValue.KeyFrame<T>(time, value, interpolator));
-	}
-
-	public void addKeyFrame(float time, T value) {
-		addKeyFrame(time, value, new NullInterpolator<T>());
-	}
+	LinkedList<KeyFrame<T>> keyFrames = new LinkedList<KeyFrame<T>>();
 
 	String name;
 
@@ -83,7 +75,26 @@ public class TimelineValue<T> {
 	public String getName() {
 		return name;
 	}
+	
+	TimelineValue() {
+		
+	}
 
+	public void addKeyFrame(float time, T value, Interpolator<T> interpolator) {
+		keyFrames.add(new KeyFrame<T>(time, value, interpolator));
+	}
+
+	public void addKeyFrame(float time, T value) {
+		addKeyFrame(time, value, new NullInterpolator<T>());
+	}
+
+	/**
+	 * Returns the value for the given time, interpolating between corresponding key frames.
+	 * 
+	 * @param time
+	 *            The time to use when calculating the value.
+	 * @return An interpolated value based on corresponding to specified time key frames.
+	 */
 	public T getValue(float time) {
 
 		KeyFrame<T> firstKeyFrame = keyFrames.getFirst();
