@@ -1,8 +1,8 @@
 package com.gemserk.animation4j.examples;
 
 import static com.gemserk.animation4j.examples.Properties.interpolatedProperty;
-import static com.gemserk.animation4j.examples.Transitions.transition;
 import static com.gemserk.animation4j.interpolator.Interpolators.colorInterpolator;
+import static com.gemserk.animation4j.transitions.Transitions.transition;
 
 import java.awt.Color;
 import java.awt.Dimension;

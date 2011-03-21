@@ -5,6 +5,7 @@ import com.gemserk.animation4j.interpolator.Interpolators;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.time.UpdateableTimeProvider;
 import com.gemserk.animation4j.transitions.Transition;
+import com.gemserk.animation4j.transitions.Transitions;
 
 public class TransitionsExample {
 

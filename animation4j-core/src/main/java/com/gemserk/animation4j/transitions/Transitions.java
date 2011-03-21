@@ -1,10 +1,8 @@
-package com.gemserk.animation4j.examples;
+package com.gemserk.animation4j.transitions;
 
 import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.time.SystemTimeProvider;
 import com.gemserk.animation4j.time.TimeProvider;
-import com.gemserk.animation4j.transitions.AutoUpdateableTransition;
-import com.gemserk.animation4j.transitions.Transition;
 
 public class Transitions {
 

@@ -15,6 +15,7 @@ import com.gemserk.animation4j.interpolator.Interpolators;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.transitions.Transition;
+import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
 import com.gemserk.componentsengine.java2d.Java2dGame;
 import com.gemserk.componentsengine.java2d.Java2dModule;
