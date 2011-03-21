@@ -2,6 +2,11 @@ package com.gemserk.animation4j.states;
 
 import com.gemserk.animation4j.Animation;
 
-public class AnimationStateMachine extends StateMachine<String, Animation> {
+/**
+ * A state machine made of Animation classes.
+ * 
+ * @author acoppes
+ */
+public class AnimationStateMachine extends StateMachine<Animation> {
 
 }

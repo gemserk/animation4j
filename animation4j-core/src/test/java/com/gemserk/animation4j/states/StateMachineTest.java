@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 
 import com.gemserk.animation4j.Animation;
 import com.gemserk.animation4j.MockAnimation;
-import com.gemserk.animation4j.states.StateMachine.StateTransition;
 
 @RunWith(JMock.class)
 public class StateMachineTest {
