@@ -3,14 +3,14 @@ package com.gemserk.animation4j.timeline;
 import java.util.Map;
 
 /**
- * Represents the concept of a time line with a group of values.
+ * Represents the concept of a time line with a group of values. Each time line value will handle its own key frames.
  * 
  * @author acoppes
  */
 @SuppressWarnings("rawtypes")
 public class Timeline {
 
-	private Map<String, TimelineValue> timelineValues;
+	private Map<String, TimelineValue> values;
 
 	private float duration;
 
@@ -20,22 +20,18 @@ public class Timeline {
 
 	public Timeline(float duration, Map<String, TimelineValue> timelineValues) {
 		this.duration = duration;
-		this.timelineValues = timelineValues;
+		this.values = timelineValues;
 	}
 
 	public Object getValue(float time, String name) {
-		return timelineValues.get(name).getValue(time);
-	}
-
-	public Map<String, TimelineValue> getTimelineValues() {
-		return timelineValues;
-	}
-
-	public TimelineIterator getIterator() {
-		return new TimelineIterator(this);
+		return values.get(name).getValue(time);
 	}
 
 	public TimelineValue getTimelineValue(String key) {
-		return timelineValues.get(key);
+		return values.get(key);
+	}
+	
+	public TimelineIterator getIterator() {
+		return new TimelineIterator(values);
 	}
 }
