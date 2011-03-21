@@ -62,7 +62,6 @@
 		</snapshotRepository>
 	</distributionManagement>
 
-
 	<modules>
 		<module>animation4j-core</module>
 		<module>animation4j-componentsengine</module>
@@ -207,9 +206,16 @@
 				<artifactId>animation4j-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>animation4j-componentsengine</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>animation4j-slick</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			
