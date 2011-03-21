@@ -4,11 +4,6 @@ import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
 
-/**
- * Implementation of a transition based on some aspects of <a href="http://www.w3.org/TR/2009/WD-css3-transitions-20090320/">CSS3 transitions spec</a>.
- * 
- * @author acoppes
- */
 public class TransitionImpl<T> implements Transition<T> {
 
 	private int totalTime;
@@ -29,19 +24,23 @@ public class TransitionImpl<T> implements Transition<T> {
 
 	private final TypeConverter<T> typeConverter;
 
-	/**
-	 * @param startValue
-	 *            The starting value of the transition.
-	 * @param interpolator
-	 *            The interpolator to use when updating the value.
-	 * @param defaultTime
-	 *            The default time to use when calling set without specifying the time.
-	 */
-	public TransitionImpl(T startValue, int defaultTime, TypeConverter<T> typeConverter) {
+	public TransitionImpl(T startValue, TypeConverter<T> typeConverter) {
+		this(startValue, typeConverter, 0);
+	}
+
+	public TransitionImpl(T startValue, TypeConverter<T> typeConverter, int defaultTime) {
+		this(startValue, typeConverter, new FloatArrayInterpolator(typeConverter.variables()), defaultTime);
+	}
+
+	public TransitionImpl(T startValue, TypeConverter<T> typeConverter, Interpolator<float[]> interpolator) {
+		this(startValue, typeConverter, interpolator, 0);
+	}
+
+	public TransitionImpl(T startValue, TypeConverter<T> typeConverter, Interpolator<float[]> interpolator, int defaultTime) {
 		this.typeConverter = typeConverter;
 		this.startValue = typeConverter.copyFromObject(startValue, null);
 		this.currentValue = null;
-		this.interpolator = new FloatArrayInterpolator(typeConverter.variables());
+		this.interpolator = interpolator;
 		this.defaultTime = defaultTime;
 	}
 
@@ -74,12 +73,6 @@ public class TransitionImpl<T> implements Transition<T> {
 
 	}
 
-	/**
-	 * Updates the current value to the new value.
-	 * 
-	 * @param time
-	 *            The time to update the current value.
-	 */
 	public void update(int time) {
 
 		if (currentTime == totalTime)
