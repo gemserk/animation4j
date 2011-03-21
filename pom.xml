@@ -50,16 +50,16 @@
 	</scm>
 
 	<distributionManagement>
-		<repository>
-			<id>gemserk.releases</id>
-			<name>Gemserk Releases</name>
-			<url>https://maven.gemserk.com/nexus/content/repositories/releases/</url>
-		</repository>
 		<snapshotRepository>
-			<id>gemserk.snapshots</id>
-			<name>Gemserk Snapshots</name>
-			<url>https://maven.gemserk.com/nexus/content/repositories/snapshots/</url>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
+		<repository>
+			<id>sonatype-nexus-staging</id>
+			<name>Nexus Release Repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
 	</distributionManagement>
 
 	<modules>
@@ -218,13 +218,13 @@
 				<artifactId>animation4j-slick</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>commons-beanutils</groupId>
 				<artifactId>commons-beanutils</artifactId>
 				<version>1.8.3</version>
 			</dependency>
-			
+
 		</dependencies>
 	</dependencyManagement>
 
