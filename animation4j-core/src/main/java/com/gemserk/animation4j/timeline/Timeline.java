@@ -18,19 +18,24 @@ public class Timeline {
 		return duration;
 	}
 
-	public Timeline(float duration, Map<String, TimelineValue> timelineValues) {
+	public Timeline(float duration, Map<String, TimelineValue> values) {
 		this.duration = duration;
-		this.values = timelineValues;
+		this.values = values;
 	}
 
+	/**
+	 * Returns the value of an element identified by name in the specified time.
+	 * 
+	 * @param time
+	 *            The time to use to get the value of the element.
+	 * @param name
+	 *            The identifier of the element in the time line.
+	 * @return The value of the element for that given time.
+	 */
 	public Object getValue(float time, String name) {
 		return values.get(name).getValue(time);
 	}
 
-	public TimelineValue getTimelineValue(String key) {
-		return values.get(key);
-	}
-	
 	public TimelineIterator getIterator() {
 		return new TimelineIterator(values);
 	}
