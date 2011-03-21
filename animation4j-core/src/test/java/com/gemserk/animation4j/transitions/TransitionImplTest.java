@@ -45,8 +45,6 @@ public class TransitionImplTest {
 		}
 		assertThat(Vector2f.instances, IsEqual.equalTo(instances + 1));
 	}
-	
-	// test: should not modify external startValue and endValue
 
 	@Test
 	public void shouldNotModifyTransitionIfStartValueChanges() {
@@ -70,4 +68,29 @@ public class TransitionImplTest {
 		assertThat(transition.get(), IsEqual.equalTo(new Vector2f(50f, 330f)));
 	}
 
+	
+	// test: should not modify external startValue and endValue
+	
+	@Test
+	public void shouldNotModifyStartValue() {
+		Vector2f startValue = new Vector2f(150f, 220f);
+		Vector2f endValue = new Vector2f(50f, 330f);
+		TransitionImpl<Vector2f> transition = new TransitionImpl<Vector2f>(startValue, vector2fConverter);
+		transition.set(endValue, 1000);
+		transition.update(1000);
+		assertThat(startValue, IsEqual.equalTo(new Vector2f(150f, 220f)));
+	}
+	
+	@Test
+	public void shouldNotModifyEndValue() {
+		Vector2f startValue = new Vector2f(150f, 220f);
+		Vector2f endValue = new Vector2f(50f, 330f);
+		TransitionImpl<Vector2f> transition = new TransitionImpl<Vector2f>(startValue, vector2fConverter);
+		transition.set(endValue, 1000);
+		transition.update(1000);
+		transition.set(new Vector2f(500, 500), 1000);
+		transition.update(1000);
+		assertThat(endValue, IsEqual.equalTo(new Vector2f(50f, 330f)));
+	}
+	
 }
