@@ -74,7 +74,6 @@ public class TransitionImpl<T> implements Transition<T> {
 	}
 
 	public void update(int time) {
-
 		if (currentTime == totalTime)
 			return;
 
@@ -89,7 +88,6 @@ public class TransitionImpl<T> implements Transition<T> {
 		float alpha = (float) currentTime / (float) totalTime;
 
 		currentValue = interpolator.interpolate(startValue, desiredValue, alpha);
-
 	}
 
 }

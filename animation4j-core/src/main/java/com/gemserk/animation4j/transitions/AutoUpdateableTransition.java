@@ -9,13 +9,15 @@ import com.gemserk.animation4j.time.TimeProvider;
  * 
  * @author acoppes
  */
-public class AutoUpdateableTransition<T> extends UpdateableTransition<T> {
+public class AutoUpdateableTransition<T> implements Transition<T> {
 
 	private final float speed;
 
 	private final TimeProvider timeProvider;
 
 	private long lastTime;
+	
+	private UpdateableTransition<T> transition;
 
 	// make a provider of custom transitions which returns the transition already configured for a time provider?
 
@@ -30,15 +32,15 @@ public class AutoUpdateableTransition<T> extends UpdateableTransition<T> {
 	}
 
 	public AutoUpdateableTransition(T startValue, Interpolator<T> interpolator, float speed, TimeProvider timeProvider) {
-		super(startValue, interpolator);
 		this.speed = speed;
 		this.timeProvider = timeProvider;
+		this.transition = new UpdateableTransition<T>(startValue, interpolator);
 	}
 
 	public AutoUpdateableTransition(T startValue, T endValue, Interpolator<T> interpolator, float speed, TimeProvider timeProvider) {
-		super(startValue, interpolator, 1000);
 		this.speed = speed;
 		this.timeProvider = timeProvider;
+		this.transition = new UpdateableTransition<T>(startValue, interpolator, 1000);
 		set(endValue);
 	}
 
@@ -47,12 +49,12 @@ public class AutoUpdateableTransition<T> extends UpdateableTransition<T> {
 		long delta = currentTime - lastTime;
 
 		if (delta <= 0)
-			return super.get();
+			return transition.get();
 
 		float time = ((float) delta) * speed;
-		super.update((int) (time * 1000f));
+		transition.update((int) (time * 1000f));
 		lastTime = currentTime;
-		return super.get();
+		return transition.get();
 	}
 
 	public void set(T t) {
@@ -61,6 +63,6 @@ public class AutoUpdateableTransition<T> extends UpdateableTransition<T> {
 
 	public void set(T t, int time) {
 		lastTime = timeProvider.getTime();
-		super.set(t, time);
+		transition.set(t, time);
 	}
 }
