@@ -12,7 +12,7 @@ public class TimelineTest {
 	@Test
 	public void testGetValueForAGivenTime() {
 
-		Timeline timeline = new Timeline(100, new HashMap<String, TimelineValue>() {
+		Timeline timeline = new Timeline(new HashMap<String, TimelineValue>() {
 			{
 				put("myvalue", new TimelineValueBuilder<Float>().keyFrame(0, 100f).keyFrame(100, 200f).build());
 			}
@@ -25,7 +25,7 @@ public class TimelineTest {
 	@Test
 	public void testGetValueForAGivenTimeWithDelay() {
 
-		Timeline timeline = new Timeline(100, new HashMap<String, TimelineValue>() {
+		Timeline timeline = new Timeline(new HashMap<String, TimelineValue>() {
 			{
 				put("myvalue", new TimelineValueBuilder<Float>().keyFrame(0, 100f).keyFrame(100, 200f).build());
 			}

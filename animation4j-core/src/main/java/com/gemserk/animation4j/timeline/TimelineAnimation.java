@@ -21,6 +21,12 @@ public class TimelineAnimation implements Animation {
 	PlayingDirection playingDirection = PlayingDirection.Normal;
 	
 	private float delay;
+	
+	private float duration;
+
+	public void setDuration(float duration) {
+		this.duration = duration;
+	}
 
 	public void setSpeed(float speed) {
 		this.speed = speed;
@@ -39,8 +45,8 @@ public class TimelineAnimation implements Animation {
 		return playingDirection;
 	}
 
-	public float getDuration() {
-		return timeline.getDuration() + getDelay();
+	private float getDuration() {
+		return duration + getDelay();
 	}
 	
 	public void setDelay(float delay) {
@@ -71,7 +77,7 @@ public class TimelineAnimation implements Animation {
 	protected boolean isIterationFinished() {
 		float delay = getDelay();
 		if (playingDirection.equals(PlayingDirection.Normal))
-			return currentTime >= timeline.getDuration() + delay;
+			return currentTime >= duration + delay;
 		return currentTime + delay <= 0;
 	}
 	

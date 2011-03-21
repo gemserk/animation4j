@@ -12,14 +12,7 @@ public class Timeline {
 
 	private Map<String, TimelineValue> values;
 
-	private float duration;
-
-	public float getDuration() {
-		return duration;
-	}
-
-	public Timeline(float duration, Map<String, TimelineValue> values) {
-		this.duration = duration;
+	public Timeline(Map<String, TimelineValue> values) {
 		this.values = values;
 	}
 
@@ -36,6 +29,9 @@ public class Timeline {
 		return values.get(name).getValue(time);
 	}
 
+	/**
+	 * Returns an iterator which lets you iterate between the time line values.
+	 */
 	public TimelineIterator getIterator() {
 		return new TimelineIterator(values);
 	}
