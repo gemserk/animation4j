@@ -6,7 +6,8 @@ import java.util.List;
 import com.gemserk.animation4j.Animation;
 
 /**
- * Monitors an Animation and call to an AnimationHandler when the animation starts and when the animation ends.
+ * Monitors an Animation and call to a group of AnimationEventHandler whenever the animation state changes.
+ * 
  * @author acoppes
  */
 public class AnimationMonitor {
@@ -14,7 +15,7 @@ public class AnimationMonitor {
 	boolean wasFinished = false;
 
 	boolean wasStarted = false;
-	
+
 	int lastIteration = 1;
 
 	Animation animation;
@@ -24,7 +25,7 @@ public class AnimationMonitor {
 	public AnimationMonitor(Animation animation) {
 		this.animation = animation;
 	}
-	
+
 	public AnimationMonitor(Animation animation, AnimationEventHandler animationEventHandler) {
 		this(animation);
 		addAnimationHandler(animationEventHandler);
@@ -38,7 +39,7 @@ public class AnimationMonitor {
 		animationEventHandlers.remove(animationEventHandler);
 	}
 
-	public void checkAnimationChanges(AnimationHandlerManager animationHandlerManager) {
+	public void checkAnimationChanges() {
 
 		boolean callOnStart = animation.isStarted() && !wasStarted && !animation.isFinished();
 		boolean callOnFinish = animation.isFinished() && !wasFinished;
@@ -53,11 +54,11 @@ public class AnimationMonitor {
 
 		for (AnimationEventHandler animationEventHandler : animationEventHandlers) {
 			if (callOnFinish)
-				animationEventHandler.onAnimationFinished(new AnimationEvent(animation, animationHandlerManager));
+				animationEventHandler.onAnimationFinished(new AnimationEvent(animation));
 			if (callOnStart)
-				animationEventHandler.onAnimationStarted(new AnimationEvent(animation, animationHandlerManager));
+				animationEventHandler.onAnimationStarted(new AnimationEvent(animation));
 			if (callOnIterationChanged)
-				animationEventHandler.onIterationChanged(new AnimationEvent(animation, animationHandlerManager));
+				animationEventHandler.onIterationChanged(new AnimationEvent(animation));
 		}
 
 	}

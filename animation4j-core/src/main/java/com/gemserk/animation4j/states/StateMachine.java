@@ -2,80 +2,22 @@ package com.gemserk.animation4j.states;
 
 import java.util.ArrayList;
 
-public class StateMachine<K, T> {
-
-	public static class StateTransition<T> {
-
-		private final T sourceState;
-
-		private final T targetState;
-
-		private final StateCondition<T> condition;
-
-		public T getSourceState() {
-			return sourceState;
-		}
-
-		public T getTargetState() {
-			return targetState;
-		}
-
-		public StateCondition<T> getCondition() {
-			return condition;
-		}
-
-		public StateTransition(StateCondition<T> condition, T sourceState, T targetState) {
-			this.condition = condition;
-			this.sourceState = sourceState;
-			this.targetState = targetState;
-		}
-
-		private void afterTransition() {
-			afterTransition(sourceState, targetState);
-		}
-
-		/**
-		 * Called after transition was performed, after entered targetState and sourceState was left.
-		 * 
-		 * @param sourceState
-		 *            The source state.
-		 * @param currentState
-		 *            The current state.
-		 */
-		protected void afterTransition(T sourceState, T currentState) {
-
-		}
-
-		private void beforeTransition() {
-			beforeTransition(sourceState, targetState);
-		}
-
-		/**
-		 * Called before the transition was performed, before sourceState was left.
-		 * 
-		 * @param currentState
-		 *            The current state.
-		 * @param targetState
-		 *            The target state.
-		 */
-		protected void beforeTransition(T currentState, T targetState) {
-
-		}
-
-	}
-
-	public static class StateCondition<T> {
-
-		public boolean matches(T sourceState, T targetState) {
-			return false;
-		}
-
-	}
+/**
+ * Represents a generic state machine.
+ * 
+ * @param <T>
+ *            The type of the states.
+ * @author acoppes
+ */
+public class StateMachine<T> {
 
 	ArrayList<StateTransition<T>> stateTransitions = new ArrayList<StateTransition<T>>();
 
 	T currentState;
 
+	/**
+	 * Sets the current state of the state machine, should be used to set the initial state.
+	 */
 	public void setCurrentState(T state) {
 		currentState = state;
 	}
@@ -84,13 +26,16 @@ public class StateMachine<K, T> {
 		return currentState;
 	}
 
+	/**
+	 * Checks all transition conditions for the current state, if a condition returns true, then the related transition is performed.
+	 */
 	public void checkTransitionConditions() {
 
 		for (int i = 0; i < stateTransitions.size(); i++) {
 			StateTransition<T> transition = stateTransitions.get(i);
 			if (transition.getSourceState() != getCurrentState())
 				continue;
-			StateCondition<T> stateCondition = transition.getCondition();
+			StateTransitionCondition<T> stateCondition = transition.getCondition();
 			if (!stateCondition.matches(getCurrentState(), transition.getTargetState()))
 				continue;
 

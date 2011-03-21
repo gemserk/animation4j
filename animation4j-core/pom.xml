@@ -31,9 +31,11 @@
 						<executions>
 							<execution>
 								<id>upload-artifacts</id>
-								<phase>package</phase>
+								<!-- would be ideal to have it on package phase, but for now javadocs 
+									and sources are created on install phase, and we need those here to be uploaded -->
+								<phase>install</phase>
 								<goals>
-									<goal>upload</goal>
+									<goal>deploy</goal>
 								</goals>
 							</execution>
 						</executions>

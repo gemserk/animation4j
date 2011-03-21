@@ -2,42 +2,40 @@ package com.gemserk.animation4j.timeline;
 
 import java.util.Map;
 
+/**
+ * Represents the concept of a time line with a group of values. Each time line value will handle its own key frames.
+ * 
+ * @author acoppes
+ */
 @SuppressWarnings("rawtypes")
 public class Timeline {
 
-	private Map<String, TimelineValue> timelineValues;
+	private Map<String, TimelineValue> values;
 
-	private float duration;
-
-	private float delay;
-
-	public float getDuration() {
-		return duration;
+	/**
+	 * Build a new time line using the specified values.
+	 */
+	public Timeline(Map<String, TimelineValue> values) {
+		this.values = values;
 	}
 
-	public float getDelay() {
-		return delay;
-	}
-
-	public Timeline(float duration, float delay, Map<String, TimelineValue> timelineValues) {
-		this.duration = duration;
-		this.delay = delay;
-		this.timelineValues = timelineValues;
-	}
-
+	/**
+	 * Returns the value of an element identified by name in the specified time.
+	 * 
+	 * @param time
+	 *            The time to use to get the value of the element.
+	 * @param name
+	 *            The identifier of the element in the time line.
+	 * @return The value of the element for that given time.
+	 */
 	public Object getValue(float time, String name) {
-		return timelineValues.get(name).getValue(time - delay);
+		return values.get(name).getValue(time);
 	}
 
-	public Map<String, TimelineValue> getTimelineValues() {
-		return timelineValues;
-	}
-
+	/**
+	 * Returns an iterator which lets you iterate between the time line values.
+	 */
 	public TimelineIterator getIterator() {
-		return new TimelineIterator(this);
-	}
-
-	public TimelineValue getTimelineValue(String key) {
-		return timelineValues.get(key);
+		return new TimelineIterator(values);
 	}
 }

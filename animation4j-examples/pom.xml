@@ -75,7 +75,7 @@
 								<id>upload-artifacts</id>
 								<phase>package</phase>
 								<goals>
-									<goal>upload</goal>
+									<goal>deploy</goal>
 								</goals>
 							</execution>
 						</executions>

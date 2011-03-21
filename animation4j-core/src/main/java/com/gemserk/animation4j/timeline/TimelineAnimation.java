@@ -19,6 +19,14 @@ public class TimelineAnimation implements Animation {
 	boolean alternateDirection = false;
 
 	PlayingDirection playingDirection = PlayingDirection.Normal;
+	
+	private float delay;
+	
+	private float duration;
+
+	public void setDuration(float duration) {
+		this.duration = duration;
+	}
 
 	public void setSpeed(float speed) {
 		this.speed = speed;
@@ -37,8 +45,16 @@ public class TimelineAnimation implements Animation {
 		return playingDirection;
 	}
 
-	public float getDuration() {
-		return timeline.getDuration() + timeline.getDelay();
+	private float getDuration() {
+		return duration + getDelay();
+	}
+	
+	public void setDelay(float delay) {
+		this.delay = delay;
+	}
+
+	public float getDelay() {
+		return delay;
 	}
 
 	public TimelineAnimation(Timeline timeline) {
@@ -59,15 +75,15 @@ public class TimelineAnimation implements Animation {
 	 * Returns true when the time line for the current iteration is finished, could be normal or reverse playing direction.
 	 */
 	protected boolean isIterationFinished() {
-		float delay = timeline.getDelay();
+		float delay = getDelay();
 		if (playingDirection.equals(PlayingDirection.Normal))
-			return currentTime >= timeline.getDuration() + delay;
+			return currentTime >= duration + delay;
 		return currentTime + delay <= 0;
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public <T> T getValue(String name) {
-		return (T) timeline.getValue(currentTime, name);
+		return (T) timeline.getValue(currentTime - getDelay(), name);
 	}
 
 	public Timeline getTimeline() {
@@ -131,7 +147,7 @@ public class TimelineAnimation implements Animation {
 	public boolean isStarted() {
 		if (iteration > 1)
 			return true;
-		return currentTime > timeline.getDelay();
+		return currentTime > getDelay();
 	}
 
 	public void update(float time) {
@@ -152,7 +168,7 @@ public class TimelineAnimation implements Animation {
 			if (alternateDirection)
 				switchDirection();
 			else
-				currentTime = 0 + timeline.getDelay();
+				currentTime = 0 + getDelay();
 		} else {
 			if (alternateDirection)
 				switchDirection();

@@ -12,8 +12,6 @@ import org.junit.runner.RunWith;
 
 import com.gemserk.animation4j.Animation;
 import com.gemserk.animation4j.MockAnimation;
-import com.gemserk.animation4j.states.StateMachine.StateCondition;
-import com.gemserk.animation4j.states.StateMachine.StateTransition;
 
 @RunWith(JMock.class)
 public class StateMachineTest {
@@ -39,7 +37,7 @@ public class StateMachineTest {
 		AnimationStateMachine animationState = new AnimationStateMachine();
 		animationState.setCurrentState(animation1);
 
-		animationState.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
+		animationState.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
 			@Override
 			public boolean matches(Animation sourceState, Animation targetState) {
 				return true;
@@ -60,14 +58,14 @@ public class StateMachineTest {
 		AnimationStateMachine animationState = new AnimationStateMachine();
 		animationState.setCurrentState(animation1);
 
-		animationState.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
+		animationState.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
 			@Override
 			public boolean matches(Animation sourceState, Animation targetState) {
 				return false;
 			}
 		}, animation1, animation2));
 
-		animationState.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
+		animationState.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
 			@Override
 			public boolean matches(Animation sourceState, Animation targetState) {
 				return true;
@@ -90,7 +88,7 @@ public class StateMachineTest {
 
 		animationState.setCurrentState(animation1);
 
-		animationState.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
+		animationState.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
 			@Override
 			public boolean matches(Animation sourceState, Animation targetState) {
 				return true;
