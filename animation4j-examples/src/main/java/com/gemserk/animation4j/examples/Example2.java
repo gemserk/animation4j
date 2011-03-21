@@ -19,7 +19,7 @@ import com.gemserk.animation4j.event.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.Interpolators;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.states.AnimationStateMachine;
-import com.gemserk.animation4j.states.StateMachine.StateCondition;
+import com.gemserk.animation4j.states.StateTransitionCondition;
 import com.gemserk.animation4j.states.StateMachine.StateTransition;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
@@ -207,7 +207,7 @@ public class Example2 extends Java2dDesktopApplication {
 
 			animationStateMachine.setCurrentState(showAnimation);
 
-			animationStateMachine.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
+			animationStateMachine.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
 				@Override
 				public boolean matches(Animation sourceState, Animation targetState) {
 					return keyboardInput.keyDownOnce(KeyEvent.VK_ENTER) && currentText < texts.length;
@@ -219,7 +219,7 @@ public class Example2 extends Java2dDesktopApplication {
 				}
 			} );
 
-			animationStateMachine.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
+			animationStateMachine.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
 				@Override
 				public boolean matches(Animation sourceState, Animation targetState) {
 					return keyboardInput.keyDownOnce(KeyEvent.VK_ENTER) && currentText >= texts.length;
@@ -231,7 +231,7 @@ public class Example2 extends Java2dDesktopApplication {
 				}
 			});
 
-			animationStateMachine.addTransition(new StateTransition<Animation>(new StateCondition<Animation>() {
+			animationStateMachine.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
 				@Override
 				public boolean matches(Animation sourceState, Animation targetState) {
 					return keyboardInput.keyDownOnce(KeyEvent.VK_ENTER);

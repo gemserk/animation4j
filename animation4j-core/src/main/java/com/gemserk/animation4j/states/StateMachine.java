@@ -10,7 +10,7 @@ public class StateMachine<K, T> {
 
 		private final T targetState;
 
-		private final StateCondition<T> condition;
+		private final StateTransitionCondition<T> condition;
 
 		public T getSourceState() {
 			return sourceState;
@@ -20,11 +20,11 @@ public class StateMachine<K, T> {
 			return targetState;
 		}
 
-		public StateCondition<T> getCondition() {
+		public StateTransitionCondition<T> getCondition() {
 			return condition;
 		}
 
-		public StateTransition(StateCondition<T> condition, T sourceState, T targetState) {
+		public StateTransition(StateTransitionCondition<T> condition, T sourceState, T targetState) {
 			this.condition = condition;
 			this.sourceState = sourceState;
 			this.targetState = targetState;
@@ -64,14 +64,6 @@ public class StateMachine<K, T> {
 
 	}
 
-	public static class StateCondition<T> {
-
-		public boolean matches(T sourceState, T targetState) {
-			return false;
-		}
-
-	}
-
 	ArrayList<StateTransition<T>> stateTransitions = new ArrayList<StateTransition<T>>();
 
 	T currentState;
@@ -90,7 +82,7 @@ public class StateMachine<K, T> {
 			StateTransition<T> transition = stateTransitions.get(i);
 			if (transition.getSourceState() != getCurrentState())
 				continue;
-			StateCondition<T> stateCondition = transition.getCondition();
+			StateTransitionCondition<T> stateCondition = transition.getCondition();
 			if (!stateCondition.matches(getCurrentState(), transition.getTargetState()))
 				continue;
 
