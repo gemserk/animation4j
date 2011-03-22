@@ -14,6 +14,10 @@ public class Vector2f {
 		this.x = x;
 		this.y = y;
 	}
+	
+	public float distanceSq(Vector2f v) {
+		return (v.x - x) * (v.x - x) + (v.y - y) * (v.y - y); 
+	}
 
 	@Override
 	public String toString() {
