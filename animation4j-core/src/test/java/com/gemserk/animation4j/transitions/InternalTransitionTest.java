@@ -46,6 +46,21 @@ public class InternalTransitionTest {
 		}
 		assertThat(Vector2f.instances, IsEqual.equalTo(instances + 1));
 	}
+	
+	@Test
+	public void shouldReuseInternalCreatedArraysWhenInterpolating() {
+		Vector2f startValue = new Vector2f(150f, 220f);
+		Vector2f endValue = new Vector2f(50f, 330f);
+
+		InternalTransition<Vector2f> transition = new InternalTransition<Vector2f>(startValue, vector2fConverter, new FloatArrayInterpolator(2));
+		int instances = Vector2fConverter.arrayInstances;
+		for (int i = 0; i < 1000; i++) {
+			transition.set(endValue, 1000);
+			transition.update(500);
+			transition.get();
+		}
+		assertThat(Vector2fConverter.arrayInstances, IsEqual.equalTo(instances + 1));
+	}
 
 	@Test
 	public void shouldNotModifyTransitionIfStartValueChanges() {

@@ -3,11 +3,15 @@ package com.gemserk.animation4j;
 import com.gemserk.animation4j.converters.TypeConverter;
 
 public class Vector2fConverter implements TypeConverter<Vector2f> {
+	
+	public static int arrayInstances = 0;
 
 	@Override
 	public float[] copyFromObject(Vector2f v, float[] x) {
-		if (x == null)
+		if (x == null) {
 			x = new float[variables()];
+			arrayInstances++;
+		}
 		x[0] = v.x;
 		x[1] = v.y;
 		return x;
