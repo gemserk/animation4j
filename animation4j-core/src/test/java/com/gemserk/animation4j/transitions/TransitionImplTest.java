@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.gemserk.animation4j.Vector2f;
 import com.gemserk.animation4j.Vector2fConverter;
+import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 
 public class TransitionImplTest {
 
@@ -17,7 +18,7 @@ public class TransitionImplTest {
 		Vector2f startValue = new Vector2f(150f, 220f);
 		Vector2f endValue = new Vector2f(50f, 330f);
 
-		TransitionImpl<Vector2f> transition = new TransitionImpl<Vector2f>(startValue, vector2fConverter);
+		TransitionImpl<Vector2f> transition = new TransitionImpl<Vector2f>(startValue, vector2fConverter, new FloatArrayInterpolator(2));
 
 		transition.set(endValue, 1000);
 		assertThat(transition.get(), IsEqual.equalTo(new Vector2f(150f, 220f)));
@@ -34,7 +35,7 @@ public class TransitionImplTest {
 		Vector2f startValue = new Vector2f(150f, 220f);
 		Vector2f endValue = new Vector2f(50f, 330f);
 
-		TransitionImpl<Vector2f> transition = new TransitionImpl<Vector2f>(startValue, vector2fConverter);
+		TransitionImpl<Vector2f> transition = new TransitionImpl<Vector2f>(startValue, vector2fConverter, new FloatArrayInterpolator(2));
 
 		transition.set(endValue, 1000);
 
@@ -50,7 +51,7 @@ public class TransitionImplTest {
 	public void shouldNotModifyTransitionIfStartValueChanges() {
 		Vector2f startValue = new Vector2f(150f, 220f);
 		Vector2f endValue = new Vector2f(50f, 330f);
-		TransitionImpl<Vector2f> transition = new TransitionImpl<Vector2f>(startValue, vector2fConverter);
+		TransitionImpl<Vector2f> transition = new TransitionImpl<Vector2f>(startValue, vector2fConverter, new FloatArrayInterpolator(2));
 		transition.set(endValue, 1000);
 		startValue.set(1000f, 1000f);
 		assertThat(transition.get(), IsEqual.equalTo(new Vector2f(150f, 220f)));
@@ -60,7 +61,7 @@ public class TransitionImplTest {
 	public void shouldNotModifyTransitionIfEndValueChanges() {
 		Vector2f startValue = new Vector2f(150f, 220f);
 		Vector2f endValue = new Vector2f(50f, 330f);
-		TransitionImpl<Vector2f> transition = new TransitionImpl<Vector2f>(startValue, vector2fConverter);
+		TransitionImpl<Vector2f> transition = new TransitionImpl<Vector2f>(startValue, vector2fConverter, new FloatArrayInterpolator(2));
 		transition.set(endValue, 1000);
 		endValue.set(1500f, 1500f);
 		assertThat(transition.get(), IsEqual.equalTo(new Vector2f(150f, 220f)));
@@ -75,7 +76,7 @@ public class TransitionImplTest {
 	public void shouldNotModifyStartValue() {
 		Vector2f startValue = new Vector2f(150f, 220f);
 		Vector2f endValue = new Vector2f(50f, 330f);
-		TransitionImpl<Vector2f> transition = new TransitionImpl<Vector2f>(startValue, vector2fConverter);
+		TransitionImpl<Vector2f> transition = new TransitionImpl<Vector2f>(startValue, vector2fConverter, new FloatArrayInterpolator(2));
 		transition.set(endValue, 1000);
 		transition.update(1000);
 		assertThat(startValue, IsEqual.equalTo(new Vector2f(150f, 220f)));
@@ -85,7 +86,7 @@ public class TransitionImplTest {
 	public void shouldNotModifyEndValue() {
 		Vector2f startValue = new Vector2f(150f, 220f);
 		Vector2f endValue = new Vector2f(50f, 330f);
-		TransitionImpl<Vector2f> transition = new TransitionImpl<Vector2f>(startValue, vector2fConverter);
+		TransitionImpl<Vector2f> transition = new TransitionImpl<Vector2f>(startValue, vector2fConverter, new FloatArrayInterpolator(2));
 		transition.set(endValue, 1000);
 		transition.update(1000);
 		transition.set(new Vector2f(500, 500), 1000);

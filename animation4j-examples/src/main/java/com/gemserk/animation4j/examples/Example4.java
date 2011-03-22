@@ -1,7 +1,6 @@
 package com.gemserk.animation4j.examples;
 
 import static com.gemserk.animation4j.examples.Properties.interpolatedProperty;
-import static com.gemserk.animation4j.interpolator.Interpolators.colorInterpolator;
 import static com.gemserk.animation4j.transitions.Transitions.transition;
 
 import java.awt.Color;
@@ -14,8 +13,8 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.event.AnimationHandlerManager;
-import com.gemserk.animation4j.interpolator.Interpolators;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.transitions.Transition;
@@ -120,10 +119,10 @@ public class Example4 extends Java2dDesktopApplication {
 
 			buttons.add(new Button() {
 				{
-					position = interpolatedProperty(transition(new Point2D.Float(320, 625), Interpolators.point2dInterpolator(), 0.001f, null));
-					size = interpolatedProperty(transition(new Point2D.Float(1f, 1f), Interpolators.point2dInterpolator(), 0.005f, null));
-					color = interpolatedProperty(transition(new Color(1f, 1f, 1f, 1f), Interpolators.colorInterpolator(), 0.005f, null));
-					glowColor = interpolatedProperty(transition(new Color(1f, 0f, 0f, 0f), Interpolators.colorInterpolator(), 0.002f, null));
+					position = interpolatedProperty(transition(new Point2D.Float(320, 625), 0.001f, Converters.point2d()));
+					size = interpolatedProperty(transition(new Point2D.Float(1f, 1f), 0.005f, Converters.point2d()));
+					color = interpolatedProperty(transition(new Color(1f, 1f, 1f, 1f), 0.005f, Converters.color()));
+					glowColor = interpolatedProperty(transition(new Color(1f, 0f, 0f, 0f), 0.002f, Converters.color()));
 
 					position.set(new Point2D.Float(320, 125));
 				}
@@ -131,10 +130,10 @@ public class Example4 extends Java2dDesktopApplication {
 
 			buttons.add(new Button() {
 				{
-					position = interpolatedProperty(transition(new Point2D.Float(320, 725), Interpolators.point2dInterpolator(), 0.001f, null));
-					size = interpolatedProperty(transition(new Point2D.Float(1f, 1f), Interpolators.point2dInterpolator(), 0.005f, null));
-					color = interpolatedProperty(transition(new Color(1f, 1f, 1f, 1f), Interpolators.colorInterpolator(), 0.005f, null));
-					glowColor = interpolatedProperty(transition(new Color(1f, 0f, 0f, 0f), Interpolators.colorInterpolator(), 0.002f, null));
+					position = interpolatedProperty(transition(new Point2D.Float(320, 725), 0.001f, Converters.point2d()));
+					size = interpolatedProperty(transition(new Point2D.Float(1f, 1f), 0.005f, Converters.point2d()));
+					color = interpolatedProperty(transition(new Color(1f, 1f, 1f, 1f), 0.005f, Converters.color()));
+					glowColor = interpolatedProperty(transition(new Color(1f, 0f, 0f, 0f), 0.002f, Converters.color()));
 
 					position.set(new Point2D.Float(320, 225));
 				}
@@ -142,16 +141,16 @@ public class Example4 extends Java2dDesktopApplication {
 
 			buttons.add(new Button() {
 				{
-					position = interpolatedProperty(transition(new Point2D.Float(320, 825), Interpolators.point2dInterpolator(), 0.001f, null));
-					size = interpolatedProperty(transition(new Point2D.Float(1f, 1f), Interpolators.point2dInterpolator(), 0.005f, null));
-					color = interpolatedProperty(transition(new Color(1f, 1f, 1f, 1f), Interpolators.colorInterpolator(), 0.005f, null));
-					glowColor = interpolatedProperty(transition(new Color(1f, 0f, 0f, 0f), Interpolators.colorInterpolator(), 0.002f, null));
+					position = interpolatedProperty(transition(new Point2D.Float(320, 825), 0.001f, Converters.point2d()));
+					size = interpolatedProperty(transition(new Point2D.Float(1f, 1f), 0.005f, Converters.point2d()));
+					color = interpolatedProperty(transition(new Color(1f, 1f, 1f, 1f), 0.005f, Converters.color()));
+					glowColor = interpolatedProperty(transition(new Color(1f, 0f, 0f, 0f), 0.002f, Converters.color()));
 
 					position.set(new Point2D.Float(320, 325));
 				}
 			});
 
-			backgroundColor = transition(new Color(0.4f, 0.4f, 0.4f, 0f), colorInterpolator(), 0.001f, null);
+			backgroundColor = transition(new Color(0.4f, 0.4f, 0.4f, 0f), 0.001f, Converters.color());
 			backgroundColor.set(new Color(0.4f, 0.4f, 0.4f, 0.6f), 1000);
 		}
 

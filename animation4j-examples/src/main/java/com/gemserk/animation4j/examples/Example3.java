@@ -12,8 +12,6 @@ import javax.swing.JEditorPane;
 
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.event.AnimationHandlerManager;
-import com.gemserk.animation4j.interpolator.Interpolators;
-import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
@@ -114,9 +112,8 @@ public class Example3 extends Java2dDesktopApplication {
 			};
 
 			// Creates a Color transition using a color interpolator with a linear interpolation function.
-			InterpolatorFunction linearInterpolationFunction = InterpolatorFunctionFactory.linear();
-//			colorTransition = new AutoUpdateableTransition<Color>(new Color(0.3f, 0.3f, 0.8f, 1f), new ColorInterpolator(linearInterpolationFunction), 0.001f);
-			colorTransition = Transitions.transition(new Color(0.3f, 0.3f, 0.8f, 1f), Interpolators.colorInterpolator(), 0.001f, Converters.color());
+
+			colorTransition = Transitions.transition(new Color(0.3f, 0.3f, 0.8f, 1f), Converters.color(), InterpolatorFunctionFactory.linear());
 		}
 
 		@Override
@@ -153,14 +150,14 @@ public class Example3 extends Java2dDesktopApplication {
 					mouseInside = true;
 					
 					// when the mouse is over the image, we set the color to white
-					colorTransition.set(new Color(1f, 1f, 1f, 1f), 300);
+					colorTransition.set(new Color(1f, 1f, 1f, 1f), 600);
 				}
 			} else {
 				if (mouseInside) {
 					mouseInside = false;
 
 					// when the mouse left the image, we set again the color to the previous color.
-					colorTransition.set(new Color(0.3f, 0.3f, 0.8f, 1f), 300);
+					colorTransition.set(new Color(0.3f, 0.3f, 0.8f, 1f), 600);
 				}
 			}
 

@@ -31,7 +31,7 @@ public class TransitionsExample {
 
 		// After the interpolator has been created, you could create a transition using it
 		// by default transitions will use a SystemTimeProvider.
-		Transition<Vector2f> transition = Transitions.transition(new Vector2f(0f, 0f), vector2fInterpolator, vector2fConverter);
+		Transition<Vector2f> transition = Transitions.transition(new Vector2f(0f, 0f), vector2fConverter);
 
 		System.out.println("Transition value: " + transition.get());
 
@@ -65,7 +65,7 @@ public class TransitionsExample {
 		Interpolator<Vector2f> anotherInterpolator = Interpolators.interpolator(vector2fConverter);
 
 		// After the interpolator has been created, you could create a transition using it
-		Transition<Vector2f> transition = Transitions.transition(new Vector2f(0f, 0f), vector2fInterpolator, vector2fConverter);
+		Transition<Vector2f> transition = Transitions.transition(new Vector2f(0f, 0f), vector2fConverter);
 
 		System.out.println("Transition value: " + transition.get());
 

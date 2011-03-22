@@ -1,7 +1,6 @@
 package com.gemserk.animation4j.transitions;
 
 import com.gemserk.animation4j.converters.TypeConverter;
-import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
 
 public class TransitionImpl<T> implements Transition<T> {
@@ -23,14 +22,6 @@ public class TransitionImpl<T> implements Transition<T> {
 	private T currentObject;
 
 	private final TypeConverter<T> typeConverter;
-
-	public TransitionImpl(T startValue, TypeConverter<T> typeConverter) {
-		this(startValue, typeConverter, 0);
-	}
-
-	public TransitionImpl(T startValue, TypeConverter<T> typeConverter, int defaultTime) {
-		this(startValue, typeConverter, new FloatArrayInterpolator(typeConverter.variables()), defaultTime);
-	}
 
 	public TransitionImpl(T startValue, TypeConverter<T> typeConverter, Interpolator<float[]> interpolator) {
 		this(startValue, typeConverter, interpolator, 0);

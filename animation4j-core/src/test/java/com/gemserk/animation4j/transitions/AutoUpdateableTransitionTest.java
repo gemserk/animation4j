@@ -8,28 +8,27 @@ import org.junit.Test;
 
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.converters.TypeConverter;
-import com.gemserk.animation4j.interpolator.Interpolator;
-import com.gemserk.animation4j.interpolator.Interpolators;
-import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
+import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.time.UpdateableTimeProvider;
 
 
 public class AutoUpdateableTransitionTest {
 
-	private Interpolator<Float> interpolator;
-	
 	private UpdateableTimeProvider timeProvider;
+	
+	private TransitionImpl<Float> transitionImpl;
+	
+	private TypeConverter<Float> typeConverter = Converters.floatValue();
 	
 	@Before
 	public void setUp() {
 		timeProvider = new UpdateableTimeProvider();
-		interpolator = Interpolators.floatInterpolator(InterpolatorFunctionFactory.linear());
+		transitionImpl = new TransitionImpl<Float>(100f, typeConverter, new FloatArrayInterpolator(typeConverter.variables()));
 	}
 	
 	@Test
 	public void shouldReturnFirstValueWhenNoTimePassed() {
-		TypeConverter<Float> typeConverter = Converters.floatValue();
-		AutoUpdateableTransition<Float> transition = new AutoUpdateableTransition<Float>(1f, timeProvider, new TransitionImpl<Float>(100f, typeConverter));
+		AutoUpdateableTransition<Float> transition = new AutoUpdateableTransition<Float>(transitionImpl, 1f, timeProvider);
 		assertThat(transition.get(), IsEqual.equalTo(100f));
 		transition.set(200f);
 		assertThat(transition.get(), IsEqual.equalTo(100f));
@@ -37,8 +36,7 @@ public class AutoUpdateableTransitionTest {
 	
 	@Test
 	public void shouldReturnSecondValueWhenTimePassed() {
-		TypeConverter<Float> typeConverter = Converters.floatValue();
-		AutoUpdateableTransition<Float> transition = new AutoUpdateableTransition<Float>(1f, timeProvider, new TransitionImpl<Float>(100f, typeConverter));
+		AutoUpdateableTransition<Float> transition = new AutoUpdateableTransition<Float>(transitionImpl, 1f, timeProvider);
 		assertThat(transition.get(), IsEqual.equalTo(100f));
 		transition.set(200f);
 		timeProvider.update(10000);
@@ -47,8 +45,7 @@ public class AutoUpdateableTransitionTest {
 	
 	@Test
 	public void shouldReturnInterpolatedValue() {
-		TypeConverter<Float> typeConverter = Converters.floatValue();
-		AutoUpdateableTransition<Float> transition = new AutoUpdateableTransition<Float>(0.01f, timeProvider, new TransitionImpl<Float>(100f, typeConverter));
+		AutoUpdateableTransition<Float> transition = new AutoUpdateableTransition<Float>(transitionImpl, 0.01f, timeProvider);
 		assertThat(transition.get(), IsEqual.equalTo(100f));
 		transition.set(200f);
 		timeProvider.update(50);
