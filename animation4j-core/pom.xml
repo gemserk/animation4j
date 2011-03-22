@@ -77,9 +77,5 @@
 			<artifactId>jmock-junit4</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>commons-beanutils</groupId>
-			<artifactId>commons-beanutils</artifactId>
-		</dependency>
 	</dependencies>
 </project>

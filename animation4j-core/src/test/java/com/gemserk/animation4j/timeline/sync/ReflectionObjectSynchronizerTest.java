@@ -3,6 +3,7 @@ package com.gemserk.animation4j.timeline.sync;
 import static org.junit.Assert.assertThat;
 
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNull;
 import org.junit.Test;
 
 
@@ -10,9 +11,11 @@ public class ReflectionObjectSynchronizerTest {
 	
 	public static class TestObject {
 		
-		float x;
+		private float x;
 		
-		float y;
+		private float y;
+		
+		private String some;
 
 		public float getX() {
 			return x;
@@ -28,6 +31,14 @@ public class ReflectionObjectSynchronizerTest {
 
 		public void setY(float y) {
 			this.y = y;
+		}
+
+		public String getSome() {
+			return some;
+		}
+
+		public void setSome(String some) {
+			this.some = some;
 		}
 		
 	}
@@ -50,7 +61,12 @@ public class ReflectionObjectSynchronizerTest {
 
 		assertThat(object.getX(), IsEqual.equalTo(100f));
 		assertThat(object.getY(), IsEqual.equalTo(500f));
-		
+
+		assertThat(object.getSome(), IsNull.nullValue());
+		reflectionObjectSynchronizer.setValue("some", "value");
+		assertThat(object.getSome(), IsNull.notNullValue());
+		assertThat(object.getSome(), IsEqual.equalTo("value"));
+
 	}
 	
 	@Test
