@@ -1,7 +1,6 @@
 package com.gemserk.animation4j.transitions;
 
-import com.gemserk.animation4j.interpolator.Interpolator;
-import com.gemserk.animation4j.time.SystemTimeProvider;
+import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.time.TimeProvider;
 
 /**
@@ -17,30 +16,22 @@ public class AutoUpdateableTransition<T> implements Transition<T> {
 
 	private long lastTime;
 	
-	private UpdateableTransition<T> transition;
+	private TransitionImpl<T> transition;
 
 	// make a provider of custom transitions which returns the transition already configured for a time provider?
 
 	// use total time instead of speed? or some easier way to calculate speed. Maybe specifying speed in milliseconds instead of seconds?
 
-	public AutoUpdateableTransition(T startValue, Interpolator<T> interpolator, float speed) {
-		this(startValue, interpolator, speed, new SystemTimeProvider());
-	}
-
-	public AutoUpdateableTransition(T startValue, T endValue, Interpolator<T> interpolator, float speed) {
-		this(startValue, endValue, interpolator, speed, new SystemTimeProvider());
-	}
-
-	public AutoUpdateableTransition(T startValue, Interpolator<T> interpolator, float speed, TimeProvider timeProvider) {
+	public AutoUpdateableTransition(T startValue, float speed, TimeProvider timeProvider, TypeConverter<T> typeConverter) {
 		this.speed = speed;
 		this.timeProvider = timeProvider;
-		this.transition = new UpdateableTransition<T>(startValue, interpolator);
+		this.transition = new TransitionImpl<T>(startValue, typeConverter);
 	}
 
-	public AutoUpdateableTransition(T startValue, T endValue, Interpolator<T> interpolator, float speed, TimeProvider timeProvider) {
+	public AutoUpdateableTransition(T startValue, T endValue, float speed, TimeProvider timeProvider, TypeConverter<T> typeConverter) {
 		this.speed = speed;
 		this.timeProvider = timeProvider;
-		this.transition = new UpdateableTransition<T>(startValue, interpolator, 1000);
+		this.transition = new TransitionImpl<T>(startValue, typeConverter);
 		set(endValue);
 	}
 
