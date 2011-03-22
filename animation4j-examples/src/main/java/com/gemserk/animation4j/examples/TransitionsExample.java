@@ -1,7 +1,5 @@
 package com.gemserk.animation4j.examples;
 
-import com.gemserk.animation4j.interpolator.Interpolator;
-import com.gemserk.animation4j.interpolator.Interpolators;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.time.UpdateableTimeProvider;
 import com.gemserk.animation4j.transitions.Transition;
@@ -21,17 +19,14 @@ public class TransitionsExample {
 		// as converters are stateless, you could reuse it in several interpolators.
 		Vector2fConverter vector2fConverter = new Vector2fConverter();
 
-		// create an interpolator specifying a converter and the functions to be used for each variable (x and y in the example)
-		Interpolator<Vector2f> vector2fInterpolator = Interpolators.interpolator(vector2fConverter, //
+		// You could create a transition using the interpolation functions you want for each variable of the class,
+		// by default transitions will use a SystemTimeProvider.
+		Transition<Vector2f> transition = Transitions.transition(new Vector2f(0f, 0f), vector2fConverter, // 
 				InterpolatorFunctionFactory.easeOut(), //
 				InterpolatorFunctionFactory.easeIn());
 
-		// you could also create interpolators using default linear interpolation functions ->
-		Interpolator<Vector2f> anotherInterpolator = Interpolators.interpolator(vector2fConverter);
-
-		// After the interpolator has been created, you could create a transition using it
-		// by default transitions will use a SystemTimeProvider.
-		Transition<Vector2f> transition = Transitions.transition(new Vector2f(0f, 0f), vector2fConverter);
+		// you can build transitions using default linear interpolation functions.
+		Transition<Vector2f> anotherTransition = Transitions.transition(new Vector2f(0f, 0f), vector2fConverter);
 
 		System.out.println("Transition value: " + transition.get());
 
@@ -51,21 +46,15 @@ public class TransitionsExample {
 	protected static void testWithUserTimeProvider() {
 		UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
 
+		// In this case, we are using a custom time provider.
 		Transitions.timeProvider = timeProvider;
 
 		// as converters are stateless, you could reuse it in several interpolators.
 		Vector2fConverter vector2fConverter = new Vector2fConverter();
 
-		// create an interpolator specifying a converter and the functions to be used for each variable (x and y in the example)
-		Interpolator<Vector2f> vector2fInterpolator = Interpolators.interpolator(vector2fConverter, //
+		Transition<Vector2f> transition = Transitions.transition(new Vector2f(0f, 0f), vector2fConverter, // 
 				InterpolatorFunctionFactory.easeOut(), //
 				InterpolatorFunctionFactory.easeIn());
-
-		// you could also create interpolators using default linear interpolation functions ->
-		Interpolator<Vector2f> anotherInterpolator = Interpolators.interpolator(vector2fConverter);
-
-		// After the interpolator has been created, you could create a transition using it
-		Transition<Vector2f> transition = Transitions.transition(new Vector2f(0f, 0f), vector2fConverter);
 
 		System.out.println("Transition value: " + transition.get());
 
