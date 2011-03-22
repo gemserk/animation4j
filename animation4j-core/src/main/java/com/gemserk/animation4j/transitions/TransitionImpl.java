@@ -3,7 +3,7 @@ package com.gemserk.animation4j.transitions;
 import com.gemserk.animation4j.time.TimeProvider;
 
 /**
- * Provides a modified implementation of UpdateableTransition which calls update(..) each time get() method is called.
+ * Provides default implementation of transition.
  * 
  * @author acoppes
  */
