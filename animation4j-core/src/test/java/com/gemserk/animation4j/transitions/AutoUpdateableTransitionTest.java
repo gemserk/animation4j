@@ -53,6 +53,34 @@ public class AutoUpdateableTransitionTest {
 		timeProvider.update(25);
 		assertThat(transition.get(), IsEqual.equalTo(175f));
 	}
+	
+	@Test
+	public void testSeveralSetAndUpdates() {
+		AutoUpdateableTransition<Float> transition = new AutoUpdateableTransition<Float>(transitionImpl, 0.01f, timeProvider);
+		assertThat(transition.get(), IsEqual.equalTo(100f));
+		transition.set(200f);
+		timeProvider.update(50);
+		assertThat(transition.get(), IsEqual.equalTo(150f));
+		timeProvider.update(25);
+		assertThat(transition.get(), IsEqual.equalTo(175f));
+		
+		transition.set(0f);
+		assertThat(transition.get(), IsEqual.equalTo(175f));
+		timeProvider.update(100);
+		
+		assertThat(transition.get(), IsEqual.equalTo(0f));
+
+		transition.set(100f);
+		timeProvider.update(25);
+		assertThat(transition.get(), IsEqual.equalTo(25f));
+		timeProvider.update(25);
+		assertThat(transition.get(), IsEqual.equalTo(50f));
+		timeProvider.update(25);
+		assertThat(transition.get(), IsEqual.equalTo(75f));
+		timeProvider.update(25);
+		assertThat(transition.get(), IsEqual.equalTo(100f));
+		
+	}
 
 	
 }

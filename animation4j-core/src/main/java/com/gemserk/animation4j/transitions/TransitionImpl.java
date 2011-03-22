@@ -53,15 +53,18 @@ public class TransitionImpl<T> implements Transition<T> {
 	public void set(T t, int time) {
 		this.desiredValue = typeConverter.copyFromObject(t, desiredValue);
 		this.totalTime = time;
-		if (currentValue != null) {
-			this.startValue = currentValue;
-			this.currentValue = null;
-		}
+		if (currentValue != null)
+			copyArray(startValue, currentValue);
 		this.currentTime = 0;
 
 		if (time == 0)
 			this.currentValue = interpolator.interpolate(startValue, desiredValue, 1f);
 
+	}
+
+	protected void copyArray(float[] a, float[] b) {
+		for (int i = 0; i < a.length; i++) 
+			a[i] = b[i];
 	}
 
 	public void update(int time) {
