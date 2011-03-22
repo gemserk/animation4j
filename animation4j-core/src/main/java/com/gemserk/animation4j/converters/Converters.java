@@ -1,10 +1,8 @@
 package com.gemserk.animation4j.converters;
 
-import java.awt.Color;
-import java.awt.geom.Point2D;
 
 /**
- * Provides type converters for common classes like Color and Point2D.
+ * Provides type converters for common java2d classes like Color and Point2D.
  * @author acoppes
  */
 public class Converters {
@@ -31,53 +29,6 @@ public class Converters {
 		}
 		
 	};
-	private static TypeConverter<Point2D> point2dConverter = new TypeConverter<Point2D>() {
-
-		@Override
-		public float[] copyFromObject(Point2D p, float[] x) {
-			if (x == null)
-				x = new float[variables()];
-			x[0] = (float) p.getX();
-			x[1] = (float) p.getY();
-			return x;
-		}
-
-		@Override
-		public Point2D copyToObject(Point2D p, float[] x) {
-			if (p == null)
-				p = new Point2D.Float(0f, 0f);
-			p.setLocation(x[0], x[1]);
-			return p;
-		}
-
-		@Override
-		public int variables() {
-			return 2;
-		}
-
-	};
-	private static TypeConverter<Color> colorConverter = new TypeConverter<Color>() {
-
-		@Override
-		public float[] copyFromObject(Color object, float[] x) {
-			if (x == null)
-				x = new float[variables()];
-			object.getRGBComponents(x);
-			return x;
-		}
-
-		@Override
-		public Color copyToObject(Color object, float[] x) {
-			// as color is immutable, it will return a new color each time.
-			return new Color(x[0], x[1], x[2], x[3]);
-		}
-
-		@Override
-		public int variables() {
-			return 4;
-		}
-
-	};
 
 	/**
 	 * This converter will be boxing and unboxing from float to Float and vice versa each time a method is called, so it is not recommended to use, 
@@ -86,14 +37,6 @@ public class Converters {
 	public static TypeConverter<Float> floatValue() {
 		// not recommended to use, it will be boxing and unboxing from float to Float and vice versa.
 		return floatConverter;
-	}
-
-	public static TypeConverter<Point2D> point2d() {
-		return point2dConverter;
-	}
-
-	public static TypeConverter<Color> color() {
-		return colorConverter;
 	}
 
 }

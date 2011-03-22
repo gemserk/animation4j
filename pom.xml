@@ -218,6 +218,12 @@
 
 			<dependency>
 				<groupId>${project.groupId}</groupId>
+				<artifactId>animation4j-java2d</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>animation4j-slick</artifactId>
 				<version>${project.version}</version>
 			</dependency>

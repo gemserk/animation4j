@@ -10,16 +10,35 @@ import org.junit.Test;
 
 import com.gemserk.animation4j.Vector2f;
 import com.gemserk.animation4j.Vector2fConverter;
-import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.converters.TypeConverter;
 
-
 public class GenericInterpolatorTest {
+
+	private class colorConverter implements TypeConverter<Color> {
+		@Override
+		public float[] copyFromObject(Color object, float[] x) {
+			if (x == null)
+				x = new float[variables()];
+			object.getRGBComponents(x);
+			return x;
+		}
+
+		@Override
+		public Color copyToObject(Color object, float[] x) {
+			// as color is immutable, it will return a new color each time.
+			return new Color(x[0], x[1], x[2], x[3]);
+		}
+
+		@Override
+		public int variables() {
+			return 4;
+		}
+	}
 
 	@Test
 	public void test() {
 
-		GenericInterpolator<Color> arrayInterpolator = new GenericInterpolator<Color>(Converters.color(), new FloatArrayInterpolator(4));
+		GenericInterpolator<Color> arrayInterpolator = new GenericInterpolator<Color>(new colorConverter(), new FloatArrayInterpolator(4));
 
 		Color startColor = new Color(0f, 0f, 0f, 0f);
 		Color endColor = new Color(1f, 1f, 1f, 1f);
@@ -51,20 +70,20 @@ public class GenericInterpolatorTest {
 		assertThat(out[3], IsEqual.equalTo(0.5f));
 
 	}
-	
+
 	@Test
 	public void test3() {
 
 		// converter uses a temporary vector to return
 		// WARNING: if converter is used multiple times, it will modify the vector already returned.
-		
+
 		TypeConverter<Vector2f> converter = new Vector2fConverter();
 
 		GenericInterpolator<Vector2f> arrayInterpolator = new GenericInterpolator<Vector2f>(converter, new FloatArrayInterpolator(2));
 
 		Vector2f t1 = new Vector2f(100f, 100f);
 		Vector2f t2 = new Vector2f(200f, 200f);
-		
+
 		Vector2f result = arrayInterpolator.interpolate(t1, t2, 0.5f);
 		result = arrayInterpolator.interpolate(t1, t2, 0.5f);
 		result = arrayInterpolator.interpolate(t1, t2, 0.5f);
@@ -74,9 +93,9 @@ public class GenericInterpolatorTest {
 		assertNotNull(result);
 		assertThat(result.x, IsEqual.equalTo(150f));
 		assertThat(result.y, IsEqual.equalTo(150f));
-		
+
 	}
-	
+
 	@Test
 	public void testGarbageGenerationWhenCallingGenericInterpolatorInterpolate() {
 
@@ -89,7 +108,7 @@ public class GenericInterpolatorTest {
 		Vector2f b = new Vector2f(200, 200);
 
 		int interpolationsQuantity = 100000;
-		
+
 		System.out.println("running " + interpolationsQuantity + " interpolations.");
 
 		for (int i = 0; i < interpolationsQuantity; i++) {

@@ -18,6 +18,7 @@ import com.gemserk.animation4j.event.AnimationEventHandler;
 import com.gemserk.animation4j.event.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.Interpolators;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
+import com.gemserk.animation4j.java2d.interpolators.Java2dInterpolators;
 import com.gemserk.animation4j.states.AnimationStateMachine;
 import com.gemserk.animation4j.states.StateTransition;
 import com.gemserk.animation4j.states.StateTransitionCondition;
@@ -144,7 +145,7 @@ public class Example2 extends Java2dDesktopApplication {
 				{
 					speed(1.5f);
 					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 260), // 
-							Interpolators.point2dInterpolator(InterpolatorFunctionFactory.easeIn(), InterpolatorFunctionFactory.easeIn())) //
+							Java2dInterpolators.point2dInterpolator(InterpolatorFunctionFactory.easeIn(), InterpolatorFunctionFactory.easeIn())) //
 							.keyFrame(1000, new Point(320, 220)));
 					value("alpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f, Interpolators.floatInterpolator(InterpolatorFunctionFactory.easeOut())).keyFrame(1000, 1f));
 					value("textAlpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f, Interpolators.floatInterpolator(InterpolatorFunctionFactory.easeOut())) //

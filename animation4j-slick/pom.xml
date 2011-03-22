@@ -9,8 +9,8 @@
 	<groupId>com.gemserk.animation4j</groupId>
 	<artifactId>animation4j-slick</artifactId>
 	<version>0.0.8-SNAPSHOT</version>
-	<name>Slick2D module fro animation4j</name>
-	<description>This module contains specific implementations for using with Slick2D</description>
+	<name>Slick2D module for animation4j</name>
+	<description>This module contains specific implementations of animation4j to be used with Slick2D</description>
 
 	<build>
 		<plugins>

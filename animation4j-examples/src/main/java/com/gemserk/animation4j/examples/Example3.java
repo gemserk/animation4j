@@ -10,9 +10,9 @@ import java.awt.geom.AffineTransform;
 
 import javax.swing.JEditorPane;
 
-import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.event.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
+import com.gemserk.animation4j.java2d.converters.Java2dConverters;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
@@ -113,7 +113,7 @@ public class Example3 extends Java2dDesktopApplication {
 
 			// Creates a Color transition using a color interpolator with a linear interpolation function.
 
-			colorTransition = Transitions.transition(new Color(0.3f, 0.3f, 0.8f, 1f), Converters.color(), InterpolatorFunctionFactory.linear());
+			colorTransition = Transitions.transition(new Color(0.3f, 0.3f, 0.8f, 1f), Java2dConverters.color(), InterpolatorFunctionFactory.linear());
 		}
 
 		@Override

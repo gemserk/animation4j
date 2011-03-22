@@ -106,6 +106,10 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>animation4j-componentsengine</artifactId>
 		</dependency>
+				<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>animation4j-java2d</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.gemserk.resources</groupId>
 			<artifactId>resourcesmanager-java2dmodule</artifactId>
