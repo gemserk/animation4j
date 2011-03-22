@@ -7,7 +7,7 @@ import com.gemserk.animation4j.time.TimeProvider;
  * 
  * @author acoppes
  */
-public class AutoUpdateableTransition<T> implements Transition<T> {
+public class TransitionImpl<T> implements Transition<T> {
 
 	private final float speed;
 
@@ -17,7 +17,7 @@ public class AutoUpdateableTransition<T> implements Transition<T> {
 	
 	private InternalTransition<T> transition;
 
-	public AutoUpdateableTransition(InternalTransition<T> transition, float speed, TimeProvider timeProvider) {
+	public TransitionImpl(InternalTransition<T> transition, float speed, TimeProvider timeProvider) {
 		this.speed = speed;
 		this.timeProvider = timeProvider;
 		this.transition = transition;

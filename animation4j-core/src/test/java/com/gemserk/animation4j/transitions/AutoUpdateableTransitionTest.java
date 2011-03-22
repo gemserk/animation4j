@@ -28,7 +28,7 @@ public class AutoUpdateableTransitionTest {
 	
 	@Test
 	public void shouldReturnFirstValueWhenNoTimePassed() {
-		AutoUpdateableTransition<Float> transition = new AutoUpdateableTransition<Float>(internalTransition, 1f, timeProvider);
+		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 1f, timeProvider);
 		assertThat(transition.get(), IsEqual.equalTo(100f));
 		transition.set(200f);
 		assertThat(transition.get(), IsEqual.equalTo(100f));
@@ -36,7 +36,7 @@ public class AutoUpdateableTransitionTest {
 	
 	@Test
 	public void shouldReturnSecondValueWhenTimePassed() {
-		AutoUpdateableTransition<Float> transition = new AutoUpdateableTransition<Float>(internalTransition, 1f, timeProvider);
+		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 1f, timeProvider);
 		assertThat(transition.get(), IsEqual.equalTo(100f));
 		transition.set(200f);
 		timeProvider.update(10000);
@@ -45,7 +45,7 @@ public class AutoUpdateableTransitionTest {
 	
 	@Test
 	public void shouldReturnInterpolatedValue() {
-		AutoUpdateableTransition<Float> transition = new AutoUpdateableTransition<Float>(internalTransition, 0.01f, timeProvider);
+		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 0.01f, timeProvider);
 		assertThat(transition.get(), IsEqual.equalTo(100f));
 		transition.set(200f);
 		timeProvider.update(50);
@@ -56,7 +56,7 @@ public class AutoUpdateableTransitionTest {
 	
 	@Test
 	public void testSeveralSetAndUpdates() {
-		AutoUpdateableTransition<Float> transition = new AutoUpdateableTransition<Float>(internalTransition, 0.01f, timeProvider);
+		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 0.01f, timeProvider);
 		assertThat(transition.get(), IsEqual.equalTo(100f));
 		transition.set(200f);
 		timeProvider.update(50);

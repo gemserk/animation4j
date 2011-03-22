@@ -3,7 +3,7 @@ package com.gemserk.animation4j.transitions;
 import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.interpolator.Interpolator;
 
-class InternalTransition<T> implements Transition<T> {
+class InternalTransition<T> {
 
 	private int totalTime;
 
@@ -35,7 +35,6 @@ class InternalTransition<T> implements Transition<T> {
 		this.defaultTime = defaultTime;
 	}
 
-	@Override
 	public T get() {
 		if (currentValue == null)
 			currentObject = typeConverter.copyToObject(currentObject, startValue);
@@ -44,12 +43,10 @@ class InternalTransition<T> implements Transition<T> {
 		return currentObject;
 	}
 
-	@Override
 	public void set(T t) {
 		this.set(t, defaultTime);
 	}
 
-	@Override
 	public void set(T t, int time) {
 		this.desiredValue = typeConverter.copyFromObject(t, desiredValue);
 		this.totalTime = time;
