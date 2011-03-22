@@ -3,7 +3,7 @@ package com.gemserk.animation4j.transitions;
 import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.interpolator.Interpolator;
 
-class TransitionImpl<T> implements Transition<T> {
+class InternalTransition<T> implements Transition<T> {
 
 	private int totalTime;
 
@@ -23,11 +23,11 @@ class TransitionImpl<T> implements Transition<T> {
 
 	private final TypeConverter<T> typeConverter;
 
-	TransitionImpl(T startValue, TypeConverter<T> typeConverter, Interpolator<float[]> interpolator) {
+	InternalTransition(T startValue, TypeConverter<T> typeConverter, Interpolator<float[]> interpolator) {
 		this(startValue, typeConverter, interpolator, 0);
 	}
 
-	TransitionImpl(T startValue, TypeConverter<T> typeConverter, Interpolator<float[]> interpolator, int defaultTime) {
+	InternalTransition(T startValue, TypeConverter<T> typeConverter, Interpolator<float[]> interpolator, int defaultTime) {
 		this.typeConverter = typeConverter;
 		this.startValue = typeConverter.copyFromObject(startValue, null);
 		this.currentValue = null;

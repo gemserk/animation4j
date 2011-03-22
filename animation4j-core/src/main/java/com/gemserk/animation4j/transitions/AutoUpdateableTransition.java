@@ -15,9 +15,9 @@ public class AutoUpdateableTransition<T> implements Transition<T> {
 
 	private long lastTime;
 	
-	private TransitionImpl<T> transition;
+	private InternalTransition<T> transition;
 
-	public AutoUpdateableTransition(TransitionImpl<T> transition, float speed, TimeProvider timeProvider) {
+	public AutoUpdateableTransition(InternalTransition<T> transition, float speed, TimeProvider timeProvider) {
 		this.speed = speed;
 		this.timeProvider = timeProvider;
 		this.transition = transition;
