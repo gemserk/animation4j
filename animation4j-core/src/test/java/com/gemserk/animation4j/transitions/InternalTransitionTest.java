@@ -9,7 +9,7 @@ import com.gemserk.animation4j.Vector2f;
 import com.gemserk.animation4j.Vector2fConverter;
 import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 
-public class TransitionImplTest {
+public class InternalTransitionTest {
 
 	Vector2fConverter vector2fConverter = new Vector2fConverter();
 
