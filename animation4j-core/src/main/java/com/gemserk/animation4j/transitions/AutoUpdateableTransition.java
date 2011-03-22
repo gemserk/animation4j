@@ -1,6 +1,5 @@
 package com.gemserk.animation4j.transitions;
 
-import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.time.TimeProvider;
 
 /**
@@ -22,17 +21,10 @@ public class AutoUpdateableTransition<T> implements Transition<T> {
 
 	// use total time instead of speed? or some easier way to calculate speed. Maybe specifying speed in milliseconds instead of seconds?
 
-	public AutoUpdateableTransition(T startValue, float speed, TimeProvider timeProvider, TypeConverter<T> typeConverter) {
+	public AutoUpdateableTransition(float speed, TimeProvider timeProvider, TransitionImpl<T> transitionImpl) {
 		this.speed = speed;
 		this.timeProvider = timeProvider;
-		this.transition = new TransitionImpl<T>(startValue, typeConverter);
-	}
-
-	public AutoUpdateableTransition(T startValue, T endValue, float speed, TimeProvider timeProvider, TypeConverter<T> typeConverter) {
-		this.speed = speed;
-		this.timeProvider = timeProvider;
-		this.transition = new TransitionImpl<T>(startValue, typeConverter);
-		set(endValue);
+		this.transition = transitionImpl;
 	}
 
 	public T get() {

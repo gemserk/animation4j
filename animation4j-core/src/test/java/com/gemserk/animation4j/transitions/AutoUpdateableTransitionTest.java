@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.gemserk.animation4j.converters.Converters;
+import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.interpolator.Interpolators;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
@@ -27,7 +28,8 @@ public class AutoUpdateableTransitionTest {
 	
 	@Test
 	public void shouldReturnFirstValueWhenNoTimePassed() {
-		AutoUpdateableTransition<Float> transition = new AutoUpdateableTransition<Float>(100f, 1f, timeProvider, Converters.floatValue());
+		TypeConverter<Float> typeConverter = Converters.floatValue();
+		AutoUpdateableTransition<Float> transition = new AutoUpdateableTransition<Float>(1f, timeProvider, new TransitionImpl<Float>(100f, typeConverter));
 		assertThat(transition.get(), IsEqual.equalTo(100f));
 		transition.set(200f);
 		assertThat(transition.get(), IsEqual.equalTo(100f));
@@ -35,7 +37,8 @@ public class AutoUpdateableTransitionTest {
 	
 	@Test
 	public void shouldReturnSecondValueWhenTimePassed() {
-		AutoUpdateableTransition<Float> transition = new AutoUpdateableTransition<Float>(100f, 1f, timeProvider, Converters.floatValue());
+		TypeConverter<Float> typeConverter = Converters.floatValue();
+		AutoUpdateableTransition<Float> transition = new AutoUpdateableTransition<Float>(1f, timeProvider, new TransitionImpl<Float>(100f, typeConverter));
 		assertThat(transition.get(), IsEqual.equalTo(100f));
 		transition.set(200f);
 		timeProvider.update(10000);
@@ -44,7 +47,8 @@ public class AutoUpdateableTransitionTest {
 	
 	@Test
 	public void shouldReturnInterpolatedValue() {
-		AutoUpdateableTransition<Float> transition = new AutoUpdateableTransition<Float>(100f, 0.01f, timeProvider, Converters.floatValue());
+		TypeConverter<Float> typeConverter = Converters.floatValue();
+		AutoUpdateableTransition<Float> transition = new AutoUpdateableTransition<Float>(0.01f, timeProvider, new TransitionImpl<Float>(100f, typeConverter));
 		assertThat(transition.get(), IsEqual.equalTo(100f));
 		transition.set(200f);
 		timeProvider.update(50);
