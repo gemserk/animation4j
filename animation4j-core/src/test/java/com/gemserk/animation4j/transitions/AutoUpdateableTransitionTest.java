@@ -79,7 +79,6 @@ public class AutoUpdateableTransitionTest {
 		assertThat(transition.get(), IsEqual.equalTo(75f));
 		timeProvider.update(25);
 		assertThat(transition.get(), IsEqual.equalTo(100f));
-		
 	}
 
 	

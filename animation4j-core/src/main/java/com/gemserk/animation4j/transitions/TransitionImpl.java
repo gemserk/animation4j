@@ -3,7 +3,7 @@ package com.gemserk.animation4j.transitions;
 import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.interpolator.Interpolator;
 
-public class TransitionImpl<T> implements Transition<T> {
+class TransitionImpl<T> implements Transition<T> {
 
 	private int totalTime;
 
@@ -23,11 +23,11 @@ public class TransitionImpl<T> implements Transition<T> {
 
 	private final TypeConverter<T> typeConverter;
 
-	public TransitionImpl(T startValue, TypeConverter<T> typeConverter, Interpolator<float[]> interpolator) {
+	TransitionImpl(T startValue, TypeConverter<T> typeConverter, Interpolator<float[]> interpolator) {
 		this(startValue, typeConverter, interpolator, 0);
 	}
 
-	public TransitionImpl(T startValue, TypeConverter<T> typeConverter, Interpolator<float[]> interpolator, int defaultTime) {
+	TransitionImpl(T startValue, TypeConverter<T> typeConverter, Interpolator<float[]> interpolator, int defaultTime) {
 		this.typeConverter = typeConverter;
 		this.startValue = typeConverter.copyFromObject(startValue, null);
 		this.currentValue = null;
@@ -53,13 +53,14 @@ public class TransitionImpl<T> implements Transition<T> {
 	public void set(T t, int time) {
 		this.desiredValue = typeConverter.copyFromObject(t, desiredValue);
 		this.totalTime = time;
+		
 		if (currentValue != null)
 			copyArray(startValue, currentValue);
+		
 		this.currentTime = 0;
-
+		
 		if (time == 0)
 			this.currentValue = interpolator.interpolate(startValue, desiredValue, 1f);
-
 	}
 
 	protected void copyArray(float[] a, float[] b) {
