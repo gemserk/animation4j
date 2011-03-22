@@ -56,8 +56,8 @@ public class Transitions {
 	 */
 	public static <T> Transition<T> transition(T startValue, float speed, TypeConverter<T> typeConverter) {
 		Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables());
-		InternalTransition<T> transition = new InternalTransition<T>(startValue, typeConverter, interpolator);
-		return new TransitionImpl<T>(transition, speed, timeProvider);
+		InternalTransition<T> internalTransition = new InternalTransition<T>(startValue, typeConverter, interpolator);
+		return new TransitionImpl<T>(internalTransition, speed, timeProvider);
 	}
 
 	/**
@@ -74,8 +74,8 @@ public class Transitions {
 	 */
 	public static <T> Transition<T> transition(T startValue, float speed, TypeConverter<T> typeConverter, InterpolatorFunction... functions) {
 		Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables(), functions);
-		InternalTransition<T> transition = new InternalTransition<T>(startValue, typeConverter, interpolator);
-		return new TransitionImpl<T>(transition, speed, timeProvider);
+		InternalTransition<T> internalTransition = new InternalTransition<T>(startValue, typeConverter, interpolator);
+		return new TransitionImpl<T>(internalTransition, speed, timeProvider);
 	}
 
 }
