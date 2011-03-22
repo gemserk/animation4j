@@ -1,4 +1,4 @@
-Animation4j provides utility classes to work create animations in Java, based on time lines and interpolators.
+Animation4j provides utility classes to work with animations, time lines and transitions in Java based on interpolations.
 
 It is a maven project and it is based on the next modules: 
 
@@ -10,6 +10,11 @@ It is a maven project and it is based on the next modules:
 
 		This module provides implementations of animation4j core module to be used 
 		with components engine project.
+
+	animation4j-java2d
+
+		This module provides you with specific classes to make your work easier 
+		when working with java2d and animation4j.
 
 	animation4j-slick
 
