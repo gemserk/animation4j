@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>animation4j</artifactId>
+		<groupId>com.gemserk.animation4j</groupId>
+		<version>0.0.8-SNAPSHOT</version>
+	</parent>
+	<groupId>com.gemserk.animation4j</groupId>
+	<artifactId>animation4j-java2d</artifactId>
+	<version>0.0.8-SNAPSHOT</version>
+	<name>Java2d module for animation4j</name>
+	<description>This module contains specific implementations of animation4j for using with java2d</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>animation4j-core</artifactId>
+		</dependency>
+	</dependencies>
+</project>

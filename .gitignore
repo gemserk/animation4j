@@ -22,3 +22,8 @@ animation4j-slick/.classpath
 animation4j-slick/.settings
 animation4j-slick/.project
 animation4j-slick/target
+
+animation4j-java2d/.classpath
+animation4j-java2d/.settings
+animation4j-java2d/.project
+animation4j-java2d/target
