@@ -15,10 +15,10 @@ public class StateMachineExample {
 	protected static void exampleStateMachine() throws InterruptedException {
 		Vector2fConverter vector2fConverter = new Vector2fConverter();
 
-		StateMachine<Vector2f> stateMachine = new StateMachine<Vector2f>();
-
 		Vector2f a = new Vector2f(100, 100);
 		Vector2f b = new Vector2f(200, 200);
+
+		StateMachine<Vector2f> stateMachine = new StateMachine<Vector2f>(a);
 
 		// sets the initial state (could be on StateMachine constructor because it is a required field)
 		stateMachine.setCurrentState(a);

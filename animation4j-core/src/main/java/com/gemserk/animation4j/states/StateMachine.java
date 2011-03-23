@@ -22,8 +22,19 @@ public class StateMachine<T> {
 		currentState = state;
 	}
 
+	/**
+	 * Returns the current state of the state machine.
+	 */
 	public T getCurrentState() {
 		return currentState;
+	}
+	
+	/**
+	 * Creates a new state machine starting in the specified initial state.
+	 * @param initialState The state to start the state machine.
+	 */
+	public StateMachine(T initialState) {
+		this.currentState = initialState;
 	}
 
 	/**

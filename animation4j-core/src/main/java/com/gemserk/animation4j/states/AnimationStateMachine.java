@@ -9,4 +9,8 @@ import com.gemserk.animation4j.Animation;
  */
 public class AnimationStateMachine extends StateMachine<Animation> {
 
+	public AnimationStateMachine(Animation initialState) {
+		super(initialState);
+	}
+
 }

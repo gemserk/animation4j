@@ -204,9 +204,9 @@ public class Example2 extends Java2dDesktopApplication {
 				}
 			}).handleChangesOf(showAnimation);
 
-			animationStateMachine = new AnimationStateMachine();
+			animationStateMachine = new AnimationStateMachine(showAnimation);
 
-			animationStateMachine.setCurrentState(showAnimation);
+//			animationStateMachine.setCurrentState(showAnimation);
 
 			animationStateMachine.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
 				@Override
