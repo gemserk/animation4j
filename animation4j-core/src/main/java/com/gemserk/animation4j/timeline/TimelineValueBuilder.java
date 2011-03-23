@@ -43,6 +43,9 @@ public class TimelineValueBuilder<T> {
 		this.interpolatorProvider = interpolatorProvider;
 	}
 
+	/**
+	 * Builds and returns the being specified time line value.
+	 */
 	public TimelineValue<T> build() {
 		timelineValue.setName(name);
 		return timelineValue;

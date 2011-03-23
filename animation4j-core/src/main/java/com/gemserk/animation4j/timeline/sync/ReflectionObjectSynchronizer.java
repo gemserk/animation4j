@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * ObjectSynchronizer implementation using reflection to set the values to an object fields.
+ * ObjectSynchronizer implementation using reflection to set the values to an object fields through setter methods.
  * 
  * @author acoppes
  */

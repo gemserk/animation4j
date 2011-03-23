@@ -2,6 +2,11 @@ package com.gemserk.animation4j.timeline;
 
 import com.gemserk.animation4j.Animation;
 
+/**
+ * An implementation of the Animation interface using a time line to animate values.
+ * 
+ * @author acoppes
+ */
 public class TimelineAnimation implements Animation {
 
 	float currentTime = 0f;
@@ -19,9 +24,9 @@ public class TimelineAnimation implements Animation {
 	boolean alternateDirection = false;
 
 	PlayingDirection playingDirection = PlayingDirection.Normal;
-	
+
 	private float delay;
-	
+
 	private float duration;
 
 	public void setDuration(float duration) {
@@ -48,7 +53,7 @@ public class TimelineAnimation implements Animation {
 	private float getDuration() {
 		return duration + getDelay();
 	}
-	
+
 	public void setDelay(float delay) {
 		this.delay = delay;
 	}
@@ -80,7 +85,7 @@ public class TimelineAnimation implements Animation {
 			return currentTime >= duration + delay;
 		return currentTime + delay <= 0;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public <T> T getValue(String name) {
 		return (T) timeline.getValue(currentTime - getDelay(), name);
