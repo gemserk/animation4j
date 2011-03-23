@@ -206,8 +206,6 @@ public class Example2 extends Java2dDesktopApplication {
 
 			animationStateMachine = new AnimationStateMachine(showAnimation);
 
-//			animationStateMachine.setCurrentState(showAnimation);
-
 			animationStateMachine.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
 				@Override
 				public boolean matches(Animation sourceState, Animation targetState) {

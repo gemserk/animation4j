@@ -19,9 +19,6 @@ public class StateMachineExample {
 		Vector2f b = new Vector2f(200, 200);
 
 		StateMachine<Vector2f> stateMachine = new StateMachine<Vector2f>(a);
-
-		// sets the initial state (could be on StateMachine constructor because it is a required field)
-		stateMachine.setCurrentState(a);
 		
 		final Transition<Vector2f> transition = Transitions.transition(a, vector2fConverter);
 		transition.set(b, 2000);
