@@ -16,13 +16,6 @@ public class StateMachine<T> {
 	T currentState;
 
 	/**
-	 * Sets the current state of the state machine, should be used to set the initial state.
-	 */
-	public void setCurrentState(T state) {
-		currentState = state;
-	}
-
-	/**
 	 * Returns the current state of the state machine.
 	 */
 	public T getCurrentState() {
