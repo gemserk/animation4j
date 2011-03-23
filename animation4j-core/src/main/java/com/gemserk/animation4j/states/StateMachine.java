@@ -47,7 +47,13 @@ public class StateMachine<T> {
 		}
 	}
 
-	public void addTransition(StateTransition<T> transition) {
-		stateTransitions.add(transition);
+	/**
+	 * Adds a new state transition to the state machine.
+	 * 
+	 * @param stateTransition
+	 *            The state transition to be added.
+	 */
+	public void addTransition(StateTransition<T> stateTransition) {
+		stateTransitions.add(stateTransition);
 	}
 }
