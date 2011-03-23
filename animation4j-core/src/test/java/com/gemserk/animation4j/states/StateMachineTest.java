@@ -25,7 +25,7 @@ public class StateMachineTest {
 	@Test
 	public void shouldReturnFirstAddedState() {
 		Animation animation1 = new MockAnimation();
-		AnimationStateMachine animationState = new AnimationStateMachine(animation1);
+		StateMachine<Animation> animationState = new StateMachine<Animation>(animation1);
 		assertThat(animationState.getCurrentState(), IsSame.sameInstance(animation1));
 	}
 
@@ -33,7 +33,7 @@ public class StateMachineTest {
 	public void shouldReturnNextStateWhenTransitionConditionMatches() {
 		Animation animation1 = new MockAnimation();
 		Animation animation2 = new MockAnimation();
-		AnimationStateMachine animationState = new AnimationStateMachine(animation1);
+		StateMachine<Animation> animationState = new StateMachine<Animation>(animation1);
 
 		animationState.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
 			@Override
@@ -53,7 +53,7 @@ public class StateMachineTest {
 		Animation animation2 = new MockAnimation();
 		Animation animation3 = new MockAnimation();
 
-		AnimationStateMachine animationState = new AnimationStateMachine(animation1);
+		StateMachine<Animation> animationState = new StateMachine<Animation>(animation1);
 
 		animationState.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
 			@Override
@@ -81,7 +81,7 @@ public class StateMachineTest {
 	@Test
 	public void souldCallPerformWhenTransitionConditionMatches() {
 		Animation animation1 = new MockAnimation();
-		AnimationStateMachine animationState = new AnimationStateMachine(animation1);
+		StateMachine<Animation> animationState = new StateMachine<Animation>(animation1);
 
 		animationState.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
 			@Override

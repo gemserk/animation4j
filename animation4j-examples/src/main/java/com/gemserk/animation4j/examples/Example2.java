@@ -19,7 +19,7 @@ import com.gemserk.animation4j.event.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.Interpolators;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.java2d.interpolators.Java2dInterpolators;
-import com.gemserk.animation4j.states.AnimationStateMachine;
+import com.gemserk.animation4j.states.StateMachine;
 import com.gemserk.animation4j.states.StateTransition;
 import com.gemserk.animation4j.states.StateTransitionCondition;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
@@ -204,7 +204,7 @@ public class Example2 extends Java2dDesktopApplication {
 				}
 			}).handleChangesOf(showAnimation);
 
-			animationStateMachine = new AnimationStateMachine(showAnimation);
+			animationStateMachine = new StateMachine<Animation>(showAnimation);
 
 			animationStateMachine.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
 				@Override
@@ -269,7 +269,7 @@ public class Example2 extends Java2dDesktopApplication {
 
 		private String[] texts;
 
-		private AnimationStateMachine animationStateMachine;
+		private StateMachine<Animation> animationStateMachine;
 
 		@Override
 		public void render(Graphics2D graphics) {
