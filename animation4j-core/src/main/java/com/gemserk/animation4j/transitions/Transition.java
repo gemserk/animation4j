@@ -35,7 +35,9 @@ public interface Transition<T> {
 	void set(T t, int time);
 
 	/**
-	 * Returns true whenever the transition is finished, false otherwhise.
+	 * Returns true whenever the transition is being performed from one value to another, false otherwise.
+	 * 
+	 * @return true whenever the transition is being performed from one value to another, false otherwise.
 	 */
-	boolean isFinished();
+	boolean isTransitioning();
 }

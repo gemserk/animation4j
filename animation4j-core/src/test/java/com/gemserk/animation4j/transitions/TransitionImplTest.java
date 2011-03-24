@@ -83,14 +83,14 @@ public class TransitionImplTest {
 	@Test
 	public void shouldNotBeFinishedByDefault() {
 		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 0.01f, timeProvider);
-		assertThat(transition.isFinished(), IsEqual.equalTo(true));
+		assertThat(transition.isTransitioning(), IsEqual.equalTo(false));
 	}
 	
 	@Test
 	public void shouldNotBeFinishedWhenCurrentValueIsNotEndValue() {
 		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 0.01f, timeProvider);
 		transition.set(500f, 2000);
-		assertThat(transition.isFinished(), IsEqual.equalTo(false));
+		assertThat(transition.isTransitioning(), IsEqual.equalTo(true));
 	}
 	
 	@Test
@@ -98,7 +98,7 @@ public class TransitionImplTest {
 		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 0.01f, timeProvider);
 		transition.set(500f, 1000);
 		timeProvider.update(1000);
-		assertThat(transition.isFinished(), IsEqual.equalTo(true));
+		assertThat(transition.isTransitioning(), IsEqual.equalTo(false));
 	}
 
 }

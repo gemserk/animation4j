@@ -38,9 +38,9 @@ public class TransitionImpl<T> implements Transition<T> {
 	}
 
 	@Override
-	public boolean isFinished() {
+	public boolean isTransitioning() {
 		updateTransition();
-		return transition.isFinished();
+		return !transition.isFinished();
 	}
 
 	protected void updateTransition() {
