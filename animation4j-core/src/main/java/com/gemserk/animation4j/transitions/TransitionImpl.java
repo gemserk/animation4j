@@ -14,7 +14,7 @@ public class TransitionImpl<T> implements Transition<T> {
 	private final TimeProvider timeProvider;
 
 	private long lastTime;
-	
+
 	private InternalTransition<T> transition;
 
 	public TransitionImpl(InternalTransition<T> transition, float speed, TimeProvider timeProvider) {
@@ -24,15 +24,7 @@ public class TransitionImpl<T> implements Transition<T> {
 	}
 
 	public T get() {
-		long currentTime = timeProvider.getTime();
-		long delta = currentTime - lastTime;
-
-		if (delta <= 0)
-			return transition.get();
-
-		float time = ((float) delta) * speed;
-		transition.update((int) (time * 1000f));
-		lastTime = currentTime;
+		updateTransition();
 		return transition.get();
 	}
 
@@ -43,5 +35,23 @@ public class TransitionImpl<T> implements Transition<T> {
 	public void set(T t, int time) {
 		lastTime = timeProvider.getTime();
 		transition.set(t, time);
+	}
+
+	@Override
+	public boolean isFinished() {
+		updateTransition();
+		return transition.isFinished();
+	}
+
+	protected void updateTransition() {
+		long currentTime = timeProvider.getTime();
+		long delta = currentTime - lastTime;
+
+		if (delta <= 0)
+			return;
+
+		float time = ((float) delta) * speed;
+		transition.update((int) (time * 1000f));
+		lastTime = currentTime;
 	}
 }

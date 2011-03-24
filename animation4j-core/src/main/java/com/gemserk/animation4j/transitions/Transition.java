@@ -1,7 +1,7 @@
 package com.gemserk.animation4j.transitions;
 
 /**
- * Provides an interface of a transition of a value. 
+ * Provides an interface of a transition of a value.
  * 
  * @param <T>
  *            The type of the transition value.
@@ -34,4 +34,8 @@ public interface Transition<T> {
 	 */
 	void set(T t, int time);
 
+	/**
+	 * Returns true whenever the transition is finished, false otherwhise.
+	 */
+	boolean isFinished();
 }

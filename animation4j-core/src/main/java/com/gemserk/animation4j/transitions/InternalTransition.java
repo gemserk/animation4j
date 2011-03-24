@@ -66,7 +66,7 @@ class InternalTransition<T> {
 	}
 
 	public void update(int time) {
-		if (currentTime == totalTime)
+		if (isFinished())
 			return;
 
 		currentTime += time;
@@ -80,6 +80,10 @@ class InternalTransition<T> {
 		float alpha = (float) currentTime / (float) totalTime;
 
 		currentValue = interpolator.interpolate(startValue, desiredValue, alpha);
+	}
+	
+	public boolean isFinished() {
+		return currentTime == totalTime;
 	}
 
 }
