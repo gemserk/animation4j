@@ -14,7 +14,7 @@ import com.gemserk.animation4j.time.TimeProvider;
  */
 public class Transitions {
 
-	private static float ms = 1f / 1000f;
+	public static float defaultTransitionSpeed = 1f / 1000f;
 
 	public static TimeProvider timeProvider = new SystemTimeProvider();
 
@@ -27,7 +27,7 @@ public class Transitions {
 	 *            The TypeConverter to use inside the transition to convert from float[] to T and vice versa.
 	 */
 	public static <T> Transition<T> transition(T startValue, TypeConverter<T> typeConverter) {
-		return transition(startValue, ms, typeConverter);
+		return transition(startValue, defaultTransitionSpeed, typeConverter);
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class Transitions {
 	 *            The interpolation functions to be used to interpolate each variable of T.
 	 */
 	public static <T> Transition<T> transition(T startValue, TypeConverter<T> typeConverter, InterpolatorFunction... functions) {
-		return transition(startValue, ms, typeConverter, functions);
+		return transition(startValue, defaultTransitionSpeed, typeConverter, functions);
 	}
 
 	/**
