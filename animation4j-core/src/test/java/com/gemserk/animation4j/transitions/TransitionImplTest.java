@@ -81,20 +81,29 @@ public class TransitionImplTest {
 	}
 
 	@Test
-	public void shouldNotBeFinishedByDefault() {
+	public void shouldNotBeInTransitionWhenCreated() {
 		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 0.01f, timeProvider);
 		assertThat(transition.isTransitioning(), IsEqual.equalTo(false));
 	}
 	
 	@Test
-	public void shouldNotBeFinishedWhenCurrentValueIsNotEndValue() {
+	public void shouldBeInTransitionWhenTimeHasNotPassedButSetCalled() {
 		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 0.01f, timeProvider);
 		transition.set(500f, 2000);
 		assertThat(transition.isTransitioning(), IsEqual.equalTo(true));
 	}
 	
 	@Test
-	public void shouldBeFinishedAfterTimePassed() {
+	public void shouldKeepBeingInTransitionWhenTwoOrMoreSetCalled() {
+		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 0.01f, timeProvider);
+		transition.set(500f, 1000);
+		timeProvider.update(500);
+		transition.set(250f, 1000);
+		assertThat(transition.isTransitioning(), IsEqual.equalTo(true));
+	}
+	
+	@Test
+	public void shouldNotBeInTransitionWhenTimeHasPassed() {
 		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 0.01f, timeProvider);
 		transition.set(500f, 1000);
 		timeProvider.update(1000);
