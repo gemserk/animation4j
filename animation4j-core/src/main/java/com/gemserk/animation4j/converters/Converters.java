@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class Converters {
 	
-	public static Map<Class<?>, TypeConverter<?>> converters = new HashMap<Class<?>, TypeConverter<?>>(); 
+	private static Map<Class<?>, TypeConverter<?>> converters = new HashMap<Class<?>, TypeConverter<?>>(); 
 	
 	public static TypeConverter<Float> floatConverter = new TypeConverter<Float>() {
 
@@ -50,6 +50,10 @@ public class Converters {
 		if (converter == null)
 			throw new RuntimeException("failed to get converter for type " + clazz.getCanonicalName());
 		return (TypeConverter<T>) converter;
+	}
+	
+	public static void registerConverter(Class<?> clazz, TypeConverter<?> typeConverter) {
+		converters.put(clazz, typeConverter);
 	}
 
 }

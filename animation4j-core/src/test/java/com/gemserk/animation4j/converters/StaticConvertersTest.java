@@ -20,10 +20,6 @@ public class StaticConvertersTest {
 		
 	}
 	
-	static {
-		Converters.converters.put(MyClass.class, new SomeConverter());
-	}
-
 	public static class SomeConverter implements TypeConverter<MyClass>{
 
 		@Override
@@ -52,6 +48,7 @@ public class StaticConvertersTest {
 	
 	@Test
 	public void shouldInferConverterFromTypeIfAlreadyRegistered() {
+		Converters.registerConverter(MyClass.class, new SomeConverter());
 		TypeConverter<MyClass> converter = Converters.converter(MyClass.class);
 		assertNotNull(converter);
 		assertThat(converter.getClass().isAssignableFrom(SomeConverter.class), IsEqual.equalTo(true));
