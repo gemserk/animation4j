@@ -48,7 +48,7 @@ public class StaticConvertersTest {
 	
 	@Test
 	public void shouldInferConverterFromTypeIfAlreadyRegistered() {
-		Converters.registerConverter(MyClass.class, new SomeConverter());
+		Converters.register(MyClass.class, new SomeConverter());
 		TypeConverter<MyClass> converter = Converters.converter(MyClass.class);
 		assertNotNull(converter);
 		assertThat(converter.getClass().isAssignableFrom(SomeConverter.class), IsEqual.equalTo(true));
