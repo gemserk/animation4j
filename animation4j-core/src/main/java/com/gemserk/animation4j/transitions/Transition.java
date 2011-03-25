@@ -12,7 +12,6 @@ public interface Transition<T> {
 	/**
 	 * Returns the current value of the transition.
 	 * 
-	 * @return The current value of the transition.
 	 */
 	T get();
 
@@ -37,7 +36,6 @@ public interface Transition<T> {
 	/**
 	 * Returns true whenever the transition is being performed from one value to another, false otherwise.
 	 * 
-	 * @return true whenever the transition is being performed from one value to another, false otherwise.
 	 */
 	boolean isTransitioning();
 }
