@@ -1,5 +1,8 @@
 package com.gemserk.animation4j.converters;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * Provides type converters for common java2d classes like Color and Point2D.
@@ -7,7 +10,9 @@ package com.gemserk.animation4j.converters;
  */
 public class Converters {
 	
-	private static TypeConverter<Float> floatConverter = new TypeConverter<Float>() {
+	public static Map<Class<?>, TypeConverter<?>> converters = new HashMap<Class<?>, TypeConverter<?>>(); 
+	
+	public static TypeConverter<Float> floatConverter = new TypeConverter<Float>() {
 
 		@Override
 		public float[] copyFromObject(Float f, float[] x) {
@@ -37,6 +42,14 @@ public class Converters {
 	public static TypeConverter<Float> floatValue() {
 		// not recommended to use, it will be boxing and unboxing from float to Float and vice versa.
 		return floatConverter;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> TypeConverter<T> converter(Class<T> clazz) {
+		TypeConverter<?> converter = converters.get(clazz);
+		if (converter == null)
+			throw new RuntimeException("failed to get converter for type " + clazz.getCanonicalName());
+		return (TypeConverter<T>) converter;
 	}
 
 }
