@@ -84,12 +84,23 @@ public class Transitions {
 	 * 
 	 * @param startValue
 	 *            Starting value of the transition.
-	 * @return The transition built.
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <T> Transition<T> transition(T startValue) {
 		TypeConverter converter = Converters.converter(startValue.getClass());
 		return transition(startValue, converter);
+	}
+
+	/**
+	 * Builds a transition given a start value and inferring the corresponding TypeConverter from the Converters factory.
+	 * 
+	 * @param startValue
+	 *            Starting value of the transition.
+	 * @param functions
+	 *            The interpolation functions to be used to interpolate each variable of T.
+	 */
+	public static <T> Transition<T> transition(T startValue, InterpolatorFunction... functions) {
+		TypeConverter converter = Converters.converter(startValue.getClass());
+		return transition(startValue, converter, functions);
 	}
 
 }
