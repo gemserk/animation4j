@@ -6,9 +6,11 @@ import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.core.IsEqual;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.gemserk.animation4j.Animation;
+import com.gemserk.animation4j.converters.Converters;
 
 public class TimelineAnimationTest {
 
@@ -43,6 +45,11 @@ public class TimelineAnimationTest {
 		public void describeTo(Description description) {
 
 		}
+	}
+	
+	@Before
+	public void setup() {
+		Converters.init();
 	}
 
 	@Test

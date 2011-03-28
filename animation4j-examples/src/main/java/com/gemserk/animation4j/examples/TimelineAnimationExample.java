@@ -1,6 +1,5 @@
 package com.gemserk.animation4j.examples;
 
-import com.gemserk.animation4j.interpolator.Interpolators;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
@@ -23,7 +22,7 @@ public class TimelineAnimationExample {
 			delay(100f);
 			
 			value("position", new TimelineValueBuilder<Vector2f>(){{
-				keyFrame(0, new Vector2f(100f, 100f), Interpolators.interpolator(vector2fConverter));
+				keyFrame(0, new Vector2f(100f, 100f));
 				keyFrame(500, new Vector2f(500f, 500f));
 			}});
 			
@@ -61,7 +60,7 @@ public class TimelineAnimationExample {
 			// note: we haven't defined delay, so delay will be 0 then.
 			
 			value("position", new TimelineValueBuilder<Vector2f>(){{
-				keyFrame(0, new Vector2f(100f, 100f), Interpolators.interpolator(vector2fConverter));
+				keyFrame(0, new Vector2f(100f, 100f));
 				keyFrame(500, new Vector2f(500f, 500f));
 			}});
 			

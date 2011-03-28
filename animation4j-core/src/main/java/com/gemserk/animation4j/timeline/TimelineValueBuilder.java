@@ -1,9 +1,9 @@
 package com.gemserk.animation4j.timeline;
 
+import com.gemserk.animation4j.converters.Converters;
+import com.gemserk.animation4j.converters.TypeConverter;
+import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
-import com.gemserk.animation4j.interpolator.InterpolatorProvider;
-import com.gemserk.animation4j.interpolator.Interpolators;
-import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
 
 /**
  * Provides an easy way to create TimelineValues.
@@ -23,7 +23,9 @@ public class TimelineValueBuilder<T> {
 		this.name = name;
 	}
 
-	TimelineValue<T> timelineValue = new TimelineValue<T>();
+	TimelineValue<T> timelineValue;
+
+	TypeConverter<T> typeConverter;
 
 	public String getName() {
 		return name;
@@ -33,24 +35,18 @@ public class TimelineValueBuilder<T> {
 		return duration;
 	}
 
-	private InterpolatorProvider interpolatorProvider = new InterpolatorProvider() {
-		{
-			register(Float.class, Interpolators.floatInterpolator(InterpolationFunctions.linear()));
-		}
-	};
-
-	public void setInterpolatorProvider(InterpolatorProvider interpolatorProvider) {
-		this.interpolatorProvider = interpolatorProvider;
-	}
-
 	/**
 	 * Builds and returns the being specified time line value.
 	 */
 	public TimelineValue<T> build() {
+		// timelineValue = new TimelineValue<T>(typeConverter);
 		timelineValue.setName(name);
+
+		// add keyframes
+
 		return timelineValue;
 	}
-
+	
 	/**
 	 * Defines a new key frame in the time line value.
 	 * 
@@ -58,27 +54,19 @@ public class TimelineValueBuilder<T> {
 	 *            The time when the key frame starts (in milliseconds).
 	 * @param value
 	 *            The value the variable should have in the key frame.
-	 * @param interpolator
-	 *            The interpolator to use between the key frame and the next key frame.
 	 */
-	public TimelineValueBuilder<T> keyFrame(float time, T value, Interpolator<T> interpolator) {
-		if (interpolator == null)
-			throw new RuntimeException("Can't build a key frame with a null interpolator");
+	public TimelineValueBuilder<T> keyFrame(float time, T value) {
+		if (typeConverter == null)
+			typeConverter = (TypeConverter) Converters.converter(value.getClass());
+
+		Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables());
+		
+		if (timelineValue == null)
+			timelineValue = new TimelineValue<T>(typeConverter);
+
 		timelineValue.addKeyFrame(time, value, interpolator);
 		duration = Math.max(duration, time);
 		return this;
-	}
-
-	/**
-	 * Defines a new key frame in the timeline value, infering an interpolator based on the type of the value.
-	 * 
-	 * @param time
-	 *            The time when the key frame starts.
-	 * @param value
-	 *            The value the variable should have in the key frame.
-	 */
-	public TimelineValueBuilder<T> keyFrame(float time, T value) {
-		return keyFrame(time, value, interpolatorProvider.inferInterpolator(value));
 	}
 
 }

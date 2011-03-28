@@ -1,7 +1,6 @@
 package com.gemserk.animation4j.examples;
 
 import com.gemserk.animation4j.Animation;
-import com.gemserk.animation4j.interpolator.Interpolators;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
@@ -49,12 +48,12 @@ public class SynchronizedAnimationExample {
 		TimelineAnimation timelineAnimation = new TimelineAnimationBuilder() {{
 			
 			value("position", new TimelineValueBuilder<Vector2f>(){{
-				keyFrame(0, new Vector2f(100f, 100f), Interpolators.interpolator(vector2fConverter));
+				keyFrame(0, new Vector2f(100f, 100f));
 				keyFrame(500, new Vector2f(500f, 500f));
 			}});
 			
 			value("size", new TimelineValueBuilder<Vector2f>(){{
-				keyFrame(0, new Vector2f(1f, 1f), Interpolators.interpolator(vector2fConverter));
+				keyFrame(0, new Vector2f(1f, 1f));
 				keyFrame(500, new Vector2f(2f, 2f));
 			}});
 

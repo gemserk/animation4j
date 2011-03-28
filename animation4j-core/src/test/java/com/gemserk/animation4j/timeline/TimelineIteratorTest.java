@@ -13,6 +13,8 @@ import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.gemserk.animation4j.converters.Converters;
+
 @RunWith(JMock.class)
 @SuppressWarnings("rawtypes")
 public class TimelineIteratorTest {
@@ -33,7 +35,7 @@ public class TimelineIteratorTest {
 	@Test
 	public void hasNextShouldBeTrueWhenNotEmptyValues() {
 		final HashMap<String, TimelineValue> values = new HashMap<String, TimelineValue>();
-		values.put("x", new TimelineValue());
+		values.put("x", new TimelineValue(Converters.floatValue()));
 		TimelineIterator timelineIterator = new TimelineIterator(values);
 		assertTrue(timelineIterator.hasNext());
 	}
@@ -43,8 +45,8 @@ public class TimelineIteratorTest {
 	public void nextShouldReturnFirstElement() {
 		final HashMap<String, TimelineValue> values = new HashMap<String, TimelineValue>();
 
-		final TimelineValue firstTimelineValue = new TimelineValue();
-		final TimelineValue secondTimelineValue = new TimelineValue();
+		final TimelineValue firstTimelineValue = new TimelineValue(Converters.floatValue());
+		final TimelineValue secondTimelineValue = new TimelineValue(Converters.floatValue());
 
 		values.put("a", firstTimelineValue);
 		values.put("b", secondTimelineValue);

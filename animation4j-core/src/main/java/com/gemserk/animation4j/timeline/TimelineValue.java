@@ -3,8 +3,8 @@ package com.gemserk.animation4j.timeline;
 import java.util.Comparator;
 import java.util.LinkedList;
 
+import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.interpolator.Interpolator;
-import com.gemserk.animation4j.interpolator.NullInterpolator;
 
 /**
  * Represents all the progress of a value inside a time line.
@@ -21,8 +21,7 @@ public class TimelineValue<T> {
 	 * 
 	 * @author acoppes
 	 */
-	@SuppressWarnings("rawtypes")
-	static class KeyFrameComparator implements Comparator<TimelineValue.KeyFrame> {
+	static class KeyFrameComparator implements Comparator<KeyFrame> {
 		@Override
 		public int compare(TimelineValue.KeyFrame o1, TimelineValue.KeyFrame o2) {
 			return (int) (o1.time - o2.time);
@@ -36,27 +35,27 @@ public class TimelineValue<T> {
 	 *            The type of the variable
 	 * @author acoppes
 	 */
-	static class KeyFrame<T> {
+	static class KeyFrame {
 
 		private float time;
 
-		private T value;
+		private float[] value;
 
-		private Interpolator<T> interpolator;
+		private Interpolator<float[]> interpolator;
 
 		public float getTime() {
 			return time;
 		}
 
-		public T getValue() {
+		public float[] getValue() {
 			return value;
 		}
 
-		public Interpolator<T> getInterpolator() {
+		public Interpolator<float[]> getInterpolator() {
 			return interpolator;
 		}
 
-		public KeyFrame(float time, T value, Interpolator<T> interpolator) {
+		public KeyFrame(float time, float[] value, Interpolator<float[]> interpolator) {
 			this.time = time;
 			this.value = value;
 			this.interpolator = interpolator;
@@ -64,9 +63,11 @@ public class TimelineValue<T> {
 
 	}
 
-	LinkedList<KeyFrame<T>> keyFrames = new LinkedList<KeyFrame<T>>();
+	LinkedList<KeyFrame> keyFrames = new LinkedList<KeyFrame>();
 
 	String name;
+
+	private final TypeConverter<T> typeConverter;
 
 	public void setName(String name) {
 		this.name = name;
@@ -76,17 +77,16 @@ public class TimelineValue<T> {
 		return name;
 	}
 	
-	TimelineValue() {
-		
+	TimelineValue(TypeConverter<T> typeConverter) {
+		this.typeConverter = typeConverter;
+	}
+	
+	public void addKeyFrame(float time, T value, Interpolator<float[]> interpolator) {
+		float[] v = typeConverter.copyFromObject(value, null);
+		keyFrames.add(new KeyFrame(time, v, interpolator));
 	}
 
-	public void addKeyFrame(float time, T value, Interpolator<T> interpolator) {
-		keyFrames.add(new KeyFrame<T>(time, value, interpolator));
-	}
-
-	public void addKeyFrame(float time, T value) {
-		addKeyFrame(time, value, new NullInterpolator<T>());
-	}
+	private T currentValue;
 
 	/**
 	 * Returns the value for the given time, interpolating between corresponding key frames.
@@ -96,26 +96,31 @@ public class TimelineValue<T> {
 	 * @return An interpolated value based on corresponding to specified time key frames.
 	 */
 	public T getValue(float time) {
+		float[] value = getFloatValue(time);
+		currentValue = typeConverter.copyToObject(currentValue, value);
+		return currentValue;
+	}
 
-		KeyFrame<T> firstKeyFrame = keyFrames.getFirst();
+	protected float[] getFloatValue(float time) {
+		KeyFrame firstKeyFrame = keyFrames.getFirst();
 
 		if (time <= firstKeyFrame.time) {
 			if (keyFrames.size() == 1)
 				return firstKeyFrame.getValue();
 
-			KeyFrame<T> secondKeyFrame = keyFrames.get(1);
+			KeyFrame secondKeyFrame = keyFrames.get(1);
 
-			Interpolator<T> interpolator = firstKeyFrame.getInterpolator();
+			Interpolator<float[]> interpolator = firstKeyFrame.getInterpolator();
 			return interpolator.interpolate(firstKeyFrame.getValue(), secondKeyFrame.getValue(), 0f);
 		}
 
 		for (int i = 0; i < keyFrames.size(); i++) {
 
-			TimelineValue.KeyFrame<T> currentKeyFrame = keyFrames.get(i);
+			KeyFrame currentKeyFrame = keyFrames.get(i);
 
 			if (currentKeyFrame.time > time) {
 
-				TimelineValue.KeyFrame<T> previousKeyFrame = keyFrames.get(i - 1);
+				KeyFrame previousKeyFrame = keyFrames.get(i - 1);
 
 				if (previousKeyFrame == null)
 					throw new RuntimeException("invalid time " + time);
@@ -124,7 +129,7 @@ public class TimelineValue<T> {
 
 				float weight = (time - previousKeyFrame.getTime()) / interval;
 
-				Interpolator<T> interpolator = previousKeyFrame.getInterpolator();
+				Interpolator<float[]> interpolator = previousKeyFrame.getInterpolator();
 				return interpolator.interpolate(previousKeyFrame.getValue(), currentKeyFrame.getValue(), weight);
 
 			}
@@ -134,10 +139,10 @@ public class TimelineValue<T> {
 		if (keyFrames.size() == 1)
 			return keyFrames.getLast().getValue();
 
-		KeyFrame<T> secondLastFrame = keyFrames.get(keyFrames.size() - 2);
-		KeyFrame<T> lastFrame = keyFrames.getLast();
+		KeyFrame secondLastFrame = keyFrames.get(keyFrames.size() - 2);
+		KeyFrame lastFrame = keyFrames.getLast();
 
-		Interpolator<T> interpolator = secondLastFrame.getInterpolator();
+		Interpolator<float[]> interpolator = secondLastFrame.getInterpolator();
 
 		return interpolator.interpolate(secondLastFrame.getValue(), lastFrame.getValue(), 1f);
 	}

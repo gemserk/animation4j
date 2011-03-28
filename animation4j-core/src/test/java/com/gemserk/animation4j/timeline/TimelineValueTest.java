@@ -4,17 +4,21 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.gemserk.animation4j.converters.Converters;
+import com.gemserk.animation4j.converters.TypeConverter;
+import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
-import com.gemserk.animation4j.interpolator.Interpolators;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
 
 
 public class TimelineValueTest {
 	
+	TypeConverter<Float> floatConverter = Converters.floatValue();
+	
 	@Test
 	public void testTimeLineValues() {
-		Interpolator<Float> interpolator = Interpolators.floatInterpolator(InterpolationFunctions.linear());
-		TimelineValue<Float> timelineValue = new TimelineValue<Float>();
+		Interpolator<float[]> interpolator = new FloatArrayInterpolator(1);
+		TimelineValue<Float> timelineValue = new TimelineValue<Float>(floatConverter);
 		
 		timelineValue.addKeyFrame(0, 10f, interpolator);
 		timelineValue.addKeyFrame(100, 20f, interpolator);
@@ -30,9 +34,9 @@ public class TimelineValueTest {
 	
 	@Test
 	public void testTimelineValuesWithOffset() {
-		Interpolator<Float> interpolator = Interpolators.floatInterpolator(InterpolationFunctions.linear());
+		Interpolator<float[]> interpolator = new FloatArrayInterpolator(1);
 		
-		TimelineValue<Float> timelineValue = new TimelineValue<Float>();
+		TimelineValue<Float> timelineValue = new TimelineValue<Float>(floatConverter);
 		timelineValue.addKeyFrame(100, 10f, interpolator);
 		timelineValue.addKeyFrame(200, 20f, interpolator);
 		
@@ -45,25 +49,14 @@ public class TimelineValueTest {
 	
 	@Test
 	public void shouldReturnInterpolatedValueForLastFrameKey() {
-		Interpolator<Float> interpolator = Interpolators.floatInterpolator(InterpolationFunctions.quadratic(0, 1, 0));
+		Interpolator<float[]> interpolator = new FloatArrayInterpolator(1, InterpolationFunctions.quadratic(0, 1, 0));
 		
-		TimelineValue<Float> timelineValue = new TimelineValue<Float>();
+		TimelineValue<Float> timelineValue = new TimelineValue<Float>(floatConverter);
 		timelineValue.addKeyFrame(0, 10f, interpolator);
 		timelineValue.addKeyFrame(100, 20f, null);
 		
 		assertEquals(10f, timelineValue.getValue(0), 0.001f);
 		assertEquals(15f, timelineValue.getValue(50), 0.001f);
-		assertEquals(10f, timelineValue.getValue(101), 0.001f);
-	}
-	
-	@Test
-	public void shouldUseNullInterpolatorIfInterpolatorNotSet() {
-		TimelineValue<Float> timelineValue = new TimelineValue<Float>();
-		timelineValue.addKeyFrame(0, 10f);
-		timelineValue.addKeyFrame(100, 20f);
-		
-		assertEquals(10f, timelineValue.getValue(0), 0.001f);
-		assertEquals(10f, timelineValue.getValue(50), 0.001f);
 		assertEquals(10f, timelineValue.getValue(101), 0.001f);
 	}
 
