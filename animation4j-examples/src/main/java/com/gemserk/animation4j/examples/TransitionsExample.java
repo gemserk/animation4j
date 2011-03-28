@@ -1,5 +1,6 @@
 package com.gemserk.animation4j.examples;
 
+import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.time.UpdateableTimeProvider;
 import com.gemserk.animation4j.transitions.Transition;
@@ -8,25 +9,26 @@ import com.gemserk.animation4j.transitions.Transitions;
 public class TransitionsExample {
 
 	public static void main(String[] args) throws InterruptedException {
+		// register a type converter for Vector2f class.
+		Converters.register(Vector2f.class, new Vector2fConverter());
+
 		System.out.println("using default system time provider");
 		testWithDefaultSystemProvider();
-		
+
 		System.out.println("now using a custom user time provider");
 		testWithUserTimeProvider();
 	}
 
 	protected static void testWithDefaultSystemProvider() throws InterruptedException {
-		// as converters are stateless, you could reuse it in several interpolators.
-		Vector2fConverter vector2fConverter = new Vector2fConverter();
 
 		// You could create a transition using the interpolation functions you want for each variable of the class,
 		// by default transitions will use a SystemTimeProvider.
-		Transition<Vector2f> transition = Transitions.transition(new Vector2f(0f, 0f), vector2fConverter, // 
+		Transition<Vector2f> transition = Transitions.transition(new Vector2f(0f, 0f), //
 				InterpolatorFunctionFactory.easeOut(), //
 				InterpolatorFunctionFactory.easeIn());
 
 		// you can build transitions using default linear interpolation functions.
-		Transition<Vector2f> anotherTransition = Transitions.transition(new Vector2f(0f, 0f), vector2fConverter);
+		Transition<Vector2f> anotherTransition = Transitions.transition(new Vector2f(0f, 0f));
 
 		System.out.println("Transition value: " + transition.get());
 
@@ -49,10 +51,7 @@ public class TransitionsExample {
 		// In this case, we are using a custom time provider.
 		Transitions.timeProvider = timeProvider;
 
-		// as converters are stateless, you could reuse it in several interpolators.
-		Vector2fConverter vector2fConverter = new Vector2fConverter();
-
-		Transition<Vector2f> transition = Transitions.transition(new Vector2f(0f, 0f), vector2fConverter, // 
+		Transition<Vector2f> transition = Transitions.transition(new Vector2f(0f, 0f), //
 				InterpolatorFunctionFactory.easeOut(), //
 				InterpolatorFunctionFactory.easeIn());
 

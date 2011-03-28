@@ -72,4 +72,7 @@ public class Converters {
 		converters.put(clazz, typeConverter);
 	}
 
+	public static void init() {
+		Converters.register(Float.class, floatConverter);
+	}
 }

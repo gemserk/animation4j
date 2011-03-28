@@ -93,6 +93,8 @@ public class Example3 extends Java2dDesktopApplication {
 
 		@Override
 		public void init() {
+			
+			Java2dConverters.init();
 
 			resourceManager.add("House", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("house-128x92.png")))));
 			houseImageResource = resourceManager.get("House");
@@ -113,7 +115,7 @@ public class Example3 extends Java2dDesktopApplication {
 
 			// Creates a Color transition using a color interpolator with a linear interpolation function.
 
-			colorTransition = Transitions.transition(new Color(0.3f, 0.3f, 0.8f, 1f), Java2dConverters.color(), InterpolatorFunctionFactory.linear());
+			colorTransition = Transitions.transition(new Color(0.3f, 0.3f, 0.8f, 1f), InterpolatorFunctionFactory.linear());
 		}
 
 		@Override

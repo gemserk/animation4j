@@ -3,12 +3,13 @@ package com.gemserk.animation4j.slick.converters;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.geom.Vector2f;
 
+import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.converters.TypeConverter;
 
 public class SlickConverters {
-	
+
 	private static TypeConverter<Vector2f> vector2fConverter = new TypeConverter<Vector2f>() {
-		
+
 		@Override
 		public float[] copyFromObject(Vector2f v, float[] x) {
 			if (x == null)
@@ -17,7 +18,7 @@ public class SlickConverters {
 			x[1] = v.y;
 			return x;
 		}
-		
+
 		@Override
 		public Vector2f copyToObject(Vector2f v, float[] x) {
 			if (v == null)
@@ -31,11 +32,11 @@ public class SlickConverters {
 		public int variables() {
 			return 2;
 		}
-		
+
 	};
-	
+
 	private static TypeConverter<Color> colorConverter = new TypeConverter<Color>() {
-		
+
 		@Override
 		public float[] copyFromObject(Color color, float[] x) {
 			if (x == null)
@@ -62,15 +63,23 @@ public class SlickConverters {
 		public int variables() {
 			return 4;
 		}
-		
+
 	};
 
 	public static TypeConverter<Vector2f> vector2f() {
 		return vector2fConverter;
 	}
-	
+
 	public static TypeConverter<Color> color() {
 		return colorConverter;
+	}
+
+	/**
+	 * Registers common converters for Slick2d classes to Converters class.
+	 */
+	public static void init() {
+		Converters.register(Vector2f.class, vector2fConverter);
+		Converters.register(Color.class, colorConverter);
 	}
 
 }
