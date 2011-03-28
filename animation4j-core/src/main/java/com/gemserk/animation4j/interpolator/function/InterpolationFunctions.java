@@ -1,6 +1,6 @@
 package com.gemserk.animation4j.interpolator.function;
 
-public class InterpolatorFunctionFactory {
+public class InterpolationFunctions {
 
 	private static InterpolationFunction linearInterpolatorFunction = new LinearBezierInterpolationFunction(0f, 1f);
 

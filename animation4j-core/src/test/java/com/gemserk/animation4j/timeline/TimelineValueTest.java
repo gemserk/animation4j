@@ -6,14 +6,14 @@ import org.junit.Test;
 
 import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.interpolator.Interpolators;
-import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
+import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
 
 
 public class TimelineValueTest {
 	
 	@Test
 	public void testTimeLineValues() {
-		Interpolator<Float> interpolator = Interpolators.floatInterpolator(InterpolatorFunctionFactory.linear());
+		Interpolator<Float> interpolator = Interpolators.floatInterpolator(InterpolationFunctions.linear());
 		TimelineValue<Float> timelineValue = new TimelineValue<Float>();
 		
 		timelineValue.addKeyFrame(0, 10f, interpolator);
@@ -30,7 +30,7 @@ public class TimelineValueTest {
 	
 	@Test
 	public void testTimelineValuesWithOffset() {
-		Interpolator<Float> interpolator = Interpolators.floatInterpolator(InterpolatorFunctionFactory.linear());
+		Interpolator<Float> interpolator = Interpolators.floatInterpolator(InterpolationFunctions.linear());
 		
 		TimelineValue<Float> timelineValue = new TimelineValue<Float>();
 		timelineValue.addKeyFrame(100, 10f, interpolator);
@@ -45,7 +45,7 @@ public class TimelineValueTest {
 	
 	@Test
 	public void shouldReturnInterpolatedValueForLastFrameKey() {
-		Interpolator<Float> interpolator = Interpolators.floatInterpolator(InterpolatorFunctionFactory.quadratic(0, 1, 0));
+		Interpolator<Float> interpolator = Interpolators.floatInterpolator(InterpolationFunctions.quadratic(0, 1, 0));
 		
 		TimelineValue<Float> timelineValue = new TimelineValue<Float>();
 		timelineValue.addKeyFrame(0, 10f, interpolator);

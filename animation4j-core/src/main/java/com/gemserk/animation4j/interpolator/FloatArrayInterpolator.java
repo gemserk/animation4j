@@ -1,7 +1,7 @@
 package com.gemserk.animation4j.interpolator;
 
 import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
-import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
+import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
 
 /**
  * Interpolates an array of floats using multiple interpolator functions (linear by default).
@@ -52,7 +52,7 @@ public class FloatArrayInterpolator implements Interpolator<float[]> {
 		for (i = 0; i < functions.length; i++)
 			this.functions[i] = functions[i];
 		for (; i < this.functions.length; i++)
-			this.functions[i] = InterpolatorFunctionFactory.linear();
+			this.functions[i] = InterpolationFunctions.linear();
 	}
 
 	@Override

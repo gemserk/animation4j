@@ -5,7 +5,7 @@ import static org.junit.Assert.assertThat;
 import org.hamcrest.core.IsSame;
 import org.junit.Test;
 
-import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
+import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
 
 
 public class InterpolatorProviderTest {
@@ -14,7 +14,7 @@ public class InterpolatorProviderTest {
 	public void shouldInferTypeForRegisteredLinearInterpolator() {
 		InterpolatorProvider interpolatorProvider = new InterpolatorProvider();
 		
-		Interpolator<Float> interpolator = Interpolators.floatInterpolator(InterpolatorFunctionFactory.linear());
+		Interpolator<Float> interpolator = Interpolators.floatInterpolator(InterpolationFunctions.linear());
 		interpolatorProvider.register(Float.class, interpolator);
 		Interpolator<Float> interpolatorInfered = interpolatorProvider.inferInterpolator(new Float(100f));
 		

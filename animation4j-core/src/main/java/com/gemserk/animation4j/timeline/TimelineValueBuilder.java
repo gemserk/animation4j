@@ -3,7 +3,7 @@ package com.gemserk.animation4j.timeline;
 import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.interpolator.InterpolatorProvider;
 import com.gemserk.animation4j.interpolator.Interpolators;
-import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
+import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
 
 /**
  * Provides an easy way to create TimelineValues.
@@ -35,7 +35,7 @@ public class TimelineValueBuilder<T> {
 
 	private InterpolatorProvider interpolatorProvider = new InterpolatorProvider() {
 		{
-			register(Float.class, Interpolators.floatInterpolator(InterpolatorFunctionFactory.linear()));
+			register(Float.class, Interpolators.floatInterpolator(InterpolationFunctions.linear()));
 		}
 	};
 
