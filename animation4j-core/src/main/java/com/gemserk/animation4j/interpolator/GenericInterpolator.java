@@ -1,7 +1,7 @@
 package com.gemserk.animation4j.interpolator;
 
 import com.gemserk.animation4j.converters.TypeConverter;
-import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
+import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 
 /**
  * Provides an implementation of the Interpolator interface using a TypeConverter to convert from the object to a float[] and vice versa, and a Interpolator<float[]> to interpolate float[] values.
@@ -51,7 +51,7 @@ public class GenericInterpolator<T> implements Interpolator<T> {
 	 * @param functions
 	 *            The functions to be used for each float[] variable when interpolating.
 	 */
-	public GenericInterpolator(TypeConverter<T> converter, InterpolatorFunction... functions) {
+	public GenericInterpolator(TypeConverter<T> converter, InterpolationFunction... functions) {
 		this(converter, new FloatArrayInterpolator(converter.variables(), functions));
 	}
 

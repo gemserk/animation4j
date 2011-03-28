@@ -5,7 +5,7 @@ package com.gemserk.animation4j.interpolator.function;
  * 
  * @author acoppes
  */
-public class CubicBezierInterpolatorFunction implements InterpolatorFunction {
+public class CubicBezierInterpolatorFunction implements InterpolationFunction {
 
 	private final float p0, p1, p2, p3;
 

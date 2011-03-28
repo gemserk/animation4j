@@ -4,7 +4,7 @@ import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
-import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
+import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 import com.gemserk.animation4j.time.SystemTimeProvider;
 import com.gemserk.animation4j.time.TimeProvider;
 
@@ -41,7 +41,7 @@ public class Transitions {
 	 * @param functions
 	 *            The interpolation functions to be used to interpolate each variable of T.
 	 */
-	public static <T> Transition<T> transition(T startValue, TypeConverter<T> typeConverter, InterpolatorFunction... functions) {
+	public static <T> Transition<T> transition(T startValue, TypeConverter<T> typeConverter, InterpolationFunction... functions) {
 		return transition(startValue, defaultTransitionSpeed, typeConverter, functions);
 	}
 
@@ -73,7 +73,7 @@ public class Transitions {
 	 * @param functions
 	 *            The interpolation functions to be used to interpolate each variable of T.
 	 */
-	public static <T> Transition<T> transition(T startValue, float speed, TypeConverter<T> typeConverter, InterpolatorFunction... functions) {
+	public static <T> Transition<T> transition(T startValue, float speed, TypeConverter<T> typeConverter, InterpolationFunction... functions) {
 		Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables(), functions);
 		InternalTransition<T> internalTransition = new InternalTransition<T>(startValue, typeConverter, interpolator);
 		return new TransitionImpl<T>(internalTransition, speed, timeProvider);
@@ -110,7 +110,7 @@ public class Transitions {
 	 * @param functions
 	 *            The interpolation functions to be used to interpolate each variable of T.
 	 */
-	public static <T> Transition<T> transition(T startValue, InterpolatorFunction... functions) {
+	public static <T> Transition<T> transition(T startValue, InterpolationFunction... functions) {
 		return transition(startValue, defaultTransitionSpeed, functions);
 	}
 
@@ -124,7 +124,7 @@ public class Transitions {
 	 * @param functions
 	 *            The interpolation functions to be used to interpolate each variable of T.
 	 */
-	public static <T> Transition<T> transition(T startValue, float speed, InterpolatorFunction... functions) {
+	public static <T> Transition<T> transition(T startValue, float speed, InterpolationFunction... functions) {
 		TypeConverter converter = Converters.converter(startValue.getClass());
 		return transition(startValue, speed, converter, functions);
 	}

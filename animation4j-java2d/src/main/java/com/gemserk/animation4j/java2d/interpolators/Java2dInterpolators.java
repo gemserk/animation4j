@@ -5,7 +5,7 @@ import java.awt.geom.Point2D;
 
 import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.interpolator.Interpolator;
-import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
+import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 import com.gemserk.animation4j.java2d.converters.Java2dConverters;
 
 public class Java2dInterpolators {
@@ -14,7 +14,7 @@ public class Java2dInterpolators {
 		return interpolator(Java2dConverters.point2d());
 	}
 
-	public static Interpolator<Point2D> point2dInterpolator(InterpolatorFunction... functions) {
+	public static Interpolator<Point2D> point2dInterpolator(InterpolationFunction... functions) {
 		return interpolator(Java2dConverters.point2d(), functions);
 	}
 
@@ -22,7 +22,7 @@ public class Java2dInterpolators {
 		return interpolator(Java2dConverters.color());
 	}
 
-	public static Interpolator<Color> colorInterpolator(InterpolatorFunction... functions) {
+	public static Interpolator<Color> colorInterpolator(InterpolationFunction... functions) {
 		return interpolator(Java2dConverters.color(), functions);
 	}
 
@@ -30,7 +30,7 @@ public class Java2dInterpolators {
 		return com.gemserk.animation4j.interpolator.Interpolators.interpolator(typeConverter);
 	}
 
-	private static <T> Interpolator<T> interpolator(TypeConverter<T> typeConverter, InterpolatorFunction... functions) {
+	private static <T> Interpolator<T> interpolator(TypeConverter<T> typeConverter, InterpolationFunction... functions) {
 		return com.gemserk.animation4j.interpolator.Interpolators.interpolator(typeConverter, functions);
 	}
 

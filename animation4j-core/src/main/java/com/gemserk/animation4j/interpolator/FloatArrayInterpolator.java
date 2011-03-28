@@ -1,6 +1,6 @@
 package com.gemserk.animation4j.interpolator;
 
-import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
+import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 
 /**
@@ -10,7 +10,7 @@ import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory
  */
 public class FloatArrayInterpolator implements Interpolator<float[]> {
 
-	private final InterpolatorFunction[] functions;
+	private final InterpolationFunction[] functions;
 
 	private final float[] x;
 
@@ -32,7 +32,7 @@ public class FloatArrayInterpolator implements Interpolator<float[]> {
 	 * @param functions
 	 *            The interpolator functions to be used to interpolate each variable of the array.
 	 */
-	public FloatArrayInterpolator(int length, InterpolatorFunction... functions) {
+	public FloatArrayInterpolator(int length, InterpolationFunction... functions) {
 		this(new float[length], functions);
 	}
 
@@ -44,9 +44,9 @@ public class FloatArrayInterpolator implements Interpolator<float[]> {
 	 * @param functions
 	 *            The interpolator functions to be used to interpolate each variable of the array.
 	 */
-	public FloatArrayInterpolator(float[] x, InterpolatorFunction... functions) {
+	public FloatArrayInterpolator(float[] x, InterpolationFunction... functions) {
 		this.x = x;
-		this.functions = new InterpolatorFunction[x.length];
+		this.functions = new InterpolationFunction[x.length];
 
 		int i = 0;
 		for (i = 0; i < functions.length; i++)

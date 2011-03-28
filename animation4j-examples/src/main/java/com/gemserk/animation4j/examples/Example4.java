@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import com.gemserk.animation4j.event.AnimationHandlerManager;
-import com.gemserk.animation4j.interpolator.function.InterpolatorFunction;
+import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 import com.gemserk.animation4j.interpolator.function.InterpolatorFunctionFactory;
 import com.gemserk.animation4j.java2d.converters.Java2dConverters;
 import com.gemserk.animation4j.transitions.Transition;
@@ -117,7 +117,7 @@ public class Example4 extends Java2dDesktopApplication {
 			buttonImageResource = resourceManager.get("Button");
 			buttonGlowImageResource = resourceManager.get("ButtonGlow");
 
-			final InterpolatorFunction linearInterpolationFunction = InterpolatorFunctionFactory.linear();
+			final InterpolationFunction linearInterpolationFunction = InterpolatorFunctionFactory.linear();
 
 			buttons.add(new Button() {
 				{

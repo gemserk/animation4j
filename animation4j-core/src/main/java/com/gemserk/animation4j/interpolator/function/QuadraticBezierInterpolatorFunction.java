@@ -5,7 +5,7 @@ package com.gemserk.animation4j.interpolator.function;
  * 
  * @author acoppes
  */
-public class QuadraticBezierInterpolatorFunction implements InterpolatorFunction {
+public class QuadraticBezierInterpolatorFunction implements InterpolationFunction {
 
 	private final float p0, p1, p2;
 

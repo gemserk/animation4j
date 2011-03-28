@@ -10,20 +10,20 @@ public class LinearBezierInterpolatorFunctionTest {
 	
 	@Test
 	public void testLinearInterpolatorFunction() {
-		InterpolatorFunction interpolatorFunction = new LinearBezierInterpolatorFunction(1f, 2f);
-		assertThat(interpolatorFunction.interpolate(0.5f), IsEqual.equalTo(1.5f));
+		InterpolationFunction interpolationFunction = new LinearBezierInterpolatorFunction(1f, 2f);
+		assertThat(interpolationFunction.interpolate(0.5f), IsEqual.equalTo(1.5f));
 	}
 	
 	@Test
 	public void shouldReturnFirstPointWhenTLessThanZero() {
-		InterpolatorFunction interpolatorFunction = new LinearBezierInterpolatorFunction(1f, 2f);
-		assertThat(interpolatorFunction.interpolate(-1), IsEqual.equalTo(1f));
+		InterpolationFunction interpolationFunction = new LinearBezierInterpolatorFunction(1f, 2f);
+		assertThat(interpolationFunction.interpolate(-1), IsEqual.equalTo(1f));
 	}
 	
 	@Test
 	public void shouldReturnSecondPointWhenTGreaterThanOne() {
-		InterpolatorFunction interpolatorFunction = new LinearBezierInterpolatorFunction(1f, 2f);
-		assertThat(interpolatorFunction.interpolate(2f), IsEqual.equalTo(2f));
+		InterpolationFunction interpolationFunction = new LinearBezierInterpolatorFunction(1f, 2f);
+		assertThat(interpolationFunction.interpolate(2f), IsEqual.equalTo(2f));
 	}
 
 }

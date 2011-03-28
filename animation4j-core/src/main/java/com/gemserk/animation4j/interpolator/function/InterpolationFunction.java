@@ -1,6 +1,6 @@
 package com.gemserk.animation4j.interpolator.function;
 
-public interface InterpolatorFunction {
+public interface InterpolationFunction {
 
 	/**
 	 * @param t
