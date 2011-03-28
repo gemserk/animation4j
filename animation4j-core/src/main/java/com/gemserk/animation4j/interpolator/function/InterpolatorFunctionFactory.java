@@ -2,7 +2,7 @@ package com.gemserk.animation4j.interpolator.function;
 
 public class InterpolatorFunctionFactory {
 
-	private static InterpolationFunction linearInterpolatorFunction = new LinearBezierInterpolatorFunction(0f, 1f);
+	private static InterpolationFunction linearInterpolatorFunction = new LinearBezierInterpolationFunction(0f, 1f);
 
 	private static InterpolationFunction easeInInterpolatorFunction = new CubicBezierInterpolatorFunction(0f, 0.42f, 1f, 1f);
 
