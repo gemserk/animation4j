@@ -80,9 +80,14 @@ public class TimelineValue<T> {
 	TimelineValue(TypeConverter<T> typeConverter) {
 		this.typeConverter = typeConverter;
 	}
-	
+
 	public void addKeyFrame(float time, T value, Interpolator<float[]> interpolator) {
-		keyFrames.add(new KeyFrame(time, typeConverter.copyFromObject(value, null), interpolator));
+		this.addKeyFrame(new KeyFrame(time, typeConverter.copyFromObject(value, null), interpolator));
+	}
+	
+
+	public void addKeyFrame(KeyFrame keyFrame) {
+		keyFrames.add(keyFrame);
 	}
 
 	private T currentValue;

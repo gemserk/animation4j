@@ -1,10 +1,13 @@
 package com.gemserk.animation4j.timeline;
 
+import java.util.ArrayList;
+
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
+import com.gemserk.animation4j.timeline.TimelineValue.KeyFrame;
 
 /**
  * Provides an easy way to create TimelineValues.
@@ -24,9 +27,9 @@ public class TimelineValueBuilder<T> {
 		this.name = name;
 	}
 
-	TimelineValue<T> timelineValue;
-
 	TypeConverter<T> typeConverter;
+
+	ArrayList<KeyFrame> keyFrames = new ArrayList<TimelineValue.KeyFrame>();
 
 	public String getName() {
 		return name;
@@ -48,11 +51,10 @@ public class TimelineValueBuilder<T> {
 	 * Builds and returns the being specified time line value.
 	 */
 	public TimelineValue<T> build() {
-		// timelineValue = new TimelineValue<T>(typeConverter);
+		TimelineValue<T> timelineValue = new TimelineValue<T>(typeConverter);
 		timelineValue.setName(name);
-
-		// add keyframes
-
+		for (int i = 0; i < keyFrames.size(); i++)
+			timelineValue.addKeyFrame(keyFrames.get(i));
 		return timelineValue;
 	}
 
@@ -70,10 +72,9 @@ public class TimelineValueBuilder<T> {
 
 		Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables());
 
-		if (timelineValue == null)
-			timelineValue = new TimelineValue<T>(typeConverter);
+		KeyFrame keyFrame = new KeyFrame(time, typeConverter.copyFromObject(value, null), interpolator);
+		this.keyFrames.add(keyFrame);
 
-		timelineValue.addKeyFrame(time, value, interpolator);
 		duration = Math.max(duration, time);
 		return this;
 	}
@@ -85,6 +86,8 @@ public class TimelineValueBuilder<T> {
 	 *            The time when the key frame starts (in milliseconds).
 	 * @param value
 	 *            The value the variable should have in the key frame.
+	 * @param functions
+	 *            The interpolation functions to be used when interpolating this keyframe.
 	 */
 	public TimelineValueBuilder<T> keyFrame(float time, T value, InterpolationFunction... functions) {
 		if (typeConverter == null)
@@ -92,11 +95,11 @@ public class TimelineValueBuilder<T> {
 
 		Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables(), functions);
 
-		if (timelineValue == null)
-			timelineValue = new TimelineValue<T>(typeConverter);
+		KeyFrame keyFrame = new KeyFrame(time, typeConverter.copyFromObject(value, null), interpolator);
+		this.keyFrames.add(keyFrame);
 
-		timelineValue.addKeyFrame(time, value, interpolator);
 		duration = Math.max(duration, time);
+
 		return this;
 	}
 
