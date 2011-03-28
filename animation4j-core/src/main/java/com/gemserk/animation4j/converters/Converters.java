@@ -12,7 +12,7 @@ public class Converters {
 
 	private static Map<Class<?>, TypeConverter<?>> converters = new HashMap<Class<?>, TypeConverter<?>>();
 
-	public static TypeConverter<Float> floatConverter = new TypeConverter<Float>() {
+	private static TypeConverter<Float> floatConverter = new TypeConverter<Float>() {
 
 		@Override
 		public float[] copyFromObject(Float f, float[] x) {

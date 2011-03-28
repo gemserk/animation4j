@@ -6,15 +6,17 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
+import com.gemserk.animation4j.converters.Converters;
+
 @SuppressWarnings({ "rawtypes", "serial" })
 public class TimelineTest {
-
+	
 	@Test
 	public void testGetValueForAGivenTime() {
 
 		Timeline timeline = new Timeline(new HashMap<String, TimelineValue>() {
 			{
-				put("myvalue", new TimelineValueBuilder<Float>().keyFrame(0, 100f).keyFrame(100, 200f).build());
+				put("myvalue", new TimelineValueBuilder<Float>(Converters.floatValue()).keyFrame(0, 100f).keyFrame(100, 200f).build());
 			}
 		});
 
@@ -27,7 +29,7 @@ public class TimelineTest {
 
 		Timeline timeline = new Timeline(new HashMap<String, TimelineValue>() {
 			{
-				put("myvalue", new TimelineValueBuilder<Float>().keyFrame(0, 100f).keyFrame(100, 200f).build());
+				put("myvalue", new TimelineValueBuilder<Float>(Converters.floatValue()).keyFrame(0, 100f).keyFrame(100, 200f).build());
 			}
 		});
 

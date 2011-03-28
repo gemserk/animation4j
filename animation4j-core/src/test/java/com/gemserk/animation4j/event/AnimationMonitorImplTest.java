@@ -6,11 +6,12 @@ import org.junit.Test;
 
 import com.gemserk.animation4j.Animation;
 import com.gemserk.animation4j.MockAnimation;
+import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
 
 public class AnimationMonitorImplTest {
-
+	
 	@Test
 	public void onEndShouldNotBeCalledIfAnimationNotFinished() {
 		Animation animation = new MockAnimation() {
@@ -156,7 +157,7 @@ public class AnimationMonitorImplTest {
 
 		Animation animation = new TimelineAnimationBuilder() {
 			{
-				value("myvalue", new TimelineValueBuilder<Float>() {
+				value("myvalue", new TimelineValueBuilder<Float>(Converters.floatValue()) {
 					{
 						keyFrame(0, 100f);
 						keyFrame(100, 200f);
