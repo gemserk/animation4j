@@ -1,6 +1,7 @@
 package com.gemserk.animation4j.examples;
 
 import com.gemserk.animation4j.Animation;
+import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
@@ -37,12 +38,12 @@ public class SynchronizedAnimationExample {
 	}
 
 	public static void main(String[] args) throws InterruptedException {
+		Converters.register(Vector2f.class, new Vector2fConverter());
 		System.out.println("First example: animation wiht one iteration only");
 		exampleAnimationOneIterationWithDelay();
 	}
 
 	protected static void exampleAnimationOneIterationWithDelay() throws InterruptedException {
-		final Vector2fConverter vector2fConverter = new Vector2fConverter();
 
 		// One problem with time line animations is that you have to get values by hand and setting them to your objects
 		TimelineAnimation timelineAnimation = new TimelineAnimationBuilder() {{

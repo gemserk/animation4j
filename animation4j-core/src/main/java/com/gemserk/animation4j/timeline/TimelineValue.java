@@ -23,7 +23,7 @@ public class TimelineValue<T> {
 	 */
 	static class KeyFrameComparator implements Comparator<KeyFrame> {
 		@Override
-		public int compare(TimelineValue.KeyFrame o1, TimelineValue.KeyFrame o2) {
+		public int compare(KeyFrame o1, KeyFrame o2) {
 			return (int) (o1.time - o2.time);
 		}
 	}
@@ -82,8 +82,7 @@ public class TimelineValue<T> {
 	}
 	
 	public void addKeyFrame(float time, T value, Interpolator<float[]> interpolator) {
-		float[] v = typeConverter.copyFromObject(value, null);
-		keyFrames.add(new KeyFrame(time, v, interpolator));
+		keyFrames.add(new KeyFrame(time, typeConverter.copyFromObject(value, null), interpolator));
 	}
 
 	private T currentValue;
@@ -101,7 +100,7 @@ public class TimelineValue<T> {
 		return currentValue;
 	}
 
-	protected float[] getFloatValue(float time) {
+	float[] getFloatValue(float time) {
 		KeyFrame firstKeyFrame = keyFrames.getFirst();
 
 		if (time <= firstKeyFrame.time) {

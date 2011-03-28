@@ -13,9 +13,12 @@ import java.awt.geom.Point2D;
 import javax.swing.JEditorPane;
 
 import com.gemserk.animation4j.Animation;
+import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.event.AnimationEvent;
 import com.gemserk.animation4j.event.AnimationEventHandler;
 import com.gemserk.animation4j.event.AnimationHandlerManager;
+import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
+import com.gemserk.animation4j.java2d.converters.Java2dConverters;
 import com.gemserk.animation4j.states.StateMachine;
 import com.gemserk.animation4j.states.StateTransition;
 import com.gemserk.animation4j.states.StateTransitionCondition;
@@ -124,6 +127,9 @@ public class Example2 extends Java2dDesktopApplication {
 
 		@Override
 		public void init() {
+			
+			Converters.init();
+			Java2dConverters.init();
 
 			resourceManager.add("Globe", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("globe-256x176.png")))));
 			resourceManager.add("House", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("house-128x92.png")))));
@@ -141,11 +147,11 @@ public class Example2 extends Java2dDesktopApplication {
 			showAnimation = new SynchrnonizedAnimation(new TimelineAnimationBuilder() {
 				{
 					speed(1.5f);
-					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 260)).keyFrame(1000, new Point(320, 220)));
-					value("alpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f).keyFrame(1000, 1f));
-					value("textAlpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f) //
-					.keyFrame(500, 0f).keyFrame(1500, 1f));
-					// show text...
+					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 260), InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //
+							.keyFrame(1000, new Point(320, 220)));
+					value("alpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f, InterpolationFunctions.easeOut()).keyFrame(1000, 1f));
+					value("textAlpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f, InterpolationFunctions.easeOut()) //
+							.keyFrame(500, 0f).keyFrame(1500, 1f));
 				}
 			}.build(), timelineSynchronizer);
 
@@ -153,8 +159,10 @@ public class Example2 extends Java2dDesktopApplication {
 				{
 					speed(2f);
 					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 220)));
-					value("alpha", new TimelineValueBuilder<Float>().keyFrame(0, 1f).keyFrame(500, 1f).keyFrame(1000, 0f));
-					value("textAlpha", new TimelineValueBuilder<Float>().keyFrame(0, 1f).keyFrame(500, 0f));
+					value("alpha", new TimelineValueBuilder<Float>().keyFrame(0, 1f, InterpolationFunctions.easeOut()) //
+							.keyFrame(500, 1f).keyFrame(1000, 0f));
+					value("textAlpha", new TimelineValueBuilder<Float>().keyFrame(0, 1f, InterpolationFunctions.easeOut()) //
+							.keyFrame(500, 0f));
 				}
 			}.build(), timelineSynchronizer);
 

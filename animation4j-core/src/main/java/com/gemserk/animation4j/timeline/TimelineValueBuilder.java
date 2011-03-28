@@ -4,6 +4,7 @@ import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
+import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 
 /**
  * Provides an easy way to create TimelineValues.
@@ -35,6 +36,14 @@ public class TimelineValueBuilder<T> {
 		return duration;
 	}
 
+	public TimelineValueBuilder() {
+
+	}
+
+	public TimelineValueBuilder(TypeConverter<T> typeConverter) {
+		this.typeConverter = typeConverter;
+	}
+
 	/**
 	 * Builds and returns the being specified time line value.
 	 */
@@ -46,7 +55,7 @@ public class TimelineValueBuilder<T> {
 
 		return timelineValue;
 	}
-	
+
 	/**
 	 * Defines a new key frame in the time line value.
 	 * 
@@ -60,7 +69,29 @@ public class TimelineValueBuilder<T> {
 			typeConverter = (TypeConverter) Converters.converter(value.getClass());
 
 		Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables());
-		
+
+		if (timelineValue == null)
+			timelineValue = new TimelineValue<T>(typeConverter);
+
+		timelineValue.addKeyFrame(time, value, interpolator);
+		duration = Math.max(duration, time);
+		return this;
+	}
+
+	/**
+	 * Defines a new key frame in the time line value.
+	 * 
+	 * @param time
+	 *            The time when the key frame starts (in milliseconds).
+	 * @param value
+	 *            The value the variable should have in the key frame.
+	 */
+	public TimelineValueBuilder<T> keyFrame(float time, T value, InterpolationFunction... functions) {
+		if (typeConverter == null)
+			typeConverter = (TypeConverter) Converters.converter(value.getClass());
+
+		Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables(), functions);
+
 		if (timelineValue == null)
 			timelineValue = new TimelineValue<T>(typeConverter);
 

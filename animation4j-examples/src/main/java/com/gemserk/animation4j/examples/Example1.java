@@ -10,7 +10,10 @@ import java.awt.event.KeyEvent;
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 
+import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.event.AnimationHandlerManager;
+import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
+import com.gemserk.animation4j.java2d.converters.Java2dConverters;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
@@ -79,6 +82,9 @@ public class Example1 extends Java2dDesktopApplication {
 		@Override
 		public void init() {
 			
+			Converters.init();
+			Java2dConverters.init();
+			
 			resourceManager.add("Critter", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("critter.png")))));
 			
 			critterImageResource = resourceManager.get("Critter");
@@ -88,9 +94,9 @@ public class Example1 extends Java2dDesktopApplication {
 					speed(2f);
 					started(false);
 
-					value("x", new TimelineValueBuilder<Float>().keyFrame(0, 150f).keyFrame(1000, 350f));
+					value("x", new TimelineValueBuilder<Float>().keyFrame(0, 150f, InterpolationFunctions.easeIn()).keyFrame(1000, 350f));
 					value("y", new TimelineValueBuilder<Float>().keyFrame(0, 325f));
-					value("angle", new TimelineValueBuilder<Float>().keyFrame(0, 0f).keyFrame(1000, (float) Math.PI / 2));
+					value("angle", new TimelineValueBuilder<Float>().keyFrame(0, 0f, InterpolationFunctions.easeIn()).keyFrame(1000, (float) Math.PI / 2));
 				}
 			}.build();
 

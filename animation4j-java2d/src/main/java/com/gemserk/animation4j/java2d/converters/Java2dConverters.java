@@ -1,6 +1,7 @@
 package com.gemserk.animation4j.java2d.converters;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.geom.Point2D;
 
 import com.gemserk.animation4j.converters.Converters;
@@ -72,6 +73,7 @@ public class Java2dConverters {
 	 * Registers common converters for Java2d classes to Converters class.
 	 */
 	public static void init() {
+		Converters.register(Point.class, point2dConverter);
 		Converters.register(Point2D.class, point2dConverter);
 		Converters.register(Color.class, colorConverter);
 	}

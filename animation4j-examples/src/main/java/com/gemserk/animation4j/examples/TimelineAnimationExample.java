@@ -1,5 +1,6 @@
 package com.gemserk.animation4j.examples;
 
+import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
@@ -7,15 +8,15 @@ import com.gemserk.animation4j.timeline.TimelineValueBuilder;
 public class TimelineAnimationExample {
 
 	public static void main(String[] args) throws InterruptedException {
-		System.out.println("First example: animation wiht one iteration only");
+		Converters.register(Vector2f.class, new Vector2fConverter());
+		
+		System.out.println("First example: animation with one iteration only");
 		exampleAnimationOneIterationWithDelay();
 		System.out.println("Second example: animation alternating directions");
 		exampleAnimationWithAlternateDirections();
 	}
 
 	protected static void exampleAnimationOneIterationWithDelay() throws InterruptedException {
-		// as converters are stateless, you could reuse it in several interpolators.
-		final Vector2fConverter vector2fConverter = new Vector2fConverter();
 
 		TimelineAnimation animation = new TimelineAnimationBuilder() {{
 			
@@ -52,8 +53,6 @@ public class TimelineAnimationExample {
 	}
 	
 	protected static void exampleAnimationWithAlternateDirections() throws InterruptedException {
-		// as converters are stateless, you could reuse it in several interpolators.
-		final Vector2fConverter vector2fConverter = new Vector2fConverter();
 
 		TimelineAnimation animation = new TimelineAnimationBuilder() {{
 			
