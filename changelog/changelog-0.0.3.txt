@@ -1,0 +1,16 @@
+changed version to 0.0.3 because API is going to be changed
+modified to use the latest version of maven-github-plugin which uses an url for a repository, and changed profiles to be github-upload
+removed the text image and changed to use a jeditorpane instead to show messages in the talking globe.
+added description for each artifact of the core module when uploaded to github
+added alternativeFileName for the uploaded artifact of the examples project
+added configuration of maven-github-plugin to upload artifacts on assembly generation
+added license for lost garden assets.
+changed monitor to avoid generating an iteration changed event when the animation was restarted.
+changed the animation states dumper to use a name
+changed animation isStarted() method to detect when an animation restarts (taking care of the animation delay). Now each time the animation restars, the monitor will detect it and call onStart accordingly.
+changed animation handler manager to aovid adding a new handler to remove registered handlers, changed to add a remove methods instead to be used for each handler to remove itself if it wants to.
+changed AnimationMonitorImpl to AnimationMonitor
+removed unused interface AnimationMonitor
+added handler manager to AnimationEvent.
+extracted AnimationEvent from animation handler methods parameters.
+modified version to 0.0.3-SNAPSHOT

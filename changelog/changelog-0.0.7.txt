@@ -1,0 +1,38 @@
+modified version to 0.0.7 to be released
+modified javadoc and sources generation to install phase
+merged with master branch, added skip deploy for slick, componentsengine and examples modules
+added deploy skip for slick, componentsengine and examples modules
+changed distribution management to use oss sonatype repos
+Merge branch 'master' into mavencentral
+added more javadocs, removed the parameter of the handler manager from the AnimationEvent, it wasnt used at all
+extracted the StateTransition class to its own file, added more javadocs for StateTransition and StateTransitionCondition
+extracted StateCondition to its own file and changed name to StateTransitionCondition
+added more javadocs, made TimelineValue class constructor package protected, use the builder if you want to create a time line value (at least for now, could be public in the future)
+added slick module to dependencies management
+removed duration from the time line and moved it to the timeline animation
+added more javadoc to the time line class and removed the getTimeLineValue method
+modified the timeline iterator to be created only using the map of time line values and changed the constructor to be package protected, removed the getValues method from the time line too
+removed delay field from time line class
+modified a bit the time line to not calculate the delated property
+added a bit of javadoc for the time line
+Merge branch 'master' into morexamples
+changed configuration to use deploy goal instead upload goal from the latest maven-github-plugin version
+added a syncrhonized animation example
+added another example for the time line animation
+added new example for time line animations, extracted vector2f class and converter as examples too
+modified the github-upload-artifacts to be processed on install phase
+Merge branch 'master' into mavencentral
+modified iterations of garbage generation test to generate garbage if using an immutable class
+modified javadoc
+modified UpdateableTransition to apply desiredValue instantly when set invoked with time 0
+removed updateable() method from Transitions factory because it should not be used because you cant update the UpdateableTransitio<T> using the interface Transition<T>
+added GenericInterpolator constructors using the TypeConverter.variableS() method to create a default FloatArrayInterpolator
+modified version to 0.0.7-SNAPSHOT because API was changed again
+added more explaination to the new transitions example
+modified TypeConverter interface to have a variables() method to return the variable quantity used when converting from the object to the float[] and vice versa
+Merge branch 'master' into mavencentral
+removed from parent pom the componentsengine dependency declaration and moved it to componentsengine module
+Merge branch 'javadocfix' into mavencentral
+Merge branch 'javadocfix' into mavencentral
+modified the pom.xml to have the gpg sign stuff, added license too
+added issueManagement to pom.xml

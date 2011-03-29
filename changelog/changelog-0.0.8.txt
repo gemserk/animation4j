@@ -1,0 +1,28 @@
+more javadocs
+added a lot of javadocs
+modified to version 0.0.8 for release
+modified reflection object synchronizer to implement its own reflection stuff without using apache bean utils, removed dependency
+added description for java2d module
+extracted converters and interpolators for color and point2d to java2d module, changed examples module to depend on java2d module too
+added new java2d module for java2d stuff
+added example of state machine of a vector class
+added test to check float[] instances creation
+changed an internal variable name
+changed test name too
+changed AutoUpdateableTransition to be default impl of transition, named TransitionImpl
+modified name of test too
+renamed TransitionImpl to InternalTransition
+added some javadocs to Transitions class
+changed the transitions example to use new api
+removed UpdateableTransition and changed TransitionImpl to be package protected class
+fixed a bug in transition impl when setting startvalue to currentvalue, now the arrays are being copied instead
+changed again Transitions class to use functions as a parameter of the transition builder methods, etc
+moved the transition impl to be a parameter of the autoupdateable transition, removed constructor with end value for now
+changed autoupdateable transition to use transition impl, type converter needed
+added test to validate if startValue and endValue are being modified in some way
+moved Transitions class to core module
+now Autoupdateable transition implements transition and use a delegate to access an UpdateableTransition
+changed TransitionImpl constructors
+added a new transition using float[] for all values, avoiding to use the type when set values
+changed phase of gpgsign to be install
+modified version to 0.0.8-SNAPSHOT for development

@@ -1,0 +1,29 @@
+modified version to 0.0.9 relese
+added a bit of javadoc to Interpolators factory class, but it should be removed because it shouldnt be used
+removed java2d interpolators not used any more
+removed unused class InterpolatorProvider and its test
+added a bit of javadoc to TimelineValueBuilder, changed it to cache the keyframes and then build the TimelineVAlue on build() method, added a test to show timeline is not generating garbage between iterpolations of keyframes
+modified other tests to use a TypeConverter when building the TimelineValue too
+fixed tests by passing the TypeConverter to the TimelineValueBuilder
+modified TimelineValue to use KeyFrames of float[] instead a generic T value and modified TimelineValueBuilder to use a typeconverter and keyframe() method to let the user specify the InterpolationFunction to use
+started refactro to use float[] in timeline keyframes too
+modified InterpolatorFunctionFactory to InterpolationFunctions (same as the other factories)
+modified cubic and quadratic functions too
+modified name of linear interpolator function to linear interpolation function
+modified name of InterpolatorFunction to InterpolationFunction
+added the missing transition method for the factory
+added init() static methods to converters classes to register common classes for the corresponding library in the Converters map, to be used when detecting a converter given a type
+added more Transitions factory methods
+added transition(startvalue) for the Transitions factory that will look for the corresponding already registered converter
+encapsulated the method to register a converter for a given type and made private the converters map
+added test for static registered converters
+removed some javadoc
+added one more test for isTransitioning method, and changed some test names
+changed isFinished() method to isTransitioning() and changed behaviour too (take a look at the test)
+changed default transition speed to be public static field
+added isFinished() method to Transition interface
+removed AnimationStateMachine class
+removed setCurrentState method from StateMachine API
+removed unused setCurrentState calls
+added initial state to StateMachine constructor
+modified version to development 0.0.9-SNAPSHOT

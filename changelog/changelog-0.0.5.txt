@@ -1,0 +1,58 @@
+modified version to release 0.0.5
+added a test to test if the GenericInterpolator is generatin garbage when using a mutable class with a corresponding type converter
+added javadoc for interpolator functions
+modified all javadocs to remove the - character
+added javadocs for GenericInterpolator<T>
+modified slick converters also, for the same reason of the previous commit
+modified the converters from Converters class to be static and stateles to be reused between different GenericInterpolators
+remvoed slick interpolators
+moved all cache responsibility to GenericInterpolator, TypeConverters now should create a new object each time the parameter object is null, the use of course could create its own converter using cache and other strategies
+added to converters the responsibility to create a new float[] if copyFromObject invoked with x null, changed the GenericInterpolator to use an Interpolator<float[]> instead a FloatArrayInterpolator because getLength is not called anymore
+added javadocs to the TypeConverter
+changed CustomInterpolator to GenericInterpolator
+modified float array interpolator to implement Interpolator<float[]>, added javadocs for modified files
+added a commment for floatConverter and changed the impl to use valueOf(float)
+removed imports of FloatInterpolator, created a method in Converters class to return a new FloatConverter
+removed FloatInterpolator class, now using custom interpolator of 1 variable
+moved float interpolator static build method to Interpolators class
+moved Interpolators class to core module
+modified the constructor of FloatInterpolator to be private and added a static floatInterpolator to create one (preparation to remove the interpolator
+added slick common classes type converter
+class Converters moved to core module
+removed ColorInterpolator and Point2DInterpolator because they are not being used any more
+inlined a variable
+modified example 2 to use interpolators factory class
+extracted class Converters with point2d and color converters, added functions as a parameter of point2d and color methods of Interpolators class
+moved TypeConverter to converters package, changed Interpolators class methods to use CustomInterpolator
+remvoed the out parameter again, now using a new custom inteprolator for each transition with a new type converter each one
+modified the interpolator interface to have an out parameter to set modified values
+modified example to add a point2d type converter but interpolator interface should be modified
+changed the custom interpolator to implement interpolator interface
+modified array interpolator to be custom interpolator
+modified float array interpolator to be built specifying the length of the vector instead vector, also added a getLength to be used by the array interpolator class
+extracted parameter for float array interpolator in arrayinterpolator constructor
+extracted type converter interface, added a test to show how to reuse a temporary object in the type converter
+modified the multiple float interpolator to accept several interpolator functions, by default it uses linear for all
+extracted multiple float interpolator to an external class;
+extracted float[] type conversion to a class
+extracted a class to interpolate between multiple variables
+removed parameter object from array interpolator api copyToObject() method
+removed getVariableQuantity method and changed to be a parameter of interpolator constructor
+first approach to the new interpolator of multiple variables Type independent
+modified version
+Merge branch 'master' into transitions
+modified version to 0.0.5-SNAPSHOT for development
+Merge branch 'master' into transitions
+Merge branch 'master' into transitions
+modified the iterator and the synchronized animation to use an iterator.restart() method to start from the beginning, avoiding creating new timeline iterators
+modified timeline iterator to avoid using iterator of the collection
+modified examples to not system exit by default, so examples loader will not quit after loading one example
+added some classes to help building transitions and properties
+changed color and glowColor to be property<color> too
+modified size and position to be Property<T>
+added dependency to componentsengine module to use interpolated properties
+removed unused assets
+modified the example to use new resources for menus and background
+modified the example to move the buttons to inside the screen
+added example 4 to examples loader, added text to buttons
+added new example to show the framework working on a gui

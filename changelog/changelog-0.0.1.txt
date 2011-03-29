@@ -1,0 +1,53 @@
+Version 0.0.1
+=============
+added resources for showing in tests, added dependency to componentsengine-core again and added Example1 using Java2dDesktopApplication from componentsengine-core.
+added example1 text in an external html and using that in AlternateDirectionExample. added getPlayingDirection to Animation interface.
+added a test for animation monitor to avoid calling onIterationChanged after animation was finished. added a new example to show only an animation alternating directions.
+extracted normalize method in InterpolatedValue.
+fixed tests to avoid using null values
+moved InterpolatorProvider to interpolator package (same with the test) and moved InterpolatedValueTest to package values
+added setter for the IntepolatorProvider on the timeline value builder.
+extracted method from the interpolator provider to provide a default interpolator based on a type directly (without using the object instance). added an exception when trying to build a key frame using null as the interpolator.
+changed name again to InterpolatorProvider, you have to previous register a default interpolator for a type.
+changed name of LinearInterpolatorFactory to LinearInterpolatorInferator
+remvoed linearIntepolator method from LinearInterpolatorFactory.
+changed the example app to let change between two animations pressing 1 or 2.
+animation should not process delay after the first iteration
+fixed isFinished method when animation finish in reverse.
+added getter methods to get debug info easily moved methods to be in similar order to the interface fixed a bug when an animation finishes with reverse direction, the next time it starts it started with firstiteration+1 (missing test for that)
+moved the alternate direction boolean to start() method in Animation interface.
+added first implementation of alternate animation direction.
+removed some comments
+added null implementation of Interpolator<T> which returns always first interpolated value. modified TimelineValue to return the interpolated value between previous to last and last key frames when time greater than last key frame, and animation has more than 1 key frame.
+changed description of slick module
+modified values of example animation
+changed example application to avoid using components engine java2d stuff so everyone could run it.
+added README.txt
+added scm and url configuration
+added tests for delayed property and interpolated property, added also some javadoc for the interpolated property.
+added check to interpolator functions to return p0 when t less than 0 and pN when t greater than 1. added sources for slick module.
+added new slick module added description for other modules.
+using keyboard and mouse from java2d.input.
+added examples module with dependencies to componentsengine project, using java2d module to configure the test application.
+added classes for componentsengine module of animation4j
+added module for componentsengine
+fixed finished method name
+changed packages again, to .interpolator, .event, .function
+changed InterpolatorFunctionFactory to use static interpolator functions.
+changed ___BezierInterpolator to ___BezierInterpolatorFunction
+removed deprecated interpolator method from builder
+added interpolator to each keyframe and using it to calculate values between that frame and then next one.
+return first value using the interpolator with the next value if time < delay.
+changed from BezierInterpolator to InterpolatorFunction changed from TransitionTimingFunctionFactory to InterpolatorFunctionFactory with default interpolator functions (ease, ease-in, ease-out, linear and cubic-bezier) added a FloatInterpolator using an InterpolatorFunction inside.
+changed bezier interpolator to only return float
+removed properties package with things related to interpolated property.
+added bezier interpolators to start implementing the feature of selecting the intepolator for each value animation.
+added event onIterationChanged for the animation event handlers
+changed names play to resume and play(iter) to start(iter), aded start() without parameter and changed restart() to call stop() and resume().
+added play with iterations to the Animation interface and added implementation to TimelineAnimation.
+changed javadoc and sources to install phase
+changed getValue to use generics
+moved all classes to animation4j package and changed some subpackages names. added java2d windows stuff to use it easily to test.
+removed all classes slick,vecmath, componentsengine dependent
+
+

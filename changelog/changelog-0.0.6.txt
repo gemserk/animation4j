@@ -1,0 +1,3 @@
+modified Interpolators class to have a mehtod interpolator to build GenericInterpolators and changed the other methods color(), float(), etc to build interpolators using the interpolator() method, changed the floatConverter() method to be floatValue() method
+added new headless example
+modified version to 0.0.6-SNAPSHOT for development

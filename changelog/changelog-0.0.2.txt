@@ -1,0 +1,42 @@
+modified version to 0.0.2
+removed some comments
+added a Decorator implementation of Animation which synchronizes a TimelineAnimation values with an object automatically when update() methods is called
+moved TimelineSynchronzier to sync package, same with corresponding test
+added more javadocs to TimelineIterator and TimelineValue
+modified TimelineSynchronizerIterator to TimelieIterator, same with corresponding test
+added getIterator to time line
+modified time line IteratorImpl to time line Iterator
+removed unused interface
+changed TimelineIteratorImpl to implements Iterator<> interface instead custom interface (have to remove it).
+changed again the TimelineSynchronizer to receive the ObjectSynchronizer as a Constructor parameter. added javadocs for ObjectSynchronizer and implementations.
+changed TimelineSynchronizer API to recieve object sync and iterator on synchronize() method.
+modified timelinet synchronizer test name
+added an implementation of ObjectSynchronizer using a PropertiesHolder to sync the properties.
+changed Example2 to user the new synchronizer using reflection.
+added ReflectionObjectSynchronizer using apache commons beanutils.
+added new package for sync stuff
+changed Example2 to use new Synchronizer using a custom ObjectSynchronizer by hand.
+modified synchronize method time parameter to float.
+extracted each class and moved to src/main/java
+extracted tests and classes for TimelineSynchronizerIterator
+added basic implementation of TimelineIterator and added tests for it.
+removed class SynchronizeValuesAnimation and changed Synchronizer to TimelineSynchronizer.
+extracted interface ObjectSynchronizer with the setValue(name, value) method called by the (Timeline)Synchronizer.
+made Synchronizer abstract with a method setValue(name, value) to be implemented in subclasses.
+added name to time line value
+added first classes of values synchronization stuff
+moved the assembly to a separated profile to avoid generating it by default
+added message to Example2
+modified ExamplesLoader to start a new thread for "app.start()" to avoid blocking the AWT events.
+added stop() impl in Example1 and Example2 to exit the application added more resources for Example2 added a start of ExamplesLoader (it is not working well for now)
+added more resources for Example2. added dependency to resourcesmanager-java2dmodule so we can use the java2d dataloaders.
+renamed again to previous name
+renamed component
+modified pom to generate jar-with-dependencies of examples project.
+added handler manager to Example1 to show animation state changes
+modified Example1 to show contents of example1.html
+modified class Example1 to show the first example using the componentsengine-core Java2d classes.
+made build() timeline method private and changed to buildTimeline() changed buildAnimation to build().
+changed TimelineAnimationBuilder API to return a TimelineAnimationBuilder in each method so it can be used as a chaining builder.
+changed TimelineAnimationBuilder to build animations instead timelines.
+changed version to 0.0.2-SNAPSHOT because the API is going to change.

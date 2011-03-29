@@ -1,0 +1,56 @@
+modified version to 0.0.4
+modified the pom to change profiles of the core and examples modules for uploading stuff to github
+fixed a bug when restarting an animation playing in reverse, it was still on reverse
+changed names of enterState and leaveState to afterTransition/beforeTransition respectively
+fixed the example 2
+added enterState and leaveState to Transition<> and removed perform from Condition.
+removed internal states of the state machine, it only requires one active state
+modified the example to use the states now correctly, modified the StateCondition<T> to have a perform() method called when the condition matches
+changed Transition inner class  to be StateTransition
+changed the Example 2 to use the animation state machine
+changed name of AnimationStateTest to StateMachineTest
+changed AnimationState to be AnimationStateMachine
+extracted StateMachine class and made AnimationState to be StateMachine<String, Animation>
+changed the AnimationState to use generics for the type of the key and the type of the states
+added the concept of transitions, thats the only way of moving through states
+started to add some state machine to animations
+removed stated interpolators because they are not being used and are not part of the API either
+Merge branch 'master' into transitions
+modified the examples loader to be a JFrame instead a JDialog and added the repaint() call because some times it was not painted correctly
+removed the configuration of each artifact of the core module, using default automatic artifact detection of the maven-github-plugin, and changed fileName to finalName of the runnable artifact because the parameter changed
+changed the constructor with endValue to be only on the AutoUpdateableTransition
+fixed a bug when Transition.set(..) called with null value, it should do no transition
+modified TransitionTest to UpdateableTransitionTest
+extracted Point2dInterpolator from Example2
+changed a bit some values of the example
+modified autoupdateable to be subclass of updateable
+removed the test of the InterpolatedProperty and changed the InterpolatedProperty to use a Transition inside
+added the test for AutoUpdateableTransition based on the InterpolatedPropertyTest
+added missing file of the Transition interface
+extracted Transition interface and made AutoUpdateableTransition and UpdateableTransition to implement Transition, also modified get() method of autoupdateable to avoid calling update when the delta is zero
+modified names of transition to updateableTransition and customtransition to autoupdateable transition
+modified the example3 to use the custom transition
+moved time providers to core module and made a CustomTransition using a Transition behind the scenes, and updating it when get() method is called, using the current TimeProvider
+Merge branch 'transitions' into transitions-test
+added set method using default time for interpolation and added some javadoc
+added an start of testing a new transiton with time
+added javadoc for get() method
+reformatted the Example3 to show a bit better the transition stuff.
+created a ColorInterpolator using a unique interpolator function for all color values. changed the Example3 to use the new ColorInterpolator.
+changed field places of Transition and changed floatInterpolator to be named interpolator now that the Transition is using generics.
+changed places of the fields
+fixed a bug using the transition when getting the value, it was using the currentTime incremented but that wasnt correct if using the Transition.update, because the updated state was inside the Transition. changed the API of the InterpolatedProperty to use directly Transitions instead InterpolatedValue.
+Merge branch 'master' into transitions
+changed version again to development, 0.0.4-SNAPSHOT
+removed unused images
+changed example 3 again to show the house as the main image and added credits panel
+modified getValue method to get()
+added new assets for example 3 and modified to show some text
+added new example to show transitions effect
+changed float type of Transition to be generic Transition<T> with T as value using an Interpolator<T>
+changed name to Transition to prepare the generics extraction
+changed to use Interpolator<Float> instead FloatInterpolator
+changed to use INterpolator instead InterpolatorFunction
+changed startValue to currentValue on set() method called
+added use of interpolator when update and if currentTime is greater than 1 it limits it to totalTime
+added first attempt at making transitions similar to css3, based on the InterpolatedValue and the InterpolatedProperty<> classes
