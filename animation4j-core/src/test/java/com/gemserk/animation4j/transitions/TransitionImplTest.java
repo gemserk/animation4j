@@ -44,7 +44,7 @@ public class TransitionImplTest {
 
 	@Test
 	public void shouldReturnInterpolatedValue() {
-		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 0.01f, timeProvider);
+		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f, timeProvider);
 		assertThat(transition.get(), IsEqual.equalTo(100f));
 		transition.set(200f);
 		timeProvider.update(50);
@@ -55,7 +55,7 @@ public class TransitionImplTest {
 
 	@Test
 	public void testSeveralSetAndUpdates() {
-		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 0.01f, timeProvider);
+		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f, timeProvider);
 		assertThat(transition.get(), IsEqual.equalTo(100f));
 		transition.set(200f);
 		timeProvider.update(50);
@@ -82,20 +82,20 @@ public class TransitionImplTest {
 
 	@Test
 	public void shouldNotBeInTransitionWhenCreated() {
-		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 0.01f, timeProvider);
+		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f, timeProvider);
 		assertThat(transition.isTransitioning(), IsEqual.equalTo(false));
 	}
 	
 	@Test
 	public void shouldBeInTransitionWhenTimeHasNotPassedButSetCalled() {
-		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 0.01f, timeProvider);
+		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f, timeProvider);
 		transition.set(500f, 2000);
 		assertThat(transition.isTransitioning(), IsEqual.equalTo(true));
 	}
 	
 	@Test
 	public void shouldKeepBeingInTransitionWhenTwoOrMoreSetCalled() {
-		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 0.01f, timeProvider);
+		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f, timeProvider);
 		transition.set(500f, 1000);
 		timeProvider.update(500);
 		transition.set(250f, 1000);
@@ -104,7 +104,7 @@ public class TransitionImplTest {
 	
 	@Test
 	public void shouldNotBeInTransitionWhenTimeHasPassed() {
-		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 0.01f, timeProvider);
+		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f, timeProvider);
 		transition.set(500f, 1000);
 		timeProvider.update(1000);
 		assertThat(transition.isTransitioning(), IsEqual.equalTo(false));

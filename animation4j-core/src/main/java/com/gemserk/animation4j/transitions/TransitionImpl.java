@@ -18,7 +18,7 @@ public class TransitionImpl<T> implements Transition<T> {
 	private InternalTransition<T> transition;
 
 	public TransitionImpl(InternalTransition<T> transition, float speed, TimeProvider timeProvider) {
-		this.speed = speed;
+		this.speed = speed / 1000f;
 		this.timeProvider = timeProvider;
 		this.transition = transition;
 	}

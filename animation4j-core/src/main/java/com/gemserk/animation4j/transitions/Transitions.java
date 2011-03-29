@@ -15,7 +15,10 @@ import com.gemserk.animation4j.time.TimeProvider;
  */
 public class Transitions {
 
-	public static float defaultTransitionSpeed = 1f / 1000f;
+	/**
+	 * Used to build transitions when no speed is specified.
+	 */
+	public static float defaultTransitionSpeed = 1f;
 
 	public static TimeProvider timeProvider = new SystemTimeProvider();
 
@@ -53,7 +56,7 @@ public class Transitions {
 	 * @param typeConverter
 	 *            The TypeConverter to use inside the transition to convert from float[] to T and vice versa.
 	 * @param speed
-	 *            The change speed of the interpolation.
+	 *            The change speed of the interpolation, by default is 1x.
 	 */
 	public static <T> Transition<T> transition(T startValue, float speed, TypeConverter<T> typeConverter) {
 		Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables());
@@ -69,7 +72,7 @@ public class Transitions {
 	 * @param typeConverter
 	 *            The TypeConverter to use inside the transition to convert from float[] to T and vice versa.
 	 * @param speed
-	 *            The change speed of the interpolation..
+	 *            The change speed of the interpolation, by default is 1x.
 	 * @param functions
 	 *            The interpolation functions to be used to interpolate each variable of T.
 	 */
@@ -95,7 +98,7 @@ public class Transitions {
 	 * @param startValue
 	 *            Starting value of the transition.
 	 * @param speed
-	 *            The change speed of the interpolation..
+	 *            The change speed of the interpolation, by default is 1x.
 	 */
 	public static <T> Transition<T> transition(T startValue, float speed) {
 		TypeConverter converter = Converters.converter(startValue.getClass());
@@ -120,7 +123,7 @@ public class Transitions {
 	 * @param startValue
 	 *            Starting value of the transition.
 	 * @param speed
-	 *            The change speed of the interpolation..
+	 *            The change speed of the interpolation, by default is 1x.
 	 * @param functions
 	 *            The interpolation functions to be used to interpolate each variable of T.
 	 */
