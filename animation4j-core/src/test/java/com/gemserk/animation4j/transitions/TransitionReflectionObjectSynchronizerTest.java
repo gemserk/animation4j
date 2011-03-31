@@ -14,15 +14,21 @@ import com.gemserk.animation4j.Vector2f;
 import com.gemserk.animation4j.timeline.sync.ReflectionObjectSynchronizer;
 
 @RunWith(JMock.class)
-public class ReflectionTransitionTest {
+public class TransitionReflectionObjectSynchronizerTest {
 
 	Mockery mockery = new Mockery() {
 		{
 			setImposteriser(ClassImposteriser.INSTANCE);
 		}
 	};
+	
+	static interface TransitionObjectSynchronizer {
+		
+		void synchronize();
+		
+	}
 
-	static class TransitionReflectionObjectSynchronizer {
+	static class TransitionReflectionObjectSynchronizer implements TransitionObjectSynchronizer {
 
 		private final Transition<?> transition;
 
@@ -39,6 +45,7 @@ public class ReflectionTransitionTest {
 			reflectionObjectSynchronizer = new ReflectionObjectSynchronizer(object);
 		}
 
+		@Override
 		public void synchronize() {
 			reflectionObjectSynchronizer.setValue(fieldName, transition.get());
 		}
