@@ -1,4 +1,4 @@
-package com.gemserk.animation4j.transitions;
+package com.gemserk.animation4j.transitions.sync;
 
 import static org.junit.Assert.assertThat;
 
@@ -11,7 +11,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.gemserk.animation4j.Vector2f;
-import com.gemserk.animation4j.timeline.sync.ReflectionObjectSynchronizer;
+import com.gemserk.animation4j.transitions.Transition;
+import com.gemserk.animation4j.transitions.sync.TransitionReflectionObjectSynchronizer;
 
 @RunWith(JMock.class)
 public class TransitionReflectionObjectSynchronizerTest {
@@ -22,36 +23,6 @@ public class TransitionReflectionObjectSynchronizerTest {
 		}
 	};
 	
-	static interface TransitionObjectSynchronizer {
-		
-		void synchronize();
-		
-	}
-
-	static class TransitionReflectionObjectSynchronizer implements TransitionObjectSynchronizer {
-
-		private final Transition<?> transition;
-
-		private final Object object;
-
-		private ReflectionObjectSynchronizer reflectionObjectSynchronizer;
-
-		private final String fieldName;
-
-		public TransitionReflectionObjectSynchronizer(Transition<?> transition, Object object, String fieldName) {
-			this.transition = transition;
-			this.object = object;
-			this.fieldName = fieldName;
-			reflectionObjectSynchronizer = new ReflectionObjectSynchronizer(object);
-		}
-
-		@Override
-		public void synchronize() {
-			reflectionObjectSynchronizer.setValue(fieldName, transition.get());
-		}
-
-	}
-
 	public static class MyObject {
 
 		Vector2f position;
