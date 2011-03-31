@@ -3,7 +3,7 @@ package com.gemserk.animation4j.transitions.sync;
 import com.gemserk.animation4j.timeline.sync.ReflectionObjectSynchronizer;
 import com.gemserk.animation4j.transitions.Transition;
 
-class TransitionReflectionObjectSynchronizer implements TransitionObjectSynchronizer {
+public class TransitionReflectionObjectSynchronizer implements TransitionObjectSynchronizer {
 
 	private final Transition<?> transition;
 

@@ -1,6 +1,6 @@
 package com.gemserk.animation4j.transitions.sync;
 
-interface TransitionObjectSynchronizer {
+public interface TransitionObjectSynchronizer {
 	
 	void synchronize();
 	
