@@ -2,8 +2,6 @@ package com.gemserk.animation4j.transitions.sync;
 
 import static org.junit.Assert.assertThat;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 
 import org.hamcrest.core.IsEqual;
 import org.jmock.Expectations;
@@ -16,7 +14,6 @@ import org.junit.runner.RunWith;
 import com.gemserk.animation4j.Vector2f;
 import com.gemserk.animation4j.Vector2fConverter;
 import com.gemserk.animation4j.converters.Converters;
-import com.gemserk.animation4j.reflection.ReflectionUtils;
 import com.gemserk.animation4j.time.UpdateableTimeProvider;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
@@ -95,39 +92,6 @@ public class TransitionReflectionObjectSynchronizerTest {
 		assertThat(synchronizer.isFinished(), IsEqual.equalTo(true));
 	}
 
-	static class SynchronizedTransitionManager {
-
-		ArrayList<TransitionObjectSynchronizer> synchronizers;
-
-		ArrayList<TransitionObjectSynchronizer> removeSynchronizers;
-
-		public SynchronizedTransitionManager() {
-			synchronizers = new ArrayList<TransitionObjectSynchronizer>();
-			removeSynchronizers = new ArrayList<TransitionObjectSynchronizer>();
-		}
-
-		public void handle(TransitionObjectSynchronizer synchronizer) {
-			synchronizers.add(synchronizer);
-		}
-
-		public void synchronize() {
-
-			for (int i = 0; i < synchronizers.size(); i++) {
-
-				TransitionObjectSynchronizer synchronizer = synchronizers.get(i);
-				synchronizer.synchronize();
-
-				if (synchronizer.isFinished())
-					removeSynchronizers.add(synchronizer);
-
-			}
-
-			synchronizers.removeAll(removeSynchronizers);
-
-		}
-
-	}
-
 	@Test
 	public void shouldCallRegisteredSynchronizersAndRemoveThenIfFinished() {
 
@@ -157,42 +121,6 @@ public class TransitionReflectionObjectSynchronizerTest {
 
 		synchronizedTransitionManager.synchronize();
 		synchronizedTransitionManager.synchronize();
-
-	}
-
-	static class Synchronizers {
-
-		static SynchronizedTransitionManager synchronizedTransitionManager = new SynchronizedTransitionManager();
-
-		public static void transition(Object object, String field, Object startValue, Object endValue, int time) {
-
-			Transition<Object> transition = Transitions.transition(startValue);
-			transition.set(endValue, time);
-
-			synchronizedTransitionManager.handle(new TransitionReflectionObjectSynchronizer(transition, object, field));
-
-		}
-
-		public static void transition(Object object, String field, Object endValue, int time) {
-
-			try {
-				String getterName = ReflectionUtils.getGetterName(field);
-				Method getterMethod = ReflectionUtils.findMethod(object, getterName);
-				
-				if (getterMethod == null)
-					throw new RuntimeException();
-				
-				Object startValue = getterMethod.invoke(object, null);
-				transition(object, field, startValue, endValue, time);
-			} catch (Exception e) {
-				throw new RuntimeException("get" + ReflectionUtils.capitalize(field) + "() method not found in " + object.getClass(), e);
-			}
-
-		}
-
-		public static void synchronize() {
-			synchronizedTransitionManager.synchronize();
-		}
 
 	}
 
