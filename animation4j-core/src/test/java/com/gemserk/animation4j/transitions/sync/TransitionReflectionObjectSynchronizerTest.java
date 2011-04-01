@@ -2,6 +2,8 @@ package com.gemserk.animation4j.transitions.sync;
 
 import static org.junit.Assert.assertThat;
 
+import java.util.ArrayList;
+
 import org.hamcrest.core.IsEqual;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -62,7 +64,7 @@ public class TransitionReflectionObjectSynchronizerTest {
 		assertThat(object.position, IsEqual.equalTo(new Vector2f(100, 100)));
 
 	}
-	
+
 	@Test
 	public void shouldNotBeFinishedIfTransitionIsTransitioning() {
 		final Transition transition = mockery.mock(Transition.class);
@@ -91,56 +93,123 @@ public class TransitionReflectionObjectSynchronizerTest {
 		assertThat(synchronizer.isFinished(), IsEqual.equalTo(true));
 	}
 
-	static class SyncrhonizedTransitionManager {
+	static class SynchronizedTransitionManager {
 
-		private TransitionReflectionObjectSynchronizer synchronizer;
+		ArrayList<TransitionObjectSynchronizer> synchronizers;
 
-		public void transition(Object object, Object startValue, Object endValue, int time, String fieldName) {
+		ArrayList<TransitionObjectSynchronizer> removeSynchronizers;
 
-			// maybe working directly with float[] transitions could be better to reuse stuff.
-
-			// TypeConverter valueConverter = Converters.converter(endValue.getClass());
-			// float[] endValueArray = valueConverter.copyFromObject(endValue, null);
-
-			// get current value from object
-
-			Transition<Object> transition = Transitions.transition(startValue);
-			transition.set(endValue, time);
-
-			synchronizer = new TransitionReflectionObjectSynchronizer(transition, object, fieldName);
-
+		public SynchronizedTransitionManager() {
+			synchronizers = new ArrayList<TransitionObjectSynchronizer>();
+			removeSynchronizers = new ArrayList<TransitionObjectSynchronizer>();
 		}
 
-		public void syncrhonize() {
-			synchronizer.synchronize();
+		public void handle(TransitionObjectSynchronizer synchronizer) {
+			synchronizers.add(synchronizer);
+		}
+
+		public void synchronize() {
+
+			for (int i = 0; i < synchronizers.size(); i++) {
+
+				TransitionObjectSynchronizer synchronizer = synchronizers.get(i);
+				synchronizer.synchronize();
+
+				if (synchronizer.isFinished())
+					removeSynchronizers.add(synchronizer);
+
+			}
+
+			synchronizers.removeAll(removeSynchronizers);
+
 		}
 
 	}
 
 	@Test
-	public void something() {
+	public void shouldCallRegisteredSynchronizersAndRemoveThenIfFinished() {
+
+		final TransitionObjectSynchronizer synchronizer1 = mockery.mock(TransitionObjectSynchronizer.class, "synchronizer1");
+		final TransitionObjectSynchronizer synchronizer2 = mockery.mock(TransitionObjectSynchronizer.class, "synchronizer2");
+
+		mockery.checking(new Expectations() {
+			{
+				oneOf(synchronizer1).synchronize();
+				oneOf(synchronizer1).isFinished();
+				will(returnValue(false));
+
+				oneOf(synchronizer2).synchronize();
+				oneOf(synchronizer2).isFinished();
+				will(returnValue(true));
+
+				oneOf(synchronizer1).synchronize();
+				oneOf(synchronizer1).isFinished();
+				will(returnValue(false));
+			}
+		});
+
+		SynchronizedTransitionManager synchronizedTransitionManager = new SynchronizedTransitionManager();
+
+		synchronizedTransitionManager.handle(synchronizer1);
+		synchronizedTransitionManager.handle(synchronizer2);
+
+		synchronizedTransitionManager.synchronize();
+		synchronizedTransitionManager.synchronize();
+
+	}
+
+	static class Synchronizers {
+
+		static SynchronizedTransitionManager synchronizedTransitionManager = new SynchronizedTransitionManager();
+
+		public static void transition(Object object, String field, Object startValue, Object endValue, int time) {
+
+			Transition<Object> transition = Transitions.transition(startValue);
+			transition.set(endValue, time);
+
+			synchronizedTransitionManager.handle(new TransitionReflectionObjectSynchronizer(transition, object, field));
+
+		}
+
+		public static void transition(Object object, String field, Object endValue, int time) {
+
+			Object startValue = null;
+			
+			
+
+			transition(object, field, startValue, endValue, time);
+
+		}
+
+		public static void synchronize() {
+			synchronizedTransitionManager.synchronize();
+		}
+
+	}
+
+	@Test
+	public void testSynchronizers() {
+
+		Converters.register(Vector2f.class, new Vector2fConverter());
 
 		MyObject myObject = new MyObject();
-		myObject.position = new Vector2f(10, 10);
-		
-		Converters.register(Vector2f.class, new Vector2fConverter());
-		UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
-		
-		Transitions.timeProvider = timeProvider;
-
-		SyncrhonizedTransitionManager syncrhonizedTransitionManager = new SyncrhonizedTransitionManager();
+		myObject.position = new Vector2f(50, 50);
 
 		int time = 500;
 
-		syncrhonizedTransitionManager.transition(myObject, myObject.position, new Vector2f(50, 50), time, "position");
+		UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
 
-		assertThat(myObject.position, IsEqual.equalTo(new Vector2f(10, 10)));
+		Transitions.timeProvider = timeProvider;
 
-		timeProvider.update(500);
+		Synchronizers.transition(myObject, "position", myObject.position, new Vector2f(100, 100), time);
+		Synchronizers.synchronize();
 
-		syncrhonizedTransitionManager.syncrhonize();
+		assertThat(myObject.position, IsEqual.equalTo(new Vector2f(50f, 50f)));
 
-		assertThat(myObject.position, IsEqual.equalTo(new Vector2f(50, 50)));
+		timeProvider.update(time);
+		Synchronizers.synchronize();
+
+		assertThat(myObject.position, IsEqual.equalTo(new Vector2f(100f, 100f)));
 
 	}
 
