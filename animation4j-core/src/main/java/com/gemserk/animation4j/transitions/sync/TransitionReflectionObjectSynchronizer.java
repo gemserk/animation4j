@@ -7,19 +7,12 @@ public class TransitionReflectionObjectSynchronizer implements TransitionObjectS
 
 	private final Transition<?> transition;
 
-	private final Object object;
-
 	private ReflectionObjectSynchronizer reflectionObjectSynchronizer;
 
 	private final String fieldName;
 	
-	public Transition<?> getTransition() {
-		return transition;
-	}
-
 	public TransitionReflectionObjectSynchronizer(Transition<?> transition, Object object, String fieldName) {
 		this.transition = transition;
-		this.object = object;
 		this.fieldName = fieldName;
 		reflectionObjectSynchronizer = new ReflectionObjectSynchronizer(object);
 	}
@@ -27,6 +20,11 @@ public class TransitionReflectionObjectSynchronizer implements TransitionObjectS
 	@Override
 	public void synchronize() {
 		reflectionObjectSynchronizer.setValue(fieldName, transition.get());
+	}
+
+	@Override
+	public boolean isFinished() {
+		return !transition.isTransitioning();
 	}
 
 }
