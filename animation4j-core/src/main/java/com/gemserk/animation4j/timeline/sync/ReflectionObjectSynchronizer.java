@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.gemserk.animation4j.reflection.ReflectionUtils;
+
 /**
  * ObjectSynchronizer implementation using reflection to set the values to an object fields through setter methods.
  * 
@@ -38,22 +40,20 @@ public class ReflectionObjectSynchronizer implements ObjectSynchronizer {
 		if (missingMethods.contains(name))
 			return null;
 		Method setterMethod = cachedSettersMethods.get(name);
+	
 		if (setterMethod != null)
 			return setterMethod;
-		Method[] methods = object.getClass().getMethods();
-		String setterName = getSetterName(name);
-		for (Method method : methods) {
-			if (!method.getName().equals(setterName))
-				continue;
-			cachedSettersMethods.put(name, method);
-			return method;
+
+		String setterName = ReflectionUtils.getSetterName(name);
+
+		setterMethod = ReflectionUtils.findMethod(object, setterName);
+		if (setterMethod != null) {
+			cachedSettersMethods.put(name, setterMethod);
+			return setterMethod;
 		}
+
 		missingMethods.add(name);
 		return null;
-	}
-
-	protected String getSetterName(String name) {
-		return "set" + name.toUpperCase().substring(0, 1) + name.substring(1);
 	}
 
 }

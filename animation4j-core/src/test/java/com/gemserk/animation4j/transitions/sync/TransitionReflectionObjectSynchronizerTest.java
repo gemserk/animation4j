@@ -210,6 +210,8 @@ public class TransitionReflectionObjectSynchronizerTest {
 		Synchronizers.synchronize();
 
 		assertThat(myObject.position, IsEqual.equalTo(new Vector2f(100f, 100f)));
+		
+		Converters.unregister(Vector2f.class);
 
 	}
 

@@ -72,6 +72,16 @@ public class Converters {
 		converters.put(clazz, typeConverter);
 	}
 
+	/**
+	 * Remove the corresponding converter for specified class from the static converters map.
+	 * 
+	 * @param clazz
+	 *            The class of the type of the converter to be unregistered.
+	 */
+	public static void unregister(Class<?> clazz) {
+		converters.remove(clazz);
+	}
+
 	public static void init() {
 		Converters.register(Float.class, floatConverter);
 	}
