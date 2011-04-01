@@ -2,6 +2,7 @@ package com.gemserk.animation4j.transitions.sync;
 
 import static org.junit.Assert.assertThat;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import org.hamcrest.core.IsEqual;
@@ -15,6 +16,7 @@ import org.junit.runner.RunWith;
 import com.gemserk.animation4j.Vector2f;
 import com.gemserk.animation4j.Vector2fConverter;
 import com.gemserk.animation4j.converters.Converters;
+import com.gemserk.animation4j.reflection.ReflectionUtils;
 import com.gemserk.animation4j.time.UpdateableTimeProvider;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
@@ -173,11 +175,18 @@ public class TransitionReflectionObjectSynchronizerTest {
 
 		public static void transition(Object object, String field, Object endValue, int time) {
 
-			Object startValue = null;
-			
-			
-
-			transition(object, field, startValue, endValue, time);
+			try {
+				String getterName = ReflectionUtils.getGetterName(field);
+				Method getterMethod = ReflectionUtils.findMethod(object, getterName);
+				
+				if (getterMethod == null)
+					throw new RuntimeException();
+				
+				Object startValue = getterMethod.invoke(object, null);
+				transition(object, field, startValue, endValue, time);
+			} catch (Exception e) {
+				throw new RuntimeException("get" + ReflectionUtils.capitalize(field) + "() method not found in " + object.getClass(), e);
+			}
 
 		}
 
@@ -201,7 +210,7 @@ public class TransitionReflectionObjectSynchronizerTest {
 
 		Transitions.timeProvider = timeProvider;
 
-		Synchronizers.transition(myObject, "position", myObject.position, new Vector2f(100, 100), time);
+		Synchronizers.transition(myObject, "position", new Vector2f(100, 100), time);
 		Synchronizers.synchronize();
 
 		assertThat(myObject.position, IsEqual.equalTo(new Vector2f(50f, 50f)));

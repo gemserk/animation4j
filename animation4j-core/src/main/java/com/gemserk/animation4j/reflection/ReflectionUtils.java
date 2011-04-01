@@ -14,7 +14,7 @@ public class ReflectionUtils {
 		return "get" + capitalize(fieldName);
 	}
 	
-	private static String capitalize(String name) {
+	public static String capitalize(String name) {
 		return name.toUpperCase().substring(0, 1) + name.substring(1);
 	}
 	
