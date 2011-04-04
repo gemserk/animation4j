@@ -134,8 +134,6 @@ public class Transitions {
 
 	/**
 	 * Provides an easy way to build a transition.
-	 * 
-	 * @author acoppes
 	 */
 	public static class TransitionBuilder<T> {
 

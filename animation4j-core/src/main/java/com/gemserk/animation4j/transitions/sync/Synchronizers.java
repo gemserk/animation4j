@@ -12,10 +12,18 @@ public class Synchronizers {
 
 	static SynchronizedTransitionManager synchronizedTransitionManager = new SynchronizedTransitionManager();
 
-	public static void transition(Object object, String field, Object startValue, Object endValue, int time) {
+	/**
+	 * Starts a transition and a synchronizer to modify the specified object's field through the transition.
+	 * @param object The container of the field to be modified.
+	 * @param field The name of the field which contains the object to be modified.
+	 * @param startValue The start value of the transition.
+	 * @param endValue The end value of the transition.
+	 * @param duration The duration of the transition.
+	 */
+	public static void transition(Object object, String field, Object startValue, Object endValue, int duration) {
 
 		Transition<Object> transition = Transitions.transition(startValue);
-		transition.set(endValue, time);
+		transition.set(endValue, duration);
 
 		synchronizedTransitionManager.handle(new TransitionReflectionObjectSynchronizer(transition, object, field));
 
@@ -45,6 +53,9 @@ public class Synchronizers {
 
 	}
 
+	/**
+	 * Performs the synchronization of all the objects with the corresponding transitions registered by calling transition() method.
+	 */
 	public static void synchronize() {
 		synchronizedTransitionManager.synchronize();
 	}
