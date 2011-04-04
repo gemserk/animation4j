@@ -4,13 +4,13 @@
 	<parent>
 		<groupId>com.gemserk.animation4j</groupId>
 		<artifactId>animation4j</artifactId>
-		<version>0.0.10-SNAPSHOT</version>
+		<version>0.0.10</version>
 	</parent>
 	<groupId>com.gemserk.animation4j</groupId>
 	<artifactId>animation4j-core</artifactId>
 	<name>Core module of Animations project</name>
 	<description>Core module of Animations project</description>
-	<version>0.0.10-SNAPSHOT</version>
+	<version>0.0.10</version>
 	<packaging>jar</packaging>
 
 	<profiles>

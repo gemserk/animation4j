@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>animation4j</artifactId>
 		<groupId>com.gemserk.animation4j</groupId>
-		<version>0.0.10-SNAPSHOT</version>
+		<version>0.0.10</version>
 	</parent>
 	<groupId>com.gemserk.animation4j</groupId>
 	<artifactId>animation4j-java2d</artifactId>
-	<version>0.0.10-SNAPSHOT</version>
+	<version>0.0.10</version>
 	<name>Java2d module for animation4j</name>
 	<description>This module contains specific implementations of animation4j for using with java2d</description>
 
