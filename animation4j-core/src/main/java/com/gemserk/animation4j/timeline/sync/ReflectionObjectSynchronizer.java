@@ -14,22 +14,27 @@ import com.gemserk.animation4j.reflection.ReflectionUtils;
  */
 public class ReflectionObjectSynchronizer implements ObjectSynchronizer {
 
-	private final Object object;
-
 	private Map<String, Method> cachedSettersMethods = new HashMap<String, Method>();
 
 	private ArrayList<String> missingMethods = new ArrayList<String>();
 	
-	// should be class dependent, avoid using the object, so it could be reused
+	/**
+	 * This field is needed because we are using some caching stuff inside, if the cache stuff was in another class then this field would be not needed.
+	 */
+	private final Class<?> clazz;
 
-	public ReflectionObjectSynchronizer(Object object) {
-		this.object = object;
+	public ReflectionObjectSynchronizer(Class<?> clazz) {
+		this.clazz = clazz;
 	}
 
 	@Override
-	public void setValue(String name, Object value) {
+	public void setValue(Object object, String name, Object value) {
+
+		if (!object.getClass().isAssignableFrom(clazz))
+			throw new RuntimeException("object should be instance from " + clazz);
+
 		try {
-			Method setterMethod = getSetter(name);
+			Method setterMethod = getSetter(object, name);
 			if (setterMethod == null)
 				return;
 			setterMethod.invoke(object, value);
@@ -38,7 +43,7 @@ public class ReflectionObjectSynchronizer implements ObjectSynchronizer {
 		}
 	}
 
-	protected Method getSetter(String name) {
+	protected Method getSetter(Object object, String name) {
 		if (missingMethods.contains(name))
 			return null;
 		Method setterMethod = cachedSettersMethods.get(name);

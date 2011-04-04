@@ -37,8 +37,8 @@ public class MutableObjectSynchronizerTest {
 		MyTestObject object = new MyTestObject();
 		object.position = instance;
 		
-		MutableObjectSynchronizer mutableObjectSynchronizer = new MutableObjectSynchronizer(object);
-		mutableObjectSynchronizer.setValue("position", new Vector2f(500, 500));
+		MutableObjectSynchronizer mutableObjectSynchronizer = new MutableObjectSynchronizer();
+		mutableObjectSynchronizer.setValue(object, "position", new Vector2f(500, 500));
 		
 		assertThat(object.position, IsEqual.equalTo(new Vector2f(500, 500)));
 		assertThat(object.position, IsSame.sameInstance(instance));
@@ -57,12 +57,12 @@ public class MutableObjectSynchronizerTest {
 		MyTestObject object = new MyTestObject();
 		object.position = instance;
 		
-		MutableObjectSynchronizer mutableObjectSynchronizer = new MutableObjectSynchronizer(object);
+		MutableObjectSynchronizer mutableObjectSynchronizer = new MutableObjectSynchronizer();
 		
 		Vector2fConverter.arrayInstances = 0;
 		
 		for (int i = 0; i < 50; i++) {
-			mutableObjectSynchronizer.setValue("position", new Vector2f(500, 500));
+			mutableObjectSynchronizer.setValue(object, "position", new Vector2f(500, 500));
 		}
 		
 		assertThat(Vector2fConverter.arrayInstances, IsEqual.equalTo(1));

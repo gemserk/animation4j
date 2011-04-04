@@ -15,18 +15,10 @@ import com.gemserk.animation4j.reflection.ReflectionUtils;
  */
 public class MutableObjectSynchronizer implements ObjectSynchronizer {
 
-	private final Object object;
-	
 	private Map<String, float[]> cachedArrays = new HashMap<String, float[]>();
 	
-	// should be class dependent, avoid using the object, so it could be reused
-
-	public MutableObjectSynchronizer(Object object) {
-		this.object = object;
-	}
-
 	@Override
-	public void setValue(String name, Object value) {
+	public void setValue(Object object, String name, Object value) {
 
 		String getterName = ReflectionUtils.getGetterName(name);
 		Method method = ReflectionUtils.findMethod(object, getterName);

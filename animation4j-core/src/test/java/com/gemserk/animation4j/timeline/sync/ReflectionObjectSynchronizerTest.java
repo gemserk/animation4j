@@ -50,20 +50,20 @@ public class ReflectionObjectSynchronizerTest {
 		object.setX(200f);
 		object.setY(150f);
 		
-		ReflectionObjectSynchronizer reflectionObjectSynchronizer = new ReflectionObjectSynchronizer(object);
+		ReflectionObjectSynchronizer reflectionObjectSynchronizer = new ReflectionObjectSynchronizer(TestObject.class);
 		
-		reflectionObjectSynchronizer.setValue("x", 100f);
+		reflectionObjectSynchronizer.setValue(object, "x", 100f);
 		
 		assertThat(object.getX(), IsEqual.equalTo(100f));
 		assertThat(object.getY(), IsEqual.equalTo(150f));
 		
-		reflectionObjectSynchronizer.setValue("y", 500f);
+		reflectionObjectSynchronizer.setValue(object, "y", 500f);
 
 		assertThat(object.getX(), IsEqual.equalTo(100f));
 		assertThat(object.getY(), IsEqual.equalTo(500f));
 
 		assertThat(object.getSome(), IsNull.nullValue());
-		reflectionObjectSynchronizer.setValue("some", "value");
+		reflectionObjectSynchronizer.setValue(object, "some", "value");
 		assertThat(object.getSome(), IsNull.notNullValue());
 		assertThat(object.getSome(), IsEqual.equalTo("value"));
 
@@ -76,13 +76,19 @@ public class ReflectionObjectSynchronizerTest {
 		object.setX(200f);
 		object.setY(150f);
 		
-		ReflectionObjectSynchronizer reflectionObjectSynchronizer = new ReflectionObjectSynchronizer(object);
+		ReflectionObjectSynchronizer reflectionObjectSynchronizer = new ReflectionObjectSynchronizer(TestObject.class);
 		
-		reflectionObjectSynchronizer.setValue("z", 100f);
+		reflectionObjectSynchronizer.setValue(object, "z", 100f);
 		
 		assertThat(object.getX(), IsEqual.equalTo(200f));
 		assertThat(object.getY(), IsEqual.equalTo(150f));
-		
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public void shouldFailToSynchronizeAnObjectFromAnotherClass() {
+		TestObject object = new TestObject();
+		ReflectionObjectSynchronizer reflectionObjectSynchronizer = new ReflectionObjectSynchronizer(ReflectionObjectSynchronizerTest.class);
+		reflectionObjectSynchronizer.setValue(object, "z", 100f);
 	}
 
 }

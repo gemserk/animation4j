@@ -11,13 +11,17 @@ import com.gemserk.animation4j.timeline.TimelineValue;
 public class TimelineSynchronizer {
 
 	private final ObjectSynchronizer objectSynchronizer;
+	
+	private final Object object;
 
 	/**
 	 * @param objectSynchronizer
 	 *            The ObjectSynchronizer to use to synchronize the time line values.
+	 * @param object TODO
 	 */
-	public TimelineSynchronizer(ObjectSynchronizer objectSynchronizer) {
+	public TimelineSynchronizer(ObjectSynchronizer objectSynchronizer, Object object) {
 		this.objectSynchronizer = objectSynchronizer;
+		this.object = object;
 	}
 
 	/**
@@ -33,7 +37,7 @@ public class TimelineSynchronizer {
 			TimelineValue<Object> timelineValue = timelineIterator.next();
 			String name = timelineValue.getName();
 			Object value = timelineValue.getValue(time);
-			objectSynchronizer.setValue(name, value);
+			objectSynchronizer.setValue(object, name, value);
 		}
 	}
 

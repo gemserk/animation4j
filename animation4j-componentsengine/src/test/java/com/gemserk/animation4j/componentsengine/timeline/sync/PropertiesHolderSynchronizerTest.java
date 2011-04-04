@@ -20,11 +20,11 @@ public class PropertiesHolderSynchronizerTest {
 		
 		PropertiesHolderSynchronizer propertiesHolderSynchronizer = new PropertiesHolderSynchronizer(propertiesHolder);
 		
-		propertiesHolderSynchronizer.setValue("y", 200f);
+		propertiesHolderSynchronizer.setValue(null, "y", 200f);
 		
 		assertThat((Float)propertiesHolder.getProperty("x").get(), IsEqual.equalTo(100f));
 		
-		propertiesHolderSynchronizer.setValue("x", 200f);
+		propertiesHolderSynchronizer.setValue(null, "x", 200f);
 		
 		assertThat((Float)propertiesHolder.getProperty("x").get(), IsEqual.equalTo(200f));
 	}

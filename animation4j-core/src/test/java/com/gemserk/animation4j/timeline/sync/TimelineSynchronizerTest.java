@@ -7,6 +7,7 @@ import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.gemserk.animation4j.Vector2f;
 import com.gemserk.animation4j.timeline.TimelineIterator;
 import com.gemserk.animation4j.timeline.TimelineValue;
 
@@ -29,6 +30,8 @@ public class TimelineSynchronizerTest {
 		final TimelineValue timelineValue = mockery.mock(TimelineValue.class);
 		final ObjectSynchronizer objectSynchronizer = mockery.mock(ObjectSynchronizer.class);
 		
+		final Vector2f myObject = new Vector2f(20, 20);
+		
 		mockery.checking(new Expectations() {
 			{
 				oneOf(timelineIterator).hasNext();
@@ -43,14 +46,14 @@ public class TimelineSynchronizerTest {
 				oneOf(timelineValue).getValue(10);
 				will(returnValue(100f));
 				
-				oneOf(objectSynchronizer).setValue("x", 100f);
+				oneOf(objectSynchronizer).setValue(myObject, "x", 100f);
 				
 				oneOf(timelineIterator).hasNext();
 				will(returnValue(false));
 			}
 		});
 		
-		TimelineSynchronizer timelineSynchronizer = new TimelineSynchronizer(objectSynchronizer);
+		TimelineSynchronizer timelineSynchronizer = new TimelineSynchronizer(objectSynchronizer, myObject);
 		
 		timelineSynchronizer.syncrhonize(timelineIterator,  10);
 		

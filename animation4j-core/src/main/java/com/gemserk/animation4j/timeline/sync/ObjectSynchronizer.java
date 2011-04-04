@@ -9,9 +9,10 @@ public interface ObjectSynchronizer {
 
 	/**
 	 * Sets the specified value to the corresponding field identified by name.
+	 * @param object The container object.
 	 * @param name The name of the field to be set.
 	 * @param value The value to set to the field.
 	 */
-	void setValue(String name, Object value);
+	void setValue(Object object, String name, Object value);
 
 }
