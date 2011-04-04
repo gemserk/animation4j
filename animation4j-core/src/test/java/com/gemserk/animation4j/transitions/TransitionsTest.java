@@ -23,4 +23,13 @@ public class TransitionsTest {
 		assertNotNull(transition);
 	}
 
+	@Test
+	public void testCreateTransitionThroughTransitionBuilder() {
+		Converters.register(Vector2f.class, new Vector2fConverter());
+		Vector2f startValue = new Vector2f(50, 50);
+		Transition<Vector2f> transition = Transitions.transitionBuilder(startValue).end(new Vector2f(100, 100)).time(500).build();
+		Vector2f value = transition.get();
+		Converters.unregister(Vector2f.class);
+	}
+	
 }

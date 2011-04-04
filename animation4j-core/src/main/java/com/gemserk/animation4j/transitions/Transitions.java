@@ -132,4 +132,82 @@ public class Transitions {
 		return transition(startValue, speed, converter, functions);
 	}
 
+	/**
+	 * Provides an easy way to build a transition.
+	 * 
+	 * @author acoppes
+	 */
+	public static class TransitionBuilder<T> {
+
+		private T startValue;
+
+		private T endValue;
+
+		private int time;
+
+		private float speed;
+
+		private InterpolationFunction[] functions;
+
+		private TypeConverter<T> typeConverter;
+
+		TransitionBuilder<T> start(T startValue) {
+			this.startValue = startValue;
+			return this;
+		}
+
+		public TransitionBuilder<T> end(T endValue) {
+			this.endValue = endValue;
+			return this;
+		}
+
+		public TransitionBuilder<T> time(int time) {
+			this.time = time;
+			return this;
+		}
+
+		public TransitionBuilder<T> speed(float speed) {
+			this.speed = speed;
+			return this;
+		}
+
+		public TransitionBuilder<T> functions(InterpolationFunction... functions) {
+			this.functions = functions;
+			return this;
+		}
+
+		public TransitionBuilder<T> converter(TypeConverter<T> typeConverter) {
+			this.typeConverter = typeConverter;
+			return this;
+		}
+
+		/**
+		 * Builds and returns the Transition<T> using the specified builder parameters.
+		 */
+		public Transition<T> build() {
+			if (typeConverter == null)
+				typeConverter = (TypeConverter<T>) Converters.converter(startValue.getClass());
+
+			Transition<T> transition;
+
+			if (functions != null)
+				transition = Transitions.transition(startValue, speed, typeConverter, functions);
+			else
+				transition = Transitions.transition(startValue, speed, typeConverter);
+
+			transition.set(endValue, time);
+			return transition;
+		}
+
+	}
+	
+	/**
+	 * Creates a new transition builder to let the user create a transition in an easy way.
+	 */
+	public static <T> TransitionBuilder<T> transitionBuilder(T startValue) {
+		// if we need to create a pool of builders or something, this is where to do that.
+		TransitionBuilder<T> transitionBuilder = new TransitionBuilder<T>();
+		return transitionBuilder.start(startValue).speed(defaultTransitionSpeed).time(1);
+	}
+	
 }
