@@ -16,18 +16,21 @@ public class ReflectionObjectSynchronizer implements ObjectSynchronizer {
 
 	private ArrayList<String> missingMethods = new ArrayList<String>();
 
+	/**
+	 * This field is needed because we are using some caching stuff inside, if the cache stuff was in another class then this field would be not needed.
+	 */
 	private final Class<?> clazz;
-	
+
 	public ReflectionObjectSynchronizer(Class<?> clazz) {
 		this.clazz = clazz;
 	}
 
 	@Override
 	public void setValue(Object object, String name, Object value) {
-		
+
 		if (!object.getClass().isAssignableFrom(clazz))
 			throw new RuntimeException("object should be instance from " + clazz);
-		
+
 		try {
 			Method setterMethod = getSetter(object, name);
 			if (setterMethod == null)
