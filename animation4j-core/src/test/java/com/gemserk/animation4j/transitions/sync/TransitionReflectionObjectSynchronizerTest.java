@@ -150,6 +150,33 @@ public class TransitionReflectionObjectSynchronizerTest {
 		Converters.unregister(Vector2f.class);
 
 	}
+	
+	@Test
+	public void testSynchronizers2() {
+
+		Converters.register(Vector2f.class, new Vector2fConverter());
+
+		MyObject myObject = new MyObject();
+		myObject.position = new Vector2f(50, 50);
+
+		int time = 500;
+
+		UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
+		Transitions.timeProvider = timeProvider;
+
+		Synchronizers.transition(myObject.position, new Vector2f(100, 100), time);
+		Synchronizers.synchronize();
+
+		assertThat(myObject.position, IsEqual.equalTo(new Vector2f(50f, 50f)));
+
+		timeProvider.update(time);
+		Synchronizers.synchronize();
+
+		assertThat(myObject.position, IsEqual.equalTo(new Vector2f(100f, 100f)));
+
+		Converters.unregister(Vector2f.class);
+
+	}
 
 	static class MutableObjectSynchronizer {
 
@@ -208,7 +235,7 @@ public class TransitionReflectionObjectSynchronizerTest {
 	}
 
 	@Test
-	public void testSynchronizers2() {
+	public void testSynchronizers3() {
 
 		Converters.register(Vector2f.class, new Vector2fConverter());
 

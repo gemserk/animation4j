@@ -2,6 +2,8 @@ package com.gemserk.animation4j.transitions.sync;
 
 import java.lang.reflect.Method;
 
+import com.gemserk.animation4j.converters.Converters;
+import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.reflection.ReflectionUtils;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
@@ -40,8 +42,27 @@ public class Synchronizers {
 		synchronizedTransitionManager.synchronize();
 	}
 
-	public static void transition(Object object, Object endValue, int time) {
+	public static void transition(final Object object, Object endValue, int time) {
 		
+		final Transition<Object> transition = Transitions.transition(object);
+		transition.set(endValue, time);
+		
+		synchronizedTransitionManager.handle(new TransitionObjectSynchronizer() {
+			
+			@Override
+			public void synchronize() {
+				TypeConverter typeConverter = Converters.converter(object.getClass());
+				Object currentValue = transition.get();
+				float[] x = typeConverter.copyFromObject(currentValue, null);
+				typeConverter.copyToObject(object, x);
+			}
+			
+			@Override
+			public boolean isFinished() {
+				return !transition.isTransitioning();
+			}
+			
+		});
 		
 	}
 

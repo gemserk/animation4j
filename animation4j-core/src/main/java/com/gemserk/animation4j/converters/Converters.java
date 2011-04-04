@@ -56,7 +56,7 @@ public class Converters {
 	public static <T> TypeConverter<T> converter(Class<T> clazz) {
 		TypeConverter<?> converter = converters.get(clazz);
 		if (converter == null)
-			throw new RuntimeException("failed to get converter for type " + clazz.getCanonicalName());
+			throw new RuntimeException("failed to get converter for type " + clazz.getName());
 		return (TypeConverter<T>) converter;
 	}
 

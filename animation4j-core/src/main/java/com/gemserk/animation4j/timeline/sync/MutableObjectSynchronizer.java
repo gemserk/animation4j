@@ -15,6 +15,8 @@ import com.gemserk.animation4j.reflection.ReflectionUtils;
  */
 public class MutableObjectSynchronizer implements ObjectSynchronizer {
 
+	// works only if objects are always from the same class
+	
 	private Map<String, float[]> cachedArrays = new HashMap<String, float[]>();
 	
 	@Override
@@ -26,7 +28,7 @@ public class MutableObjectSynchronizer implements ObjectSynchronizer {
 			throw new RuntimeException("missing getter for field " + name + " in " + object.getClass());
 
 		TypeConverter typeConverter = Converters.converter(value.getClass());
-
+		
 		try {
 			Object fieldObject = method.invoke(object, (Object[]) null);
 			cachedArrays.put(name, typeConverter.copyFromObject(value, cachedArrays.get(name)));
