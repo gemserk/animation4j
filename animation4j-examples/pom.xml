@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>animation4j</artifactId>
 		<groupId>com.gemserk.animation4j</groupId>
-		<version>0.0.10</version>
+		<version>0.0.10-SNAPSHOT</version>
 	</parent>
 	<groupId>com.gemserk.animation4j</groupId>
 	<artifactId>animation4j-examples</artifactId>
-	<version>0.0.10</version>
+	<version>0.0.10-SNAPSHOT</version>
 	<name>Examples module of animation4j</name>
 	<description>This module contains example applications using animation4j for the user to get started</description>
 

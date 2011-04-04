@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gemserk.animation4j</groupId>
 	<artifactId>animation4j</artifactId>
-	<version>0.0.10</version>
+	<version>0.0.10-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Parent module for Animations 4 Java</name>
 	<description>Parent module for Animations 4 Java</description>

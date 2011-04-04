@@ -21,12 +21,9 @@ public class Synchronizers {
 	 * @param duration The duration of the transition.
 	 */
 	public static void transition(Object object, String field, Object startValue, Object endValue, int duration) {
-
 		Transition<Object> transition = Transitions.transition(startValue);
 		transition.set(endValue, duration);
-
-		synchronizedTransitionManager.handle(new TransitionReflectionObjectSynchronizer(transition, object, field));
-
+		transition(object, field, transition);
 	}
 
 	/**
@@ -38,6 +35,8 @@ public class Synchronizers {
 	 */
 	public static void transition(Object object, String field, Object endValue, int duration) {
 
+		// this method seem strange here, why making all the reflection stuff ?
+		
 		try {
 			String getterName = ReflectionUtils.getGetterName(field);
 			Method getterMethod = ReflectionUtils.findMethod(object.getClass(), getterName);
@@ -51,6 +50,16 @@ public class Synchronizers {
 			throw new RuntimeException("get" + ReflectionUtils.capitalize(field) + "() method not found in " + object.getClass(), e);
 		}
 
+	}
+	
+	/**
+	 * Starts a transition and a synchronizer to modify the specified object's field through the transition.
+	 * @param object The container of the field to be modified.
+	 * @param field The name of the field which contains the object to be modified.
+	 * @param transition The transition to synchronize with the object field.
+	 */
+	public static void transition(Object object, String field, Transition transition) {
+		synchronizedTransitionManager.handle(new TransitionReflectionObjectSynchronizer(transition, object, field));
 	}
 
 	/**
