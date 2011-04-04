@@ -43,9 +43,12 @@ public class Synchronizers {
 	}
 
 	public static void transition(final Object object, Object endValue, int time) {
-		
 		final Transition<Object> transition = Transitions.transition(object);
 		transition.set(endValue, time);
+		transition(object, transition);
+	}
+	
+	public static void transition(final Object object, final Transition transition) {
 		
 		synchronizedTransitionManager.handle(new TransitionObjectSynchronizer() {
 			
