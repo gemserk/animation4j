@@ -19,6 +19,8 @@ public class ReflectionObjectSynchronizer implements ObjectSynchronizer {
 	private Map<String, Method> cachedSettersMethods = new HashMap<String, Method>();
 
 	private ArrayList<String> missingMethods = new ArrayList<String>();
+	
+	// should be class dependent, avoid using the object, so it could be reused
 
 	public ReflectionObjectSynchronizer(Object object) {
 		this.object = object;
