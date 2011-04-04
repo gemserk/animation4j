@@ -40,4 +40,9 @@ public class Synchronizers {
 		synchronizedTransitionManager.synchronize();
 	}
 
+	public static void transition(Object object, Object endValue, int time) {
+		
+		
+	}
+
 }

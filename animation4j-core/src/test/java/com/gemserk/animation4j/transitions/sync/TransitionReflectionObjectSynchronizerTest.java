@@ -2,7 +2,6 @@ package com.gemserk.animation4j.transitions.sync;
 
 import static org.junit.Assert.assertThat;
 
-
 import org.hamcrest.core.IsEqual;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -14,6 +13,7 @@ import org.junit.runner.RunWith;
 import com.gemserk.animation4j.Vector2f;
 import com.gemserk.animation4j.Vector2fConverter;
 import com.gemserk.animation4j.converters.Converters;
+import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.time.UpdateableTimeProvider;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
@@ -135,7 +135,6 @@ public class TransitionReflectionObjectSynchronizerTest {
 		int time = 500;
 
 		UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
-
 		Transitions.timeProvider = timeProvider;
 
 		Synchronizers.transition(myObject, "position", new Vector2f(100, 100), time);
@@ -147,7 +146,92 @@ public class TransitionReflectionObjectSynchronizerTest {
 		Synchronizers.synchronize();
 
 		assertThat(myObject.position, IsEqual.equalTo(new Vector2f(100f, 100f)));
-		
+
+		Converters.unregister(Vector2f.class);
+
+	}
+
+	static class MutableObjectSynchronizer {
+
+		private final Object object;
+
+		private final TypeConverter typeConverter;
+
+		public MutableObjectSynchronizer(Object object) {
+			this(object, Converters.converter(object.getClass()));
+		}
+
+		public MutableObjectSynchronizer(Object object, TypeConverter typeConverter) {
+			this.object = object;
+			this.typeConverter = typeConverter;
+		}
+
+		public void synchronize(Object value) {
+			float[] v = typeConverter.copyFromObject(value, null);
+			typeConverter.copyToObject(object, v);
+		}
+
+	}
+	
+	static class TransitionMutableObjectSynchronizer {
+
+		private final MutableObjectSynchronizer mutableObjectSynchronizer;
+
+		private final Transition transition;
+
+		public TransitionMutableObjectSynchronizer(MutableObjectSynchronizer mutableObjectSynchronizer, Transition transition) {
+			this.mutableObjectSynchronizer = mutableObjectSynchronizer;
+			this.transition = transition;
+
+		}
+
+		public void synchronize() {
+			mutableObjectSynchronizer.synchronize(transition.get());
+		}
+
+	}
+
+	@Test
+	public void testSynchronizeMutableObject() {
+
+		Vector2fConverter typeConverter = new Vector2fConverter();
+		Vector2f position = new Vector2f(50, 50);
+
+		MutableObjectSynchronizer mutableObjectSyncrhonizer = new MutableObjectSynchronizer(position, typeConverter);
+
+		assertThat(position, IsEqual.equalTo(new Vector2f(50f, 50f)));
+
+		mutableObjectSyncrhonizer.synchronize(new Vector2f(100, 100));
+
+		assertThat(position, IsEqual.equalTo(new Vector2f(100, 100)));
+
+	}
+
+	@Test
+	public void testSynchronizers2() {
+
+		Converters.register(Vector2f.class, new Vector2fConverter());
+
+		UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
+		Transitions.timeProvider = timeProvider;
+
+		Vector2f position = new Vector2f(50, 50);
+
+		MutableObjectSynchronizer mutableObjectSynchronizer = new MutableObjectSynchronizer(position);
+
+		Transition<Vector2f> transition = Transitions.transition(position);
+		transition.set(new Vector2f(100, 100), 500);
+
+		TransitionMutableObjectSynchronizer transitionMutableObjectSynchronizer = new TransitionMutableObjectSynchronizer(mutableObjectSynchronizer, transition);
+		transitionMutableObjectSynchronizer.synchronize();
+
+		assertThat(position, IsEqual.equalTo(new Vector2f(50f, 50f)));
+
+		timeProvider.update(250);
+		transitionMutableObjectSynchronizer.synchronize();
+
+		assertThat(position, IsEqual.equalTo(new Vector2f(75, 75)));
+
 		Converters.unregister(Vector2f.class);
 
 	}
