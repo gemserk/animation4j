@@ -195,7 +195,9 @@ public class Transitions {
 			else
 				transition = Transitions.transition(startValue, speed, typeConverter);
 
-			transition.set(endValue, time);
+			if (endValue != null)
+				transition.set(endValue, time);
+			
 			return transition;
 		}
 
