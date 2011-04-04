@@ -61,8 +61,7 @@ class InternalTransition<T> {
 	}
 
 	protected void copyArray(float[] a, float[] b) {
-		for (int i = 0; i < a.length; i++) 
-			a[i] = b[i];
+		System.arraycopy(b, 0, a, 0, a.length);
 	}
 
 	public void update(int time) {
