@@ -141,7 +141,7 @@ public class Example2 extends Java2dDesktopApplication {
 			element.alpha = 0f;
 			element.textAlpha = 0f;
 			
-			ObjectSynchronizer objectSynchronizer = new ReflectionObjectSynchronizer();
+			ObjectSynchronizer objectSynchronizer = new ReflectionObjectSynchronizer(element.getClass());
 			timelineSynchronizer = new TimelineSynchronizer(objectSynchronizer, element);
 
 			showAnimation = new SynchrnonizedAnimation(new TimelineAnimationBuilder() {

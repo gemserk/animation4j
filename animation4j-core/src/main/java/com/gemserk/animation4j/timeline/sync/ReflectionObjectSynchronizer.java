@@ -16,8 +16,18 @@ public class ReflectionObjectSynchronizer implements ObjectSynchronizer {
 
 	private ArrayList<String> missingMethods = new ArrayList<String>();
 
+	private final Class<?> clazz;
+	
+	public ReflectionObjectSynchronizer(Class<?> clazz) {
+		this.clazz = clazz;
+	}
+
 	@Override
 	public void setValue(Object object, String name, Object value) {
+		
+		if (!object.getClass().isAssignableFrom(clazz))
+			throw new RuntimeException("object should be instance from " + clazz);
+		
 		try {
 			Method setterMethod = getSetter(object, name);
 			if (setterMethod == null)

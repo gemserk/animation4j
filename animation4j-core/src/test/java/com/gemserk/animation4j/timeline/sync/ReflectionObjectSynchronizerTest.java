@@ -50,7 +50,7 @@ public class ReflectionObjectSynchronizerTest {
 		object.setX(200f);
 		object.setY(150f);
 		
-		ReflectionObjectSynchronizer reflectionObjectSynchronizer = new ReflectionObjectSynchronizer();
+		ReflectionObjectSynchronizer reflectionObjectSynchronizer = new ReflectionObjectSynchronizer(TestObject.class);
 		
 		reflectionObjectSynchronizer.setValue(object, "x", 100f);
 		
@@ -76,12 +76,19 @@ public class ReflectionObjectSynchronizerTest {
 		object.setX(200f);
 		object.setY(150f);
 		
-		ReflectionObjectSynchronizer reflectionObjectSynchronizer = new ReflectionObjectSynchronizer();
+		ReflectionObjectSynchronizer reflectionObjectSynchronizer = new ReflectionObjectSynchronizer(TestObject.class);
 		
 		reflectionObjectSynchronizer.setValue(object, "z", 100f);
 		
 		assertThat(object.getX(), IsEqual.equalTo(200f));
 		assertThat(object.getY(), IsEqual.equalTo(150f));
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public void shouldFailToSynchronizeAnObjectFromAnotherClass() {
+		TestObject object = new TestObject();
+		ReflectionObjectSynchronizer reflectionObjectSynchronizer = new ReflectionObjectSynchronizer(ReflectionObjectSynchronizerTest.class);
+		reflectionObjectSynchronizer.setValue(object, "z", 100f);
 	}
 
 }
