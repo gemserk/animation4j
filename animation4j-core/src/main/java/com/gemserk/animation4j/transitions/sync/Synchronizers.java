@@ -23,7 +23,7 @@ public class Synchronizers {
 
 		try {
 			String getterName = ReflectionUtils.getGetterName(field);
-			Method getterMethod = ReflectionUtils.findMethod(object, getterName);
+			Method getterMethod = ReflectionUtils.findMethod(object.getClass(), getterName);
 			
 			if (getterMethod == null)
 				throw new RuntimeException();

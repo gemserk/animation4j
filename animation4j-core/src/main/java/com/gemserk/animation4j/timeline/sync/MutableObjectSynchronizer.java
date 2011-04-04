@@ -20,8 +20,7 @@ public class MutableObjectSynchronizer implements ObjectSynchronizer {
 	@Override
 	public void setValue(Object object, String name, Object value) {
 
-		String getterName = ReflectionUtils.getGetterName(name);
-		Method method = ReflectionUtils.findMethod(object, getterName);
+		Method method = ReflectionUtils.getGetter(object.getClass(), name);
 		
 		if (method == null) 
 			throw new RuntimeException("missing getter for field " + name + " in " + object.getClass());

@@ -2,8 +2,6 @@ package com.gemserk.animation4j.timeline.sync;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.gemserk.animation4j.reflection.ReflectionUtils;
 
@@ -13,8 +11,6 @@ import com.gemserk.animation4j.reflection.ReflectionUtils;
  * @author acoppes
  */
 public class ReflectionObjectSynchronizer implements ObjectSynchronizer {
-
-	private Map<String, Method> cachedSettersMethods = new HashMap<String, Method>();
 
 	private ArrayList<String> missingMethods = new ArrayList<String>();
 	
@@ -34,7 +30,7 @@ public class ReflectionObjectSynchronizer implements ObjectSynchronizer {
 			throw new RuntimeException("object should be instance from " + clazz);
 
 		try {
-			Method setterMethod = getSetter(object, name);
+			Method setterMethod = getSetter(name);
 			if (setterMethod == null)
 				return;
 			setterMethod.invoke(object, value);
@@ -43,21 +39,14 @@ public class ReflectionObjectSynchronizer implements ObjectSynchronizer {
 		}
 	}
 
-	protected Method getSetter(Object object, String name) {
+	protected Method getSetter(String name) {
 		if (missingMethods.contains(name))
 			return null;
-		Method setterMethod = cachedSettersMethods.get(name);
-	
-		if (setterMethod != null)
-			return setterMethod;
+		
+		Method setterMethod = ReflectionUtils.getSetter(clazz, name);
 
-		String setterName = ReflectionUtils.getSetterName(name);
-
-		setterMethod = ReflectionUtils.findMethod(object, setterName);
-		if (setterMethod != null) {
-			cachedSettersMethods.put(name, setterMethod);
+		if (setterMethod != null) 
 			return setterMethod;
-		}
 
 		missingMethods.add(name);
 		return null;
