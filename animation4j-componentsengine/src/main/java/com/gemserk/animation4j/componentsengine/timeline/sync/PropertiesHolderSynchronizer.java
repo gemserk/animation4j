@@ -17,7 +17,7 @@ public class PropertiesHolderSynchronizer implements ObjectSynchronizer {
 	}
 
 	@Override
-	public void setValue(String name, Object value) {
+	public void setValue(Object object, String name, Object value) {
 		Property<Object> property = propertiesHolder.getProperty(name);
 		if (property != null)
 			property.set(value);

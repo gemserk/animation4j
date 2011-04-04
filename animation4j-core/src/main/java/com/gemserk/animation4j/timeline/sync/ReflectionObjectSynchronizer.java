@@ -12,20 +12,14 @@ import java.util.Map;
  */
 public class ReflectionObjectSynchronizer implements ObjectSynchronizer {
 
-	private final Object object;
-
 	private Map<String, Method> cachedSettersMethods = new HashMap<String, Method>();
 
 	private ArrayList<String> missingMethods = new ArrayList<String>();
 
-	public ReflectionObjectSynchronizer(Object object) {
-		this.object = object;
-	}
-
 	@Override
-	public void setValue(String name, Object value) {
+	public void setValue(Object object, String name, Object value) {
 		try {
-			Method setterMethod = getSetter(name);
+			Method setterMethod = getSetter(object, name);
 			if (setterMethod == null)
 				return;
 			setterMethod.invoke(object, value);
@@ -34,7 +28,7 @@ public class ReflectionObjectSynchronizer implements ObjectSynchronizer {
 		}
 	}
 
-	protected Method getSetter(String name) {
+	protected Method getSetter(Object object, String name) {
 		if (missingMethods.contains(name))
 			return null;
 		Method setterMethod = cachedSettersMethods.get(name);

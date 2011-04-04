@@ -7,6 +7,6 @@ package com.gemserk.animation4j.timeline.sync;
  */
 public interface ObjectSynchronizer {
 
-	void setValue(String name, Object value);
+	void setValue(Object object, String name, Object value);
 
 }
