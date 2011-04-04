@@ -17,7 +17,7 @@ public class TransitionReflectionObjectSynchronizer implements TransitionObjectS
 		this.transition = transition;
 		this.object = object;
 		this.fieldName = fieldName;
-		reflectionObjectSynchronizer = new ReflectionObjectSynchronizer(object.getClass());
+		reflectionObjectSynchronizer = new ReflectionObjectSynchronizer();
 	}
 
 	@Override

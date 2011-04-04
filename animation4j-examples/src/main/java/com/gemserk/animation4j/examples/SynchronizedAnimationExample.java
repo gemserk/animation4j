@@ -65,7 +65,7 @@ public class SynchronizedAnimationExample {
 		
 		MyEntity myEntity = new MyEntity();
 		
-		TimelineSynchronizer timelineSynchronizer = new TimelineSynchronizer(new ReflectionObjectSynchronizer(MyEntity.class), myEntity);
+		TimelineSynchronizer timelineSynchronizer = new TimelineSynchronizer(new ReflectionObjectSynchronizer(), myEntity);
 		
 		Animation animation = new SynchrnonizedAnimation(timelineAnimation, timelineSynchronizer);
 		animation.start(1);
