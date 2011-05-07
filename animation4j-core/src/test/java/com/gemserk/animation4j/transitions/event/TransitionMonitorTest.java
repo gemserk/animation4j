@@ -9,81 +9,9 @@ import org.junit.Test;
 import com.gemserk.animation4j.Vector2f;
 import com.gemserk.animation4j.Vector2fConverter;
 import com.gemserk.animation4j.converters.Converters;
-import com.gemserk.animation4j.transitions.Transition;
+import com.gemserk.animation4j.transitions.MockTransition;
 
 public class TransitionMonitorTest {
-
-	class MockTransition<T> implements Transition<T> {
-
-		boolean transitioning;
-
-		public void setTransitioning(boolean transitioning) {
-			this.transitioning = transitioning;
-		}
-
-		@Override
-		public T get() {
-			// TODO Auto-generated function stub
-			return null;
-		}
-
-		@Override
-		public void set(T t) {
-			// TODO Auto-generated function stub
-
-		}
-
-		@Override
-		public void set(T t, int time) {
-			// TODO Auto-generated function stub
-
-		}
-
-		@Override
-		public boolean isTransitioning() {
-			// TODO Auto-generated function stub
-			return transitioning;
-
-		}
-
-	}
-
-	@SuppressWarnings("rawtypes")
-	public static class TransitionMonitor {
-
-		private Transition transition;
-
-		private boolean wasStarted = false;
-
-		private boolean wasFinished = false;
-
-		private boolean wasTransitioning = false;
-
-		public void monitor(Transition transition) {
-			this.transition = transition;
-			this.wasStarted = false;
-			this.wasFinished = false;
-			this.wasTransitioning = false;
-		}
-
-		public boolean wasStarted() {
-			return wasStarted;
-		}
-
-		public boolean wasFinished() {
-			return wasFinished;
-		}
-
-		public void update() {
-			boolean transitioning = transition.isTransitioning();
-
-			wasStarted = !wasTransitioning && transitioning;
-			wasFinished = wasTransitioning && !transitioning;
-
-			wasTransitioning = transitioning;
-		}
-
-	}
 
 	@Before
 	public void startUp() {
