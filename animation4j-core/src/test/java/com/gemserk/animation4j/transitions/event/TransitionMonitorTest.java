@@ -55,19 +55,31 @@ public class TransitionMonitorTest {
 
 		private boolean wasStarted = false;
 
+		private boolean wasFinished = false;
+
 		private boolean wasTransitioning = false;
 
 		public void monitor(Transition transition) {
 			this.transition = transition;
+			this.wasStarted = false;
+			this.wasFinished = false;
+			this.wasTransitioning = false;
 		}
 
 		public boolean wasStarted() {
 			return wasStarted;
 		}
 
+		public boolean wasFinished() {
+			return wasFinished;
+		}
+
 		public void update() {
 			boolean transitioning = transition.isTransitioning();
+
 			wasStarted = !wasTransitioning && transitioning;
+			wasFinished = wasTransitioning && !transitioning;
+
 			wasTransitioning = transitioning;
 		}
 
@@ -100,7 +112,7 @@ public class TransitionMonitorTest {
 
 		assertThat(transitionMonitor.wasStarted(), IsEqual.equalTo(true));
 	}
-	
+
 	@Test
 	public void shouldReturnWasStartedOnlyOnce() {
 		MockTransition<Vector2f> transition = new MockTransition<Vector2f>();
@@ -114,6 +126,67 @@ public class TransitionMonitorTest {
 		transitionMonitor.update();
 		assertThat(transitionMonitor.wasStarted(), IsEqual.equalTo(false));
 
+	}
+
+	@Test
+	public void shouldReturnTransitionNotFinishedIfTransitionDidntFinish() {
+		MockTransition<Vector2f> transition = new MockTransition<Vector2f>();
+		transition.setTransitioning(true);
+
+		TransitionMonitor transitionMonitor = new TransitionMonitor();
+		transitionMonitor.monitor(transition);
+		transitionMonitor.update();
+
+		assertThat(transitionMonitor.wasFinished(), IsEqual.equalTo(false));
+	}
+
+	@Test
+	public void shouldReturnTransitionFinishedIfTransitionDidFinish() {
+		MockTransition<Vector2f> transition = new MockTransition<Vector2f>();
+		transition.setTransitioning(true);
+
+		TransitionMonitor transitionMonitor = new TransitionMonitor();
+		transitionMonitor.monitor(transition);
+		transitionMonitor.update();
+
+		assertThat(transitionMonitor.wasFinished(), IsEqual.equalTo(false));
+		transition.setTransitioning(false);
+		transitionMonitor.update();
+		assertThat(transitionMonitor.wasFinished(), IsEqual.equalTo(true));
+	}
+
+	@Test
+	public void shouldReturnTransitionFinishedIfTransitionDidFinishOnce() {
+		MockTransition<Vector2f> transition = new MockTransition<Vector2f>();
+		transition.setTransitioning(true);
+
+		TransitionMonitor transitionMonitor = new TransitionMonitor();
+		transitionMonitor.monitor(transition);
+		transitionMonitor.update();
+
+		assertThat(transitionMonitor.wasFinished(), IsEqual.equalTo(false));
+		transition.setTransitioning(false);
+		transitionMonitor.update();
+		assertThat(transitionMonitor.wasFinished(), IsEqual.equalTo(true));
+		transitionMonitor.update();
+		assertThat(transitionMonitor.wasFinished(), IsEqual.equalTo(false));
+	}
+
+	@Test
+	public void shouldNotPreservePreviousStatusWhenMonitorNewTransition() {
+		MockTransition<Vector2f> transition = new MockTransition<Vector2f>();
+		transition.setTransitioning(true);
+
+		TransitionMonitor transitionMonitor = new TransitionMonitor();
+		transitionMonitor.monitor(transition);
+		transitionMonitor.update();
+
+		assertThat(transitionMonitor.wasStarted(), IsEqual.equalTo(true));
+
+		MockTransition<Vector2f> transition2 = new MockTransition<Vector2f>();
+		transitionMonitor.monitor(transition2);
+
+		assertThat(transitionMonitor.wasStarted(), IsEqual.equalTo(false));
 	}
 
 }
