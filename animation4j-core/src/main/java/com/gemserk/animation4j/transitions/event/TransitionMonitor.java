@@ -28,6 +28,13 @@ public class TransitionMonitor {
 		return wasFinished;
 	}
 
+	/**
+	 * Returns the Transition being monitored.
+	 */
+	public Transition getTransition() {
+		return transition;
+	}
+
 	public void update() {
 		boolean transitioning = transition.isTransitioning();
 

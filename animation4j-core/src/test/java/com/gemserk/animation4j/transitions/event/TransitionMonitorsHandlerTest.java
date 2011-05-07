@@ -3,6 +3,8 @@ package com.gemserk.animation4j.transitions.event;
 import static org.junit.Assert.assertThat;
 
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNull;
+import org.hamcrest.core.IsSame;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -14,86 +16,77 @@ import com.gemserk.animation4j.transitions.Transition;
 
 @RunWith(JMock.class)
 public class TransitionMonitorsHandlerTest {
-	
+
 	Mockery mockery = new Mockery() {
 		{
 			setImposteriser(ClassImposteriser.INSTANCE);
 		}
 	};
-	
-	public static class TransitionEventHandler {
-		
-		public void onTransitionStarted() {
-			
-		}
 
-		public void onTransitionFinished() {
-			
-		}
+	/**
+	 * Calls a TransitionEventHandler whenever a monitored Transition changes its state.
+	 * 
+	 * @author acoppes
+	 */
+	@SuppressWarnings("rawtypes")
+	static class TransitionMonitorProcessor {
 
-	}
-	
-	static class TransitionMonitorEventImpl {
-		
 		private TransitionEventHandler transitionEventHandler;
-		
+
 		private TransitionMonitor transitionMonitor;
-		
+
 		public void setTransitionEventHandler(TransitionEventHandler transitionEventHandler) {
 			this.transitionEventHandler = transitionEventHandler;
 		}
-		
+
 		public void setTransitionMonitor(TransitionMonitor transitionMonitor) {
 			this.transitionMonitor = transitionMonitor;
 		}
-
+		
+		@SuppressWarnings("unchecked")
 		public void update() {
 			transitionMonitor.update();
 			if (transitionMonitor.wasStarted())
-				transitionEventHandler.onTransitionStarted();
+				transitionEventHandler.onTransitionStarted(transitionMonitor.getTransition());
 			if (transitionMonitor.wasFinished())
-				transitionEventHandler.onTransitionFinished();
+				transitionEventHandler.onTransitionFinished(transitionMonitor.getTransition());
 		}
-		
+
 	}
 
 	@SuppressWarnings("rawtypes")
 	static class TransitionMonitorBuilder {
+
+		private TransitionMonitor transitionMonitor;
 		
+		private TransitionEventHandler transitionEventHandler;
+
 		public TransitionMonitorBuilder with(TransitionEventHandler transitionEventHandler) {
-			return this;
-		}
-		
-		public TransitionMonitorBuilder monitor(Transition transition) {
+			this.transitionEventHandler = transitionEventHandler;
 			return this;
 		}
 
-	}
-	
-	static class MockTransitionEventHandler extends TransitionEventHandler {
-		
-		boolean onTransitionFinishedCalled = false;
-		
-		boolean onTransitionStartedCalled = false;
-		
-		@Override
-		public void onTransitionFinished() {
-			onTransitionFinishedCalled = true;
+		public TransitionMonitorBuilder monitor(Transition transition) {
+			transitionMonitor = new TransitionMonitor();
+			transitionMonitor.monitor(transition);
+			return this;
 		}
 		
-		@Override
-		public void onTransitionStarted() {
-			onTransitionStartedCalled = true;
+		public TransitionMonitorProcessor build() {
+			TransitionMonitorProcessor transitionMonitorProcessor = new TransitionMonitorProcessor();
+			transitionMonitorProcessor.setTransitionMonitor(transitionMonitor);
+			transitionMonitorProcessor.setTransitionEventHandler(transitionEventHandler);
+			return transitionMonitorProcessor;
 		}
-		
+
 	}
-	
+
 	@Test
 	public void shouldNotCallEventHandlerWhenNoChangesInTransitionDetected() {
 		MockTransitionEventHandler mockTransitionEventHandler = new MockTransitionEventHandler();
-		
+
 		final TransitionMonitor transitionMonitor = mockery.mock(TransitionMonitor.class);
-		
+
 		mockery.checking(new Expectations() {
 			{
 				oneOf(transitionMonitor).update();
@@ -103,22 +96,24 @@ public class TransitionMonitorsHandlerTest {
 				will(returnValue(false));
 			}
 		});
-		
-		TransitionMonitorEventImpl transitionMonitorEventImpl = new TransitionMonitorEventImpl();
-		transitionMonitorEventImpl.setTransitionEventHandler(mockTransitionEventHandler);
-		transitionMonitorEventImpl.setTransitionMonitor(transitionMonitor);
-		transitionMonitorEventImpl.update();
-		
+
+		TransitionMonitorProcessor transitionMonitorProcessor = new TransitionMonitorProcessor();
+		transitionMonitorProcessor.setTransitionEventHandler(mockTransitionEventHandler);
+		transitionMonitorProcessor.setTransitionMonitor(transitionMonitor);
+		transitionMonitorProcessor.update();
+
 		assertThat(mockTransitionEventHandler.onTransitionStartedCalled, IsEqual.equalTo(false));
 		assertThat(mockTransitionEventHandler.onTransitionFinishedCalled, IsEqual.equalTo(false));
+		assertThat(mockTransitionEventHandler.transition, IsNull.nullValue());
 	}
-	
+
 	@Test
 	public void shouldCallOnStartWhenTransitionStartedDetected() {
 		MockTransitionEventHandler mockTransitionEventHandler = new MockTransitionEventHandler();
-		
+
 		final TransitionMonitor transitionMonitor = mockery.mock(TransitionMonitor.class);
-		
+		final Transition transition = mockery.mock(Transition.class);
+
 		mockery.checking(new Expectations() {
 			{
 				oneOf(transitionMonitor).update();
@@ -126,24 +121,28 @@ public class TransitionMonitorsHandlerTest {
 				will(returnValue(true));
 				oneOf(transitionMonitor).wasFinished();
 				will(returnValue(false));
+				oneOf(transitionMonitor).getTransition();
+				will(returnValue(transition));
 			}
 		});
-		
-		TransitionMonitorEventImpl transitionMonitorEventImpl = new TransitionMonitorEventImpl();
-		transitionMonitorEventImpl.setTransitionEventHandler(mockTransitionEventHandler);
-		transitionMonitorEventImpl.setTransitionMonitor(transitionMonitor);
-		transitionMonitorEventImpl.update();
-		
+
+		TransitionMonitorProcessor transitionMonitorProcessor = new TransitionMonitorProcessor();
+		transitionMonitorProcessor.setTransitionEventHandler(mockTransitionEventHandler);
+		transitionMonitorProcessor.setTransitionMonitor(transitionMonitor);
+		transitionMonitorProcessor.update();
+
 		assertThat(mockTransitionEventHandler.onTransitionStartedCalled, IsEqual.equalTo(true));
 		assertThat(mockTransitionEventHandler.onTransitionFinishedCalled, IsEqual.equalTo(false));
+		assertThat(mockTransitionEventHandler.transition, IsSame.sameInstance(transition));
 	}
-	
+
 	@Test
 	public void shouldCallOnFinishWhenTransitionFinishDetected() {
 		MockTransitionEventHandler mockTransitionEventHandler = new MockTransitionEventHandler();
-		
+
 		final TransitionMonitor transitionMonitor = mockery.mock(TransitionMonitor.class);
-		
+		final Transition transition = mockery.mock(Transition.class);
+
 		mockery.checking(new Expectations() {
 			{
 				oneOf(transitionMonitor).update();
@@ -151,16 +150,19 @@ public class TransitionMonitorsHandlerTest {
 				will(returnValue(false));
 				oneOf(transitionMonitor).wasFinished();
 				will(returnValue(true));
+				oneOf(transitionMonitor).getTransition();
+				will(returnValue(transition));
 			}
 		});
-		
-		TransitionMonitorEventImpl transitionMonitorEventImpl = new TransitionMonitorEventImpl();
-		transitionMonitorEventImpl.setTransitionEventHandler(mockTransitionEventHandler);
-		transitionMonitorEventImpl.setTransitionMonitor(transitionMonitor);
-		transitionMonitorEventImpl.update();
-		
+
+		TransitionMonitorProcessor transitionMonitorProcessor = new TransitionMonitorProcessor();
+		transitionMonitorProcessor.setTransitionEventHandler(mockTransitionEventHandler);
+		transitionMonitorProcessor.setTransitionMonitor(transitionMonitor);
+		transitionMonitorProcessor.update();
+
 		assertThat(mockTransitionEventHandler.onTransitionStartedCalled, IsEqual.equalTo(false));
 		assertThat(mockTransitionEventHandler.onTransitionFinishedCalled, IsEqual.equalTo(true));
+		assertThat(mockTransitionEventHandler.transition, IsSame.sameInstance(transition));
 	}
-	
+
 }
