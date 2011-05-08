@@ -10,9 +10,10 @@ import com.gemserk.animation4j.converters.Converters;
 
 
 public class TransitionsTest {
-	
+
 	@Test(expected=RuntimeException.class)
 	public void shouldFailToInferConverterFromStartValueIfConverterNotRegistered() {
+		Converters.unregister(Vector2f.class);
 		Transitions.transition(new Vector2f(100, 100));
 	}
 
@@ -21,6 +22,7 @@ public class TransitionsTest {
 		Converters.register(Vector2f.class, new Vector2fConverter());
 		Transition<Vector2f> transition = Transitions.transition(new Vector2f(100, 100));
 		assertNotNull(transition);
+		Converters.unregister(Vector2f.class);
 	}
 
 	@Test
