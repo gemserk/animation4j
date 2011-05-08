@@ -23,37 +23,6 @@ public class TransitionMonitorsHandlerTest {
 		}
 	};
 
-	/**
-	 * Calls a TransitionEventHandler whenever a monitored Transition changes its state.
-	 * 
-	 * @author acoppes
-	 */
-	@SuppressWarnings("rawtypes")
-	static class TransitionMonitorProcessor {
-
-		private TransitionEventHandler transitionEventHandler;
-
-		private TransitionMonitor transitionMonitor;
-
-		public void setTransitionEventHandler(TransitionEventHandler transitionEventHandler) {
-			this.transitionEventHandler = transitionEventHandler;
-		}
-
-		public void setTransitionMonitor(TransitionMonitor transitionMonitor) {
-			this.transitionMonitor = transitionMonitor;
-		}
-		
-		@SuppressWarnings("unchecked")
-		public void update() {
-			transitionMonitor.update();
-			if (transitionMonitor.wasStarted())
-				transitionEventHandler.onTransitionStarted(transitionMonitor.getTransition());
-			if (transitionMonitor.wasFinished())
-				transitionEventHandler.onTransitionFinished(transitionMonitor.getTransition());
-		}
-
-	}
-
 	@SuppressWarnings("rawtypes")
 	static class TransitionMonitorBuilder {
 
