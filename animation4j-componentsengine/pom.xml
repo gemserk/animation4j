@@ -4,12 +4,12 @@
 	<parent>
 		<groupId>com.gemserk.animation4j</groupId>
 		<artifactId>animation4j</artifactId>
-		<version>0.0.11-SNAPSHOT</version>
+		<version>0.0.11-transitionevents-SNAPSHOT</version>
 	</parent>
 	<groupId>com.gemserk.animation4j</groupId>
 	<artifactId>animation4j-componentsengine</artifactId>
 	<name>Components Engine module of animation4j</name>
-	<version>0.0.11-SNAPSHOT</version>
+	<version>0.0.11-transitionevents-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<description>This module contains classes to use with componentsengine for easy use of animation4j.</description>
 	
