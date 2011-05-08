@@ -195,6 +195,8 @@ public class Transitions {
 
 			if (endValue != null)
 				transition.set(endValue, time);
+			else
+				throw new RuntimeException("cant create a transition without end value, you must call end() method");
 			
 			return transition;
 		}

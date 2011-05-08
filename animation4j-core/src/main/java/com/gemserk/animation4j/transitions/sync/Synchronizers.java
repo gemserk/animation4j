@@ -7,10 +7,16 @@ import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.reflection.ReflectionUtils;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
+import com.gemserk.animation4j.transitions.event.TransitionEventHandler;
+import com.gemserk.animation4j.transitions.event.TransitionMonitorBuilder;
 
 public class Synchronizers {
 
-	static SynchronizedTransitionManager synchronizedTransitionManager = new SynchronizedTransitionManager();
+	private static SynchronizedTransitionManager synchronizedTransitionManager = new SynchronizedTransitionManager();
+	
+	private static TransitionHandlersManager transitionHandlersManager = new TransitionHandlersManager();
+
+	private static TransitionMonitorBuilder transitionMonitorBuilder = new TransitionMonitorBuilder();
 
 	/**
 	 * Starts a transition and a synchronizer to modify the specified object's field through the transition.
@@ -67,6 +73,7 @@ public class Synchronizers {
 	 */
 	public static void synchronize() {
 		synchronizedTransitionManager.synchronize();
+		transitionHandlersManager.update();
 	}
 
 	/**
@@ -107,6 +114,19 @@ public class Synchronizers {
 
 		});
 
+	}
+	
+	public static void transition(Object object, Transition transition, TransitionEventHandler transitionEventHandler) {
+		transition(object, transition);
+		transitionHandlersManager.handle(transitionMonitorBuilder.with(transitionEventHandler).monitor(transition).build());
+	}
+	
+	/**
+	 * Returns a monitor builder to use to create a 
+	 * @return
+	 */
+	public static TransitionMonitorBuilder monitorBuilder() {
+		return transitionMonitorBuilder;
 	}
 
 }

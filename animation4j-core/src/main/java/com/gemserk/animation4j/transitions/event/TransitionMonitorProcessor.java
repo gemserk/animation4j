@@ -11,6 +11,8 @@ public class TransitionMonitorProcessor {
 	private TransitionEventHandler transitionEventHandler;
 
 	private TransitionMonitor transitionMonitor;
+	
+	private boolean finished = false;
 
 	@SuppressWarnings("rawtypes")
 	public void setTransitionEventHandler(TransitionEventHandler transitionEventHandler) {
@@ -20,14 +22,25 @@ public class TransitionMonitorProcessor {
 	public void setTransitionMonitor(TransitionMonitor transitionMonitor) {
 		this.transitionMonitor = transitionMonitor;
 	}
+	
+	public void setFinished(boolean finished) {
+		this.finished = finished;
+	}
+	
+	public boolean isFinished() {
+		return finished;
+	}
 
 	@SuppressWarnings("unchecked")
 	public void update() {
 		transitionMonitor.update();
 		if (transitionMonitor.wasStarted())
 			transitionEventHandler.onTransitionStarted(transitionMonitor.getTransition());
-		if (transitionMonitor.wasFinished())
+		if (transitionMonitor.wasFinished()) {
 			transitionEventHandler.onTransitionFinished(transitionMonitor.getTransition());
+			finished = true;
+		}
+			
 	}
 
 }
