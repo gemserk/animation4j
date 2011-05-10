@@ -73,6 +73,7 @@
 	<properties>
 		<compiler.version>1.6</compiler.version>
 		<maven.version>2.0.10</maven.version>
+		<componentsengine.version>0.0.10-SNAPSHOT</componentsengine.version>
 	</properties>
 
 	<build>

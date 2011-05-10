@@ -13,10 +13,6 @@
 	<packaging>jar</packaging>
 	<description>This module contains classes to use with componentsengine for easy use of animation4j.</description>
 	
-	<properties>
-		<componentsengine.version>0.0.9-SNAPSHOT</componentsengine.version>
-	</properties>
-	
 	<build>
 		<plugins>
 			<plugin>

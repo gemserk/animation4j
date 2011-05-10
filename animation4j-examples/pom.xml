@@ -115,6 +115,11 @@
 			<artifactId>resourcesmanager-java2dmodule</artifactId>
 			<version>0.0.8</version>
 		</dependency>
+		<dependency>
+			<groupId>com.gemserk.componentsengine</groupId>
+			<artifactId>componentsengine-java2d</artifactId>
+			<version>${componentsengine.version}</version>
+		</dependency>
 	</dependencies>
 
 </project>
