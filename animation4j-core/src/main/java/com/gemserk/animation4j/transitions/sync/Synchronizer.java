@@ -14,11 +14,11 @@ public class Synchronizer {
 	private TransitionHandlersManager transitionHandlersManager = new TransitionHandlersManager();
 
 	private TransitionMonitorBuilder transitionMonitorBuilder = new TransitionMonitorBuilder();
-
+	
 	/**
 	 * Performs the synchronization of all the objects with the corresponding transitions registered by calling transition() method.
 	 */
-	public void synchronize() {
+	public void update() {
 		synchronizedTransitionManager.synchronize();
 		transitionHandlersManager.update();
 	}
@@ -35,10 +35,6 @@ public class Synchronizer {
 	 */
 	public void transition(Object object, String field, Transition transition) {
 		synchronizedTransitionManager.handle(new TransitionReflectionObjectSynchronizer(transition, object, field));
-	}
-
-	public void transition(Object object, TransitionBuilder transitionBuilder) {
-		transition(object, transitionBuilder.build());
 	}
 
 	/**
@@ -68,6 +64,10 @@ public class Synchronizer {
 		});
 	}
 
+	public void transition(Object object, TransitionBuilder transitionBuilder) {
+		transition(object, transitionBuilder.build());
+	}
+
 	/**
 	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
 	 * 
@@ -81,6 +81,10 @@ public class Synchronizer {
 	public void transition(Object object, Transition transition, TransitionEventHandler transitionEventHandler) {
 		transition(object, transition);
 		transitionHandlersManager.handle(transitionMonitorBuilder.with(transitionEventHandler).monitor(transition).build());
+	}
+
+	public void transition(Object object, TransitionBuilder transitionBuilder, TransitionEventHandler transitionEventHandler) {
+		transition(object, transitionBuilder.build(), transitionEventHandler);
 	}
 
 }
