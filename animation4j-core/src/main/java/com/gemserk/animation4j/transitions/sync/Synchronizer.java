@@ -50,7 +50,6 @@ public class Synchronizer {
 	 *            The transition to use to modify the object.
 	 */
 	public void transition(final Object object, final Transition transition) {
-
 		synchronizedTransitionManager.handle(new TransitionObjectSynchronizer() {
 
 			@Override
@@ -67,9 +66,18 @@ public class Synchronizer {
 			}
 
 		});
-
 	}
 
+	/**
+	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
+	 * 
+	 * @param object
+	 *            The <b>mutable</b> object to be modified in through the transition.
+	 * @param transition
+	 *            The transition to use to modify the object.
+	 * @param transitionEventHandler
+	 *            The event handler to handle Transition status change events.
+	 */
 	public void transition(Object object, Transition transition, TransitionEventHandler transitionEventHandler) {
 		transition(object, transition);
 		transitionHandlersManager.handle(transitionMonitorBuilder.with(transitionEventHandler).monitor(transition).build());

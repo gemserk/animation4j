@@ -137,7 +137,7 @@ public class TransitionReflectionObjectSynchronizerTest {
 		UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
 		Transitions.timeProvider = timeProvider;
 
-		Synchronizers.transition(myObject, "position", new Vector2f(100, 100), time);
+		Synchronizers.transition(myObject, "position", Transitions.transitionBuilder(myObject, "position").end(new Vector2f(100, 100)).time(time).build());
 		Synchronizers.synchronize();
 
 		assertThat(myObject.position, IsEqual.equalTo(new Vector2f(50f, 50f)));
@@ -163,8 +163,9 @@ public class TransitionReflectionObjectSynchronizerTest {
 
 		UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
 		Transitions.timeProvider = timeProvider;
+		Object object = myObject.position;
 
-		Synchronizers.transition(myObject.position, new Vector2f(100, 100), time);
+		Synchronizers.transition(object, Transitions.transitionBuilder(object).end(new Vector2f(100, 100)).time(time).build());
 		Synchronizers.synchronize();
 
 		assertThat(myObject.position, IsEqual.equalTo(new Vector2f(50f, 50f)));

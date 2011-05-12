@@ -5,6 +5,7 @@ import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
+import com.gemserk.animation4j.reflection.ReflectionUtils;
 import com.gemserk.animation4j.time.SystemTimeProvider;
 import com.gemserk.animation4j.time.TimeProvider;
 
@@ -136,6 +137,13 @@ public class Transitions {
 		// TransitionBuilder<T> transitionBuilder = new TransitionBuilder<T>();
 		transitionBuilder.timeProvider(timeProvider);
 		return transitionBuilder.start(startValue);
+	}
+	
+	/**
+	 * Creates a new transition builder to let the user create a transition in an easy way.
+	 */
+	public static <T> TransitionBuilder<T> transitionBuilder(Object object, String field) {
+		return (TransitionBuilder<T>) transitionBuilder(ReflectionUtils.getFieldValue(object, field));
 	}
 
 }
