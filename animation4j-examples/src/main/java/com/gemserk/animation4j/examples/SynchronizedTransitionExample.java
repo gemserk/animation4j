@@ -2,7 +2,7 @@ package com.gemserk.animation4j.examples;
 
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.transitions.Transitions;
-import com.gemserk.animation4j.transitions.sync.Synchronizers;
+import com.gemserk.animation4j.transitions.sync.Synchronizer;
 
 public class SynchronizedTransitionExample {
 	
@@ -29,6 +29,8 @@ public class SynchronizedTransitionExample {
 		}
 		
 	}
+	
+	private static Synchronizer synchronizer = new Synchronizer();
 
 	public static void main(String[] args) throws InterruptedException {
 		Converters.register(Vector2f.class, new Vector2fConverter());
@@ -39,32 +41,22 @@ public class SynchronizedTransitionExample {
 		
 		MyObject myObject = new MyObject();
 		
-		Synchronizers.transition(myObject.position, Transitions.transitionBuilder(myObject.position)
+		synchronizer.transition(myObject.position, Transitions.transitionBuilder(myObject.position)
 				.end(new Vector2f(50, 50))
-				.time(500)
-				.build());
-
-		Synchronizers.transition(myObject.size, Transitions.transitionBuilder(myObject.size)
+				.time(500));
+		synchronizer.transition(myObject.size, Transitions.transitionBuilder(myObject.size)
 				.end(new Vector2f(1, 1))
-				.time(500)
-				.build());
+				.time(500));
 		
-		Synchronizers.synchronize();
-		
+		synchronizer.synchronize(0);
 		System.out.println("myobject.position: " + myObject.position);
 		System.out.println("myobject.size: " + myObject.size);
 		
-		Thread.sleep(250);
-		
-		Synchronizers.synchronize();
-
+		synchronizer.synchronize(250);
 		System.out.println("myobject.position: " + myObject.position);
 		System.out.println("myobject.size: " + myObject.size);
 		
-		Thread.sleep(250);
-		
-		Synchronizers.synchronize();
-
+		synchronizer.synchronize(250);
 		System.out.println("myobject.position: " + myObject.position);
 		System.out.println("myobject.size: " + myObject.size);
 
