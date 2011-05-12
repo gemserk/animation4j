@@ -1,7 +1,6 @@
 package com.gemserk.animation4j.examples;
 
 import static com.gemserk.animation4j.examples.Properties.interpolatedProperty;
-import static com.gemserk.animation4j.transitions.Transitions.transition;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,6 +17,7 @@ import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
 import com.gemserk.animation4j.java2d.converters.Java2dConverters;
 import com.gemserk.animation4j.transitions.Transition;
+import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
 import com.gemserk.componentsengine.java2d.Java2dGame;
 import com.gemserk.componentsengine.java2d.Java2dModule;
@@ -121,10 +121,10 @@ public class Example4 extends Java2dDesktopApplication {
 
 			buttons.add(new Button() {
 				{
-					position = interpolatedProperty(transition(new Point2D.Float(320, 625), 1f, Java2dConverters.point2d()));
-					size = interpolatedProperty(transition(new Point2D.Float(1f, 1f), 5f, Java2dConverters.point2d()));
-					color = interpolatedProperty(transition(new Color(1f, 1f, 1f, 1f), 5f));
-					glowColor = interpolatedProperty(transition(new Color(1f, 0f, 0f, 0f), 2f));
+					position = interpolatedProperty(Transitions.transitionBuilder(new Point2D.Float(320, 625)).speed(1f).typeConverter(Java2dConverters.point2d()).build());
+					size = interpolatedProperty(Transitions.transitionBuilder(new Point2D.Float(1f, 1f)).speed(5f).typeConverter(Java2dConverters.point2d()).build());
+					color = interpolatedProperty(Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build());
+					glowColor = interpolatedProperty(Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build());
 
 					position.set(new Point2D.Float(320, 125));
 				}
@@ -132,10 +132,10 @@ public class Example4 extends Java2dDesktopApplication {
 
 			buttons.add(new Button() {
 				{
-					position = interpolatedProperty(transition(new Point2D.Float(320, 725), 1f, Java2dConverters.point2d()));
-					size = interpolatedProperty(transition(new Point2D.Float(1f, 1f), 5f, Java2dConverters.point2d()));
-					color = interpolatedProperty(transition(new Color(1f, 1f, 1f, 1f), 5f));
-					glowColor = interpolatedProperty(transition(new Color(1f, 0f, 0f, 0f), 2f));
+					position = interpolatedProperty(Transitions.transitionBuilder(new Point2D.Float(320, 725)).speed(1f).typeConverter(Java2dConverters.point2d()).build());
+					size = interpolatedProperty(Transitions.transitionBuilder(new Point2D.Float(1f, 1f)).speed(5f).typeConverter(Java2dConverters.point2d()).build());
+					color = interpolatedProperty(Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build());
+					glowColor = interpolatedProperty(Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build());
 
 					position.set(new Point2D.Float(320, 225));
 				}
@@ -143,16 +143,16 @@ public class Example4 extends Java2dDesktopApplication {
 
 			buttons.add(new Button() {
 				{
-					position = interpolatedProperty(transition(new Point2D.Float(320, 825), 1f, Java2dConverters.point2d()));
-					size = interpolatedProperty(transition(new Point2D.Float(1f, 1f), 5f, Java2dConverters.point2d()));
-					color = interpolatedProperty(transition(new Color(1f, 1f, 1f, 1f), 5f));
-					glowColor = interpolatedProperty(transition(new Color(1f, 0f, 0f, 0f), 2f));
+					position = interpolatedProperty(Transitions.transitionBuilder(new Point2D.Float(320, 825)).speed(1f).typeConverter(Java2dConverters.point2d()).build());
+					size = interpolatedProperty(Transitions.transitionBuilder(new Point2D.Float(1f, 1f)).speed(5f).typeConverter(Java2dConverters.point2d()).build());
+					color = interpolatedProperty(Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build());
+					glowColor = interpolatedProperty(Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build());
 
 					position.set(new Point2D.Float(320, 325));
 				}
 			});
 
-			backgroundColor = transition(new Color(0.4f, 0.4f, 0.4f, 0f), 1f);
+			backgroundColor = Transitions.transitionBuilder(new Color(0.4f, 0.4f, 0.4f, 0f)).speed(1f).build();
 			backgroundColor.set(new Color(0.4f, 0.4f, 0.4f, 0.6f), 1000);
 		}
 

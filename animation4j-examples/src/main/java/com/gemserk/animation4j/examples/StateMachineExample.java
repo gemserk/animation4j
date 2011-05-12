@@ -20,7 +20,7 @@ public class StateMachineExample {
 
 		StateMachine<Vector2f> stateMachine = new StateMachine<Vector2f>(a);
 		
-		final Transition<Vector2f> transition = Transitions.transition(a, vector2fConverter);
+		final Transition<Vector2f> transition = Transitions.transitionBuilder(a).typeConverter(vector2fConverter).build();
 		transition.set(b, 2000);
 
 		stateMachine.addTransition(new StateTransition<Vector2f>(new StateTransitionCondition<Vector2f>() {

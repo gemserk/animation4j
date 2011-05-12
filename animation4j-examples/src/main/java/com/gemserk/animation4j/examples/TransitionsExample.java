@@ -1,6 +1,7 @@
 package com.gemserk.animation4j.examples;
 
 import com.gemserk.animation4j.converters.Converters;
+import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
 import com.gemserk.animation4j.time.UpdateableTimeProvider;
 import com.gemserk.animation4j.transitions.Transition;
@@ -23,12 +24,11 @@ public class TransitionsExample {
 
 		// You could create a transition using the interpolation functions you want for each variable of the class,
 		// by default transitions will use a SystemTimeProvider.
-		Transition<Vector2f> transition = Transitions.transition(new Vector2f(0f, 0f), //
-				InterpolationFunctions.easeOut(), //
-				InterpolationFunctions.easeIn());
+		InterpolationFunction[] functions = { InterpolationFunctions.easeOut(), InterpolationFunctions.easeIn() };
+		Transition<Vector2f> transition = Transitions.transitionBuilder(new Vector2f(0f, 0f)).functions(functions).build();
 
 		// you can build transitions using default linear interpolation functions.
-		Transition<Vector2f> anotherTransition = Transitions.transition(new Vector2f(0f, 0f));
+		Transition<Vector2f> anotherTransition = Transitions.transitionBuilder(new Vector2f(0f, 0f)).build();
 
 		System.out.println("Transition value: " + transition.get());
 
@@ -50,10 +50,9 @@ public class TransitionsExample {
 
 		// In this case, we are using a custom time provider.
 		Transitions.timeProvider = timeProvider;
+		InterpolationFunction[] functions = { InterpolationFunctions.easeOut(), InterpolationFunctions.easeIn() };
 
-		Transition<Vector2f> transition = Transitions.transition(new Vector2f(0f, 0f), //
-				InterpolationFunctions.easeOut(), //
-				InterpolationFunctions.easeIn());
+		Transition<Vector2f> transition = Transitions.transitionBuilder(new Vector2f(0f, 0f)).functions(functions).build();
 
 		System.out.println("Transition value: " + transition.get());
 

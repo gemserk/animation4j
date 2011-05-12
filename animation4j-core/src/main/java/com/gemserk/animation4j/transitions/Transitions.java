@@ -23,110 +23,6 @@ public class Transitions {
 	public static TimeProvider timeProvider = new SystemTimeProvider();
 
 	/**
-	 * Builds a transition specifying the starting value, using default speed of 1 unit per ms.
-	 * 
-	 * @param startValue
-	 *            Starting value of the transition.
-	 * @param typeConverter
-	 *            The TypeConverter to use inside the transition to convert from float[] to T and vice versa.
-	 */
-	public static <T> Transition<T> transition(T startValue, TypeConverter<T> typeConverter) {
-		return transitionBuilder(startValue).typeConverter(typeConverter).build();
-	}
-
-	/**
-	 * Builds a transition specifying the starting value, using default speed of 1 unit per ms.
-	 * 
-	 * @param startValue
-	 *            Starting value of the transition.
-	 * @param typeConverter
-	 *            The TypeConverter to use inside the transition to convert from float[] to T and vice versa.
-	 * @param functions
-	 *            The interpolation functions to be used to interpolate each variable of T.
-	 */
-	public static <T> Transition<T> transition(T startValue, TypeConverter<T> typeConverter, InterpolationFunction... functions) {
-		return transitionBuilder(startValue).typeConverter(typeConverter).functions(functions).build();
-	}
-
-	/**
-	 * Builds a transition specifying the starting value.
-	 * 
-	 * @param startValue
-	 *            Starting value of the transition.
-	 * @param typeConverter
-	 *            The TypeConverter to use inside the transition to convert from float[] to T and vice versa.
-	 * @param speed
-	 *            The change speed of the interpolation, by default is 1x.
-	 */
-	public static <T> Transition<T> transition(T startValue, float speed, TypeConverter<T> typeConverter) {
-		return transitionBuilder(startValue).speed(speed).typeConverter(typeConverter).build();
-	}
-
-	/**
-	 * Builds a transition using specified parameters.
-	 * 
-	 * @param startValue
-	 *            Starting value of the transition.
-	 * @param typeConverter
-	 *            The TypeConverter to use inside the transition to convert from float[] to T and vice versa.
-	 * @param speed
-	 *            The change speed of the interpolation, by default is 1x.
-	 * @param functions
-	 *            The interpolation functions to be used to interpolate each variable of T.
-	 */
-	public static <T> Transition<T> transition(T startValue, float speed, TypeConverter<T> typeConverter, InterpolationFunction... functions) {
-		return transitionBuilder(startValue).speed(speed).typeConverter(typeConverter).functions(functions).build();
-	}
-
-	/**
-	 * Builds a transition given a start value and inferring the corresponding TypeConverter from the Converters factory.
-	 * 
-	 * @param startValue
-	 *            Starting value of the transition.
-	 */
-	public static <T> Transition<T> transition(T startValue) {
-		return transitionBuilder(startValue).build();
-	}
-
-	/**
-	 * Builds a transition given a start value and inferring the corresponding TypeConverter from the Converters factory.
-	 * 
-	 * @param startValue
-	 *            Starting value of the transition.
-	 * @param speed
-	 *            The change speed of the interpolation, by default is 1x.
-	 */
-	public static <T> Transition<T> transition(T startValue, float speed) {
-		return transitionBuilder(startValue).speed(speed).build();
-	}
-
-	/**
-	 * Builds a transition given a start value and inferring the corresponding TypeConverter from the Converters factory.
-	 * 
-	 * @param startValue
-	 *            Starting value of the transition.
-	 * @param functions
-	 *            The interpolation functions to be used to interpolate each variable of T.
-	 */
-	public static <T> Transition<T> transition(T startValue, InterpolationFunction... functions) {
-		return transitionBuilder(startValue).functions(functions).build();
-	}
-
-	/**
-	 * Builds a transition given a start value and inferring the corresponding TypeConverter from the Converters factory.
-	 * 
-	 * @param startValue
-	 *            Starting value of the transition.
-	 * @param speed
-	 *            The change speed of the interpolation, by default is 1x.
-	 * @param functions
-	 *            The interpolation functions to be used to interpolate each variable of T.
-	 */
-	public static <T> Transition<T> transition(T startValue, float speed, InterpolationFunction... functions) {
-		return transitionBuilder(startValue).speed(speed).functions(functions).build();
-	}
-
-	/**
 	 * Provides an easy way to build a transition.
 	 */
 	public static class TransitionBuilder<T> {
@@ -180,7 +76,7 @@ public class Transitions {
 			return this;
 		}
 
-		public TransitionBuilder<T> typeConverter(TypeConverter<T> typeConverter) {
+		public TransitionBuilder<T> typeConverter(TypeConverter typeConverter) {
 			this.typeConverter = typeConverter;
 			return this;
 		}

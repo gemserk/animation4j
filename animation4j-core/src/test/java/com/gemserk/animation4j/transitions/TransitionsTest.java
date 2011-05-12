@@ -14,13 +14,13 @@ public class TransitionsTest {
 	@Test(expected=RuntimeException.class)
 	public void shouldFailToInferConverterFromStartValueIfConverterNotRegistered() {
 		Converters.unregister(Vector2f.class);
-		Transitions.transition(new Vector2f(100, 100));
+		Transitions.transitionBuilder(new Vector2f(100, 100)).build();
 	}
 
 	@Test
 	public void shouldInferConverterFromStartValueIfConverterRegistered() {
 		Converters.register(Vector2f.class, new Vector2fConverter());
-		Transition<Vector2f> transition = Transitions.transition(new Vector2f(100, 100));
+		Transition<Vector2f> transition = Transitions.transitionBuilder(new Vector2f(100, 100)).build();
 		assertNotNull(transition);
 		Converters.unregister(Vector2f.class);
 	}

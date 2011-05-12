@@ -11,7 +11,7 @@ public class Properties {
 		return new SimpleProperty<T>(value);
 	}
 
-	public static <T> Property<T> interpolatedProperty(Transition<T> transition) {
+	public static <T> Property<T> interpolatedProperty(Transition transition) {
 		return new InterpolatedProperty<T>(transition);
 	}
 

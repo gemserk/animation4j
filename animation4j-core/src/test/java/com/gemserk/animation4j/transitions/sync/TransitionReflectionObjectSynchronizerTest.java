@@ -246,7 +246,7 @@ public class TransitionReflectionObjectSynchronizerTest {
 
 		MutableObjectSynchronizer mutableObjectSynchronizer = new MutableObjectSynchronizer(position);
 
-		Transition<Vector2f> transition = Transitions.transition(position);
+		Transition<Vector2f> transition = Transitions.transitionBuilder(position).build();
 		transition.set(new Vector2f(100, 100), 500);
 
 		TransitionMutableObjectSynchronizer transitionMutableObjectSynchronizer = new TransitionMutableObjectSynchronizer(mutableObjectSynchronizer, transition);
