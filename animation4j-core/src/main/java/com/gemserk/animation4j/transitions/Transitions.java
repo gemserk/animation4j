@@ -31,7 +31,8 @@ public class Transitions {
 	 *            The TypeConverter to use inside the transition to convert from float[] to T and vice versa.
 	 */
 	public static <T> Transition<T> transition(T startValue, TypeConverter<T> typeConverter) {
-		return transition(startValue, defaultTransitionSpeed, typeConverter);
+		return transitionBuilder(startValue).speed(defaultTransitionSpeed).typeConverter(typeConverter).build();
+		// return transition(startValue, defaultTransitionSpeed, typeConverter);
 	}
 
 	/**
@@ -45,7 +46,8 @@ public class Transitions {
 	 *            The interpolation functions to be used to interpolate each variable of T.
 	 */
 	public static <T> Transition<T> transition(T startValue, TypeConverter<T> typeConverter, InterpolationFunction... functions) {
-		return transition(startValue, defaultTransitionSpeed, typeConverter, functions);
+		return transitionBuilder(startValue).speed(defaultTransitionSpeed).typeConverter(typeConverter).functions(functions).build();
+		// return transition(startValue, defaultTransitionSpeed, typeConverter, functions);
 	}
 
 	/**
@@ -59,9 +61,10 @@ public class Transitions {
 	 *            The change speed of the interpolation, by default is 1x.
 	 */
 	public static <T> Transition<T> transition(T startValue, float speed, TypeConverter<T> typeConverter) {
-		Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables());
-		InternalTransition<T> internalTransition = new InternalTransition<T>(startValue, typeConverter, interpolator);
-		return new TransitionImpl<T>(internalTransition, speed, timeProvider);
+		return transitionBuilder(startValue).speed(speed).typeConverter(typeConverter).build();
+		// Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables());
+		// InternalTransition<T> internalTransition = new InternalTransition<T>(startValue, typeConverter, interpolator);
+		// return new TransitionImpl<T>(internalTransition, speed, timeProvider);
 	}
 
 	/**
@@ -77,9 +80,10 @@ public class Transitions {
 	 *            The interpolation functions to be used to interpolate each variable of T.
 	 */
 	public static <T> Transition<T> transition(T startValue, float speed, TypeConverter<T> typeConverter, InterpolationFunction... functions) {
-		Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables(), functions);
-		InternalTransition<T> internalTransition = new InternalTransition<T>(startValue, typeConverter, interpolator);
-		return new TransitionImpl<T>(internalTransition, speed, timeProvider);
+		return transitionBuilder(startValue).speed(speed).typeConverter(typeConverter).functions(functions).build();
+		// Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables(), functions);
+		// InternalTransition<T> internalTransition = new InternalTransition<T>(startValue, typeConverter, interpolator);
+		// return new TransitionImpl<T>(internalTransition, speed, timeProvider);
 	}
 
 	/**
@@ -89,7 +93,8 @@ public class Transitions {
 	 *            Starting value of the transition.
 	 */
 	public static <T> Transition<T> transition(T startValue) {
-		return transition(startValue, defaultTransitionSpeed);
+		return transitionBuilder(startValue).speed(defaultTransitionSpeed).build();
+		// return transition(startValue, defaultTransitionSpeed);
 	}
 
 	/**
@@ -101,8 +106,9 @@ public class Transitions {
 	 *            The change speed of the interpolation, by default is 1x.
 	 */
 	public static <T> Transition<T> transition(T startValue, float speed) {
-		TypeConverter converter = Converters.converter(startValue.getClass());
-		return transition(startValue, speed, converter);
+		return transitionBuilder(startValue).speed(speed).build();
+		// TypeConverter converter = Converters.converter(startValue.getClass());
+		// return transition(startValue, speed, converter);
 	}
 
 	/**
@@ -114,7 +120,8 @@ public class Transitions {
 	 *            The interpolation functions to be used to interpolate each variable of T.
 	 */
 	public static <T> Transition<T> transition(T startValue, InterpolationFunction... functions) {
-		return transition(startValue, defaultTransitionSpeed, functions);
+		return transitionBuilder(startValue).speed(defaultTransitionSpeed).functions(functions).build();
+		// return transition(startValue, defaultTransitionSpeed, functions);
 	}
 
 	/**
@@ -128,8 +135,9 @@ public class Transitions {
 	 *            The interpolation functions to be used to interpolate each variable of T.
 	 */
 	public static <T> Transition<T> transition(T startValue, float speed, InterpolationFunction... functions) {
-		TypeConverter converter = Converters.converter(startValue.getClass());
-		return transition(startValue, speed, converter, functions);
+		return transitionBuilder(startValue).speed(speed).functions(functions).build();
+		// TypeConverter converter = Converters.converter(startValue.getClass());
+		// return transition(startValue, speed, converter, functions);
 	}
 
 	/**
@@ -143,11 +151,13 @@ public class Transitions {
 
 		private int time;
 
-		private float speed;
+		private float speed = 1f;
 
 		private InterpolationFunction[] functions;
 
 		private TypeConverter<T> typeConverter;
+
+		private TimeProvider timeProvider = new SystemTimeProvider();
 
 		TransitionBuilder<T> start(T startValue) {
 			this.startValue = startValue;
@@ -179,6 +189,16 @@ public class Transitions {
 			return this;
 		}
 
+		public TransitionBuilder<T> timeProvider(TimeProvider timeProvider) {
+			this.timeProvider = timeProvider;
+			return this;
+		}
+
+		public TransitionBuilder<T> typeConverter(TypeConverter<T> typeConverter) {
+			this.typeConverter = typeConverter;
+			return this;
+		}
+
 		/**
 		 * Builds and returns the Transition<T> using the specified builder parameters.
 		 */
@@ -188,28 +208,36 @@ public class Transitions {
 
 			Transition<T> transition;
 
-			if (functions != null)
-				transition = Transitions.transition(startValue, speed, typeConverter, functions);
-			else
-				transition = Transitions.transition(startValue, speed, typeConverter);
+			if (functions != null) {
+				// transition = Transitions.transition(startValue, speed, typeConverter, functions);
+				Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables(), functions);
+				InternalTransition<T> internalTransition = new InternalTransition<T>(startValue, typeConverter, interpolator);
+				transition = new TransitionImpl<T>(internalTransition, speed, timeProvider);
+			} else {
+				// transition = Transitions.transition(startValue, speed, typeConverter);
+				Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables());
+				InternalTransition<T> internalTransition = new InternalTransition<T>(startValue, typeConverter, interpolator);
+				transition = new TransitionImpl<T>(internalTransition, speed, timeProvider);
+			}
 
 			if (endValue != null)
 				transition.set(endValue, time);
-			else
-				throw new RuntimeException("cant create a transition without end value, you must call end() method");
-			
+			// else
+			// throw new RuntimeException("cant create a transition without end value, you must call end() method");
+
 			return transition;
 		}
 
 	}
-	
+
 	/**
 	 * Creates a new transition builder to let the user create a transition in an easy way.
 	 */
 	public static <T> TransitionBuilder<T> transitionBuilder(T startValue) {
 		// if we need to create a pool of builders or something, this is where to do that.
 		TransitionBuilder<T> transitionBuilder = new TransitionBuilder<T>();
+		transitionBuilder.timeProvider(timeProvider);
 		return transitionBuilder.start(startValue).speed(defaultTransitionSpeed).time(1);
 	}
-	
+
 }
