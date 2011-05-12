@@ -132,16 +132,15 @@ public class TransitionReflectionObjectSynchronizerTest {
 		myObject.position = new Vector2f(50, 50);
 
 		int time = 500;
+		
+		Synchronizer synchronizer = new Synchronizer();
 
-		UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
-
-		Synchronizers.transition(myObject, "position", Transitions.transitionBuilder(myObject, "position").end(new Vector2f(100, 100)).time(time).timeProvider(timeProvider).build());
-		Synchronizers.synchronize();
+		synchronizer.transition(myObject, "position", Transitions.transitionBuilder(myObject, "position").end(new Vector2f(100, 100)).time(time));
+		synchronizer.synchronize(0);
 
 		assertThat(myObject.position, IsEqual.equalTo(new Vector2f(50f, 50f)));
 
-		timeProvider.update(time);
-		Synchronizers.synchronize();
+		synchronizer.synchronize(time);
 
 		assertThat(myObject.position, IsEqual.equalTo(new Vector2f(100f, 100f)));
 
@@ -157,16 +156,16 @@ public class TransitionReflectionObjectSynchronizerTest {
 
 		int time = 500;
 
-		UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
+		Synchronizer synchronizer = new Synchronizer();
+		
 		Object object = myObject.position;
 
-		Synchronizers.transition(object, Transitions.transitionBuilder(object).end(new Vector2f(100, 100)).time(time).timeProvider(timeProvider).build());
-		Synchronizers.synchronize();
+		synchronizer.transition(object, Transitions.transitionBuilder(object).end(new Vector2f(100, 100)).time(time));
+		synchronizer.synchronize(0);
 
 		assertThat(myObject.position, IsEqual.equalTo(new Vector2f(50f, 50f)));
 
-		timeProvider.update(time);
-		Synchronizers.synchronize();
+		synchronizer.synchronize(time);
 
 		assertThat(myObject.position, IsEqual.equalTo(new Vector2f(100f, 100f)));
 

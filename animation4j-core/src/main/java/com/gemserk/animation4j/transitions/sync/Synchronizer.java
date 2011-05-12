@@ -59,6 +59,10 @@ public class Synchronizer {
 	public void transition(Object object, String field, Transition transition) {
 		synchronizedTransitionManager.handle(new TransitionReflectionObjectSynchronizer(transition, object, field));
 	}
+	
+	public void transition(Object object, String field, TransitionBuilder transitionBuilder) {
+		this.transition(object, field, transitionBuilder.timeProvider(timeProvider).build());
+	}
 
 	/**
 	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.

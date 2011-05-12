@@ -6,9 +6,11 @@ import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.animation4j.transitions.event.TransitionEventHandler;
 import com.gemserk.animation4j.transitions.event.TransitionMonitor;
 import com.gemserk.animation4j.transitions.event.TransitionMonitorProcessor;
-import com.gemserk.animation4j.transitions.sync.Synchronizers;
+import com.gemserk.animation4j.transitions.sync.Synchronizer;
 
 public class TransitionEventHandlerExample {
+	
+	private static Synchronizer synchronizer = new Synchronizer();
 
 	public static void main(String[] args) throws InterruptedException {
 		// register a type converter for Vector2f class.
@@ -65,12 +67,11 @@ public class TransitionEventHandlerExample {
 
 		};
 
-		Synchronizers.transition(myVector, Transitions.transitionBuilder(myVector).end(new Vector2f(100f, 100f)).time(500).build(), eventHandler);
-		Synchronizers.synchronize();
-		Thread.sleep(300);
-		Synchronizers.synchronize();
-		Thread.sleep(300);
-		Synchronizers.synchronize();
+		synchronizer.transition(myVector, Transitions.transitionBuilder(myVector).end(new Vector2f(100f, 100f)).time(500), eventHandler);
+		synchronizer.synchronize(0);
+		synchronizer.synchronize(300);
+		synchronizer.synchronize(300);
+		synchronizer.synchronize();
 
 	}
 
