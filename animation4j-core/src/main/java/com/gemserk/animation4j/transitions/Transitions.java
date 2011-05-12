@@ -38,7 +38,7 @@ public class Transitions {
 
 		private InterpolationFunction[] functions;
 
-		private TypeConverter<T> typeConverter;
+		private TypeConverter typeConverter;
 
 		private TimeProvider timeProvider;
 
@@ -101,7 +101,7 @@ public class Transitions {
 		 */
 		public Transition<T> build() {
 			if (typeConverter == null)
-				typeConverter = (TypeConverter<T>) Converters.converter(startValue.getClass());
+				typeConverter = Converters.converter(startValue.getClass());
 
 			InternalTransition<T> internalTransition = new InternalTransition<T>(startValue, typeConverter, getInterpolator());
 			Transition<T> transition = new TransitionImpl<T>(internalTransition, speed, timeProvider);

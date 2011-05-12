@@ -58,7 +58,7 @@ public class ReflectionUtils {
 	public static Method getSetter(Class clazz, String fieldName) {
 		return findMethod(clazz, getSetterName(fieldName));
 	}
-	
+
 	public static Method getGetter(Class clazz, String fieldName) {
 		return findMethod(clazz, getGetterName(fieldName));
 	}
@@ -67,6 +67,20 @@ public class ReflectionUtils {
 		if (!classCache.containsKey(clazz.getName()))
 			classCache.put(clazz.getName(), new ClassCache());
 		return classCache.get(clazz.getName());
+	}
+
+	public static Object getFieldValue(Object object, String field) {
+		String getterName = getGetterName(field);
+		Method getterMethod = findMethod(object.getClass(), getterName);
+
+		if (getterMethod == null)
+			throw new RuntimeException("get" + capitalize(field) + "() method not found in " + object.getClass());
+
+		try {
+			return getterMethod.invoke(object, (Object[]) null);
+		} catch (Exception e) {
+			throw new RuntimeException("get" + capitalize(field) + "() method not found in " + object.getClass(), e);
+		}
 	}
 
 }

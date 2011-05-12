@@ -1,7 +1,5 @@
 package com.gemserk.animation4j.transitions.sync;
 
-import java.lang.reflect.Method;
-
 import com.gemserk.animation4j.reflection.ReflectionUtils;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
@@ -18,24 +16,6 @@ public class Synchronizers {
 	 *            The container of the field to be modified.
 	 * @param field
 	 *            The name of the field which contains the object to be modified.
-	 * @param startValue
-	 *            The start value of the transition.
-	 * @param endValue
-	 *            The end value of the transition.
-	 * @param duration
-	 *            The duration of the transition.
-	 */
-	public static void transition(Object object, String field, Object startValue, Object endValue, int duration) {
-		synchronizer.transition(object, field, Transitions.transitionBuilder(startValue).end(endValue).time(duration).build());
-	}
-
-	/**
-	 * Starts a transition and a synchronizer to modify the specified object's field through the transition.
-	 * 
-	 * @param object
-	 *            The container of the field to be modified.
-	 * @param field
-	 *            The name of the field which contains the object to be modified.
 	 * @param endValue
 	 *            The end value of the transition.
 	 * @param duration
@@ -43,19 +23,8 @@ public class Synchronizers {
 	 */
 	public static void transition(Object object, String field, Object endValue, int duration) {
 		// this method seem strange here, why making all the reflection stuff ?
-		try {
-			String getterName = ReflectionUtils.getGetterName(field);
-			Method getterMethod = ReflectionUtils.findMethod(object.getClass(), getterName);
-
-			if (getterMethod == null)
-				throw new RuntimeException();
-
-			Object startValue = getterMethod.invoke(object, (Object[]) null);
-			transition(object, field, startValue, endValue, duration);
-		} catch (Exception e) {
-			throw new RuntimeException("get" + ReflectionUtils.capitalize(field) + "() method not found in " + object.getClass(), e);
-		}
-
+		Object startValue = ReflectionUtils.getFieldValue(object, field);
+		transition(object, field, Transitions.transitionBuilder(startValue).end(endValue).time(duration).build());
 	}
 
 	/**
