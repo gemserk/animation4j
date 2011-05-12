@@ -36,9 +36,11 @@ public class Synchronizer {
 	}
 
 	/**
-	 * Performs a synchronization of all internal objects with the corresponding registered transitions using the specified delta.
+	 * Performs a synchronization of all internal objects with the corresponding registered transitions using the specified delta. 
+	 * It will only work (for now) for those transitions registered using a TransitionBuilder.
 	 * 
 	 * @param delta
+	 *            The delta time to use to synchronize.
 	 */
 	public void synchronize(long delta) {
 		timeProvider.update(delta);

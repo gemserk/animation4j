@@ -18,6 +18,17 @@ public class Synchronizers {
 	public static void synchronize() {
 		getInstance().synchronize();
 	}
+	
+	/**
+	 * Performs a synchronization of all internal objects with the corresponding registered transitions using the specified delta. 
+	 * It will only work (for now) for those transitions registered using a TransitionBuilder.
+	 * 
+	 * @param delta
+	 *            The delta time to use to synchronize.
+	 */
+	public static void synchronize(long delta) {
+		getInstance().synchronize(delta);
+	}
 
 	/**
 	 * Starts a transition and a synchronizer to modify the specified object's field through the transition.
