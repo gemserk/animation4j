@@ -1,12 +1,13 @@
 package com.gemserk.animation4j.transitions.sync;
 
 import com.gemserk.animation4j.transitions.Transition;
+import com.gemserk.animation4j.transitions.Transitions.TransitionBuilder;
 import com.gemserk.animation4j.transitions.event.TransitionEventHandler;
 
 public class Synchronizers {
 
 	private static final Synchronizer synchronizer = new Synchronizer();
-	
+
 	public static Synchronizer getInstance() {
 		return synchronizer;
 	}
@@ -33,6 +34,20 @@ public class Synchronizers {
 	}
 
 	/**
+	 * Starts a transition and a synchronizer to modify the specified object's field through the transition.
+	 * 
+	 * @param object
+	 *            The container of the field to be modified.
+	 * @param field
+	 *            The name of the field which contains the object to be modified.
+	 * @param transitionBuilder
+	 *            the TransitionBuilder used to build internally the transition.
+	 */
+	public void transition(Object object, String field, TransitionBuilder transitionBuilder) {
+		getInstance().transition(object, field, transitionBuilder);
+	}
+
+	/**
 	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
 	 * 
 	 * @param object
@@ -49,6 +64,18 @@ public class Synchronizers {
 	 * 
 	 * @param object
 	 *            The <b>mutable</b> object to be modified in through the transition.
+	 * @param transitionBuilder
+	 *            the TransitionBuilder used to build internally the transition.
+	 */
+	public void transition(Object object, TransitionBuilder transitionBuilder) {
+		getInstance().transition(object, transitionBuilder);
+	}
+
+	/**
+	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
+	 * 
+	 * @param object
+	 *            The <b>mutable</b> object to be modified in through the transition.
 	 * @param transition
 	 *            The transition to use to modify the object.
 	 * @param transitionEventHandler
@@ -58,4 +85,17 @@ public class Synchronizers {
 		getInstance().transition(object, transition, transitionEventHandler);
 	}
 
+	/**
+	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
+	 * 
+	 * @param object
+	 *            The <b>mutable</b> object to be modified in through the transition.
+	 * @param transitionBuilder
+	 *            The transition builder to create the transition.
+	 * @param transitionEventHandler
+	 *            The event handler to handle Transition status change events.
+	 */
+	public void transition(Object object, TransitionBuilder transitionBuilder, TransitionEventHandler transitionEventHandler) {
+		getInstance().transition(object, transitionBuilder, transitionEventHandler);
+	}
 }

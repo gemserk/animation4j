@@ -59,7 +59,17 @@ public class Synchronizer {
 	public void transition(Object object, String field, Transition transition) {
 		synchronizedTransitionManager.handle(new TransitionReflectionObjectSynchronizer(transition, object, field));
 	}
-	
+
+	/**
+	 * Starts a transition and a synchronizer to modify the specified object's field through the transition.
+	 * 
+	 * @param object
+	 *            The container of the field to be modified.
+	 * @param field
+	 *            The name of the field which contains the object to be modified.
+	 * @param transitionBuilder
+	 *            the TransitionBuilder used to build internally the transition.
+	 */
 	public void transition(Object object, String field, TransitionBuilder transitionBuilder) {
 		this.transition(object, field, transitionBuilder.timeProvider(timeProvider).build());
 	}
@@ -76,6 +86,14 @@ public class Synchronizer {
 		synchronizedTransitionManager.handle(new TransitionDirectObjectSynchronizer(object, transition));
 	}
 
+	/**
+	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
+	 * 
+	 * @param object
+	 *            The <b>mutable</b> object to be modified in through the transition.
+	 * @param transitionBuilder
+	 *            the TransitionBuilder used to build internally the transition.
+	 */
 	public void transition(Object object, TransitionBuilder transitionBuilder) {
 		transition(object, transitionBuilder.timeProvider(timeProvider).build());
 	}
