@@ -15,7 +15,7 @@ public class Synchronizers {
 	 * Performs the synchronization of all the objects with the corresponding transitions registered by calling transition() method.
 	 */
 	public static void synchronize() {
-		getInstance().update();
+		getInstance().synchronize();
 	}
 
 	/**

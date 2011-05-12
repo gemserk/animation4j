@@ -16,7 +16,7 @@ public class Synchronizer {
 	/**
 	 * Performs the synchronization of all the objects with the corresponding transitions registered by calling transition() method.
 	 */
-	public void update() {
+	public void synchronize() {
 		synchronizedTransitionManager.synchronize();
 		transitionHandlersManager.update();
 	}
