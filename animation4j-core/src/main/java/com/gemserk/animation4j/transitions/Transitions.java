@@ -86,7 +86,8 @@ public class Transitions {
 		}
 
 		public TransitionBuilder<T> timeProvider(TimeProvider timeProvider) {
-			this.timeProvider = timeProvider;
+			if (this.timeProvider == systemTypeProvider)
+				this.timeProvider = timeProvider;
 			return this;
 		}
 
