@@ -15,17 +15,18 @@ import com.gemserk.animation4j.time.TimeProvider;
  */
 public class Transitions {
 
-	/**
-	 * Used to build transitions when no speed is specified.
-	 */
-	public static float defaultTransitionSpeed = 1f;
-
 	public static TimeProvider timeProvider = new SystemTimeProvider();
+
+	private static final TransitionBuilder transitionBuilder = new TransitionBuilder();
 
 	/**
 	 * Provides an easy way to build a transition.
 	 */
 	public static class TransitionBuilder<T> {
+
+		private static final TimeProvider systemTypeProvider = new SystemTimeProvider();
+		
+		private static final float defaultTransitionSpeed = 1f;
 
 		private T startValue;
 
@@ -33,15 +34,29 @@ public class Transitions {
 
 		private int time;
 
-		private float speed = 1f;
+		private float speed;
 
 		private InterpolationFunction[] functions;
 
 		private TypeConverter<T> typeConverter;
 
-		private TimeProvider timeProvider = new SystemTimeProvider();
+		private TimeProvider timeProvider;
 
-		TransitionBuilder<T> start(T startValue) {
+		public TransitionBuilder() {
+			reset();
+		}
+
+		private void reset() {
+			functions = null;
+			speed = defaultTransitionSpeed;
+			startValue = null;
+			endValue = null;
+			time = 0;
+			timeProvider = systemTypeProvider;
+			typeConverter = null;
+		}
+
+		public TransitionBuilder<T> start(T startValue) {
 			this.startValue = startValue;
 			return this;
 		}
@@ -88,16 +103,15 @@ public class Transitions {
 			if (typeConverter == null)
 				typeConverter = (TypeConverter<T>) Converters.converter(startValue.getClass());
 
-			Transition<T> transition;
-
 			InternalTransition<T> internalTransition = new InternalTransition<T>(startValue, typeConverter, getInterpolator());
-			transition = new TransitionImpl<T>(internalTransition, speed, timeProvider);
+			Transition<T> transition = new TransitionImpl<T>(internalTransition, speed, timeProvider);
 
 			if (endValue != null)
 				transition.set(endValue, time);
 			// else
 			// throw new RuntimeException("cant create a transition without end value, you must call end() method");
 
+			reset();
 			return transition;
 		}
 
@@ -119,10 +133,9 @@ public class Transitions {
 	 */
 	public static <T> TransitionBuilder<T> transitionBuilder(T startValue) {
 		// if we need to create a pool of builders or something, this is where to do that.
-		TransitionBuilder<T> transitionBuilder = new TransitionBuilder<T>();
+		// TransitionBuilder<T> transitionBuilder = new TransitionBuilder<T>();
 		transitionBuilder.timeProvider(timeProvider);
-		transitionBuilder.speed(defaultTransitionSpeed);
-		return transitionBuilder.start(startValue).speed(defaultTransitionSpeed).time(1);
+		return transitionBuilder.start(startValue);
 	}
 
 }
