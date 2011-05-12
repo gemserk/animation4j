@@ -1,6 +1,5 @@
 package com.gemserk.animation4j.transitions.sync;
 
-import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions.TransitionBuilder;
 import com.gemserk.animation4j.transitions.event.TransitionEventHandler;
 
@@ -41,18 +40,6 @@ public class Synchronizers {
 	 */
 	public static void transition(Object object, String field, TransitionBuilder transitionBuilder) {
 		getInstance().transition(object, field, transitionBuilder);
-	}
-
-	/**
-	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
-	 * 
-	 * @param object
-	 *            The <b>mutable</b> object to be modified in through the transition.
-	 * @param transition
-	 *            The transition to use to modify the object.
-	 */
-	public static void transition(final Object object, final Transition transition) {
-		getInstance().transition(object, transition);
 	}
 
 	/**
