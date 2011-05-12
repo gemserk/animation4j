@@ -1,7 +1,5 @@
 package com.gemserk.animation4j.transitions.sync;
 
-import com.gemserk.animation4j.converters.Converters;
-import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions.TransitionBuilder;
 import com.gemserk.animation4j.transitions.event.TransitionEventHandler;
@@ -46,22 +44,7 @@ public class Synchronizer {
 	 *            The transition to use to modify the object.
 	 */
 	public void transition(final Object object, final Transition transition) {
-		synchronizedTransitionManager.handle(new TransitionObjectSynchronizer() {
-
-			@Override
-			public void synchronize() {
-				TypeConverter typeConverter = Converters.converter(object.getClass());
-				Object currentValue = transition.get();
-				float[] x = typeConverter.copyFromObject(currentValue, null);
-				typeConverter.copyToObject(object, x);
-			}
-
-			@Override
-			public boolean isFinished() {
-				return !transition.isTransitioning();
-			}
-
-		});
+		synchronizedTransitionManager.handle(new TransitionDirectObjectSynchronizer(object, transition));
 	}
 
 	public void transition(Object object, TransitionBuilder transitionBuilder) {
