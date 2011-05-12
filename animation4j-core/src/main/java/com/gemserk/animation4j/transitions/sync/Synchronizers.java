@@ -18,10 +18,9 @@ public class Synchronizers {
 	public static void synchronize() {
 		getInstance().synchronize();
 	}
-	
+
 	/**
-	 * Performs a synchronization of all internal objects with the corresponding registered transitions using the specified delta. 
-	 * It will only work (for now) for those transitions registered using a TransitionBuilder.
+	 * Performs a synchronization of all internal objects with the corresponding registered transitions using the specified delta. It will only work (for now) for those transitions registered using a TransitionBuilder.
 	 * 
 	 * @param delta
 	 *            The delta time to use to synchronize.
@@ -37,24 +36,10 @@ public class Synchronizers {
 	 *            The container of the field to be modified.
 	 * @param field
 	 *            The name of the field which contains the object to be modified.
-	 * @param transition
-	 *            The transition to synchronize with the object field.
-	 */
-	public static void transition(Object object, String field, Transition transition) {
-		getInstance().transition(object, field, transition);
-	}
-
-	/**
-	 * Starts a transition and a synchronizer to modify the specified object's field through the transition.
-	 * 
-	 * @param object
-	 *            The container of the field to be modified.
-	 * @param field
-	 *            The name of the field which contains the object to be modified.
 	 * @param transitionBuilder
 	 *            the TransitionBuilder used to build internally the transition.
 	 */
-	public void transition(Object object, String field, TransitionBuilder transitionBuilder) {
+	public static void transition(Object object, String field, TransitionBuilder transitionBuilder) {
 		getInstance().transition(object, field, transitionBuilder);
 	}
 
@@ -78,22 +63,8 @@ public class Synchronizers {
 	 * @param transitionBuilder
 	 *            the TransitionBuilder used to build internally the transition.
 	 */
-	public void transition(Object object, TransitionBuilder transitionBuilder) {
+	public static void transition(Object object, TransitionBuilder transitionBuilder) {
 		getInstance().transition(object, transitionBuilder);
-	}
-
-	/**
-	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
-	 * 
-	 * @param object
-	 *            The <b>mutable</b> object to be modified in through the transition.
-	 * @param transition
-	 *            The transition to use to modify the object.
-	 * @param transitionEventHandler
-	 *            The event handler to handle Transition status change events.
-	 */
-	public static void transition(Object object, Transition transition, TransitionEventHandler transitionEventHandler) {
-		getInstance().transition(object, transition, transitionEventHandler);
 	}
 
 	/**
@@ -106,7 +77,7 @@ public class Synchronizers {
 	 * @param transitionEventHandler
 	 *            The event handler to handle Transition status change events.
 	 */
-	public void transition(Object object, TransitionBuilder transitionBuilder, TransitionEventHandler transitionEventHandler) {
+	public static void transition(Object object, TransitionBuilder transitionBuilder, TransitionEventHandler transitionEventHandler) {
 		getInstance().transition(object, transitionBuilder, transitionEventHandler);
 	}
 }
