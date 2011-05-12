@@ -48,11 +48,10 @@ public class TransitionsExample {
 	protected static void testWithUserTimeProvider() {
 		UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
 
-		// In this case, we are using a custom time provider.
-		Transitions.timeProvider = timeProvider;
 		InterpolationFunction[] functions = { InterpolationFunctions.easeOut(), InterpolationFunctions.easeIn() };
 
-		Transition<Vector2f> transition = Transitions.transitionBuilder(new Vector2f(0f, 0f)).functions(functions).build();
+		// In this case, we are using a custom time provider.
+		Transition<Vector2f> transition = Transitions.transitionBuilder(new Vector2f(0f, 0f)).functions(functions).timeProvider(timeProvider).build();
 
 		System.out.println("Transition value: " + transition.get());
 

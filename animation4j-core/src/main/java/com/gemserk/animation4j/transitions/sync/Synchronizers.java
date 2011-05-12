@@ -5,13 +5,17 @@ import com.gemserk.animation4j.transitions.event.TransitionEventHandler;
 
 public class Synchronizers {
 
-	private static Synchronizer synchronizer = new Synchronizer();
+	private static final Synchronizer synchronizer = new Synchronizer();
+	
+	public static Synchronizer getInstance() {
+		return synchronizer;
+	}
 
 	/**
 	 * Performs the synchronization of all the objects with the corresponding transitions registered by calling transition() method.
 	 */
 	public static void synchronize() {
-		synchronizer.synchronize();
+		getInstance().synchronize();
 	}
 
 	/**
@@ -25,7 +29,7 @@ public class Synchronizers {
 	 *            The transition to synchronize with the object field.
 	 */
 	public static void transition(Object object, String field, Transition transition) {
-		synchronizer.transition(object, field, transition);
+		getInstance().transition(object, field, transition);
 	}
 
 	/**
@@ -37,7 +41,7 @@ public class Synchronizers {
 	 *            The transition to use to modify the object.
 	 */
 	public static void transition(final Object object, final Transition transition) {
-		synchronizer.transition(object, transition);
+		getInstance().transition(object, transition);
 	}
 
 	/**
@@ -51,7 +55,7 @@ public class Synchronizers {
 	 *            The event handler to handle Transition status change events.
 	 */
 	public static void transition(Object object, Transition transition, TransitionEventHandler transitionEventHandler) {
-		synchronizer.transition(object, transition, transitionEventHandler);
+		getInstance().transition(object, transition, transitionEventHandler);
 	}
 
 }

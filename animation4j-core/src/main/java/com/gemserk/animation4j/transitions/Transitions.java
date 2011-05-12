@@ -10,23 +10,21 @@ import com.gemserk.animation4j.time.SystemTimeProvider;
 import com.gemserk.animation4j.time.TimeProvider;
 
 /**
- * Provides an easy way to build transitions.
+ * Transitions factory provides a TransitionBuilder to specify Transitions in an easy way.
  * 
  * @author acoppes
  */
 public class Transitions {
 
-	public static TimeProvider timeProvider = new SystemTimeProvider();
-
 	private static final TransitionBuilder transitionBuilder = new TransitionBuilder();
 
 	/**
-	 * Provides an easy way to build a transition.
+	 * Provides an easy way to specify all the different values of a transition and to build it.
 	 */
 	public static class TransitionBuilder<T> {
 
 		private static final TimeProvider systemTypeProvider = new SystemTimeProvider();
-		
+
 		private static final float defaultTransitionSpeed = 1f;
 
 		private T startValue;
@@ -133,14 +131,11 @@ public class Transitions {
 	 * Creates a new transition builder to let the user create a transition in an easy way.
 	 */
 	public static <T> TransitionBuilder<T> transitionBuilder(T startValue) {
-		// if we need to create a pool of builders or something, this is where to do that.
-		// TransitionBuilder<T> transitionBuilder = new TransitionBuilder<T>();
-		transitionBuilder.timeProvider(timeProvider);
 		return transitionBuilder.start(startValue);
 	}
-	
+
 	/**
-	 * Creates a new transition builder to let the user create a transition in an easy way.
+	 * Creates a new transition builder to let the user create a transition in an easy way, it uses as start value the current value of the field of the specified object.
 	 */
 	public static <T> TransitionBuilder<T> transitionBuilder(Object object, String field) {
 		return (TransitionBuilder<T>) transitionBuilder(ReflectionUtils.getFieldValue(object, field));
