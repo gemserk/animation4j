@@ -2,6 +2,12 @@ package com.gemserk.animation4j.transitions.sync;
 
 import java.util.ArrayList;
 
+/**
+ * Handles synchronization of a collection of object synchronizers.
+ * 
+ * @author acoppes
+ * 
+ */
 public class SynchronizedTransitionManager {
 
 	private ArrayList<TransitionObjectSynchronizer> synchronizers;
@@ -25,7 +31,6 @@ public class SynchronizedTransitionManager {
 			if (synchronizer.isFinished())
 				removeSynchronizers.add(synchronizer);
 		}
-
 		synchronizers.removeAll(removeSynchronizers);
 	}
 

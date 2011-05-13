@@ -7,12 +7,24 @@ import com.gemserk.animation4j.transitions.event.TransitionEventHandler;
 import com.gemserk.animation4j.transitions.event.TransitionMonitorBuilder;
 
 public class Synchronizer {
+	
+	private class ObjectSynchronizerProvider {
+		public TransitionReflectionObjectSynchronizer getReflectionObjectSynchronizer(Object object, String field, Transition transition) {
+			return new TransitionReflectionObjectSynchronizer(transition, object, field);
+		}
 
+		public TransitionDirectObjectSynchronizer getObjectSynchronizer(Object object, Transition transition) {
+			return new TransitionDirectObjectSynchronizer(object, transition);
+		}
+	}
+	
 	private SynchronizedTransitionManager synchronizedTransitionManager = new SynchronizedTransitionManager();
 
 	private TransitionHandlersManager transitionHandlersManager = new TransitionHandlersManager();
 
 	private TransitionMonitorBuilder transitionMonitorBuilder = new TransitionMonitorBuilder();
+	
+	private ObjectSynchronizerProvider objectSynchronizerProvider = new ObjectSynchronizerProvider();
 
 	/**
 	 * Used internally to synchronize correctly when calling synchronize(delta) method, a restriction however is it will only work for all Transitions registered using a TransitionBuilder.
@@ -59,7 +71,15 @@ public class Synchronizer {
 	 *            The transition to synchronize with the object field.
 	 */
 	private void transition(Object object, String field, Transition transition) {
-		synchronizedTransitionManager.handle(new TransitionReflectionObjectSynchronizer(transition, object, field));
+		synchronizedTransitionManager.handle(getReflectionObjectSynchronizer(object, field, transition));
+	}
+	
+	private TransitionReflectionObjectSynchronizer getReflectionObjectSynchronizer(Object object, String field, Transition transition) {
+		return objectSynchronizerProvider.getReflectionObjectSynchronizer(object, field, transition);
+	}
+
+	private TransitionDirectObjectSynchronizer getObjectSynchronizer(Object object, Transition transition) {
+		return objectSynchronizerProvider.getObjectSynchronizer(object, transition);
 	}
 
 	/**
@@ -84,8 +104,8 @@ public class Synchronizer {
 	 * @param transition
 	 *            The transition to use to modify the object.
 	 */
-	private void transition(final Object object, final Transition transition) {
-		synchronizedTransitionManager.handle(new TransitionDirectObjectSynchronizer(object, transition));
+	private void transition(Object object, Transition transition) {
+		synchronizedTransitionManager.handle(getObjectSynchronizer(object, transition));
 	}
 
 	/**
