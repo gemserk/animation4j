@@ -2,7 +2,10 @@ package com.gemserk.animation4j.transitions.sync;
 
 import java.util.ArrayList;
 
+import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.transitions.Transition;
+import com.gemserk.animation4j.utils.Pool;
+import com.gemserk.animation4j.utils.Pool.PoolObjectFactory;
 
 /**
  * Handles synchronization of a collection of object synchronizers.
@@ -11,36 +14,48 @@ import com.gemserk.animation4j.transitions.Transition;
  * 
  */
 public class SynchronizedTransitionManager {
-
-	private class ObjectSynchronizerProvider {
-		
-		TransitionReflectionObjectSynchronizer getReflectionObjectSynchronizer(Object object, String field, Transition transition) {
-			return new TransitionReflectionObjectSynchronizer(transition, object, field);
+	
+	private static final PoolObjectFactory<TransitionReflectionObjectSynchronizer> reflectionSynchronizerFactory = new PoolObjectFactory<TransitionReflectionObjectSynchronizer>() {
+		@Override
+		public TransitionReflectionObjectSynchronizer createObject() {
+			return new TransitionReflectionObjectSynchronizer();
 		}
+	};
 
-		TransitionDirectObjectSynchronizer getObjectSynchronizer(Object object, Transition transition) {
-			return new TransitionDirectObjectSynchronizer(object, transition);
+	private static final PoolObjectFactory<TransitionDirectObjectSynchronizer> synchronizerFactory = new PoolObjectFactory<TransitionDirectObjectSynchronizer>() {
+		@Override
+		public TransitionDirectObjectSynchronizer createObject() {
+			return new TransitionDirectObjectSynchronizer();
 		}
-		
-	}
+	};
+
+	private Pool<TransitionReflectionObjectSynchronizer> reflectionObjectSynchronizersPool = new Pool<TransitionReflectionObjectSynchronizer>(reflectionSynchronizerFactory, 100);
+
+	private Pool<TransitionDirectObjectSynchronizer> objectSynchronizerPool = new Pool<TransitionDirectObjectSynchronizer>(synchronizerFactory, 100);
 
 	private ArrayList<TransitionObjectSynchronizer> synchronizers;
 
 	private ArrayList<TransitionObjectSynchronizer> removeSynchronizers;
-	
-	private ObjectSynchronizerProvider objectSynchronizerProvider = new ObjectSynchronizerProvider();
 
 	public SynchronizedTransitionManager() {
 		synchronizers = new ArrayList<TransitionObjectSynchronizer>();
 		removeSynchronizers = new ArrayList<TransitionObjectSynchronizer>();
 	}
-	
+
 	public void objectSynchronizer(Object object, Transition transition) {
-		handle(objectSynchronizerProvider.getObjectSynchronizer(object, transition));
+		TransitionDirectObjectSynchronizer objectSynchronizer = objectSynchronizerPool.newObject();
+		objectSynchronizer.setObject(object);
+		objectSynchronizer.setTransition(transition);
+		objectSynchronizer.setTypeConverter(Converters.converter(object.getClass()));
+		handle(objectSynchronizer);
 	}
 
 	public void reflectionObjectSynchronizer(Object object, String field, Transition transition) {
-		handle(objectSynchronizerProvider.getReflectionObjectSynchronizer(object, field, transition));
+		TransitionReflectionObjectSynchronizer objectSynchronizer = reflectionObjectSynchronizersPool.newObject();
+		objectSynchronizer.setObject(object);
+		objectSynchronizer.setFieldName(field);
+		objectSynchronizer.setTransition(transition);
+		handle(objectSynchronizer);
 	}
 
 	public void handle(TransitionObjectSynchronizer synchronizer) {
@@ -48,12 +63,20 @@ public class SynchronizedTransitionManager {
 	}
 
 	public void synchronize() {
+		removeSynchronizers.clear();
 		for (int i = 0; i < synchronizers.size(); i++) {
 			TransitionObjectSynchronizer synchronizer = synchronizers.get(i);
 			synchronizer.synchronize();
 
-			if (synchronizer.isFinished())
+			if (synchronizer.isFinished()) {
 				removeSynchronizers.add(synchronizer);
+
+				// returns objects to their pools
+				if (synchronizer instanceof TransitionReflectionObjectSynchronizer)
+					reflectionObjectSynchronizersPool.free((TransitionReflectionObjectSynchronizer) synchronizer);
+				else if (synchronizer instanceof TransitionDirectObjectSynchronizer)
+					objectSynchronizerPool.free((TransitionDirectObjectSynchronizer) synchronizer);
+			}
 		}
 		synchronizers.removeAll(removeSynchronizers);
 	}

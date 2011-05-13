@@ -1,6 +1,5 @@
 package com.gemserk.animation4j.transitions.sync;
 
-import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.transitions.Transition;
 
@@ -12,16 +11,26 @@ import com.gemserk.animation4j.transitions.Transition;
  */
 class TransitionDirectObjectSynchronizer implements TransitionObjectSynchronizer {
 
-	private final Object object;
+	private Object object;
 
-	private final Transition transition;
+	private Transition transition;
 
-	private final TypeConverter typeConverter;
-
-	public TransitionDirectObjectSynchronizer(Object object, Transition transition) {
+	private TypeConverter typeConverter;
+	
+	public void setObject(Object object) {
 		this.object = object;
+	}
+	
+	public void setTransition(Transition transition) {
 		this.transition = transition;
-		typeConverter = Converters.converter(object.getClass());
+	}
+	
+	public void setTypeConverter(TypeConverter typeConverter) {
+		this.typeConverter = typeConverter;
+	}
+
+	public TransitionDirectObjectSynchronizer() {
+
 	}
 
 	@Override

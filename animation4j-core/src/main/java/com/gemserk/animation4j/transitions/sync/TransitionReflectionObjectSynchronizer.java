@@ -10,13 +10,25 @@ import com.gemserk.animation4j.transitions.Transition;
  */
 public class TransitionReflectionObjectSynchronizer implements TransitionObjectSynchronizer {
 
-	private final Transition<?> transition;
+	private static final ReflectionObjectSynchronizer reflectionObjectSynchronizer = new ReflectionObjectSynchronizer();
 
-	private ReflectionObjectSynchronizer reflectionObjectSynchronizer;
+	private Transition<?> transition;
 
-	private final String fieldName;
+	private String fieldName;
 
-	private final Object object;
+	private Object object;
+	
+	public void setObject(Object object) {
+		this.object = object;
+	}
+	
+	public void setFieldName(String fieldName) {
+		this.fieldName = fieldName;
+	}
+	
+	public void setTransition(Transition<?> transition) {
+		this.transition = transition;
+	}
 
 	/**
 	 * @param transition
@@ -30,7 +42,10 @@ public class TransitionReflectionObjectSynchronizer implements TransitionObjectS
 		this.transition = transition;
 		this.object = object;
 		this.fieldName = fieldName;
-		reflectionObjectSynchronizer = new ReflectionObjectSynchronizer();
+	}
+	
+	public TransitionReflectionObjectSynchronizer() {
+		
 	}
 
 	@Override
