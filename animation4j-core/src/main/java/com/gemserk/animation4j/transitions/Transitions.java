@@ -41,7 +41,7 @@ public class Transitions {
 
 		private TimeProvider timeProvider;
 
-		public TransitionBuilder() {
+		TransitionBuilder() {
 			reset();
 		}
 
@@ -96,6 +96,10 @@ public class Transitions {
 			return this;
 		}
 
+		public boolean isStartValueSet() {
+			return startValue != null;
+		}
+
 		/**
 		 * Builds and returns the Transition<T> using the specified builder parameters.
 		 */
@@ -116,16 +120,19 @@ public class Transitions {
 		}
 
 		private Interpolator<float[]> getInterpolator() {
-			Interpolator<float[]> interpolator = null;
-
-			if (functions != null) {
-				interpolator = new FloatArrayInterpolator(typeConverter.variables(), functions);
-			} else {
-				interpolator = new FloatArrayInterpolator(typeConverter.variables());
-			}
-			return interpolator;
+			if (functions != null)
+				return new FloatArrayInterpolator(typeConverter.variables(), functions);
+			else
+				return new FloatArrayInterpolator(typeConverter.variables());
 		}
 
+	}
+
+	/**
+	 * Creates a new transition builder to let the user create a transition in an easy way.
+	 */
+	public static TransitionBuilder transitionBuilder() {
+		return transitionBuilder;
 	}
 
 	/**

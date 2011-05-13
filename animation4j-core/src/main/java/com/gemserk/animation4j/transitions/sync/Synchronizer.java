@@ -97,6 +97,8 @@ public class Synchronizer {
 	 *            the TransitionBuilder used to build internally the transition.
 	 */
 	public void transition(Object object, TransitionBuilder transitionBuilder) {
+		if (!transitionBuilder.isStartValueSet())
+			transitionBuilder.start(object);
 		transition(object, transitionBuilder.timeProvider(timeProvider).build());
 	}
 
@@ -126,6 +128,8 @@ public class Synchronizer {
 	 *            The event handler to handle Transition status change events.
 	 */
 	public void transition(Object object, TransitionBuilder transitionBuilder, TransitionEventHandler transitionEventHandler) {
+		if (!transitionBuilder.isStartValueSet())
+			transitionBuilder.start(object);
 		transition(object, transitionBuilder.timeProvider(timeProvider).build(), transitionEventHandler);
 	}
 

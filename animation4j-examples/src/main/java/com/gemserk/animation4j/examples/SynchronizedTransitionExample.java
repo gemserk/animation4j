@@ -41,10 +41,10 @@ public class SynchronizedTransitionExample {
 		
 		MyObject myObject = new MyObject();
 		
-		synchronizer.transition(myObject.position, Transitions.transitionBuilder(myObject.position)
+		synchronizer.transition(myObject.position, Transitions.transitionBuilder()
 				.end(new Vector2f(50, 50))
 				.time(500));
-		synchronizer.transition(myObject.size, Transitions.transitionBuilder(myObject.size)
+		synchronizer.transition(myObject.size, Transitions.transitionBuilder()
 				.end(new Vector2f(1, 1))
 				.time(500));
 		
