@@ -2,13 +2,14 @@ package com.gemserk.animation4j.transitions.event;
 
 import com.gemserk.animation4j.transitions.Transition;
 
-@SuppressWarnings("rawtypes") class MockTransitionEventHandler extends TransitionEventHandler {
+@SuppressWarnings("rawtypes")
+public class MockTransitionEventHandler extends TransitionEventHandler {
 
-	boolean onTransitionFinishedCalled = false;
+	public boolean onTransitionFinishedCalled = false;
 
-	boolean onTransitionStartedCalled = false;
+	public boolean onTransitionStartedCalled = false;
 
-	Transition transition = null;
+	public Transition transition = null;
 
 	@Override
 	public void onTransitionFinished(Transition transition) {

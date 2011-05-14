@@ -4,7 +4,6 @@ import com.gemserk.animation4j.time.UpdateableTimeProvider;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions.TransitionBuilder;
 import com.gemserk.animation4j.transitions.event.TransitionEventHandler;
-import com.gemserk.animation4j.transitions.event.TransitionMonitorBuilder;
 
 public class Synchronizer {
 
@@ -12,8 +11,6 @@ public class Synchronizer {
 
 	private TransitionHandlersManager transitionHandlersManager = new TransitionHandlersManager();
 
-	private TransitionMonitorBuilder transitionMonitorBuilder = new TransitionMonitorBuilder();
-	
 	/**
 	 * Used internally to synchronize correctly when calling synchronize(delta) method, a restriction however is it will only work for all Transitions registered using a TransitionBuilder.
 	 */
@@ -75,6 +72,22 @@ public class Synchronizer {
 	public void transition(Object object, String field, TransitionBuilder transitionBuilder) {
 		this.transition(object, field, transitionBuilder.timeProvider(timeProvider).build());
 	}
+	
+	/**
+	 * Starts a transition and a synchronizer to modify the specified object's field through the transition.
+	 * 
+	 * @param object
+	 *            The container of the field to be modified.
+	 * @param field
+	 *            The name of the field which contains the object to be modified.
+	 * @param transitionBuilder
+	 *            the TransitionBuilder used to build internally the transition.
+	 */
+	public void transition(Object object, String field, TransitionBuilder transitionBuilder, TransitionEventHandler transitionEventHandler) {
+		Transition transition = transitionBuilder.timeProvider(timeProvider).build();
+		this.transition(object, field, transition);
+		transitionHandlersManager.handle(transition, transitionEventHandler);
+	}
 
 	/**
 	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
@@ -114,7 +127,7 @@ public class Synchronizer {
 	 */
 	private void transition(Object object, Transition transition, TransitionEventHandler transitionEventHandler) {
 		transition(object, transition);
-		transitionHandlersManager.handle(transitionMonitorBuilder.with(transitionEventHandler).monitor(transition).build());
+		transitionHandlersManager.handle(transition, transitionEventHandler);
 	}
 
 	/**

@@ -23,6 +23,10 @@ public class TransitionMonitorProcessor {
 		this.transitionMonitor = transitionMonitor;
 	}
 	
+	public TransitionMonitor getTransitionMonitor() {
+		return transitionMonitor;
+	}
+	
 	public void setFinished(boolean finished) {
 		this.finished = finished;
 	}
