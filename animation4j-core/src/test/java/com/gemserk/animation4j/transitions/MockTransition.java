@@ -28,11 +28,6 @@ public class MockTransition<T> implements Transition<T> {
 
 	}
 
-	@Override
-	public boolean isTransitioning() {
-		return transitioning;
-	}
-	
 	public void setFinished(boolean finished) {
 		this.finished = finished;
 	}
@@ -47,7 +42,7 @@ public class MockTransition<T> implements Transition<T> {
 	}
 
 	@Override
-	public boolean isFinihsed() {
+	public boolean isFinished() {
 		return finished;
 	}
 

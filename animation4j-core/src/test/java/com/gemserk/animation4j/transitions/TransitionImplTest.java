@@ -81,25 +81,38 @@ public class TransitionImplTest {
 	}
 
 	@Test
-	public void shouldNotBeInTransitionWhenCreated() {
+	public void shouldNotBeStartedWhenCreated() {
 		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f, timeProvider);
-		assertThat(transition.isTransitioning(), IsEqual.equalTo(false));
+		assertThat(transition.isStarted(), IsEqual.equalTo(false));
 	}
-	
+
 	@Test
-	public void shouldBeInTransitionWhenTimeHasNotPassedButSetCalled() {
+	public void shouldBeFinishedWhenCreated() {
+		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f, timeProvider);
+		assertThat(transition.isFinished(), IsEqual.equalTo(true));
+	}
+
+	@Test
+	public void shouldBeStartedWhenTimeHasNotPassedButSetCalled() {
 		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f, timeProvider);
 		transition.set(500f, 2000);
-		assertThat(transition.isTransitioning(), IsEqual.equalTo(true));
+		assertThat(transition.isStarted(), IsEqual.equalTo(true));
 	}
-	
+
+	@Test
+	public void shouldNotBeFinishedWhenTimeHasNotPassedButSetCalled() {
+		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f, timeProvider);
+		transition.set(500f, 2000);
+		assertThat(transition.isFinished(), IsEqual.equalTo(false));
+	}
+
 	@Test
 	public void shouldKeepBeingInTransitionWhenTwoOrMoreSetCalled() {
 		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f, timeProvider);
 		transition.set(500f, 1000);
 		timeProvider.update(500);
 		transition.set(250f, 1000);
-		assertThat(transition.isTransitioning(), IsEqual.equalTo(true));
+		assertThat(transition.isFinished(), IsEqual.equalTo(false));
 	}
 	
 	@Test
@@ -107,7 +120,7 @@ public class TransitionImplTest {
 		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f, timeProvider);
 		transition.set(500f, 1000);
 		timeProvider.update(1000);
-		assertThat(transition.isTransitioning(), IsEqual.equalTo(false));
+		assertThat(transition.isFinished(), IsEqual.equalTo(true));
 	}
 
 }

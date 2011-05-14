@@ -40,7 +40,7 @@ public class TransitionMonitor {
 
 	public void update() {
 		boolean started = transition.isStarted();
-		boolean finished = transition.isFinihsed();
+		boolean finished = transition.isFinished();
 		
 		callOnStart = !wasStarted && started;
 		callOnFinish = !wasFinished && finished;

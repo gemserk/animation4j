@@ -55,7 +55,7 @@ public class TransitionReflectionObjectSynchronizer implements TransitionObjectS
 
 	@Override
 	public boolean isFinished() {
-		return transition.isFinihsed();
+		return transition.isFinished();
 	}
 
 }

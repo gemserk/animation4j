@@ -34,12 +34,13 @@ public interface Transition<T> {
 	void set(T t, int time);
 
 	/**
-	 * Returns true whenever the transition is being performed from one value to another, false otherwise.
-	 * 
+	 * Returns true whenever the transition was started, false otherwise.
 	 */
-	boolean isTransitioning();
-	
 	boolean isStarted();
+
+	/**
+	 * Returns true whenever the transition was finished, false otherwise.
+	 */
+	boolean isFinished();
 	
-	boolean isFinihsed();
 }
