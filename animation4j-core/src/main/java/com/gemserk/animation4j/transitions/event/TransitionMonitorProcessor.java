@@ -1,5 +1,7 @@
 package com.gemserk.animation4j.transitions.event;
 
+import com.gemserk.animation4j.transitions.Transition;
+
 /**
  * Calls a TransitionEventHandler whenever a monitored Transition changes its state.
  * 
@@ -23,16 +25,18 @@ public class TransitionMonitorProcessor {
 		this.transitionMonitor = transitionMonitor;
 	}
 	
-	public TransitionMonitor getTransitionMonitor() {
-		return transitionMonitor;
-	}
-	
 	public void setFinished(boolean finished) {
 		this.finished = finished;
 	}
 	
 	public boolean isFinished() {
 		return finished;
+	}
+	
+	public void process(Transition transition, TransitionEventHandler transitionEventHandler) {
+		finished = false;
+		this.transitionMonitor.monitor(transition);
+		this.transitionEventHandler = transitionEventHandler;
 	}
 
 	@SuppressWarnings("unchecked")

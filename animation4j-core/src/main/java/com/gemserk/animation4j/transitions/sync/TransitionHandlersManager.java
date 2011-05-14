@@ -36,8 +36,7 @@ public class TransitionHandlersManager {
 	 */
 	public void handle(Transition transition, TransitionEventHandler transitionEventHandler) {
 		TransitionMonitorProcessor transitionMonitorProcessor = monitorProcessorPool.newObject();
-		transitionMonitorProcessor.getTransitionMonitor().monitor(transition);
-		transitionMonitorProcessor.setTransitionEventHandler(transitionEventHandler);
+		transitionMonitorProcessor.process(transition, transitionEventHandler);
 		transitionMonitorProcessors.add(transitionMonitorProcessor);
 	}
 
@@ -45,13 +44,14 @@ public class TransitionHandlersManager {
 	 * Updates all internal monitors to detect changes in transitions and call all registered event handlers.
 	 */
 	public void update() {
+		removeTransitionMonitorProcessors.clear();
 		for (int i = 0; i < transitionMonitorProcessors.size(); i++) {
 			TransitionMonitorProcessor transitionMonitorProcessor = transitionMonitorProcessors.get(i);
 			transitionMonitorProcessor.update();
 
 			if (transitionMonitorProcessor.isFinished()) {
-				removeTransitionMonitorProcessors.add(transitionMonitorProcessor);
 				monitorProcessorPool.free(transitionMonitorProcessor);
+				removeTransitionMonitorProcessors.add(transitionMonitorProcessor);
 			}
 		}
 		transitionMonitorProcessors.removeAll(removeTransitionMonitorProcessors);

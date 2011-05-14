@@ -41,5 +41,40 @@ public class TransitionHandlersManagerTest {
 		assertThat(mockTransitionEventHandler.onTransitionFinishedCalled, IsEqual.equalTo(true));
 
 	}
+	
+	@Test
+	public void checkSameProcessorUserTwiceShouldNotBeFinished() {
+		@SuppressWarnings("rawtypes")
+		MockTransition transition = new MockTransition();
+		MockTransitionEventHandler mockTransitionEventHandler = new MockTransitionEventHandler();
+
+		TransitionHandlersManager transitionHandlersManager = new TransitionHandlersManager();
+		transitionHandlersManager.handle(transition, mockTransitionEventHandler);
+		
+		transition.setTransitioning(false);
+		transitionHandlersManager.update();
+		transition.setTransitioning(true);
+		transitionHandlersManager.update();
+		transition.setTransitioning(false);
+		transitionHandlersManager.update();
+
+		assertThat(mockTransitionEventHandler.onTransitionFinishedCalled, IsEqual.equalTo(true));
+		
+		transition = new MockTransition();
+		mockTransitionEventHandler = new MockTransitionEventHandler();
+		
+		transitionHandlersManager.handle(transition, mockTransitionEventHandler);
+
+		transition.setTransitioning(false);
+		transitionHandlersManager.update();
+		transition.setTransitioning(true);
+		transitionHandlersManager.update();
+		transition.setTransitioning(false);
+		transitionHandlersManager.update();
+
+		assertThat(mockTransitionEventHandler.onTransitionStartedCalled, IsEqual.equalTo(true));
+		assertThat(mockTransitionEventHandler.onTransitionFinishedCalled, IsEqual.equalTo(true));
+
+	}
 
 }
