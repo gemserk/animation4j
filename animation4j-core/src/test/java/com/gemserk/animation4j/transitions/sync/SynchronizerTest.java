@@ -11,6 +11,7 @@ import com.gemserk.animation4j.Vector2f;
 import com.gemserk.animation4j.Vector2fConverter;
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.transitions.Transitions;
+import com.gemserk.animation4j.transitions.event.MockTransitionEventHandler;
 
 public class SynchronizerTest {
 
@@ -61,4 +62,16 @@ public class SynchronizerTest {
 		assertThat(object1, IsEqual.equalTo(new Vector2f(0, 0)));
 	}
 
+	@Test
+	public void shouldCallEventsEvenIfDeltaIsTooGreat() {
+		MockTransitionEventHandler mockTransitionEventHandler = new MockTransitionEventHandler();
+		Synchronizer synchronizer1 = new Synchronizer();
+		Vector2f object1 = new Vector2f(50, 50);
+		synchronizer1.transition(object1, Transitions.transitionBuilder(object1).end(new Vector2f(0f, 0f)).time(100), mockTransitionEventHandler);
+		synchronizer1.synchronize(200);
+		assertThat(object1, IsEqual.equalTo(new Vector2f(0f, 0f)));
+		assertThat(mockTransitionEventHandler.onTransitionStartedCalled, IsEqual.equalTo(true));
+		assertThat(mockTransitionEventHandler.onTransitionFinishedCalled, IsEqual.equalTo(true));
+	}
+	
 }

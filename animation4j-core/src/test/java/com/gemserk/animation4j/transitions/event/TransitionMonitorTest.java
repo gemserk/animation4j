@@ -3,6 +3,7 @@ package com.gemserk.animation4j.transitions.event;
 import static org.junit.Assert.assertThat;
 
 import org.hamcrest.core.IsEqual;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,6 +17,11 @@ public class TransitionMonitorTest {
 	@Before
 	public void startUp() {
 		Converters.register(Vector2f.class, new Vector2fConverter());
+	}
+	
+	@After
+	public void after() {
+		Converters.unregister(Vector2f.class);
 	}
 
 	@Test
@@ -53,7 +59,6 @@ public class TransitionMonitorTest {
 		assertThat(transitionMonitor.wasStarted(), IsEqual.equalTo(true));
 		transitionMonitor.update();
 		assertThat(transitionMonitor.wasStarted(), IsEqual.equalTo(false));
-
 	}
 
 	@Test

@@ -37,10 +37,8 @@ public class TransitionMonitor {
 
 	public void update() {
 		boolean transitioning = transition.isTransitioning();
-
 		wasStarted = !wasTransitioning && transitioning;
 		wasFinished = wasTransitioning && !transitioning;
-
 		wasTransitioning = transitioning;
 	}
 
