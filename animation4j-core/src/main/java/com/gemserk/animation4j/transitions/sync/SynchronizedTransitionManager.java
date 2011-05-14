@@ -70,7 +70,6 @@ public class SynchronizedTransitionManager {
 
 			if (synchronizer.isFinished()) {
 				removeSynchronizers.add(synchronizer);
-
 				// returns objects to their pools
 				if (synchronizer instanceof TransitionReflectionObjectSynchronizer)
 					reflectionObjectSynchronizersPool.free((TransitionReflectionObjectSynchronizer) synchronizer);

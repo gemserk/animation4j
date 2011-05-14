@@ -106,5 +106,5 @@ public class TransitionMonitorsHandlerTest {
 		assertThat(mockTransitionEventHandler.onTransitionFinishedCalled, IsEqual.equalTo(true));
 		assertThat(mockTransitionEventHandler.transition, IsSame.sameInstance(transition));
 	}
-
+	
 }

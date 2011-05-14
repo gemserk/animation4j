@@ -29,21 +29,24 @@ public class TransitionHandlersManagerTest {
 		
 		// I assume internal implementation here :S
 		
-		transition.setTransitioning(true);
+//		transition.setTransitioning(true);
+		transition.setStarted(true);
+		transition.setFinished(false);
 		transitionHandlersManager.update();
 
 		assertThat(mockTransitionEventHandler.onTransitionStartedCalled, IsEqual.equalTo(true));
 		assertThat(mockTransitionEventHandler.onTransitionFinishedCalled, IsEqual.equalTo(false));
 
-		transition.setTransitioning(false);
+		transition.setStarted(true);
+		transition.setFinished(true);
+//		transition.setTransitioning(false);
 		transitionHandlersManager.update();
 
 		assertThat(mockTransitionEventHandler.onTransitionFinishedCalled, IsEqual.equalTo(true));
-
 	}
 	
 	@Test
-	public void checkSameProcessorUserTwiceShouldNotBeFinished() {
+	public void checkSameProcessorUsedTwiceShouldNotBeFinished() {
 		@SuppressWarnings("rawtypes")
 		MockTransition transition = new MockTransition();
 		MockTransitionEventHandler mockTransitionEventHandler = new MockTransitionEventHandler();
@@ -51,11 +54,7 @@ public class TransitionHandlersManagerTest {
 		TransitionHandlersManager transitionHandlersManager = new TransitionHandlersManager();
 		transitionHandlersManager.handle(transition, mockTransitionEventHandler);
 		
-		transition.setTransitioning(false);
-		transitionHandlersManager.update();
-		transition.setTransitioning(true);
-		transitionHandlersManager.update();
-		transition.setTransitioning(false);
+		transition.setFinished(true);
 		transitionHandlersManager.update();
 
 		assertThat(mockTransitionEventHandler.onTransitionFinishedCalled, IsEqual.equalTo(true));
@@ -65,11 +64,8 @@ public class TransitionHandlersManagerTest {
 		
 		transitionHandlersManager.handle(transition, mockTransitionEventHandler);
 
-		transition.setTransitioning(false);
-		transitionHandlersManager.update();
-		transition.setTransitioning(true);
-		transitionHandlersManager.update();
-		transition.setTransitioning(false);
+		transition.setStarted(true);
+		transition.setFinished(true);
 		transitionHandlersManager.update();
 
 		assertThat(mockTransitionEventHandler.onTransitionStartedCalled, IsEqual.equalTo(true));

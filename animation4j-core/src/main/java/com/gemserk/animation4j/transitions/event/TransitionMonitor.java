@@ -11,21 +11,24 @@ public class TransitionMonitor {
 
 	private boolean wasFinished = false;
 
-	private boolean wasTransitioning = false;
+	private boolean callOnStart;
+
+	private boolean callOnFinish;
 
 	public void monitor(Transition transition) {
 		this.transition = transition;
 		this.wasStarted = false;
 		this.wasFinished = false;
-		this.wasTransitioning = false;
+		this.callOnFinish = false;
+		this.callOnStart = false;
 	}
 
 	public boolean wasStarted() {
-		return wasStarted;
+		return callOnStart;
 	}
 
 	public boolean wasFinished() {
-		return wasFinished;
+		return callOnFinish;
 	}
 
 	/**
@@ -36,10 +39,14 @@ public class TransitionMonitor {
 	}
 
 	public void update() {
-		boolean transitioning = transition.isTransitioning();
-		wasStarted = !wasTransitioning && transitioning;
-		wasFinished = wasTransitioning && !transitioning;
-		wasTransitioning = transitioning;
+		boolean started = transition.isStarted();
+		boolean finished = transition.isFinihsed();
+		
+		callOnStart = !wasStarted && started;
+		callOnFinish = !wasFinished && finished;
+		
+		wasStarted = started;
+		wasFinished = finished;
 	}
 
 }

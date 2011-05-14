@@ -43,6 +43,6 @@ class TransitionDirectObjectSynchronizer implements TransitionObjectSynchronizer
 
 	@Override
 	public boolean isFinished() {
-		return !transition.isTransitioning();
+		return transition.isFinihsed();
 	}
 }

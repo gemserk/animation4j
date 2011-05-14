@@ -38,4 +38,8 @@ public interface Transition<T> {
 	 * 
 	 */
 	boolean isTransitioning();
+	
+	boolean isStarted();
+	
+	boolean isFinihsed();
 }

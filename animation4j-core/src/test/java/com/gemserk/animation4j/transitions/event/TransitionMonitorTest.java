@@ -10,7 +10,10 @@ import org.junit.Test;
 import com.gemserk.animation4j.Vector2f;
 import com.gemserk.animation4j.Vector2fConverter;
 import com.gemserk.animation4j.converters.Converters;
+import com.gemserk.animation4j.time.UpdateableTimeProvider;
 import com.gemserk.animation4j.transitions.MockTransition;
+import com.gemserk.animation4j.transitions.Transition;
+import com.gemserk.animation4j.transitions.Transitions;
 
 public class TransitionMonitorTest {
 
@@ -27,6 +30,7 @@ public class TransitionMonitorTest {
 	@Test
 	public void shouldReturnTransitionNotStartedIfTransitionDidntStart() {
 		MockTransition<Vector2f> transition = new MockTransition<Vector2f>();
+		transition.setStarted(false);
 
 		TransitionMonitor transitionMonitor = new TransitionMonitor();
 		transitionMonitor.monitor(transition);
@@ -39,6 +43,7 @@ public class TransitionMonitorTest {
 	public void shouldReturnTransitionStartedIfTransitionDidStart() {
 		MockTransition<Vector2f> transition = new MockTransition<Vector2f>();
 		transition.setTransitioning(true);
+		transition.setStarted(true);
 
 		TransitionMonitor transitionMonitor = new TransitionMonitor();
 		transitionMonitor.monitor(transition);
@@ -51,6 +56,7 @@ public class TransitionMonitorTest {
 	public void shouldReturnWasStartedOnlyOnce() {
 		MockTransition<Vector2f> transition = new MockTransition<Vector2f>();
 		transition.setTransitioning(true);
+		transition.setStarted(true);
 
 		TransitionMonitor transitionMonitor = new TransitionMonitor();
 		transitionMonitor.monitor(transition);
@@ -76,29 +82,29 @@ public class TransitionMonitorTest {
 	@Test
 	public void shouldReturnTransitionFinishedIfTransitionDidFinish() {
 		MockTransition<Vector2f> transition = new MockTransition<Vector2f>();
-		transition.setTransitioning(true);
+		transition.setFinished(false);
 
 		TransitionMonitor transitionMonitor = new TransitionMonitor();
 		transitionMonitor.monitor(transition);
 		transitionMonitor.update();
 
 		assertThat(transitionMonitor.wasFinished(), IsEqual.equalTo(false));
-		transition.setTransitioning(false);
+		transition.setFinished(true);
 		transitionMonitor.update();
 		assertThat(transitionMonitor.wasFinished(), IsEqual.equalTo(true));
 	}
 
 	@Test
-	public void shouldReturnTransitionFinishedIfTransitionDidFinishOnce() {
+	public void shouldReturnTransitionFinishedIfTransitionDidFinishOnlyOnce() {
 		MockTransition<Vector2f> transition = new MockTransition<Vector2f>();
-		transition.setTransitioning(true);
+		transition.setFinished(false);
 
 		TransitionMonitor transitionMonitor = new TransitionMonitor();
 		transitionMonitor.monitor(transition);
 		transitionMonitor.update();
 
 		assertThat(transitionMonitor.wasFinished(), IsEqual.equalTo(false));
-		transition.setTransitioning(false);
+		transition.setFinished(true);
 		transitionMonitor.update();
 		assertThat(transitionMonitor.wasFinished(), IsEqual.equalTo(true));
 		transitionMonitor.update();
@@ -108,18 +114,32 @@ public class TransitionMonitorTest {
 	@Test
 	public void shouldNotPreservePreviousStatusWhenMonitorNewTransition() {
 		MockTransition<Vector2f> transition = new MockTransition<Vector2f>();
-		transition.setTransitioning(true);
+		transition.setStarted(true);
 
 		TransitionMonitor transitionMonitor = new TransitionMonitor();
 		transitionMonitor.monitor(transition);
 		transitionMonitor.update();
 
-		assertThat(transitionMonitor.wasStarted(), IsEqual.equalTo(true));
-
 		MockTransition<Vector2f> transition2 = new MockTransition<Vector2f>();
 		transitionMonitor.monitor(transition2);
 
 		assertThat(transitionMonitor.wasStarted(), IsEqual.equalTo(false));
+	}
+	
+	@Test
+	public void testMonitorChangesWhenUpdateTimeIsGreaterThanTransitionTime() {
+		UpdateableTimeProvider updateableTimeProvider = new UpdateableTimeProvider();
+
+		final TransitionMonitor transitionMonitor = new TransitionMonitor();
+		final Transition<Vector2f> transition = Transitions.transitionBuilder(new Vector2f(50, 50)).end(new Vector2f(100, 100)).time(500).timeProvider(updateableTimeProvider).build();
+		
+		transitionMonitor.monitor(transition);
+
+		updateableTimeProvider.update(1000);
+		transitionMonitor.update();
+		
+		assertThat(transitionMonitor.wasStarted(), IsEqual.equalTo(true));
+		assertThat(transitionMonitor.wasFinished(), IsEqual.equalTo(true));
 	}
 
 }

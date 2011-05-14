@@ -15,6 +15,7 @@ import com.gemserk.animation4j.Vector2fConverter;
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.time.UpdateableTimeProvider;
+import com.gemserk.animation4j.transitions.MockTransition;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
 
@@ -66,28 +67,18 @@ public class TransitionReflectionObjectSynchronizerTest {
 
 	@Test
 	public void shouldNotBeFinishedIfTransitionIsTransitioning() {
-		final Transition transition = mockery.mock(Transition.class);
+		MockTransition transition = new MockTransition();
+		transition.setFinished(false);
 		MyObject object = new MyObject();
-		mockery.checking(new Expectations() {
-			{
-				oneOf(transition).isTransitioning();
-				will(returnValue(true));
-			}
-		});
 		TransitionReflectionObjectSynchronizer synchronizer = new TransitionReflectionObjectSynchronizer(transition, object, "position");
 		assertThat(synchronizer.isFinished(), IsEqual.equalTo(false));
 	}
 
 	@Test
 	public void shouldBeFinishedIfTransitionIsNotTransitioning() {
-		final Transition transition = mockery.mock(Transition.class);
+		MockTransition transition = new MockTransition();
+		transition.setFinished(true);
 		MyObject object = new MyObject();
-		mockery.checking(new Expectations() {
-			{
-				oneOf(transition).isTransitioning();
-				will(returnValue(false));
-			}
-		});
 		TransitionReflectionObjectSynchronizer synchronizer = new TransitionReflectionObjectSynchronizer(transition, object, "position");
 		assertThat(synchronizer.isFinished(), IsEqual.equalTo(true));
 	}

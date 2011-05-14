@@ -16,6 +16,10 @@ public class TransitionImpl<T> implements Transition<T> {
 	private long lastTime;
 
 	private InternalTransition<T> transition;
+	
+	private boolean started = false;
+	
+	private boolean finished = true;
 
 	public TransitionImpl(InternalTransition<T> transition, float speed, TimeProvider timeProvider) {
 		this.speed = speed;
@@ -35,23 +39,43 @@ public class TransitionImpl<T> implements Transition<T> {
 	public void set(T t, int time) {
 		lastTime = timeProvider.getTime();
 		transition.set(t, time);
+		
+		started = false;
+		finished = false;
 	}
 
 	@Override
 	public boolean isTransitioning() {
 		updateTransition();
-		return !transition.isFinished();
+		return !finished;
+		 // return !transition.isFinished();
 	}
 
 	protected void updateTransition() {
 		long currentTime = timeProvider.getTime();
 		long delta = currentTime - lastTime;
+		
+		started = true;
 
-		if (delta <= 0)
+		if (delta <= 0) 
 			return;
 
 		float time = ((float) delta) * speed;
 		transition.update((int) (time));
 		lastTime = currentTime;
+		
+		finished = transition.isFinished();
+	}
+
+	@Override
+	public boolean isStarted() {
+		updateTransition();
+		return started;
+	}
+
+	@Override
+	public boolean isFinihsed() {
+		updateTransition();
+		return finished;
 	}
 }
