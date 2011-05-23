@@ -1,0 +1,65 @@
+package com.gemserk.animation4j.timeline;
+
+import java.util.Comparator;
+
+import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
+import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
+
+/**
+ * A key frame specifies a specific value the variable should have in a specific time.
+ * 
+ * @param <T>
+ *            The type of the variable
+ * @author acoppes
+ */
+public class KeyFrame {
+	
+	/**
+	 * Determines a way to compare key frames based on the key frame time.
+	 * 
+	 * @author acoppes
+	 */
+	static class KeyFrameComparator implements Comparator<KeyFrame> {
+		@Override
+		public int compare(KeyFrame o1, KeyFrame o2) {
+			return (int) (o1.time - o2.time);
+		}
+	}
+
+	private final float time;
+
+	private final float[] value;
+
+	private final InterpolationFunction[] functions;
+
+	public float getTime() {
+		return time;
+	}
+
+	public float[] getValue() {
+		return value;
+	}
+
+	public InterpolationFunction[] getFunctions() {
+		return functions;
+	}
+
+	public KeyFrame(float time, float[] value, InterpolationFunction... functions) {
+		this.time = time;
+		this.value = value;
+		this.functions = functions;
+	}
+
+	public float[] interpolate(float[] b, float[] out, float weight) {
+		FloatArrayInterpolator.interpolate(getValue(), b, out, weight, functions);
+		return out;
+	}
+
+	/**
+	 * Interpolates values between the current key frame and the specified key frame using the specified functions for this key frame, outputs result in out array.
+	 */
+	public float[] interpolate(KeyFrame keyFrame, float[] out, float weight) {
+		return interpolate(keyFrame.getValue(), out, weight);
+	}
+
+}

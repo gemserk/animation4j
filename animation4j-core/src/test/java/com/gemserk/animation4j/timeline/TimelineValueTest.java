@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.converters.TypeConverter;
-import com.gemserk.animation4j.timeline.TimelineValue.KeyFrame;
 
 
 public class TimelineValueTest {

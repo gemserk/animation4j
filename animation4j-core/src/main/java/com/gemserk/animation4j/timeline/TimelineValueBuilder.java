@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
-import com.gemserk.animation4j.timeline.TimelineValue.KeyFrame;
 
 /**
  * Provides an easy way to create TimelineValues.
@@ -27,7 +26,7 @@ public class TimelineValueBuilder<T> {
 
 	TypeConverter<T> typeConverter;
 
-	ArrayList<KeyFrame> keyFrames = new ArrayList<TimelineValue.KeyFrame>();
+	ArrayList<KeyFrame> keyFrames = new ArrayList<KeyFrame>();
 
 	public String getName() {
 		return name;
