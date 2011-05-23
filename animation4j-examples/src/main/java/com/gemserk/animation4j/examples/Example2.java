@@ -191,7 +191,10 @@ public class Example2 extends Java2dDesktopApplication {
 				}
 			};
 
-			texts = new String[] { "<div>We need help! The enemies are near, we cannot let them conquer our lands</div>", "<div>Now is the time, gather your forces and prepare for the battle!</div>", "<div>People <strong>trust</strong> in you!</div>", "<div>You are our last hope!</div>" };
+			texts = new String[] { "<div>We need help! The enemies are near, we cannot let them conquer our lands</div>", //
+					"<div>Now is the time, gather your forces and prepare for the battle!</div>",  //
+					"<div>People <strong>trust</strong> in you!</div>", // 
+					"<div>You are our last hope!</div>" };
 
 			currentText = 0;
 
