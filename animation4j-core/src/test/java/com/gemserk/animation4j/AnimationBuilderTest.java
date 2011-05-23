@@ -28,9 +28,8 @@ public class AnimationBuilderTest {
 
 			private TimelineValue timelineValue;
 
-			public ValueBuilder(TimelineBuilder timelineBuilder, String name) {
+			public ValueBuilder(TimelineBuilder timelineBuilder) {
 				this.timelineBuilder = timelineBuilder;
-				this.name = name;
 			}
 
 			public ValueBuilder keyframe(float time, Object value, InterpolationFunction... functions) {
@@ -44,10 +43,10 @@ public class AnimationBuilderTest {
 				return this;
 			}
 
-			// keyframe(time, float...values)
-
 			public Timeline build() {
 				values.put(this.name, this.timelineValue);
+				this.name = null;
+				this.timelineValue = null;
 				return timelineBuilder.build();
 			}
 
@@ -67,7 +66,7 @@ public class AnimationBuilderTest {
 
 		private TimelineBuilder() {
 			values = new HashMap<String, TimelineValue>();
-			valueBuilder = new ValueBuilder(this, null);
+			valueBuilder = new ValueBuilder(this);
 		}
 
 		public ValueBuilder value(String name) {
