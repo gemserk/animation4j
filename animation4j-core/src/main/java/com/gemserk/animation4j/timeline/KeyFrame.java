@@ -1,31 +1,15 @@
 package com.gemserk.animation4j.timeline;
 
-import java.util.Comparator;
-
 import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 
 /**
- * A key frame specifies a specific value the variable should have in a specific time.
+ * A key frame specifies a specific value a variable should have in a specific time.
  * 
- * @param <T>
- *            The type of the variable
  * @author acoppes
  */
 public class KeyFrame {
 	
-	/**
-	 * Determines a way to compare key frames based on the key frame time.
-	 * 
-	 * @author acoppes
-	 */
-	static class KeyFrameComparator implements Comparator<KeyFrame> {
-		@Override
-		public int compare(KeyFrame o1, KeyFrame o2) {
-			return (int) (o1.time - o2.time);
-		}
-	}
-
 	private final float time;
 
 	private final float[] value;
