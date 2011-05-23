@@ -32,6 +32,10 @@ public class Timeline {
 		return values.get(name).getValue(time);
 	}
 
+	public <T> T getValue2(float time, String name) {
+		return (T) values.get(name).getValue(time);
+	}
+	
 	/**
 	 * Returns an iterator which lets you iterate between the time line values.
 	 */

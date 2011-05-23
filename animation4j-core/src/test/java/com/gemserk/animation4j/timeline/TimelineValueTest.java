@@ -18,7 +18,7 @@ public class TimelineValueTest {
 	
 	@Test
 	public void testTimeLineValues() {
-		TimelineValue<Float> timelineValue = new TimelineValue<Float>(floatConverter);
+		TimelineValue<Float> timelineValue = new TimelineValue<Float>(null, floatConverter);
 		
 		timelineValue.addKeyFrame(new KeyFrame(0f, new float[]{10f}));
 		timelineValue.addKeyFrame(new KeyFrame(100, new float[]{20f}));
@@ -34,7 +34,7 @@ public class TimelineValueTest {
 	
 	@Test
 	public void testTimelineValuesWithOffset() {
-		TimelineValue<Float> timelineValue = new TimelineValue<Float>(floatConverter);
+		TimelineValue<Float> timelineValue = new TimelineValue<Float>(null, floatConverter);
 		
 		timelineValue.addKeyFrame(new KeyFrame(100f, new float[]{10f}));
 		timelineValue.addKeyFrame(new KeyFrame(200f, new float[]{20f}));
@@ -48,7 +48,7 @@ public class TimelineValueTest {
 	
 	@Test
 	public void shouldReturnInterpolatedValueForLastFrameKey() {
-		TimelineValue<Float> timelineValue = new TimelineValue<Float>(floatConverter);
+		TimelineValue<Float> timelineValue = new TimelineValue<Float>(null, floatConverter);
 		
 		timelineValue.addKeyFrame(new KeyFrame(0f, new float[]{10f}));
 		timelineValue.addKeyFrame(new KeyFrame(100, new float[]{20f}));
@@ -60,13 +60,13 @@ public class TimelineValueTest {
 	
 	@Test
 	public void shouldReturnNullWhenNoKeyFrames() {
-		TimelineValue<Float> timelineValue = new TimelineValue<Float>(floatConverter);
+		TimelineValue<Float> timelineValue = new TimelineValue<Float>(null, floatConverter);
 		assertThat(timelineValue.getValue(0f), IsNull.nullValue());
 	}
 	
 	@Test
 	public void shouldReturnUniqueValueWhenOnlyOneValue() {
-		TimelineValue<Float> timelineValue = new TimelineValue<Float>(floatConverter);
+		TimelineValue<Float> timelineValue = new TimelineValue<Float>(null, floatConverter);
 		timelineValue.addKeyFrame(new KeyFrame(0f, new float[]{10f}));
 		assertThat(timelineValue.getValue(-1f), IsEqual.equalTo(10f));
 		assertThat(timelineValue.getValue(0f), IsEqual.equalTo(10f));
@@ -75,7 +75,7 @@ public class TimelineValueTest {
 	
 	@Test
 	public void testGetFrame() {
-		TimelineValue<Float> timelineValue = new TimelineValue<Float>(floatConverter);
+		TimelineValue<Float> timelineValue = new TimelineValue<Float>(null, floatConverter);
 		
 		KeyFrame firstKeyFrame = new KeyFrame(0f, new float[]{10f});
 		KeyFrame secondKeyFrame = new KeyFrame(100, new float[]{20f});
@@ -93,7 +93,7 @@ public class TimelineValueTest {
 	
 	@Test
 	public void testGetPreviousFrame() {
-		TimelineValue<Float> timelineValue = new TimelineValue<Float>(floatConverter);
+		TimelineValue<Float> timelineValue = new TimelineValue<Float>(null, floatConverter);
 		
 		KeyFrame firstKeyFrame = new KeyFrame(0f, new float[]{10f});
 		KeyFrame secondKeyFrame = new KeyFrame(100, new float[]{20f});

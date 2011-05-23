@@ -35,7 +35,7 @@ public class TimelineIteratorTest {
 	@Test
 	public void hasNextShouldBeTrueWhenNotEmptyValues() {
 		final HashMap<String, TimelineValue> values = new HashMap<String, TimelineValue>();
-		values.put("x", new TimelineValue(Converters.floatValue()));
+		values.put("x", new TimelineValue(null, Converters.floatValue()));
 		TimelineIterator timelineIterator = new TimelineIterator(values);
 		assertTrue(timelineIterator.hasNext());
 	}
@@ -45,8 +45,8 @@ public class TimelineIteratorTest {
 	public void nextShouldReturnFirstElement() {
 		final HashMap<String, TimelineValue> values = new HashMap<String, TimelineValue>();
 
-		final TimelineValue firstTimelineValue = new TimelineValue(Converters.floatValue());
-		final TimelineValue secondTimelineValue = new TimelineValue(Converters.floatValue());
+		final TimelineValue firstTimelineValue = new TimelineValue(null, Converters.floatValue());
+		final TimelineValue secondTimelineValue = new TimelineValue(null, Converters.floatValue());
 
 		values.put("a", firstTimelineValue);
 		values.put("b", secondTimelineValue);

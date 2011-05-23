@@ -14,33 +14,30 @@ import com.gemserk.animation4j.converters.TypeConverter;
  */
 public class TimelineValue<T> {
 
-	LinkedList<KeyFrame> keyFrames = new LinkedList<KeyFrame>();
-
-	String name;
-
 	private final TypeConverter<T> typeConverter;
+	
+	private final float[] x;
 
-	private float[] x;
+	private final LinkedList<KeyFrame> keyFrames;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	private final String name;
+
+	private T currentValue;
 
 	public String getName() {
 		return name;
 	}
 
-	TimelineValue(TypeConverter<T> typeConverter) {
+	public TimelineValue(String name, TypeConverter<T> typeConverter) {
+		this.name = name;
 		this.typeConverter = typeConverter;
+		this.x = new float[typeConverter.variables()];
+		keyFrames = new LinkedList<KeyFrame>();
 	}
 
 	public void addKeyFrame(KeyFrame keyFrame) {
 		keyFrames.add(keyFrame);
-		if (x == null)
-			x = new float[keyFrame.getValue().length];
 	}
-
-	private T currentValue;
 
 	/**
 	 * Returns the value for the given time, interpolating between corresponding key frames.

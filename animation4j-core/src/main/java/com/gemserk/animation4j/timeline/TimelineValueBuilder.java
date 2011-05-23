@@ -48,8 +48,7 @@ public class TimelineValueBuilder<T> {
 	 * Builds and returns the being specified time line value.
 	 */
 	public TimelineValue<T> build() {
-		TimelineValue<T> timelineValue = new TimelineValue<T>(typeConverter);
-		timelineValue.setName(name);
+		TimelineValue<T> timelineValue = new TimelineValue<T>(name, typeConverter);
 		for (int i = 0; i < keyFrames.size(); i++)
 			timelineValue.addKeyFrame(keyFrames.get(i));
 		return timelineValue;
