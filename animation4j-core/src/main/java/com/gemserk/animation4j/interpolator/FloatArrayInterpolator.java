@@ -66,7 +66,7 @@ public class FloatArrayInterpolator implements Interpolator<float[]> {
 	
 	public static void interpolate(float[]a, float[]b, float[] out, float t, InterpolationFunction... functions) {
 		for (int i = 0; i < out.length; i++) {
-			if (i < functions.length)
+			if (functions != null && i < functions.length)
 				t = functions[i].interpolate(t);
 			else
 				t = InterpolationFunctions.linear().interpolate(t);

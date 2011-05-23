@@ -1,7 +1,5 @@
 package com.gemserk.animation4j;
 
-import org.junit.Test;
-
 import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
 import com.gemserk.animation4j.transitions.Transitions;
@@ -89,7 +87,6 @@ public class AnimationBuilderTest {
 
 	}
 
-	@Test
 	public void test() {
 
 		Vector2f v = new Vector2f(50f, 50f);

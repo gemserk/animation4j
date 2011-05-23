@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.converters.TypeConverter;
-import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
-import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 import com.gemserk.animation4j.timeline.TimelineValue.KeyFrame;
 
@@ -70,9 +68,9 @@ public class TimelineValueBuilder<T> {
 		if (typeConverter == null)
 			typeConverter = (TypeConverter) Converters.converter(value.getClass());
 
-		Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables());
+		// Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables());
 
-		KeyFrame keyFrame = new KeyFrame(time, typeConverter.copyFromObject(value, null), interpolator);
+		KeyFrame keyFrame = new KeyFrame(time, typeConverter.copyFromObject(value, null));
 		this.keyFrames.add(keyFrame);
 
 		duration = Math.max(duration, time);
@@ -93,9 +91,9 @@ public class TimelineValueBuilder<T> {
 		if (typeConverter == null)
 			typeConverter = (TypeConverter) Converters.converter(value.getClass());
 
-		Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables(), functions);
+		// Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables(), functions);
 
-		KeyFrame keyFrame = new KeyFrame(time, typeConverter.copyFromObject(value, null), interpolator);
+		KeyFrame keyFrame = new KeyFrame(time, typeConverter.copyFromObject(value, null), functions);
 		this.keyFrames.add(keyFrame);
 
 		duration = Math.max(duration, time);

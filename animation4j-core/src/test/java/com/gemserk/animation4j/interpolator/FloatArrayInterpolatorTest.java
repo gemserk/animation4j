@@ -39,5 +39,14 @@ public class FloatArrayInterpolatorTest {
 		assertThat(c[1], IsEqual.equalTo(0.3f));
 	}
 
+	@Test
+	public void staticInterpolationTest3() {
+		float a[] = new float[] {0f};
+		float b[] = new float[] {1f};
+		float c[] = new float[1];
+		FloatArrayInterpolator.interpolate(a, b, c, 0.5f, null);
+		assertThat(c[0], IsEqual.equalTo(0.5f));
+	}
+
 
 }
