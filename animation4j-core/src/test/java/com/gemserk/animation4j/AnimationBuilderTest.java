@@ -8,6 +8,30 @@ import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 
 public class AnimationBuilderTest {
+	
+	class Timeline {
+		
+		class Keyframe {
+			
+			float[] value;
+			
+			int time;
+			
+			InterpolationFunction[] functions;
+			
+		}
+		
+		Keyframe[] keyframes;
+		
+		public Timeline(Keyframe[] keyframes) {
+			
+		}
+		
+		Keyframe getKeyframe(int time) {
+			return null;
+		}
+		
+	}
 
 	class AnimationBuilder {
 

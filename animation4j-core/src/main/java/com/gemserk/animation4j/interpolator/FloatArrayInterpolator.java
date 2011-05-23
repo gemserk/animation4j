@@ -63,5 +63,15 @@ public class FloatArrayInterpolator implements Interpolator<float[]> {
 		}
 		return x;
 	}
+	
+	public static void interpolate(float[]a, float[]b, float[] out, float t, InterpolationFunction... functions) {
+		for (int i = 0; i < out.length; i++) {
+			if (i < functions.length)
+				t = functions[i].interpolate(t);
+			else
+				t = InterpolationFunctions.linear().interpolate(t);
+			out[i] = a[i] * (1 - t) + b[i] * t;
+		}
+	}
 
 }
