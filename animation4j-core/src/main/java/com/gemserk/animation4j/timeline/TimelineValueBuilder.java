@@ -66,8 +66,8 @@ public class TimelineValueBuilder<T> {
 	public TimelineValueBuilder<T> keyFrame(float time, T value) {
 		if (typeConverter == null)
 			typeConverter = (TypeConverter) Converters.converter(value.getClass());
-
-		// Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables());
+		
+		// TODO: do not allow time less than last time to avoid defining key frames between other key frames. 
 
 		KeyFrame keyFrame = new KeyFrame(time, typeConverter.copyFromObject(value, null));
 		this.keyFrames.add(keyFrame);
@@ -89,8 +89,6 @@ public class TimelineValueBuilder<T> {
 	public TimelineValueBuilder<T> keyFrame(float time, T value, InterpolationFunction... functions) {
 		if (typeConverter == null)
 			typeConverter = (TypeConverter) Converters.converter(value.getClass());
-
-		// Interpolator<float[]> interpolator = new FloatArrayInterpolator(typeConverter.variables(), functions);
 
 		KeyFrame keyFrame = new KeyFrame(time, typeConverter.copyFromObject(value, null), functions);
 		this.keyFrames.add(keyFrame);

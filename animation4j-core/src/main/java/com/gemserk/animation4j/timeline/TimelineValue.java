@@ -50,50 +50,49 @@ public class TimelineValue<T> {
 	 * @return An interpolated value based on corresponding to specified time key frames.
 	 */
 	public T getValue(float time) {
+		if (keyFrames.isEmpty())
+			return null;
 		float[] value = getFloatValue(time);
 		currentValue = typeConverter.copyToObject(currentValue, value);
 		return currentValue;
 	}
 
 	float[] getFloatValue(float time) {
+		KeyFrame keyFrame = getKeyFrame(time);
+		KeyFrame previousKeyFrame = getPreviousKeyFrame(keyFrame);
+
+		if (previousKeyFrame == null)
+			return keyFrame.getValue();
+
+		float interval = keyFrame.getTime() - previousKeyFrame.getTime();
+		float weight = (time - previousKeyFrame.getTime()) / interval;
+
+		return previousKeyFrame.interpolate(keyFrame, x, weight);
+	}
+
+	KeyFrame getKeyFrame(float time) {
+		if (keyFrames.size() == 1)
+			return keyFrames.getFirst();
+
 		KeyFrame firstKeyFrame = keyFrames.getFirst();
 
-		if (time <= firstKeyFrame.getTime()) {
-			if (keyFrames.size() == 1)
-				return firstKeyFrame.getValue();
-
-			KeyFrame secondKeyFrame = keyFrames.get(1);
-
-			return firstKeyFrame.interpolate(secondKeyFrame, x, 0f);
-		}
+		if (time < firstKeyFrame.getTime())
+			return firstKeyFrame;
 
 		for (int i = 0; i < keyFrames.size(); i++) {
-
 			KeyFrame currentKeyFrame = keyFrames.get(i);
-
-			if (currentKeyFrame.getTime() > time) {
-
-				KeyFrame previousKeyFrame = keyFrames.get(i - 1);
-
-				if (previousKeyFrame == null)
-					throw new RuntimeException("invalid time " + time);
-
-				float interval = currentKeyFrame.getTime() - previousKeyFrame.getTime();
-
-				float weight = (time - previousKeyFrame.getTime()) / interval;
-
-				return previousKeyFrame.interpolate(currentKeyFrame, x, weight);
-			}
-
+			if (currentKeyFrame.getTime() > time)
+				return currentKeyFrame;
 		}
 
-		if (keyFrames.size() == 1)
-			return keyFrames.getLast().getValue();
+		return keyFrames.getLast();
+	}
 
-		KeyFrame secondLastFrame = keyFrames.get(keyFrames.size() - 2);
-		KeyFrame lastFrame = keyFrames.getLast();
-
-		return secondLastFrame.interpolate(lastFrame, x, 1);
+	KeyFrame getPreviousKeyFrame(KeyFrame keyFrame) {
+		int currentKeyFrameIndex = keyFrames.indexOf(keyFrame);
+		if (currentKeyFrameIndex - 1 < 0)
+			return null;
+		return keyFrames.get(currentKeyFrameIndex - 1);
 	}
 
 }
