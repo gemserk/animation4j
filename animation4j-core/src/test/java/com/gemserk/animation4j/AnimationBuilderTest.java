@@ -20,10 +20,8 @@ public class AnimationBuilderTest {
 
 	public static class TimelineBuilder {
 
-		private HashMap<String, TimelineValue> values;
-
 		private class ValueBuilder {
-
+			
 			private final TimelineBuilder timelineBuilder;
 
 			private String name;
@@ -54,20 +52,26 @@ public class AnimationBuilderTest {
 			}
 
 			public ValueBuilder value(String name) {
-				values.put(this.name, this.timelineValue);
+				if (name != null)
+					values.put(this.name, this.timelineValue);
 				this.name = name;
 				this.timelineValue = null;
 				return this;
 			}
 
 		}
+		
+		private HashMap<String, TimelineValue> values;
+		
+		private ValueBuilder valueBuilder;
 
 		private TimelineBuilder() {
 			values = new HashMap<String, TimelineValue>();
+			valueBuilder = new ValueBuilder(this, null);
 		}
 
 		public ValueBuilder value(String name) {
-			return new ValueBuilder(this, name);
+			return valueBuilder.value(name);
 		}
 
 		public Timeline build() {
