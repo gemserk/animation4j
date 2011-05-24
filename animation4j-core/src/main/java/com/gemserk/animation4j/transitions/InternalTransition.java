@@ -4,10 +4,8 @@ import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.interpolator.Interpolator;
 
 class InternalTransition<T> {
-
-	private int totalTime;
-
-	private int currentTime;
+	
+	private final TimeTransition timeTransition = new TimeTransition();
 
 	private int defaultTime;
 
@@ -49,13 +47,9 @@ class InternalTransition<T> {
 
 	public void set(T t, int time) {
 		this.desiredValue = typeConverter.copyFromObject(t, desiredValue);
-		this.totalTime = time;
-		
+		timeTransition.start(time);
 		if (currentValue != null)
 			copyArray(startValue, currentValue);
-		
-		this.currentTime = 0;
-		
 		if (time == 0)
 			this.currentValue = interpolator.interpolate(startValue, desiredValue, 1f);
 	}
@@ -67,22 +61,15 @@ class InternalTransition<T> {
 	public void update(int time) {
 		if (isFinished())
 			return;
-
-		currentTime += time;
-
-		if (currentTime > totalTime)
-			currentTime = totalTime;
-
+		timeTransition.update(time);
 		if (desiredValue == null)
 			return;
-
-		float alpha = (float) currentTime / (float) totalTime;
-
+		float alpha = timeTransition.get();
 		currentValue = interpolator.interpolate(startValue, desiredValue, alpha);
 	}
 	
 	public boolean isFinished() {
-		return currentTime == totalTime;
+		return timeTransition.isFinished();
 	}
 
 }

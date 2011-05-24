@@ -2,7 +2,15 @@ package com.gemserk.animation4j.transitions;
 
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
 
+/**
+ * Represents a Transition of a float value over time.
+ * 
+ * @author acoppes
+ * 
+ */
 public class FloatTransition {
+
+	private final TimeTransition timeTransition = new TimeTransition();
 
 	private float current;
 
@@ -11,8 +19,6 @@ public class FloatTransition {
 	private float end;
 
 	private boolean started;
-
-	private TimeTransition timeTransition = new TimeTransition();
 
 	public float get() {
 		return current;
