@@ -2,23 +2,18 @@ package com.gemserk.animation4j.transitions;
 
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
 
-
 public class FloatTransition {
 
 	private float current;
-	
+
 	private float start;
 
 	private float end;
-	
-	private int transitionTime;
-	
-	private int currentTime;
 
 	private boolean started;
-	
-	private boolean finished;
-	
+
+	private TimeTransition timeTransition = new TimeTransition();
+
 	public float get() {
 		return current;
 	}
@@ -31,10 +26,8 @@ public class FloatTransition {
 	public void set(float t, int time) {
 		this.start = current;
 		this.end = t;
-		this.transitionTime = time;
-		this.currentTime = 0;
 		this.started = false;
-		this.finished = false;
+		timeTransition.start(time);
 	}
 
 	public boolean isStarted() {
@@ -42,22 +35,15 @@ public class FloatTransition {
 	}
 
 	public boolean isFinished() {
-		return finished;
+		return timeTransition.isFinished();
 	}
 
 	public void update(int delta) {
 		this.started = true;
-		
-		currentTime += delta;
-		
-		if (currentTime >= transitionTime) { 
-			this.current = end;
-			this.finished = true;
+		if (timeTransition.isFinished())
 			return;
-		}
-
-		float t = (float) currentTime / (float) transitionTime;
-		this.current = FloatInterpolator.interpolate(start, end, t);
+		timeTransition.update(delta);
+		this.current = FloatInterpolator.interpolate(start, end, timeTransition.get());
 	}
-	
+
 }

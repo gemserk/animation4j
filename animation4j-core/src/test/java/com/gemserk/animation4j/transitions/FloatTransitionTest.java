@@ -5,9 +5,8 @@ import static org.junit.Assert.assertThat;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
-
 public class FloatTransitionTest {
-	
+
 	@Test
 	public void shouldSetInstantlyIfNoTimeSpecified() {
 		FloatTransition transition = new FloatTransition();
@@ -15,7 +14,7 @@ public class FloatTransitionTest {
 		transition.set(50f);
 		assertThat(transition.get(), IsEqual.equalTo(50f));
 	}
-	
+
 	@Test
 	public void shouldDoNothingOnUpdateIfNoNextValueSpecified() {
 		FloatTransition transition = new FloatTransition();
@@ -40,9 +39,9 @@ public class FloatTransitionTest {
 	public void shouldNotBeStartedNorFinished() {
 		FloatTransition transition = new FloatTransition();
 		assertThat(transition.isStarted(), IsEqual.equalTo(false));
-		assertThat(transition.isFinished(), IsEqual.equalTo(false));
+		assertThat(transition.isFinished(), IsEqual.equalTo(true));
 	}
-	
+
 	@Test
 	public void shouldBeStartedWhenSetWithDelayButNotFinishedBeforeUpdated() {
 		FloatTransition transition = new FloatTransition();
@@ -50,7 +49,7 @@ public class FloatTransitionTest {
 		assertThat(transition.isStarted(), IsEqual.equalTo(false));
 		assertThat(transition.isFinished(), IsEqual.equalTo(false));
 	}
-	
+
 	@Test
 	public void shouldBeStartedAndFinishedAfterUpdate() {
 		FloatTransition transition = new FloatTransition();
@@ -62,7 +61,7 @@ public class FloatTransitionTest {
 		assertThat(transition.isStarted(), IsEqual.equalTo(true));
 		assertThat(transition.isFinished(), IsEqual.equalTo(true));
 	}
-	
+
 	@Test
 	public void shouldNotBeStartedAfterSecondSetWithTime() {
 		FloatTransition transition = new FloatTransition();
@@ -72,7 +71,7 @@ public class FloatTransitionTest {
 		assertThat(transition.isStarted(), IsEqual.equalTo(false));
 		assertThat(transition.isFinished(), IsEqual.equalTo(false));
 	}
-	
+
 	@Test
 	public void shouldNotBeStartedAfterSecondSet() {
 		FloatTransition transition = new FloatTransition();
@@ -82,5 +81,5 @@ public class FloatTransitionTest {
 		assertThat(transition.isStarted(), IsEqual.equalTo(false));
 		assertThat(transition.isFinished(), IsEqual.equalTo(false));
 	}
-	
+
 }
