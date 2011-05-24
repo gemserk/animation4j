@@ -63,4 +63,24 @@ public class FloatTransitionTest {
 		assertThat(transition.isFinished(), IsEqual.equalTo(true));
 	}
 	
+	@Test
+	public void shouldNotBeStartedAfterSecondSetWithTime() {
+		FloatTransition transition = new FloatTransition();
+		transition.set(50f, 100);
+		transition.update(100);
+		transition.set(50f, 100);
+		assertThat(transition.isStarted(), IsEqual.equalTo(false));
+		assertThat(transition.isFinished(), IsEqual.equalTo(false));
+	}
+	
+	@Test
+	public void shouldNotBeStartedAfterSecondSet() {
+		FloatTransition transition = new FloatTransition();
+		transition.set(50f, 100);
+		transition.update(100);
+		transition.set(50f);
+		assertThat(transition.isStarted(), IsEqual.equalTo(false));
+		assertThat(transition.isFinished(), IsEqual.equalTo(false));
+	}
+	
 }

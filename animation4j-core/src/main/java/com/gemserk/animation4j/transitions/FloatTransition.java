@@ -24,7 +24,8 @@ public class FloatTransition {
 	}
 
 	public void set(float t) {
-		this.current = t;
+		set(t, 0);
+		this.current = end;
 	}
 
 	public void set(float t, int time) {
@@ -32,6 +33,8 @@ public class FloatTransition {
 		this.end = t;
 		this.transitionTime = time;
 		this.currentTime = 0;
+		this.started = false;
+		this.finished = false;
 	}
 
 	public boolean isStarted() {
