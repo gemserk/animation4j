@@ -24,6 +24,8 @@ public class TimeTransition {
 	 * @return
 	 */
 	public float get() {
+		if (transitionTime == 0)
+			return 1f;
 		return ((float) currentTime / (float) transitionTime);
 	}
 

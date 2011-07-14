@@ -82,4 +82,11 @@ public class FloatTransitionTest {
 		assertThat(transition.isFinished(), IsEqual.equalTo(false));
 	}
 
+	@Test
+	public void shouldSetValue() {
+		FloatTransition transition = new FloatTransition();
+		transition.set(100f);
+		transition.update(1000);
+		assertThat(transition.get(), IsEqual.equalTo(100f));
+	}
 }

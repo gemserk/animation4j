@@ -33,5 +33,14 @@ public class TimeTransitionTest {
 		timeTransition.start(500);
 		assertThat(timeTransition.isFinished(), IsEqual.equalTo(false));
 	}
+	
+	@Test
+	public void testGetWhenTimeZero() {
+		TimeTransition timeTransition = new TimeTransition();
+		timeTransition.start(0);
+		timeTransition.update(1000);
+		assertThat(timeTransition.get(), IsEqual.equalTo(1f));
+		assertThat(timeTransition.isFinished(), IsEqual.equalTo(true));
+	}
 
 }
