@@ -83,7 +83,7 @@ public class FloatTransitionTest {
 	}
 
 	@Test
-	public void shouldSetValue() {
+	public void shouldSetValueInNoTime() {
 		FloatTransition transition = new FloatTransition();
 		transition.set(100f);
 		transition.update(1000);
