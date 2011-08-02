@@ -182,24 +182,24 @@ public class AnimationBuilderTest2 {
 
 	}
 
-	public static class AnimationManager {
+	public static class Builders {
 
-		private TimelineBuilder timelineBuilder = new TimelineBuilder();
-		private TimelineAnimationBuilder timelineAnimationBuilder = new TimelineAnimationBuilder();
-		private TimelineValueBuilder timelineValueBuilder = new TimelineValueBuilder();
+		private static TimelineBuilder timelineBuilder = new TimelineBuilder();
+		private static TimelineAnimationBuilder timelineAnimationBuilder = new TimelineAnimationBuilder();
+		private static TimelineValueBuilder timelineValueBuilder = new TimelineValueBuilder();
 
-		public TimelineBuilder timeline() {
+		public static TimelineBuilder timeline() {
 			return timelineBuilder;
 		}
 
-		public TimelineAnimationBuilder animation(TimelineBuilder timelineBuilder) {
+		public static TimelineAnimationBuilder animation(TimelineBuilder timelineBuilder) {
 			return timelineAnimationBuilder.setTimeline(timelineBuilder.build());
 		}
 
-		public TimelineValueBuilder timelineValue(String name) {
+		public static TimelineValueBuilder timelineValue(String name) {
 			return timelineValueBuilder.name(name);
 		}
-
+		
 	}
 
 	@Before
@@ -216,16 +216,15 @@ public class AnimationBuilderTest2 {
 
 	@Test
 	public void testAnimationBuilder() {
-		AnimationManager animationManager = new AnimationManager();
-		TimelineAnimation timelineAnimation = animationManager.animation( //
-				animationManager.timeline() //
-						.value(animationManager.timelineValue("alpha") //
+		TimelineAnimation timelineAnimation = Builders.animation( //
+				Builders.timeline() //
+						.value(Builders.timelineValue("alpha") //
 								.typeConverter(Converters.floatValue()) //
 								.keyFrame(0, 500f) //
 								.keyFrame(500, 12500f) //
 								.keyFrame(1000, 500f) //
 						) //
-						.value(animationManager.timelineValue("gamma") //
+						.value(Builders.timelineValue("gamma") //
 								.keyFrame(0, 3f) //
 								.keyFrame(500, 10f) //
 								.keyFrame(1000, 50f) //
