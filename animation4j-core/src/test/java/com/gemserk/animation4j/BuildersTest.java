@@ -11,7 +11,7 @@ import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.timeline.Builders;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 
-public class AnimationBuilderTest2 {
+public class BuildersTest {
 
 	@Before
 	public void before() {
