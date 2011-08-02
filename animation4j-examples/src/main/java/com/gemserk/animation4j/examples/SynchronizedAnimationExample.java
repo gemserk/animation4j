@@ -1,6 +1,6 @@
 package com.gemserk.animation4j.examples;
 
-import com.gemserk.animation4j.Animation;
+import com.gemserk.animation4j.animations.Animation;
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;

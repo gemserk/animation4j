@@ -1,4 +1,6 @@
-package com.gemserk.animation4j;
+package com.gemserk.animation4j.animations;
+
+import com.gemserk.animation4j.animations.Animation;
 
 public class MockAnimation implements Animation {
 

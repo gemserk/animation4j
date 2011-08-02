@@ -1,7 +1,7 @@
 package com.gemserk.animation4j.examples;
 
-import com.gemserk.animation4j.event.AnimationEvent;
-import com.gemserk.animation4j.event.AnimationEventHandler;
+import com.gemserk.animation4j.animations.events.AnimationEvent;
+import com.gemserk.animation4j.animations.events.AnimationEventHandler;
 
 public class DumpAnimationStateHandler extends AnimationEventHandler {
 	

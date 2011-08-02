@@ -12,7 +12,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import com.gemserk.animation4j.event.AnimationHandlerManager;
+import com.gemserk.animation4j.animations.events.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
 import com.gemserk.animation4j.java2d.converters.Java2dConverters;

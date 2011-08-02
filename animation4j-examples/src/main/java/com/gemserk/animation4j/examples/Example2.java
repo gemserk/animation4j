@@ -12,11 +12,11 @@ import java.awt.geom.Point2D;
 
 import javax.swing.JEditorPane;
 
-import com.gemserk.animation4j.Animation;
+import com.gemserk.animation4j.animations.Animation;
+import com.gemserk.animation4j.animations.events.AnimationEvent;
+import com.gemserk.animation4j.animations.events.AnimationEventHandler;
+import com.gemserk.animation4j.animations.events.AnimationHandlerManager;
 import com.gemserk.animation4j.converters.Converters;
-import com.gemserk.animation4j.event.AnimationEvent;
-import com.gemserk.animation4j.event.AnimationEventHandler;
-import com.gemserk.animation4j.event.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
 import com.gemserk.animation4j.java2d.converters.Java2dConverters;
 import com.gemserk.animation4j.states.StateMachine;

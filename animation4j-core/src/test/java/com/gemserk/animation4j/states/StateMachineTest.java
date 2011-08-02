@@ -10,8 +10,8 @@ import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.gemserk.animation4j.Animation;
-import com.gemserk.animation4j.MockAnimation;
+import com.gemserk.animation4j.animations.Animation;
+import com.gemserk.animation4j.animations.MockAnimation;
 
 @RunWith(JMock.class)
 public class StateMachineTest {

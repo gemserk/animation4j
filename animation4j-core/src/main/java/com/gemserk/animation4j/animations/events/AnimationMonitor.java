@@ -1,9 +1,9 @@
-package com.gemserk.animation4j.event;
+package com.gemserk.animation4j.animations.events;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gemserk.animation4j.Animation;
+import com.gemserk.animation4j.animations.Animation;
 
 /**
  * Monitors an Animation and call to a group of AnimationEventHandler whenever the animation state changes.

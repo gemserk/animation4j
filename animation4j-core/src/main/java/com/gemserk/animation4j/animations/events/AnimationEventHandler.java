@@ -1,4 +1,4 @@
-package com.gemserk.animation4j.event;
+package com.gemserk.animation4j.animations.events;
 
 /**
  * Represents an animation events handler.

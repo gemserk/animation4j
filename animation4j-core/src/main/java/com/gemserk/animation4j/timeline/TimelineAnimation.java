@@ -1,6 +1,6 @@
 package com.gemserk.animation4j.timeline;
 
-import com.gemserk.animation4j.Animation;
+import com.gemserk.animation4j.animations.Animation;
 
 /**
  * An implementation of the Animation interface using a time line to animate values.

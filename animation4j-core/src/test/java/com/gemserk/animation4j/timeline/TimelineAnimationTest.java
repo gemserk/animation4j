@@ -8,7 +8,7 @@ import org.hamcrest.Matcher;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
-import com.gemserk.animation4j.Animation;
+import com.gemserk.animation4j.animations.Animation;
 import com.gemserk.animation4j.converters.Converters;
 
 public class TimelineAnimationTest {

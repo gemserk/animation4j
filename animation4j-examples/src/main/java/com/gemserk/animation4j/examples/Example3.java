@@ -10,7 +10,7 @@ import java.awt.geom.AffineTransform;
 
 import javax.swing.JEditorPane;
 
-import com.gemserk.animation4j.event.AnimationHandlerManager;
+import com.gemserk.animation4j.animations.events.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
 import com.gemserk.animation4j.java2d.converters.Java2dConverters;

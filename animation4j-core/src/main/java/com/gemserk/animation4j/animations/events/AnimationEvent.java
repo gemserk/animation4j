@@ -1,6 +1,6 @@
-package com.gemserk.animation4j.event;
+package com.gemserk.animation4j.animations.events;
 
-import com.gemserk.animation4j.Animation;
+import com.gemserk.animation4j.animations.Animation;
 
 /**
  * Used to call the AnimationEventHandler methods.
