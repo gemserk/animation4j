@@ -16,6 +16,10 @@ public class TimelineAnimation implements Animation {
 	public void setDuration(float duration) {
 		animation.setDuration(duration);
 	}
+	
+	public float getDuration() {
+		return animation.getDuration();
+	}
 
 	public void setSpeed(float speed) {
 		animation.setSpeed(speed);

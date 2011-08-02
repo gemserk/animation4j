@@ -104,6 +104,10 @@ public class Builders {
 		private TimelineBuilder() {
 			reset();
 		}
+		
+		public float getDuration() {
+			return duration;
+		}
 
 		private void reset() {
 			values = new HashMap<String, TimelineValue>();
@@ -132,13 +136,13 @@ public class Builders {
 
 	public static class TimelineAnimationBuilder {
 
-		private Timeline timeline;
+		private TimelineBuilder timelineBuilder;
 		private float delay;
 		private float speed;
 		private boolean started;
 
-		public Builders.TimelineAnimationBuilder setTimeline(Timeline timeline) {
-			this.timeline = timeline;
+		public Builders.TimelineAnimationBuilder setTimelineBuilder(TimelineBuilder timelineBuilder) {
+			this.timelineBuilder = timelineBuilder;
 			return this;
 		}
 
@@ -168,9 +172,13 @@ public class Builders {
 		}
 
 		public TimelineAnimation build() {
-			TimelineAnimation timelineAnimation = new TimelineAnimation(timeline, started);
+			float duration = timelineBuilder.getDuration();
+			
+			TimelineAnimation timelineAnimation = new TimelineAnimation(timelineBuilder.build(), started);
+			timelineAnimation.setDuration(duration);
 			timelineAnimation.setDelay(delay);
 			timelineAnimation.setSpeed(speed);
+			
 			reset();
 			return timelineAnimation;
 		}
@@ -186,7 +194,7 @@ public class Builders {
 	}
 
 	public static Builders.TimelineAnimationBuilder animation(Builders.TimelineBuilder timelineBuilder) {
-		return timelineAnimationBuilder.setTimeline(timelineBuilder.build());
+		return timelineAnimationBuilder.setTimelineBuilder(timelineBuilder);
 	}
 
 	public static Builders.TimelineValueBuilder timelineValue(String name) {

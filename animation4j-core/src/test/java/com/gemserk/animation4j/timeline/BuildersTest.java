@@ -10,8 +10,6 @@ import org.junit.Test;
 import com.gemserk.animation4j.Vector2f;
 import com.gemserk.animation4j.Vector2fConverter;
 import com.gemserk.animation4j.converters.Converters;
-import com.gemserk.animation4j.timeline.Builders;
-import com.gemserk.animation4j.timeline.TimelineAnimation;
 
 public class BuildersTest {
 
@@ -47,6 +45,7 @@ public class BuildersTest {
 				.started(true) //
 				.build();
 		assertThat(timelineAnimation.getDelay(), IsEqual.equalTo(200f));
+		assertThat(timelineAnimation.getDuration(), IsEqual.equalTo(1200f));
 		System.out.println(timelineAnimation.getTimeline());
 	}
 
