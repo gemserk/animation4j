@@ -67,7 +67,7 @@ public class TimelineAnimation implements Animation {
 	}
 
 	public <T> T getValue(String name) {
-		return timeline.getValue(getCurrentTime() - getDelay(), name);
+		return (T) timeline.getValue(getCurrentTime() - getDelay(), name);
 	}
 
 	public Timeline getTimeline() {
