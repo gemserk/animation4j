@@ -157,7 +157,7 @@ public class AnimationMonitorImplTest {
 
 		Animation animation = new TimelineAnimationBuilder() {
 			{
-				value("myvalue", new TimelineValueBuilder<Float>(Converters.floatValue()) {
+				value("myvalue", new TimelineValueBuilder(Converters.floatValue()) {
 					{
 						keyFrame(0, 100f);
 						keyFrame(100, 200f);

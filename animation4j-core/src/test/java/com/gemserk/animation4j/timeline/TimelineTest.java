@@ -18,7 +18,7 @@ public class TimelineTest {
 
 		Timeline timeline = new Timeline(new HashMap<String, TimelineValue>() {
 			{
-				put("myvalue", new TimelineValueBuilder<Float>(Converters.floatValue()).keyFrame(0, 100f).keyFrame(100, 200f).build());
+				put("myvalue", new TimelineValueBuilder(Converters.floatValue()).keyFrame(0, 100f).keyFrame(100, 200f).build());
 			}
 		});
 
@@ -31,7 +31,7 @@ public class TimelineTest {
 
 		Timeline timeline = new Timeline(new HashMap<String, TimelineValue>() {
 			{
-				put("myvalue", new TimelineValueBuilder<Float>(Converters.floatValue()).keyFrame(0, 100f).keyFrame(100, 200f).build());
+				put("myvalue", new TimelineValueBuilder(Converters.floatValue()).keyFrame(0, 100f).keyFrame(100, 200f).build());
 			}
 		});
 
@@ -50,7 +50,7 @@ public class TimelineTest {
 		
 		Timeline timeline = new Timeline(new HashMap<String, TimelineValue>() {
 			{
-				put("myvalue", new TimelineValueBuilder<Vector2f>(new Vector2fConverter())
+				put("myvalue", new TimelineValueBuilder(new Vector2fConverter())
 						.keyFrame(0f, new Vector2f(100, 100))
 						.keyFrame(1000f, new Vector2f(200, 200)).build());
 			}

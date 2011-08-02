@@ -22,7 +22,7 @@ public class TimelineAnimationExample {
 			
 			delay(100f);
 			
-			value("position", new TimelineValueBuilder<Vector2f>(){{
+			value("position", new TimelineValueBuilder(){{
 				keyFrame(0, new Vector2f(100f, 100f));
 				keyFrame(500, new Vector2f(500f, 500f));
 			}});
@@ -58,7 +58,7 @@ public class TimelineAnimationExample {
 			
 			// note: we haven't defined delay, so delay will be 0 then.
 			
-			value("position", new TimelineValueBuilder<Vector2f>(){{
+			value("position", new TimelineValueBuilder(){{
 				keyFrame(0, new Vector2f(100f, 100f));
 				keyFrame(500, new Vector2f(500f, 500f));
 			}});

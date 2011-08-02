@@ -147,10 +147,10 @@ public class Example2 extends Java2dDesktopApplication {
 			showAnimation = new SynchronizedAnimation(new TimelineAnimationBuilder() {
 				{
 					speed(1.5f);
-					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 260), InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //
+					value("position", new TimelineValueBuilder().keyFrame(0, new Point(320, 260), InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //
 							.keyFrame(1000, new Point(320, 220)));
-					value("alpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f, InterpolationFunctions.easeOut()).keyFrame(1000, 1f));
-					value("textAlpha", new TimelineValueBuilder<Float>().keyFrame(0, 0f, InterpolationFunctions.easeOut()) //
+					value("alpha", new TimelineValueBuilder().keyFrame(0, 0f, InterpolationFunctions.easeOut()).keyFrame(1000, 1f));
+					value("textAlpha", new TimelineValueBuilder().keyFrame(0, 0f, InterpolationFunctions.easeOut()) //
 							.keyFrame(500, 0f).keyFrame(1500, 1f));
 				}
 			}.build(), timelineSynchronizer);
@@ -158,10 +158,10 @@ public class Example2 extends Java2dDesktopApplication {
 			hideAnimation = new SynchronizedAnimation(new TimelineAnimationBuilder() {
 				{
 					speed(2f);
-					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 220)));
-					value("alpha", new TimelineValueBuilder<Float>().keyFrame(0, 1f, InterpolationFunctions.easeOut()) //
+					value("position", new TimelineValueBuilder().keyFrame(0, new Point(320, 220)));
+					value("alpha", new TimelineValueBuilder().keyFrame(0, 1f, InterpolationFunctions.easeOut()) //
 							.keyFrame(500, 1f).keyFrame(1000, 0f));
-					value("textAlpha", new TimelineValueBuilder<Float>().keyFrame(0, 1f, InterpolationFunctions.easeOut()) //
+					value("textAlpha", new TimelineValueBuilder().keyFrame(0, 1f, InterpolationFunctions.easeOut()) //
 							.keyFrame(500, 0f));
 				}
 			}.build(), timelineSynchronizer);

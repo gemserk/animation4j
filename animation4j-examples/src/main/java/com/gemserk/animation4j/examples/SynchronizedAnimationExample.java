@@ -48,12 +48,12 @@ public class SynchronizedAnimationExample {
 		// One problem with time line animations is that you have to get values by hand and setting them to your objects
 		TimelineAnimation timelineAnimation = new TimelineAnimationBuilder() {{
 			
-			value("position", new TimelineValueBuilder<Vector2f>(){{
+			value("position", new TimelineValueBuilder(){{
 				keyFrame(0, new Vector2f(100f, 100f));
 				keyFrame(500, new Vector2f(500f, 500f));
 			}});
 			
-			value("size", new TimelineValueBuilder<Vector2f>(){{
+			value("size", new TimelineValueBuilder(){{
 				keyFrame(0, new Vector2f(1f, 1f));
 				keyFrame(500, new Vector2f(2f, 2f));
 			}});

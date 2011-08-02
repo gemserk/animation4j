@@ -53,7 +53,7 @@ public class TimelineAnimationTest {
 			{
 				started(true);
 				delay(100);
-				value("myvalue", new TimelineValueBuilder<Float>(Converters.floatValue()) {
+				value("myvalue", new TimelineValueBuilder(Converters.floatValue()) {
 					{
 						keyFrame(0, 100f);
 						keyFrame(100, 200f);
@@ -76,7 +76,7 @@ public class TimelineAnimationTest {
 
 		TimelineAnimation animation = new TimelineAnimationBuilder() {
 			{
-				value("myvalue", new TimelineValueBuilder<Float>(Converters.floatValue()) {
+				value("myvalue", new TimelineValueBuilder(Converters.floatValue()) {
 					{
 						keyFrame(0, 100f);
 						keyFrame(100, 200f);
@@ -105,7 +105,7 @@ public class TimelineAnimationTest {
 
 		TimelineAnimation animation = new TimelineAnimationBuilder() {
 			{
-				value("myvalue", new TimelineValueBuilder<Float>(Converters.floatValue()) {
+				value("myvalue", new TimelineValueBuilder(Converters.floatValue()) {
 					{
 						keyFrame(0, 100f);
 						keyFrame(100, 200f);
@@ -139,7 +139,7 @@ public class TimelineAnimationTest {
 
 		TimelineAnimation animation = new TimelineAnimationBuilder() {
 			{
-				value("myvalue", new TimelineValueBuilder<Float>(Converters.floatValue()) {
+				value("myvalue", new TimelineValueBuilder(Converters.floatValue()) {
 					{
 						delay(100);
 						keyFrame(0, 100f);
@@ -162,7 +162,7 @@ public class TimelineAnimationTest {
 
 		TimelineAnimation animation = new TimelineAnimationBuilder() {
 			{
-				value("myvalue", new TimelineValueBuilder<Float>(Converters.floatValue()) {
+				value("myvalue", new TimelineValueBuilder(Converters.floatValue()) {
 					{
 						keyFrame(0, 200f);
 						keyFrame(100, 900f);
@@ -205,7 +205,7 @@ public class TimelineAnimationTest {
 		
 		TimelineAnimation animation = new TimelineAnimationBuilder() {
 			{
-				value(valueName, new TimelineValueBuilder<Float>(Converters.floatValue()) {
+				value(valueName, new TimelineValueBuilder(Converters.floatValue()) {
 					{
 						delay(100);
 						keyFrame(0, 100f);
@@ -244,7 +244,7 @@ public class TimelineAnimationTest {
 		
 		TimelineAnimation animation = new TimelineAnimationBuilder() {
 			{
-				value(valueName, new TimelineValueBuilder<Float>(Converters.floatValue()) {
+				value(valueName, new TimelineValueBuilder(Converters.floatValue()) {
 					{
 						keyFrame(0, 100f);
 						keyFrame(100, 200f);

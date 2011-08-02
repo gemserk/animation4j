@@ -9,12 +9,9 @@ import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 /**
  * Provides an easy way to create TimelineValues.
  * 
- * @param <T>
- *            The type of the variable of the TimelineValue.
- * 
  * @author acoppes
  */
-public class TimelineValueBuilder<T> {
+public class TimelineValueBuilder {
 
 	String name;
 
@@ -24,7 +21,7 @@ public class TimelineValueBuilder<T> {
 		this.name = name;
 	}
 
-	TypeConverter<T> typeConverter;
+	TypeConverter typeConverter;
 
 	ArrayList<KeyFrame> keyFrames = new ArrayList<KeyFrame>();
 
@@ -40,15 +37,15 @@ public class TimelineValueBuilder<T> {
 
 	}
 
-	public TimelineValueBuilder(TypeConverter<T> typeConverter) {
+	public TimelineValueBuilder(TypeConverter typeConverter) {
 		this.typeConverter = typeConverter;
 	}
 
 	/**
 	 * Builds and returns the being specified time line value.
 	 */
-	public TimelineValue<T> build() {
-		TimelineValue<T> timelineValue = new TimelineValue<T>(name, typeConverter);
+	public TimelineValue build() {
+		TimelineValue timelineValue = new TimelineValue(name, typeConverter);
 		for (int i = 0; i < keyFrames.size(); i++)
 			timelineValue.addKeyFrame(keyFrames.get(i));
 		return timelineValue;
@@ -62,7 +59,7 @@ public class TimelineValueBuilder<T> {
 	 * @param value
 	 *            The value the variable should have in the key frame.
 	 */
-	public TimelineValueBuilder<T> keyFrame(float time, T value) {
+	public <T> TimelineValueBuilder keyFrame(float time, T value) {
 		if (typeConverter == null)
 			typeConverter = (TypeConverter) Converters.converter(value.getClass());
 		
@@ -85,7 +82,7 @@ public class TimelineValueBuilder<T> {
 	 * @param functions
 	 *            The interpolation functions to be used when interpolating this keyframe.
 	 */
-	public TimelineValueBuilder<T> keyFrame(float time, T value, InterpolationFunction... functions) {
+	public <T> TimelineValueBuilder keyFrame(float time, T value, InterpolationFunction... functions) {
 		if (typeConverter == null)
 			typeConverter = (TypeConverter) Converters.converter(value.getClass());
 
