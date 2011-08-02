@@ -1,6 +1,7 @@
 package com.gemserk.animation4j.timeline;
 
 import com.gemserk.animation4j.animations.Animation;
+import com.gemserk.animation4j.animations.AnimationImpl;
 
 /**
  * An implementation of the Animation interface using a time line to animate values.
@@ -9,57 +10,36 @@ import com.gemserk.animation4j.animations.Animation;
  */
 public class TimelineAnimation implements Animation {
 
-	float currentTime = 0f;
-
-	float speed = 1f;
-
-	boolean playing = false;
-
-	Timeline timeline;
-
-	private int iteration = 1;
-
-	private int iterations = 1;
-
-	boolean alternateDirection = false;
-
-	PlayingDirection playingDirection = PlayingDirection.Normal;
-
-	private float delay;
-
-	private float duration;
+	private Timeline timeline;
+	private AnimationImpl animation;
 
 	public void setDuration(float duration) {
-		this.duration = duration;
+		animation.setDuration(duration);
 	}
 
 	public void setSpeed(float speed) {
-		this.speed = speed;
+		animation.setSpeed(speed);
 	}
 
 	public void setAlternateDirection(boolean alternateDirection) {
-		this.alternateDirection = alternateDirection;
+		animation.setAlternateDirection(alternateDirection);
 	}
 
 	public float getCurrentTime() {
-		return currentTime;
+		return animation.getCurrentTime();
 	}
 
 	@Override
 	public PlayingDirection getPlayingDirection() {
-		return playingDirection;
-	}
-
-	private float getDuration() {
-		return duration + getDelay();
+		return animation.getPlayingDirection();
 	}
 
 	public void setDelay(float delay) {
-		this.delay = delay;
+		animation.setDelay(delay);
 	}
 
 	public float getDelay() {
-		return delay;
+		return animation.getDelay();
 	}
 
 	public TimelineAnimation(Timeline timeline) {
@@ -72,23 +52,19 @@ public class TimelineAnimation implements Animation {
 
 	public TimelineAnimation(Timeline timeline, boolean started, boolean alternateDirection) {
 		this.timeline = timeline;
-		this.playing = started;
-		this.alternateDirection = alternateDirection;
+		this.animation = new AnimationImpl(started, alternateDirection);
 	}
 
 	/**
 	 * Returns true when the time line for the current iteration is finished, could be normal or reverse playing direction.
 	 */
 	protected boolean isIterationFinished() {
-		float delay = getDelay();
-		if (playingDirection.equals(PlayingDirection.Normal))
-			return currentTime >= duration + delay;
-		return currentTime + delay <= 0;
+		return animation.isIterationFinished();
 	}
 
 	@SuppressWarnings("unchecked")
 	public <T> T getValue(String name) {
-		return (T) timeline.getValue(currentTime - getDelay(), name);
+		return (T) timeline.getValue(getCurrentTime() - getDelay(), name);
 	}
 
 	public Timeline getTimeline() {
@@ -102,107 +78,56 @@ public class TimelineAnimation implements Animation {
 
 	@Override
 	public void start(int iterationCount) {
-		this.iterations = iterationCount;
-		if (this.iterations <= 0)
-			this.iterations = Integer.MAX_VALUE;
-		this.iteration = 1;
-		resume();
+		animation.start(iterationCount);
 	}
 
 	@Override
 	public void start(int iterationCount, boolean alternateDirection) {
-		start(iterationCount);
-		this.alternateDirection = alternateDirection;
+		animation.start(iterationCount, alternateDirection);
 	}
 
 	@Override
 	public void restart() {
-		stop();
-		resume();
+		animation.restart();
 	}
 
 	public void stop() {
-		currentTime = 0;
-		iteration = 1;
-		playingDirection = PlayingDirection.Normal;
-		pause();
+		animation.stop();
 	}
 
 	public void pause() {
-		playing = false;
+		animation.pause();
 	}
 
 	public void resume() {
-		playing = true;
+		animation.resume();
 	}
 
 	@Override
 	public int getIteration() {
-		return iteration;
+		return animation.getIteration();
 	}
 
 	@Override
 	public boolean isFinished() {
-		if (iteration > iterations)
-			return true;
-		return isIterationFinished();
+		return animation.isFinished();
 	}
 
 	@Override
 	public boolean isStarted() {
-		if (iteration > 1)
-			return true;
-		return currentTime > getDelay();
+		return animation.isStarted();
 	}
 
 	public void update(float time) {
-		if (!playing)
-			return;
-		moveCurrentTime(time);
-		if (isIterationFinished()) {
-			iteration++;
-			if (iteration > iterations)
-				finishIterations();
-			else
-				nextIteration();
-		}
+		animation.update(time);
 	}
 
 	public void nextIteration() {
-		if (playingDirection.equals(PlayingDirection.Normal)) {
-			if (alternateDirection)
-				switchDirection();
-			else
-				currentTime = 0 + getDelay();
-		} else {
-			if (alternateDirection)
-				switchDirection();
-		}
+		animation.nextIteration();
 	}
 
 	public void switchDirection() {
-		if (playingDirection == PlayingDirection.Normal)
-			playingDirection = PlayingDirection.Reverse;
-		else
-			playingDirection = PlayingDirection.Normal;
-	}
-
-	protected void finishIterations() {
-		if (playingDirection.equals(PlayingDirection.Normal)) {
-			currentTime = getDuration();
-			pause();
-		} else {
-			currentTime = 0f;
-			pause();
-			switchDirection();
-		}
-	}
-
-	protected void moveCurrentTime(float time) {
-		if (playingDirection.equals(PlayingDirection.Normal))
-			currentTime += time * speed;
-		else
-			currentTime -= time * speed;
+		animation.switchDirection();
 	}
 
 }
