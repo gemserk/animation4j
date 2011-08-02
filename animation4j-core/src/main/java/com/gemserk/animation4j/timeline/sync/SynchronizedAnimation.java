@@ -9,7 +9,7 @@ import com.gemserk.animation4j.timeline.TimelineIterator;
  * 
  * @author acoppes
  */
-public class SynchrnonizedAnimation implements Animation {
+public class SynchronizedAnimation implements Animation {
 
 	private final TimelineAnimation animation;
 
@@ -17,7 +17,7 @@ public class SynchrnonizedAnimation implements Animation {
 
 	private final TimelineIterator iterator;
 
-	public SynchrnonizedAnimation(TimelineAnimation animation, TimelineSynchronizer timelineSynchronizer) {
+	public SynchronizedAnimation(TimelineAnimation animation, TimelineSynchronizer timelineSynchronizer) {
 		this.animation = animation;
 		this.timelineSynchronizer = timelineSynchronizer;
 

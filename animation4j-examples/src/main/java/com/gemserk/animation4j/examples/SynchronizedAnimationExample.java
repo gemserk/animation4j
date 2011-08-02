@@ -6,7 +6,7 @@ import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
 import com.gemserk.animation4j.timeline.sync.ReflectionObjectSynchronizer;
-import com.gemserk.animation4j.timeline.sync.SynchrnonizedAnimation;
+import com.gemserk.animation4j.timeline.sync.SynchronizedAnimation;
 import com.gemserk.animation4j.timeline.sync.TimelineSynchronizer;
 
 public class SynchronizedAnimationExample {
@@ -67,7 +67,7 @@ public class SynchronizedAnimationExample {
 		
 		TimelineSynchronizer timelineSynchronizer = new TimelineSynchronizer(new ReflectionObjectSynchronizer(), myEntity);
 		
-		Animation animation = new SynchrnonizedAnimation(timelineAnimation, timelineSynchronizer);
+		Animation animation = new SynchronizedAnimation(timelineAnimation, timelineSynchronizer);
 		animation.start(1);
 		
 		// using the synchronized animation you shouldn't call the get() method, but for now you still have to call the update method.

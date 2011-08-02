@@ -46,9 +46,9 @@ public class SyncrhonizedAnimationTest {
 			}
 		});
 
-		SynchrnonizedAnimation synchrnonizedAnimation = new SynchrnonizedAnimation(animation, timelineSynchronizer);
+		SynchronizedAnimation synchronizedAnimation = new SynchronizedAnimation(animation, timelineSynchronizer);
 
-		synchrnonizedAnimation.update(10f);
+		synchronizedAnimation.update(10f);
 
 	}
 	
@@ -69,7 +69,7 @@ public class SyncrhonizedAnimationTest {
 			}
 		});
 
-		new SynchrnonizedAnimation(animation, timelineSynchronizer);
+		new SynchronizedAnimation(animation, timelineSynchronizer);
 
 	}
 

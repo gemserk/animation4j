@@ -26,7 +26,7 @@ import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
 import com.gemserk.animation4j.timeline.sync.ObjectSynchronizer;
 import com.gemserk.animation4j.timeline.sync.ReflectionObjectSynchronizer;
-import com.gemserk.animation4j.timeline.sync.SynchrnonizedAnimation;
+import com.gemserk.animation4j.timeline.sync.SynchronizedAnimation;
 import com.gemserk.animation4j.timeline.sync.TimelineSynchronizer;
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
 import com.gemserk.componentsengine.java2d.Java2dGame;
@@ -144,7 +144,7 @@ public class Example2 extends Java2dDesktopApplication {
 			ObjectSynchronizer objectSynchronizer = new ReflectionObjectSynchronizer();
 			timelineSynchronizer = new TimelineSynchronizer(objectSynchronizer, element);
 
-			showAnimation = new SynchrnonizedAnimation(new TimelineAnimationBuilder() {
+			showAnimation = new SynchronizedAnimation(new TimelineAnimationBuilder() {
 				{
 					speed(1.5f);
 					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 260), InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //
@@ -155,7 +155,7 @@ public class Example2 extends Java2dDesktopApplication {
 				}
 			}.build(), timelineSynchronizer);
 
-			hideAnimation = new SynchrnonizedAnimation(new TimelineAnimationBuilder() {
+			hideAnimation = new SynchronizedAnimation(new TimelineAnimationBuilder() {
 				{
 					speed(2f);
 					value("position", new TimelineValueBuilder<Point2D>().keyFrame(0, new Point(320, 220)));
