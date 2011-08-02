@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>animation4j</artifactId>
 		<groupId>com.gemserk.animation4j</groupId>
-		<version>0.0.12-SNAPSHOT</version>
+		<version>0.0.13-SNAPSHOT</version>
 	</parent>
 	<groupId>com.gemserk.animation4j</groupId>
 	<artifactId>animation4j-slick</artifactId>
-	<version>0.0.12-SNAPSHOT</version>
+	<version>0.0.13-SNAPSHOT</version>
 	<name>Slick2D module for animation4j</name>
 	<description>This module contains specific implementations of animation4j to be used with Slick2D</description>
 
