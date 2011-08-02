@@ -65,4 +65,13 @@ public class AnimationHandlerManager {
 	public Action with(AnimationEventHandler animationEventHandler) {
 		return new Action(this, animationEventHandler);
 	}
+
+	public void removeMonitorsFor(Animation animation) {
+		for (int i = 0; i < animationMonitors.size(); i++) {
+			if (animationMonitors.get(i).getAnimation() == animation)
+				animationMonitorsToRemove.add(animationMonitors.get(i));
+		}
+		animationMonitors.removeAll(animationMonitorsToRemove);
+		animationMonitorsToRemove.clear();
+	}
 }

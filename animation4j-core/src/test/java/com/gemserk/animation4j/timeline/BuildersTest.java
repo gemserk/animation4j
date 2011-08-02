@@ -1,4 +1,4 @@
-package com.gemserk.animation4j;
+package com.gemserk.animation4j.timeline;
 
 import static org.junit.Assert.assertThat;
 
@@ -7,6 +7,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.gemserk.animation4j.Vector2f;
+import com.gemserk.animation4j.Vector2fConverter;
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.timeline.Builders;
 import com.gemserk.animation4j.timeline.TimelineAnimation;

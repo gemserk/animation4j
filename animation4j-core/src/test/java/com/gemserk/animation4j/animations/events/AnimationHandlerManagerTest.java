@@ -7,8 +7,6 @@ import org.junit.Test;
 
 import com.gemserk.animation4j.animations.Animation;
 import com.gemserk.animation4j.animations.MockAnimation;
-import com.gemserk.animation4j.animations.events.AnimationHandlerManager;
-import com.gemserk.animation4j.animations.events.AnimationMonitor;
 
 public class AnimationHandlerManagerTest {
 
@@ -54,6 +52,28 @@ public class AnimationHandlerManagerTest {
 		animationHandlerManager.checkAnimationChanges();
 		
 		assertTrue(animationHandlerManager.animationMonitors.contains(animationMonitor));
+	}
+	
+	@Test
+	public void shouldRemoveAllMonitorsForAnimation() {
+
+		Animation animation = new MockAnimation() {
+			{
+				setStarted(false);
+				setFinished(false);
+			}
+		};
+
+		AnimationMonitor animationMonitor = new AnimationMonitor(animation);
+
+		AnimationHandlerManager animationHandlerManager = new AnimationHandlerManager();
+		animationHandlerManager.handleAnimationChanges(animationMonitor);
+		
+		assertTrue(animationHandlerManager.animationMonitors.contains(animationMonitor));
+		
+		animationHandlerManager.removeMonitorsFor(animation);
+		
+		assertFalse(animationHandlerManager.animationMonitors.contains(animationMonitor));
 	}
 
 }

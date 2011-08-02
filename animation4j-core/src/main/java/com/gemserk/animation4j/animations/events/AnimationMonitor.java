@@ -12,15 +12,15 @@ import com.gemserk.animation4j.animations.Animation;
  */
 public class AnimationMonitor {
 
-	boolean wasFinished = false;
-
-	boolean wasStarted = false;
-
-	int lastIteration = 1;
-
-	Animation animation;
-
-	List<AnimationEventHandler> animationEventHandlers = new ArrayList<AnimationEventHandler>();
+	private boolean wasFinished = false;
+	private boolean wasStarted = false;
+	private int lastIteration = 1;
+	private Animation animation;
+	private List<AnimationEventHandler> animationEventHandlers = new ArrayList<AnimationEventHandler>();
+	
+	public Animation getAnimation() {
+		return animation;
+	}
 
 	public AnimationMonitor(Animation animation) {
 		this.animation = animation;
