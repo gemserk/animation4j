@@ -42,4 +42,13 @@ public class Timeline {
 	public TimelineIterator getIterator() {
 		return new TimelineIterator(values);
 	}
+	
+	@Override
+	public String toString() {
+		StringBuffer stringBuffer = new StringBuffer("[");
+		for (String key : values.keySet()) 
+			stringBuffer.append(values.get(key).toString());
+		stringBuffer.append("]");
+		return stringBuffer.toString();
+	}
 }

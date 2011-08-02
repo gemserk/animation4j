@@ -91,5 +91,17 @@ public class TimelineValue<T> {
 			return null;
 		return keyFrames.get(currentKeyFrameIndex - 1);
 	}
+	
+	@Override
+	public String toString() {
+		StringBuffer stringBuffer = new StringBuffer("[");
+		stringBuffer.append("name: ");
+		stringBuffer.append(name);
+		stringBuffer.append(", keyframes:");
+		for (KeyFrame keyFrame : keyFrames) 
+			stringBuffer.append(keyFrame.toString());
+		stringBuffer.append("]");
+		return stringBuffer.toString();		
+	}
 
 }

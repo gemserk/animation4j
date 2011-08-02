@@ -46,4 +46,17 @@ public class KeyFrame {
 		return interpolate(keyFrame.getValue(), out, weight);
 	}
 
+	@Override
+	public String toString() {
+		StringBuffer stringBuffer = new StringBuffer("[");
+		stringBuffer.append("time: ");
+		stringBuffer.append(time);
+		stringBuffer.append(", values: ");
+		for (int i = 0; i < value.length; i++) {
+			stringBuffer.append(value[i]);	
+			stringBuffer.append(", ");
+		}
+		stringBuffer.append("]");
+		return stringBuffer.toString();
+	}
 }
