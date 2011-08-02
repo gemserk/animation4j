@@ -62,9 +62,8 @@ public class TimelineAnimation implements Animation {
 		return animation.isIterationFinished();
 	}
 
-	@SuppressWarnings("unchecked")
 	public <T> T getValue(String name) {
-		return (T) timeline.getValue(getCurrentTime() - getDelay(), name);
+		return timeline.getValue(getCurrentTime() - getDelay(), name);
 	}
 
 	public Timeline getTimeline() {

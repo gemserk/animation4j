@@ -28,11 +28,8 @@ public class Timeline {
 	 *            The identifier of the element in the time line.
 	 * @return The value of the element for that given time.
 	 */
-	public Object getValue(float time, String name) {
-		return values.get(name).getValue(time);
-	}
-
-	public <T> T getValue2(float time, String name) {
+	@SuppressWarnings("unchecked")
+	public <T> T getValue(float time, String name) {
 		return (T) values.get(name).getValue(time);
 	}
 	

@@ -112,19 +112,19 @@ public class AnimationBuilderTest {
 				.keyframe(100, new Vector2f(50f, 50f)) //
 				.build();
 
-		Vector2f v = timeline.getValue2(0, "position");
+		Vector2f v = timeline.getValue(0, "position");
 		assertThat(v, IsEqual.equalTo(new Vector2f(20f, 30f)));
 
-		v = timeline.getValue2(100, "position");
+		v = timeline.getValue(100, "position");
 		assertThat(v, IsEqual.equalTo(new Vector2f(20f, 30f)));
 
-		v = timeline.getValue2(200, "position");
+		v = timeline.getValue(200, "position");
 		assertThat(v, IsEqual.equalTo(new Vector2f(200f, 300f)));
 
-		v = timeline.getValue2(0, "size");
+		v = timeline.getValue(0, "size");
 		assertThat(v, IsEqual.equalTo(new Vector2f(10f, 10f)));
 
-		v = timeline.getValue2(100, "size");
+		v = timeline.getValue(100, "size");
 		assertThat(v, IsEqual.equalTo(new Vector2f(50f, 50f)));
 
 		timeline = TimelineBuilder.timeline() //
@@ -136,10 +136,10 @@ public class AnimationBuilderTest {
 				.keyframe(100, new Vector2f(50f, 50f)) //
 				.build();
 		
-		v = timeline.getValue2(0, "position");
+		v = timeline.getValue(0, "position");
 		assertThat(v, IsEqual.equalTo(new Vector2f(10f, 10f)));
 
-		v = timeline.getValue2(100, "position");
+		v = timeline.getValue(100, "position");
 		assertThat(v, IsEqual.equalTo(new Vector2f(50f, 50f)));
 
 	}
