@@ -14,7 +14,7 @@ public class ReflectionUtils {
 
 	}
 
-	private static Map<String, ClassCache> classCache = new HashMap<String, ClassCache>();
+	private static Map<Class, ClassCache> classCache = new HashMap<Class, ClassCache>();
 	private static Map<String, String> cachedGettersMap = new HashMap<String, String>();
 	private static Map<String, String> cachedSettersMap = new HashMap<String, String>();
 
@@ -69,9 +69,9 @@ public class ReflectionUtils {
 	}
 
 	private static ClassCache getClassCache(Class clazz) {
-		if (!classCache.containsKey(clazz.getName()))
-			classCache.put(clazz.getName(), new ClassCache());
-		return classCache.get(clazz.getName());
+		if (!classCache.containsKey(clazz))
+			classCache.put(clazz, new ClassCache());
+		return classCache.get(clazz);
 	}
 
 	public static Object getFieldValue(Object object, String field) {
