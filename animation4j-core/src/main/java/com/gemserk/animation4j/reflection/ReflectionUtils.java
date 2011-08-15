@@ -8,20 +8,26 @@ public class ReflectionUtils {
 
 	// Could be optimized?
 
-	static class ClassCache {
+	private static class ClassCache {
 
 		Map<String, Method> cachedMethods = new HashMap<String, Method>();
 
 	}
 
-	private static Map<String, ClassCache> classCache = new HashMap<String, ReflectionUtils.ClassCache>();
+	private static Map<String, ClassCache> classCache = new HashMap<String, ClassCache>();
+	private static Map<String, String> cachedGettersMap = new HashMap<String, String>();
+	private static Map<String, String> cachedSettersMap = new HashMap<String, String>();
 
 	public static String getSetterName(String fieldName) {
-		return "set" + capitalize(fieldName);
+		if (!cachedSettersMap.containsKey(fieldName))
+			cachedSettersMap.put(fieldName, "set" + capitalize(fieldName));
+		return cachedSettersMap.get(fieldName);
 	}
 
 	public static String getGetterName(String fieldName) {
-		return "get" + capitalize(fieldName);
+		if (!cachedGettersMap.containsKey(fieldName))
+			cachedGettersMap.put(fieldName, "get" + capitalize(fieldName));
+		return cachedGettersMap.get(fieldName);
 	}
 
 	public static String capitalize(String name) {
@@ -29,7 +35,6 @@ public class ReflectionUtils {
 	}
 
 	public static Method findMethod(Class clazz, String methodName) {
-
 		ClassCache classCacheEntry = getClassCache(clazz);
 
 		Method method = classCacheEntry.cachedMethods.get(methodName);
@@ -74,12 +79,12 @@ public class ReflectionUtils {
 		Method getterMethod = findMethod(object.getClass(), getterName);
 
 		if (getterMethod == null)
-			throw new RuntimeException("get" + capitalize(field) + "() method not found in " + object.getClass());
+			throw new RuntimeException(getterName + "() method not found in " + object.getClass());
 
 		try {
 			return getterMethod.invoke(object, (Object[]) null);
 		} catch (Exception e) {
-			throw new RuntimeException("get" + capitalize(field) + "() method not found in " + object.getClass(), e);
+			throw new RuntimeException(getterName + "() method not found in " + object.getClass(), e);
 		}
 	}
 
