@@ -18,6 +18,7 @@ public class MutableObjectSynchronizer implements ObjectSynchronizer {
 	// works only if objects are always from the same class
 	
 	private Map<String, float[]> cachedArrays = new HashMap<String, float[]>();
+	private static final Object[] emptyObjectArray = new Object[] {};
 	
 	@Override
 	public void setValue(Object object, String name, Object value) {
@@ -30,7 +31,7 @@ public class MutableObjectSynchronizer implements ObjectSynchronizer {
 		TypeConverter typeConverter = Converters.converter(value.getClass());
 		
 		try {
-			Object fieldObject = method.invoke(object, (Object[]) null);
+			Object fieldObject = method.invoke(object, emptyObjectArray);
 			cachedArrays.put(name, typeConverter.copyFromObject(value, cachedArrays.get(name)));
 			typeConverter.copyToObject(fieldObject, cachedArrays.get(name));
 		} catch (Exception e) {
