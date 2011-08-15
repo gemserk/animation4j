@@ -105,10 +105,9 @@
 				<version>2.1.2</version>
 				<executions>
 					<execution>
-						<id>attach-sources</id>
-						<phase>install</phase>
+						<phase>package</phase>
 						<goals>
-							<goal>jar-no-fork</goal>
+							<goal>jar</goal>
 						</goals>
 						<configuration>
 							<encoding>UTF-8</encoding>
@@ -123,7 +122,6 @@
 				<version>2.7</version>
 				<executions>
 					<execution>
-						<id>attach-javadocs</id>
 						<phase>install</phase>
 						<goals>
 							<goal>jar</goal>
