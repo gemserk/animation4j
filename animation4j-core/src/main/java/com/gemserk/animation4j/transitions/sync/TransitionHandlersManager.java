@@ -54,7 +54,8 @@ public class TransitionHandlersManager {
 				removeTransitionMonitorProcessors.add(transitionMonitorProcessor);
 			}
 		}
-		transitionMonitorProcessors.removeAll(removeTransitionMonitorProcessors);
+		for (int i = 0; i < removeTransitionMonitorProcessors.size(); i++) 
+			transitionMonitorProcessors.remove(removeTransitionMonitorProcessors.get(i));
 	}
 
 }

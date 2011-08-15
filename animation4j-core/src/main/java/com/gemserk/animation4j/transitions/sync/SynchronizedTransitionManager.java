@@ -14,7 +14,7 @@ import com.gemserk.animation4j.utils.Pool.PoolObjectFactory;
  * 
  */
 public class SynchronizedTransitionManager {
-	
+
 	private static final PoolObjectFactory<TransitionReflectionObjectSynchronizer> reflectionSynchronizerFactory = new PoolObjectFactory<TransitionReflectionObjectSynchronizer>() {
 		@Override
 		public TransitionReflectionObjectSynchronizer createObject() {
@@ -77,7 +77,8 @@ public class SynchronizedTransitionManager {
 					objectSynchronizerPool.free((TransitionDirectObjectSynchronizer) synchronizer);
 			}
 		}
-		synchronizers.removeAll(removeSynchronizers);
+		for (int i = 0; i < removeSynchronizers.size(); i++) 
+			synchronizers.remove(removeSynchronizers.get(i));
 	}
 
 }
