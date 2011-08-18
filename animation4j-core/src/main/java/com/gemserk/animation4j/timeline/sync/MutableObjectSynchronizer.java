@@ -31,6 +31,7 @@ public class MutableObjectSynchronizer implements ObjectSynchronizer {
 		TypeConverter typeConverter = Converters.converter(value.getClass());
 		
 		try {
+			// test call invoke(object) to see if new object[] is created
 			Object fieldObject = method.invoke(object, emptyObjectArray);
 			cachedArrays.put(name, typeConverter.copyFromObject(value, cachedArrays.get(name)));
 			typeConverter.copyToObject(fieldObject, cachedArrays.get(name));

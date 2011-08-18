@@ -9,7 +9,10 @@ import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
  * @author acoppes
  */
 public class KeyFrame {
-	
+
+	/**
+	 * Time in seconds of the key frame.
+	 */
 	private final float time;
 
 	private final float[] value;
@@ -53,7 +56,7 @@ public class KeyFrame {
 		stringBuffer.append(time);
 		stringBuffer.append(", values: ");
 		for (int i = 0; i < value.length; i++) {
-			stringBuffer.append(value[i]);	
+			stringBuffer.append(value[i]);
 			stringBuffer.append(", ");
 		}
 		stringBuffer.append("]");

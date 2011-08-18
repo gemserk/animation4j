@@ -34,6 +34,20 @@ public class Timeline {
 	}
 	
 	/**
+	 * Returns the value of an element identified by name in the specified time.
+	 * 
+	 * @param time
+	 *            The time to use to get the value of the element.
+	 * @param name
+	 *            The identifier of the element in the time line.
+	 * @return The value of the element for that given time.
+	 */
+	@SuppressWarnings("unchecked")
+	public <T> T getValue(int time, String name) {
+		return (T) values.get(name).getValue((float) time * 0.001f);
+	}
+	
+	/**
 	 * Returns an iterator which lets you iterate between the time line values.
 	 */
 	public TimelineIterator getIterator() {

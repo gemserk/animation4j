@@ -43,26 +43,28 @@ public class Builders {
 			return name;
 		}
 
-		/**
-		 * Defines a new key frame in the time line value.
-		 * 
-		 * @param time
-		 *            The time when the key frame starts (in milliseconds).
-		 * @param value
-		 *            The value the variable should have in the key frame.
-		 */
-		public <T> Builders.TimelineValueBuilder keyFrame(float time, T value) {
-			if (typeConverter == null)
-				typeConverter = (TypeConverter) Converters.converter(value.getClass());
-
-			// TODO: do not allow time less than last time to avoid defining key frames between other key frames.
-
-			KeyFrame keyFrame = new KeyFrame(time, typeConverter.copyFromObject(value, null));
-			this.keyFrames.add(keyFrame);
-
-			duration = Math.max(duration, time);
-			return this;
-		}
+		// /**
+		// * Defines a new key frame in the time line value.
+		// *
+		// * @param time
+		// * The time when the key frame starts (in milliseconds).
+		// * @param value
+		// * The value the variable should have in the key frame.
+		// */
+		// public <T> Builders.TimelineValueBuilder keyFrame(float time, T value) {
+		// if (typeConverter == null)
+		// typeConverter = (TypeConverter) Converters.converter(value.getClass());
+		//
+		// // TODO: do not allow time less than last time to avoid defining key frames between other key frames.
+		//
+		// float timeInSeconds = time * 0.001f;
+		//
+		// KeyFrame keyFrame = new KeyFrame(time, typeConverter.copyFromObject(value, null));
+		// this.keyFrames.add(keyFrame);
+		//
+		// duration = Math.max(duration, timeInSeconds);
+		// return this;
+		// }
 
 		/**
 		 * Defines a new key frame in the time line value.
@@ -78,10 +80,12 @@ public class Builders {
 			if (typeConverter == null)
 				typeConverter = (TypeConverter) Converters.converter(value.getClass());
 
-			KeyFrame keyFrame = new KeyFrame(time, typeConverter.copyFromObject(value, null), functions);
+			float timeInSeconds = time * 0.001f;
+
+			KeyFrame keyFrame = new KeyFrame(timeInSeconds, typeConverter.copyFromObject(value, null), functions);
 			this.keyFrames.add(keyFrame);
 
-			duration = Math.max(duration, time);
+			duration = Math.max(duration, timeInSeconds);
 
 			return this;
 		}
@@ -104,7 +108,7 @@ public class Builders {
 		private TimelineBuilder() {
 			reset();
 		}
-		
+
 		public float getDuration() {
 			return duration;
 		}
@@ -141,22 +145,40 @@ public class Builders {
 		private float speed;
 		private boolean started;
 
-		public Builders.TimelineAnimationBuilder setTimelineBuilder(TimelineBuilder timelineBuilder) {
+		public TimelineAnimationBuilder setTimelineBuilder(TimelineBuilder timelineBuilder) {
 			this.timelineBuilder = timelineBuilder;
 			return this;
 		}
 
-		public Builders.TimelineAnimationBuilder delay(float time) {
+		/**
+		 * Sets the delay of the TimelineAnimation.
+		 * 
+		 * @param time
+		 *            The time in Seconds of the delay.
+		 * @return
+		 */
+		public TimelineAnimationBuilder delay(float time) {
 			this.delay = time;
 			return this;
 		}
 
-		public Builders.TimelineAnimationBuilder started(boolean started) {
+		/**
+		 * Sets the delay of the TimelineAnimation.
+		 * 
+		 * @param time
+		 *            The Time in ms of the delay.
+		 */
+		public TimelineAnimationBuilder delay(int time) {
+			this.delay = (float) time * 0.001f;
+			return this;
+		}
+
+		public TimelineAnimationBuilder started(boolean started) {
 			this.started = started;
 			return this;
 		}
 
-		public Builders.TimelineAnimationBuilder speed(float speed) {
+		public TimelineAnimationBuilder speed(float speed) {
 			this.speed = speed;
 			return this;
 		}
@@ -173,12 +195,12 @@ public class Builders {
 
 		public TimelineAnimation build() {
 			float duration = timelineBuilder.getDuration();
-			
+
 			TimelineAnimation timelineAnimation = new TimelineAnimation(timelineBuilder.build(), started);
 			timelineAnimation.setDuration(duration);
 			timelineAnimation.setDelay(delay);
 			timelineAnimation.setSpeed(speed);
-			
+
 			reset();
 			return timelineAnimation;
 		}

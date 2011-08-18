@@ -52,7 +52,7 @@ import com.google.inject.Injector;
 public class Example2 extends Java2dDesktopApplication {
 
 	public static void main(String[] args) {
-		Java2dDesktopApplication java2dDesktopApplication = new Example2(){
+		Java2dDesktopApplication java2dDesktopApplication = new Example2() {
 			@Override
 			public void stop() {
 				super.stop();
@@ -127,7 +127,7 @@ public class Example2 extends Java2dDesktopApplication {
 
 		@Override
 		public void init() {
-			
+
 			Converters.init();
 			Java2dConverters.init();
 
@@ -140,7 +140,7 @@ public class Example2 extends Java2dDesktopApplication {
 			element.position = new Point(100, 100);
 			element.alpha = 0f;
 			element.textAlpha = 0f;
-			
+
 			ObjectSynchronizer objectSynchronizer = new ReflectionObjectSynchronizer();
 			timelineSynchronizer = new TimelineSynchronizer(objectSynchronizer, element);
 
@@ -192,8 +192,8 @@ public class Example2 extends Java2dDesktopApplication {
 			};
 
 			texts = new String[] { "<div>We need help! The enemies are near, we cannot let them conquer our lands</div>", //
-					"<div>Now is the time, gather your forces and prepare for the battle!</div>",  //
-					"<div>People <strong>trust</strong> in you!</div>", // 
+					"<div>Now is the time, gather your forces and prepare for the battle!</div>", //
+					"<div>People <strong>trust</strong> in you!</div>", //
 					"<div>You are our last hope!</div>" };
 
 			currentText = 0;
@@ -220,7 +220,7 @@ public class Example2 extends Java2dDesktopApplication {
 				protected void afterTransition(Animation sourceState, Animation targetState) {
 					targetState.restart();
 				}
-			} );
+			});
 
 			animationStateMachine.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
 				@Override
@@ -313,12 +313,12 @@ public class Example2 extends Java2dDesktopApplication {
 		@Override
 		public void update(int delta) {
 
-			currentAnimation.update(delta);
-			
+			currentAnimation.update((float) delta * 0.001f);
+
 			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
-				 currentText++;
+				currentText++;
 			}
-			
+
 			animationStateMachine.checkTransitionConditions();
 			currentAnimation = animationStateMachine.getCurrentState();
 

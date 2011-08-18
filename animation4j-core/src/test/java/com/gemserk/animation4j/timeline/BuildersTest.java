@@ -41,11 +41,11 @@ public class BuildersTest {
 								.keyFrame(1000, 50f) //
 						)) //
 				.speed(2f) //
-				.delay(200) //
+				.delay(0.2f) //
 				.started(true) //
 				.build();
-		assertThat(timelineAnimation.getDelay(), IsEqual.equalTo(200f));
-		assertThat(timelineAnimation.getDuration(), IsEqual.equalTo(1200f));
+		assertThat(timelineAnimation.getDelay(), IsEqual.equalTo(0.2f));
+		assertThat(timelineAnimation.getDuration(), IsEqual.equalTo(1.2f));
 		System.out.println(timelineAnimation.getTimeline());
 	}
 

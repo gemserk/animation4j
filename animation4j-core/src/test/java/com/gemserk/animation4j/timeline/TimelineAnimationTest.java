@@ -89,13 +89,13 @@ public class TimelineAnimationTest {
 
 		// assertThat(animation.getIteration(), IsEqual.equalTo(1));
 		assertThat((Float) animation.getValue("myvalue"), IsEqual.equalTo(100f));
-		animation.update(99.99f);
+		animation.update(0.09999f);
 		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(200f, 0.1f));
-		animation.update(0.01f);
+		animation.update(0.01f * 0.001f);
 		// assertThat(animation.getIteration(), IsEqual.equalTo(2));
 		assertThat(animation.isFinished(), IsEqual.equalTo(false));
 		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(100f, 0.1f));
-		animation.update(100f);
+		animation.update(100f * 0.001f);
 		assertThat(animation.isFinished(), IsEqual.equalTo(true));
 		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(200f, 0.1f));
 	}
@@ -118,17 +118,17 @@ public class TimelineAnimationTest {
 
 		// assertThat(animation.getIteration(), IsEqual.equalTo(1));
 		assertThat((Float) animation.getValue("myvalue"), IsEqual.equalTo(100f));
-		animation.update(99.99f);
+		animation.update(99.99f * 0.001f);
 		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(200f, 0.1f));
-		animation.update(0.01f);
+		animation.update(0.01f * 0.001f);
 		// assertThat(animation.getIteration(), IsEqual.equalTo(2));
 		assertThat(animation.isFinished(), IsEqual.equalTo(false));
 		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(100f, 0.1f));
-		animation.update(99.99f);
+		animation.update(99.99f * 0.001f);
 		assertThat(animation.isFinished(), IsEqual.equalTo(false));
 		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(200f, 0.1f));
 
-		animation.update(9999999f);
+		animation.update(9999999f * 0.001f);
 		assertThat(animation.isFinished(), IsEqual.equalTo(false));
 		// assertThat(animation.getIteration(), IsEqual.equalTo(100));
 
@@ -178,19 +178,19 @@ public class TimelineAnimationTest {
 		
 		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(200f, 0.1f));
 		
-		animation.update(100);
+		animation.update(100 * 0.001f);
 		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(900f, 0.1f));
 
-		animation.update(100);
+		animation.update(100 * 0.001f);
 		assertThat(animation.isStarted(), IsEqual.equalTo(true));
 		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(2000f, 0.1f));
 
-		animation.update(50);
+		animation.update(50 * 0.001f);
 		assertThat(animation.isStarted(), IsEqual.equalTo(true));
 		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(1900f, 0.1f));
 		assertThat(animation.isFinished(), IsEqual.equalTo(false));
 		
-		animation.update(151);
+		animation.update(151 * 0.001f);
 		assertThat(animation.isFinished(), IsEqual.equalTo(true));
 		assertThat((Float) animation.getValue("myvalue"), IsNear.isNear(200f, 0.1f));
 
@@ -217,17 +217,17 @@ public class TimelineAnimationTest {
 
 		animation.start(2);
 		assertThat((Float) animation.getValue(valueName), IsNear.isNear(100f, 0.1f));
-		animation.update(100);
+		animation.update(100 * 0.001f);
 		assertThat((Float) animation.getValue(valueName), IsNear.isNear(100f, 0.1f));
-		animation.update(99.999f);
+		animation.update(99.999f * 0.001f);
 		assertThat((Float) animation.getValue(valueName), IsNear.isNear(200f, 0.1f));
 		
-		animation.update(0.001f);
+		animation.update(0.001f * 0.001f);
 		assertThat((Float) animation.getValue(valueName), IsNear.isNear(100f, 0.1f));
 		
 		// the second time it should only move without using the delay.
 		
-		animation.update(99.999f);
+		animation.update(99.999f * 0.001f);
 		assertThat(animation.isFinished(), IsEqual.equalTo(false));
 		assertThat((Float) animation.getValue(valueName), IsNear.isNear(200f, 0.1f));
 	}
@@ -256,13 +256,13 @@ public class TimelineAnimationTest {
 		animation.start(2, true);
 		assertThat(animation.getIteration(), IsEqual.equalTo(1));
 		assertThat(animation.getPlayingDirection(), IsEqual.equalTo(Animation.PlayingDirection.Normal));
-		animation.update(101);
+		animation.update(101 * 0.001f);
 		assertThat(animation.getIteration(), IsEqual.equalTo(2));
 		assertThat(animation.getPlayingDirection(), IsEqual.equalTo(Animation.PlayingDirection.Reverse));
 		animation.restart();
 		assertThat(animation.getIteration(), IsEqual.equalTo(1));
 		assertThat(animation.getPlayingDirection(), IsEqual.equalTo(Animation.PlayingDirection.Normal));
-		animation.update(20);
+		animation.update(20 * 0.001f);
 		assertThat(animation.getIteration(), IsEqual.equalTo(1));
 		assertThat(animation.getPlayingDirection(), IsEqual.equalTo(Animation.PlayingDirection.Normal));
 		

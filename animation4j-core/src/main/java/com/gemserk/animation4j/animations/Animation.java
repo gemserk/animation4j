@@ -80,5 +80,11 @@ public interface Animation {
 
 	// / used to update the animation (should be in the subclass only)
 
+	/**
+	 * Updates the animation.
+	 * 
+	 * @param delta
+	 *            The time to update the animation in Seconds.
+	 */
 	void update(float delta);
 }

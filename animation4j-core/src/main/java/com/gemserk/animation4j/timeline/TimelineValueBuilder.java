@@ -51,26 +51,28 @@ public class TimelineValueBuilder {
 		return timelineValue;
 	}
 
-	/**
-	 * Defines a new key frame in the time line value.
-	 * 
-	 * @param time
-	 *            The time when the key frame starts (in milliseconds).
-	 * @param value
-	 *            The value the variable should have in the key frame.
-	 */
-	public <T> TimelineValueBuilder keyFrame(float time, T value) {
-		if (typeConverter == null)
-			typeConverter = (TypeConverter) Converters.converter(value.getClass());
-		
-		// TODO: do not allow time less than last time to avoid defining key frames between other key frames. 
-
-		KeyFrame keyFrame = new KeyFrame(time, typeConverter.copyFromObject(value, null));
-		this.keyFrames.add(keyFrame);
-
-		duration = Math.max(duration, time);
-		return this;
-	}
+	// /**
+	// * Defines a new key frame in the time line value.
+	// *
+	// * @param time
+	// * The time when the key frame starts (in milliseconds).
+	// * @param value
+	// * The value the variable should have in the key frame.
+	// */
+	// public <T> TimelineValueBuilder keyFrame(float time, T value) {
+	// if (typeConverter == null)
+	// typeConverter = (TypeConverter) Converters.converter(value.getClass());
+	//
+	// float timeInSeconds = time * 0.001f;
+	//
+	// // TODO: do not allow time less than last time to avoid defining key frames between other key frames.
+	//
+	// KeyFrame keyFrame = new KeyFrame(timeInSeconds, typeConverter.copyFromObject(value, null));
+	// this.keyFrames.add(keyFrame);
+	//
+	// duration = Math.max(duration, timeInSeconds);
+	// return this;
+	// }
 
 	/**
 	 * Defines a new key frame in the time line value.
@@ -86,10 +88,12 @@ public class TimelineValueBuilder {
 		if (typeConverter == null)
 			typeConverter = (TypeConverter) Converters.converter(value.getClass());
 
-		KeyFrame keyFrame = new KeyFrame(time, typeConverter.copyFromObject(value, null), functions);
+		float timeInSeconds = time * 0.001f;
+
+		KeyFrame keyFrame = new KeyFrame(timeInSeconds, typeConverter.copyFromObject(value, null), functions);
 		this.keyFrames.add(keyFrame);
 
-		duration = Math.max(duration, time);
+		duration = Math.max(duration, timeInSeconds);
 
 		return this;
 	}

@@ -72,18 +72,18 @@ public class SynchronizedAnimationExample {
 		
 		// using the synchronized animation you shouldn't call the get() method, but for now you still have to call the update method.
 		
-		System.out.println("myEntity.position at time 0: " + myEntity.position);
-		System.out.println("myEntity.size at time 0: " + myEntity.size);
+		System.out.println("myEntity.position at time 0ms: " + myEntity.position);
+		System.out.println("myEntity.size at time 0ms: " + myEntity.size);
 		
-		animation.update(250);
+		animation.update(0.25f);
 
-		System.out.println("myEntity.position at time 250: " + myEntity.position);
-		System.out.println("myEntity.size at time 250: " + myEntity.size);
+		System.out.println("myEntity.position at time 250ms: " + myEntity.position);
+		System.out.println("myEntity.size at time 250ms: " + myEntity.size);
 		
-		animation.update(250);
+		animation.update(0.25f);
 
-		System.out.println("myEntity.position at time 500: " + myEntity.position);
-		System.out.println("myEntity.size at time 500: " + myEntity.size);
+		System.out.println("myEntity.position at time 500ms: " + myEntity.position);
+		System.out.println("myEntity.size at time 500ms: " + myEntity.size);
 
 	}
 

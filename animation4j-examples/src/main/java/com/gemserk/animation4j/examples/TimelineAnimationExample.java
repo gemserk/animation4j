@@ -20,7 +20,7 @@ public class TimelineAnimationExample {
 
 		TimelineAnimation animation = new TimelineAnimationBuilder() {{
 			
-			delay(100f);
+			delay(100);
 			
 			value("position", new TimelineValueBuilder(){{
 				keyFrame(0, new Vector2f(100f, 100f));
@@ -33,20 +33,20 @@ public class TimelineAnimationExample {
 		animation.start(1);
 
 		Vector2f currentValue = animation.getValue("position");
-		System.out.println("currentValue at time 0: " + currentValue);
+		System.out.println("currentValue at time 0ms: " + currentValue);
 		
 		// value should not be modified because the animation has a delay of 100 units
 		animation.update(99);
 		currentValue = animation.getValue("position");
-		System.out.println("currentValue at time 99: " + currentValue);
+		System.out.println("currentValue at time 99ms: " + currentValue);
 		
 		animation.update(201);
 		currentValue = animation.getValue("position");
-		System.out.println("currentValue at time 300: " + currentValue);
+		System.out.println("currentValue at time 300ms: " + currentValue);
 
 		animation.update(300);
 		currentValue = animation.getValue("position");
-		System.out.println("currentValue at time 600: " + currentValue);
+		System.out.println("currentValue at time 600ms: " + currentValue);
 		
 		System.out.println("animation is stopped? : " + animation.isFinished());
 		

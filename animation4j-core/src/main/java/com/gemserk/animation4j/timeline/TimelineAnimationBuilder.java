@@ -67,11 +67,23 @@ public class TimelineAnimationBuilder {
 	 * Specifies the delay to start of the animation.
 	 * 
 	 * @param time
-	 *            The delay in ms.
+	 *            The delay in seconds.
 	 * @return The builder in order to let the user make methods chaining.
 	 */
 	public TimelineAnimationBuilder delay(float time) {
 		this.delay = time;
+		return this;
+	}
+	
+	/**
+	 * Specifies the delay to start of the animation.
+	 * 
+	 * @param time
+	 *            The delay in ms.
+	 * @return The builder in order to let the user make methods chaining.
+	 */
+	public TimelineAnimationBuilder delay(int time) {
+		this.delay = (float) time * 0.001f;
 		return this;
 	}
 

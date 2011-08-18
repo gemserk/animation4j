@@ -151,7 +151,7 @@ public class Example1 extends Java2dDesktopApplication {
 		@Override
 		public void update(int delta) {
 			
-			animation.update(delta);
+			animation.update((float)delta * 0.001f);
 			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
 				animation.restart();
 				// animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(animation);
