@@ -25,6 +25,16 @@ public class TransitionImplTest {
 		timeProvider = new UpdateableTimeProvider();
 		internalTransition = new InternalTransition<Float>(100f, typeConverter, new FloatArrayInterpolator(typeConverter.variables()));
 	}
+	
+	@Test
+	public void shouldTransitionFromValueToValue() {
+		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 1f, timeProvider);
+		assertThat(transition.get(), IsEqual.equalTo(100f));
+		transition.set(200f);
+		assertThat(transition.get(), IsEqual.equalTo(100f));
+		timeProvider.update(0.1f);
+		assertThat(transition.get(), IsEqual.equalTo(110f));
+	}
 
 	@Test
 	public void shouldReturnFirstValueWhenNoTimePassed() {

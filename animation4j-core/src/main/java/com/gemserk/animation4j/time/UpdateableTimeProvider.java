@@ -7,7 +7,7 @@ package com.gemserk.animation4j.time;
  */
 public class UpdateableTimeProvider implements TimeProvider {
 
-	float time = 0;
+	float time = 0f;
 
 	public float getTime() {
 		return time;
