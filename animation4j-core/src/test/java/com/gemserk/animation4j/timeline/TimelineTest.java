@@ -53,7 +53,7 @@ public class TimelineTest {
 
 		Timeline timeline = new Timeline(new HashMap<String, TimelineValue>() {
 			{
-				put("myvalue", new TimelineValueBuilder(new Vector2fConverter()).keyFrame(0f, new Vector2f(100, 100)).keyFrame(1000f, new Vector2f(200, 200)).build());
+				put("myvalue", new TimelineValueBuilder(new Vector2fConverter()).keyFrame(0, new Vector2f(100, 100)).keyFrame(1000, new Vector2f(200, 200)).build());
 			}
 		});
 

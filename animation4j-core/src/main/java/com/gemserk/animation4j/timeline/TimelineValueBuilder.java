@@ -78,7 +78,7 @@ public class TimelineValueBuilder {
 	 * Defines a new key frame in the time line value.
 	 * 
 	 * @param time
-	 *            The time when the key frame starts (in milliseconds).
+	 *            The time when the key frame starts in seconds.
 	 * @param value
 	 *            The value the variable should have in the key frame.
 	 * @param functions
@@ -88,14 +88,26 @@ public class TimelineValueBuilder {
 		if (typeConverter == null)
 			typeConverter = (TypeConverter) Converters.converter(value.getClass());
 
-		float timeInSeconds = time * 0.001f;
-
-		KeyFrame keyFrame = new KeyFrame(timeInSeconds, typeConverter.copyFromObject(value, null), functions);
+		KeyFrame keyFrame = new KeyFrame(time, typeConverter.copyFromObject(value, null), functions);
 		this.keyFrames.add(keyFrame);
 
-		duration = Math.max(duration, timeInSeconds);
+		duration = Math.max(duration, time);
 
 		return this;
+	}
+
+	/**
+	 * Defines a new key frame in the time line value.
+	 * 
+	 * @param time
+	 *            The time when the key frame starts (in milliseconds).
+	 * @param value
+	 *            The value the variable should have in the key frame.
+	 * @param functions
+	 *            The interpolation functions to be used when interpolating this keyframe.
+	 */
+	public <T> TimelineValueBuilder keyFrame(int time, T value, InterpolationFunction... functions) {
+		return keyFrame((float) time * 0.001f, value, functions);
 	}
 
 }

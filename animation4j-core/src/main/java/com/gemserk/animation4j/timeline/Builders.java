@@ -80,14 +80,16 @@ public class Builders {
 			if (typeConverter == null)
 				typeConverter = (TypeConverter) Converters.converter(value.getClass());
 
-			float timeInSeconds = time * 0.001f;
-
-			KeyFrame keyFrame = new KeyFrame(timeInSeconds, typeConverter.copyFromObject(value, null), functions);
+			KeyFrame keyFrame = new KeyFrame(time, typeConverter.copyFromObject(value, null), functions);
 			this.keyFrames.add(keyFrame);
 
-			duration = Math.max(duration, timeInSeconds);
+			duration = Math.max(duration, time);
 
 			return this;
+		}
+		
+		public <T> Builders.TimelineValueBuilder keyFrame(int time, T value, InterpolationFunction... functions) {
+			return keyFrame((float)time * 0.001f, value, functions);
 		}
 
 		public TimelineValue build() {
