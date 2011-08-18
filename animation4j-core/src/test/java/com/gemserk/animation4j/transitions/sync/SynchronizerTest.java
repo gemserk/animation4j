@@ -56,9 +56,9 @@ public class SynchronizerTest {
 		synchronizer1.transition(object1, Transitions.transitionBuilder(object1).end(new Vector2f(0f, 0f)).time(1000));
 		synchronizer1.synchronize(0);
 		assertThat(object1, IsEqual.equalTo(new Vector2f(50, 50)));
-		synchronizer1.synchronize(500);
+		synchronizer1.synchronize(0.5f);
 		assertThat(object1, IsEqual.equalTo(new Vector2f(25, 25)));
-		synchronizer1.synchronize(500);
+		synchronizer1.synchronize(0.5f);
 		assertThat(object1, IsEqual.equalTo(new Vector2f(0, 0)));
 	}
 
