@@ -11,6 +11,9 @@ public class TransitionImpl<T> implements Transition<T> {
 
 	private final TimeProvider timeProvider;
 
+	/**
+	 * Used internally to multiply delta when updating the transition, 2f implies 2x the interpolation speed.
+	 */
 	private final float speed;
 
 	private float lastTime;
@@ -55,7 +58,7 @@ public class TransitionImpl<T> implements Transition<T> {
 		if (delta <= 0)
 			return;
 
-		float time = ((float) delta) * speed;
+		float time = delta * speed;
 		transition.update(time);
 		lastTime = currentTime;
 

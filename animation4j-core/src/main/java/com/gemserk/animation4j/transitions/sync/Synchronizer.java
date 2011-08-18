@@ -1,5 +1,6 @@
 package com.gemserk.animation4j.transitions.sync;
 
+import com.gemserk.animation4j.time.SystemTimeProvider;
 import com.gemserk.animation4j.time.UpdateableTimeProvider;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions.TransitionBuilder;
@@ -8,28 +9,28 @@ import com.gemserk.animation4j.transitions.event.TransitionEventHandler;
 public class Synchronizer {
 
 	private SynchronizedTransitionManager synchronizedTransitionManager = new SynchronizedTransitionManager();
-
 	private TransitionHandlersManager transitionHandlersManager = new TransitionHandlersManager();
 
 	/**
 	 * Used internally to synchronize correctly when calling synchronize(delta) method, a restriction however is it will only work for all Transitions registered using a TransitionBuilder.
 	 */
 	private UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
+	private SystemTimeProvider systemTimeProvider = new SystemTimeProvider();
 
-	private long lastTimeMs;
+	private float lastTime;
 
 	public Synchronizer() {
-		lastTimeMs = System.currentTimeMillis();
+		lastTime = systemTimeProvider.getTime();
 	}
 
 	/**
 	 * Performs the synchronization of all the objects with the corresponding registered transitions, it uses a delta based on the last system time.
 	 */
 	public void synchronize() {
-		long currentTimeMs = System.currentTimeMillis();
-		long deltaMs = currentTimeMs - lastTimeMs;
-		synchronize(deltaMs);
-		lastTimeMs = currentTimeMs;
+		float currentTime = systemTimeProvider.getTime();
+		float delta = currentTime - lastTime;
+		synchronize(delta);
+		lastTime = currentTime;
 	}
 
 	/**
@@ -37,9 +38,9 @@ public class Synchronizer {
 	 * It will only work (for now) for those transitions registered using a TransitionBuilder.
 	 * 
 	 * @param delta
-	 *            The delta time to use to synchronize.
+	 *            The delta time in Seconds to use to synchronize.
 	 */
-	public void synchronize(long delta) {
+	public void synchronize(float delta) {
 		timeProvider.update(delta);
 		synchronizedTransitionManager.synchronize();
 		transitionHandlersManager.update();

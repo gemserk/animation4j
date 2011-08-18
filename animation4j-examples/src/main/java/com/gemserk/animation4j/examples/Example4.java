@@ -153,7 +153,7 @@ public class Example4 extends Java2dDesktopApplication {
 			});
 
 			backgroundColor = Transitions.transitionBuilder(new Color(0.4f, 0.4f, 0.4f, 0f)).speed(1f).build();
-			backgroundColor.set(new Color(0.4f, 0.4f, 0.4f, 0.6f), 1000);
+			backgroundColor.set(new Color(0.4f, 0.4f, 0.4f, 0.6f), 1f);
 		}
 
 		Transition<Color> backgroundColor;

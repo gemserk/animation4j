@@ -22,9 +22,9 @@ public class Synchronizers {
 	 * Performs a synchronization of all internal objects with the corresponding registered transitions using the specified delta. It will only work (for now) for those transitions registered using a TransitionBuilder.
 	 * 
 	 * @param delta
-	 *            The delta time to use to synchronize.
+	 *            The delta time in Seconds to use to synchronize.
 	 */
-	public static void synchronize(long delta) {
+	public static void synchronize(float delta) {
 		getInstance().synchronize(delta);
 	}
 

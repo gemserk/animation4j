@@ -25,7 +25,7 @@ public class TimeTransition {
 	public float get() {
 		if (transitionTime == 0)
 			return 1f;
-		return ((float) currentTime / (float) transitionTime);
+		return (currentTime / transitionTime);
 	}
 
 	public void start(float time) {

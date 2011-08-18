@@ -7,7 +7,7 @@ class InternalTransition<T> {
 	
 	private final TimeTransition timeTransition = new TimeTransition();
 
-	private int defaultTime;
+	private float defaultTime;
 
 	private Interpolator<float[]> interpolator;
 
@@ -25,7 +25,7 @@ class InternalTransition<T> {
 		this(startValue, typeConverter, interpolator, 0);
 	}
 
-	InternalTransition(T startValue, TypeConverter<T> typeConverter, Interpolator<float[]> interpolator, int defaultTime) {
+	InternalTransition(T startValue, TypeConverter<T> typeConverter, Interpolator<float[]> interpolator, float defaultTime) {
 		this.typeConverter = typeConverter;
 		this.startValue = typeConverter.copyFromObject(startValue, null);
 		this.currentValue = null;
