@@ -29,9 +29,9 @@ public interface Transition<T> {
 	 * @param t
 	 *            The wanted new value.
 	 * @param time
-	 *            The time to set the new value. If time is zero, then value is applied directly.
+	 *            The time in seconds to set the new value. If time is zero, then value is applied directly.
 	 */
-	void set(T t, int time);
+	void set(T t, float time);
 
 	/**
 	 * Returns true whenever the transition was started, false otherwise.

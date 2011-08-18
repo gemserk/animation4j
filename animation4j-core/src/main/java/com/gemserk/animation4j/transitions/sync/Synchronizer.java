@@ -16,20 +16,20 @@ public class Synchronizer {
 	 */
 	private UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
 
-	private long lastTime;
+	private long lastTimeMs;
 
 	public Synchronizer() {
-		lastTime = System.currentTimeMillis();
+		lastTimeMs = System.currentTimeMillis();
 	}
 
 	/**
 	 * Performs the synchronization of all the objects with the corresponding registered transitions, it uses a delta based on the last system time.
 	 */
 	public void synchronize() {
-		long currentTime = System.currentTimeMillis();
-		long delta = currentTime - lastTime;
-		synchronize(delta);
-		lastTime = currentTime;
+		long currentTimeMs = System.currentTimeMillis();
+		long deltaMs = currentTimeMs - lastTimeMs;
+		synchronize(deltaMs);
+		lastTimeMs = currentTimeMs;
 	}
 
 	/**

@@ -20,8 +20,6 @@ public class TransitionHandlersManagerTest {
 
 		transitionHandlersManager.handle(transition, mockTransitionEventHandler);
 		
-		transition.setTransitioning(false);
-		
 		transitionHandlersManager.update();
 		
 		assertThat(mockTransitionEventHandler.onTransitionStartedCalled, IsEqual.equalTo(false));

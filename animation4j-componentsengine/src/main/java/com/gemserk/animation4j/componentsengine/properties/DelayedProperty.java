@@ -14,7 +14,7 @@ public class DelayedProperty<T> implements Property<T> {
 
 	private T delayedValue;
 
-	private long timeWhenSet = 0;
+	private float timeWhenSet = 0;
 
 	private T value;
 

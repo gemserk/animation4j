@@ -8,9 +8,8 @@ package com.gemserk.animation4j.transitions;
  */
 public class TimeTransition {
 
-	private int transitionTime;
-
-	private int currentTime;
+	private float transitionTime;
+	private float currentTime;
 
 	private boolean finished = true;
 
@@ -29,13 +28,13 @@ public class TimeTransition {
 		return ((float) currentTime / (float) transitionTime);
 	}
 
-	public void start(int time) {
+	public void start(float time) {
 		this.transitionTime = time;
 		this.currentTime = 0;
 		this.finished = false;
 	}
 
-	public void update(int time) {
+	public void update(float time) {
 		if (finished)
 			return;
 		this.currentTime += time;

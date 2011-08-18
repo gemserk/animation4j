@@ -45,7 +45,7 @@ class InternalTransition<T> {
 		this.set(t, defaultTime);
 	}
 
-	public void set(T t, int time) {
+	public void set(T t, float time) {
 		this.desiredValue = typeConverter.copyFromObject(t, desiredValue);
 		timeTransition.start(time);
 		if (currentValue != null)
@@ -58,7 +58,7 @@ class InternalTransition<T> {
 		System.arraycopy(b, 0, a, 0, a.length);
 	}
 
-	public void update(int time) {
+	public void update(float time) {
 		if (isFinished())
 			return;
 		timeTransition.update(time);

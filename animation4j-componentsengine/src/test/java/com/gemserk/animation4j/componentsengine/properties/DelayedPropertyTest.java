@@ -24,8 +24,8 @@ public class DelayedPropertyTest {
 	public void shouldReturnStartValueWhileBeforeDelay() {
 		TimeProvider timeProvider = createMock(TimeProvider.class);
 		
-		expect(timeProvider.getTime()).andReturn(0L);
-		expect(timeProvider.getTime()).andReturn(0L);
+		expect(timeProvider.getTime()).andReturn(0f);
+		expect(timeProvider.getTime()).andReturn(0f);
 		replay(timeProvider);
 		
 		Property<Integer> delayedProperty = new DelayedProperty<Integer>(100, 1000, timeProvider);
@@ -39,8 +39,8 @@ public class DelayedPropertyTest {
 	public void shouldReturnNewValueAfterDelay() {
 		TimeProvider timeProvider = createMock(TimeProvider.class);
 		
-		expect(timeProvider.getTime()).andReturn(0L);
-		expect(timeProvider.getTime()).andReturn(1000L);
+		expect(timeProvider.getTime()).andReturn(0f);
+		expect(timeProvider.getTime()).andReturn(1000f);
 		replay(timeProvider);
 		
 		Property<Integer> delayedProperty = new DelayedProperty<Integer>(100, 1000, timeProvider);

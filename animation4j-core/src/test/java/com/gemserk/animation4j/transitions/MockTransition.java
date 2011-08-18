@@ -3,15 +3,8 @@ package com.gemserk.animation4j.transitions;
 
 public class MockTransition<T> implements Transition<T> {
 
-	boolean transitioning;
-	
 	boolean started = false;
-	
 	boolean finished = false;
-
-	public void setTransitioning(boolean transitioning) {
-		this.transitioning = transitioning;
-	}
 
 	@Override
 	public T get() {
@@ -24,7 +17,7 @@ public class MockTransition<T> implements Transition<T> {
 	}
 
 	@Override
-	public void set(T t, int time) {
+	public void set(T t, float time) {
 
 	}
 

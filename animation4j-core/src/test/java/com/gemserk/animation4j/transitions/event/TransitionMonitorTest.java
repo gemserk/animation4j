@@ -42,7 +42,6 @@ public class TransitionMonitorTest {
 	@Test
 	public void shouldReturnTransitionStartedIfTransitionDidStart() {
 		MockTransition<Vector2f> transition = new MockTransition<Vector2f>();
-		transition.setTransitioning(true);
 		transition.setStarted(true);
 
 		TransitionMonitor transitionMonitor = new TransitionMonitor();
@@ -55,7 +54,6 @@ public class TransitionMonitorTest {
 	@Test
 	public void shouldReturnWasStartedOnlyOnce() {
 		MockTransition<Vector2f> transition = new MockTransition<Vector2f>();
-		transition.setTransitioning(true);
 		transition.setStarted(true);
 
 		TransitionMonitor transitionMonitor = new TransitionMonitor();
@@ -70,7 +68,6 @@ public class TransitionMonitorTest {
 	@Test
 	public void shouldReturnTransitionNotFinishedIfTransitionDidntFinish() {
 		MockTransition<Vector2f> transition = new MockTransition<Vector2f>();
-		transition.setTransitioning(true);
 
 		TransitionMonitor transitionMonitor = new TransitionMonitor();
 		transitionMonitor.monitor(transition);

@@ -1,5 +1,6 @@
 package com.gemserk.animation4j.transitions;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import org.hamcrest.core.IsEqual;
@@ -47,9 +48,9 @@ public class TransitionImplTest {
 		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f, timeProvider);
 		assertThat(transition.get(), IsEqual.equalTo(100f));
 		transition.set(200f);
-		timeProvider.update(50);
+		timeProvider.update(0.05f);
 		assertThat(transition.get(), IsEqual.equalTo(150f));
-		timeProvider.update(25);
+		timeProvider.update(0.025f);
 		assertThat(transition.get(), IsEqual.equalTo(175f));
 	}
 
@@ -58,26 +59,26 @@ public class TransitionImplTest {
 		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f, timeProvider);
 		assertThat(transition.get(), IsEqual.equalTo(100f));
 		transition.set(200f);
-		timeProvider.update(50);
+		timeProvider.update(0.05f);
 		assertThat(transition.get(), IsEqual.equalTo(150f));
-		timeProvider.update(25);
+		timeProvider.update(0.025f);
 		assertThat(transition.get(), IsEqual.equalTo(175f));
 
 		transition.set(0f);
 		assertThat(transition.get(), IsEqual.equalTo(175f));
-		timeProvider.update(100);
+		timeProvider.update(0.1f);
 
 		assertThat(transition.get(), IsEqual.equalTo(0f));
 
 		transition.set(100f);
-		timeProvider.update(25);
-		assertThat(transition.get(), IsEqual.equalTo(25f));
-		timeProvider.update(25);
-		assertThat(transition.get(), IsEqual.equalTo(50f));
-		timeProvider.update(25);
-		assertThat(transition.get(), IsEqual.equalTo(75f));
-		timeProvider.update(25);
-		assertThat(transition.get(), IsEqual.equalTo(100f));
+		timeProvider.update(0.025f);
+		assertEquals(25f, transition.get(), 0.01f);
+		timeProvider.update(0.025f);
+		assertEquals(50f, transition.get(), 0.01f);
+		timeProvider.update(0.025f);
+		assertEquals(75f, transition.get(), 0.01f);
+		timeProvider.update(0.025f);
+		assertEquals(100f, transition.get(), 0.01f);
 	}
 
 	@Test

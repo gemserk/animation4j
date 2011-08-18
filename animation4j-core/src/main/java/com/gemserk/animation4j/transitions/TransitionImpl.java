@@ -9,16 +9,15 @@ import com.gemserk.animation4j.time.TimeProvider;
  */
 public class TransitionImpl<T> implements Transition<T> {
 
-	private final float speed;
-
 	private final TimeProvider timeProvider;
 
-	private long lastTime;
+	private final float speed;
+
+	private float lastTime;
 
 	private InternalTransition<T> transition;
 
 	private boolean started = false;
-
 	private boolean finished = true;
 
 	public TransitionImpl(InternalTransition<T> transition, float speed, TimeProvider timeProvider) {
@@ -33,10 +32,10 @@ public class TransitionImpl<T> implements Transition<T> {
 	}
 
 	public void set(T t) {
-		this.set(t, 1000);
+		this.set(t, 1f);
 	}
 
-	public void set(T t, int time) {
+	public void set(T t, float time) {
 		lastTime = timeProvider.getTime();
 		transition.set(t, time);
 
@@ -48,8 +47,8 @@ public class TransitionImpl<T> implements Transition<T> {
 		if (finished)
 			return;
 
-		long currentTime = timeProvider.getTime();
-		long delta = currentTime - lastTime;
+		float currentTime = timeProvider.getTime();
+		float delta = currentTime - lastTime;
 
 		started = true;
 
@@ -57,7 +56,7 @@ public class TransitionImpl<T> implements Transition<T> {
 			return;
 
 		float time = ((float) delta) * speed;
-		transition.update((int) (time));
+		transition.update(time);
 		lastTime = currentTime;
 
 		finished = transition.isFinished();

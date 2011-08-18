@@ -7,9 +7,9 @@ package com.gemserk.animation4j.time;
  */
 public class UpdateableTimeProvider implements TimeProvider {
 
-	long time = 0;
+	float time = 0;
 
-	public long getTime() {
+	public float getTime() {
 		return time;
 	}
 
@@ -19,7 +19,7 @@ public class UpdateableTimeProvider implements TimeProvider {
 	 * @param time
 	 *            The time increment value.
 	 */
-	public void update(long time) {
+	public void update(float time) {
 		this.time += time;
 	}
 

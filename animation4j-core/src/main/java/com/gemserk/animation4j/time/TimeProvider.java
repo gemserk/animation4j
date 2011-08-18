@@ -8,8 +8,8 @@ package com.gemserk.animation4j.time;
 public interface TimeProvider {
 
 	/**
-	 * Returns the current time of the time provider system.
+	 * Returns the current time of the time provider system in seconds.
 	 */
-	long getTime();
+	float getTime();
 
 }
