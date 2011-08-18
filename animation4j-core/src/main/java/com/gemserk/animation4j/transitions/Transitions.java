@@ -31,7 +31,7 @@ public class Transitions {
 
 		private T endValue;
 
-		private int time;
+		private float time;
 
 		private float speed;
 
@@ -66,6 +66,10 @@ public class Transitions {
 		}
 
 		public TransitionBuilder<T> time(int time) {
+			return time((float) time * 0.001f);
+		}
+		
+		public TransitionBuilder<T> time(float time) {
 			this.time = time;
 			return this;
 		}
