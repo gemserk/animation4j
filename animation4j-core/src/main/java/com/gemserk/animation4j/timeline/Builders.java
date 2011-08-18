@@ -23,6 +23,7 @@ public class Builders {
 		private void reset() {
 			keyFrames = new ArrayList<KeyFrame>();
 			typeConverter = null;
+			duration = 0f;
 		}
 
 		public float getDuration() {

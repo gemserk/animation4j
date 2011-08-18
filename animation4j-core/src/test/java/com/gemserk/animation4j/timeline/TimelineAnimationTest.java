@@ -267,5 +267,34 @@ public class TimelineAnimationTest {
 		assertThat(animation.getPlayingDirection(), IsEqual.equalTo(Animation.PlayingDirection.Normal));
 		
 	}
+	
+	@Test
+	public void shouldBeFinishedAfterTotalTimeSpent() {
+		
+		float totalTime = 20f;
+		
+		Converters.register(Float.class, Converters.floatValue());
+		
+		TimelineAnimation animation = Builders.animation(Builders.timeline() //
+				.value(Builders.timelineValue("alpha") //
+						.keyFrame(0, 0f) //
+						.keyFrame(0.2f, 1f) //
+						.keyFrame(0.8f, 1f) //
+						.keyFrame(1f, 0f)) //
+				) //
+				.speed(1f / totalTime) //
+				.build();
+		animation.start(1);
+		
+		animation.update(totalTime * 0.5f);
+		
+		assertFalse(animation.isFinished());
+		
+		animation.update(totalTime * 0.5f);
+		
+		assertTrue(animation.isFinished());
+		
+		Converters.unregister(Float.class);
+	}
 
 }
