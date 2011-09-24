@@ -9,135 +9,75 @@ Features
 * Animation of any object you want.
 * API based on CSS3 definitions for animations and transitions.
 * Optional event listeners for animation and transition state changes.
+* Low dependence to animation4j classes by providing black box interaction (optional).
 
 Introduction
 ------------
 
 To know how to use the project, you should know a bit about the following classes. First of all, the next examples will be using a class named Vector2f defined as:
 
-	public class Vector2f {
+	Vector2f {
 
-		public float x, y;
+		float x, y;
 	
-		public Vector2f(float x, float y) {
-			this.x = x;
-			this.y = y;
-		}
-
 	}
+
+(note: I removed some boilerplate code for the documentation examples)
 
 ### Transition<T>
 
 This class provides a way to modify an object from one value to another in a specified time, the API:
 
-	/**
-	 * Provides an interface of a transition of a value.
-	 * 
-	 * @param <T>
-	 *            The type of the transition value.
-	 * @author acoppes
-	 */
-	public interface Transition<T> {
+	Transition<T> {
 
-		/**
-		 * Returns the current value of the transition.
-		 * 
-		 */
-		T get();
+		// returns current value of the transition
+		T get(); 
 
-		/**
-		 * Start an interpolation from a to b in the specified default time.
-		 * 
-		 * @param t
-		 *            The wanted new value.
-		 */
-		void set(T t);
+		// sets the current value of the transition	
+		set(T t); 
 
-		/**
-		 * Start an interpolation from a to b in the specified time.
-		 * 
-		 * @param t
-		 *            The wanted new value.
-		 * @param time
-		 *            The time in seconds to set the new value. If time is zero, then value is applied directly.
-		 */
-		void set(T t, float time);
+		// starts a transition to the specified value in the specified time
+		set(T t, float time); 
 
-		/**
-		 * Returns true whenever the transition was started, false otherwise.
-		 */
+		// returns true whenever the transition was started, false otherwise
 		boolean isStarted();
 
-		/**
-		 * Returns true whenever the transition was finished, false otherwise.
-		 */
+		// returns true whenever the transition was finished, false otherwise.
 		boolean isFinished();
-	
+
 	}
 
 ### TypeConverter
 
 Provides a way to let the framework copy values to your object and vice versa, this is the API:
 
-	/**
-	 * Provides a way to convert an object in a float[] array and vice versa, for interpolation purposes.
-	 * 
-	 * @param <T>
-	 *            The type to convert.
-	 * @author acoppes
-	 */
-	public interface TypeConverter<T> {
+	TypeConverter<T> {
 
-		/**
-		 * Returns the quantity of variables are used to convert the object to the float[] and vice versa.
-		 * 
-		 * @return the quantity of variables used.
-		 */
+		// Should returns the quantity of variables used 
+		// to convert the object to the float[] and vice versa.
 		int variables();
 
-		/**
-		 * Copy the values of the object to the specified float array, if null it will create a new float array.
-		 * 
-		 * @param object
-		 *            The object from where to get the values to fulfill the float array.
-		 * @param x
-		 *            The float array to copy the values of the object. If null it will create a new float array.
-		 * @return The float array with the values of the object.
-		 */
+		// copy the values of the object to the specified float array, if null it will create a new float array.
 		float[] copyFromObject(T object, float[] x);
 
-		/**
-		 * Copy the values of the float array to the specified object.
-		 * 
-		 * @param object
-		 *            The object which the float array values will be copied to. If null or object immutable, it will create a new object.
-		 * @param x
-		 *            The float array to get the values to fulfill the object.
-		 * @return An object with the values of the float array.
-		 */
+		// copy the values of the float array to the specified object.
 		T copyToObject(T object, float[] x);
 
 	}
 
 Using the previously defined Vector2f, an implementation of TypeConverter<Vector2f> could be something like this:
 
-	public class Vector2fConverter implements TypeConverter<Vector2f> {
+	Vector2fConverter implements TypeConverter<Vector2f> {
 	
-		public static int arrayInstances = 0;
-
-		@Override
-		public float[] copyFromObject(Vector2f v, float[] x) {
-			if (x == null) {
+		float[] copyFromObject(Vector2f v, float[] x) {
+			if (x == null) 
 				x = new float[variables()];
-				arrayInstances++;
-			}
 			x[0] = v.x;
 			x[1] = v.y;
 			return x;
 		}
 
-		@Override
-		public Vector2f copyToObject(Vector2f v, float[] x) {
+		Vector2f copyToObject(Vector2f v, float[] x) {
 			if (v == null)
 				v = new Vector2f(0, 0);
 			v.x = x[0];
@@ -145,8 +85,7 @@ Using the previously defined Vector2f, an implementation of TypeConverter<Vector
 			return v;
 		}
 
-		@Override
-		public int variables() {
+		int variables() {
 			return 2;
 		}
 	}
