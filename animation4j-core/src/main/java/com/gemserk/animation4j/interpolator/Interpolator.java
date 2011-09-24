@@ -21,5 +21,18 @@ public interface Interpolator<T> {
 	 * @return An interpolated object between a and b.
 	 */
 	T interpolate(T a, T b, float t);
-
+	
+	// maybe a method:
+	
+	// T interpolate(T a, T b, float t, InterpolationFunction ... functions);
+	
+	// right now each implementation has its own functions, with this new method you could have default interpolation functions
+	// or custom interpolation functions for one interpolation
+	
+	// another useful method could be something for mutable objects:
+	
+	// void interpolate(T t, T a, T b, float t)
+	
+	// or just modify GenericInterpolator to accept the variable object and if it is mutable it will modify it, else it would not...
+	
 }

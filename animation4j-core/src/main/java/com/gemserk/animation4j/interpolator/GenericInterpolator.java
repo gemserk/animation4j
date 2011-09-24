@@ -11,14 +11,9 @@ import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 public class GenericInterpolator<T> implements Interpolator<T> {
 
 	private final TypeConverter<T> converter;
-
-	private float[] a;
-
-	private float[] b;
-
+	private final Interpolator<float[]> interpolator;
+	private float[] a, b;
 	private T object;
-
-	private Interpolator<float[]> interpolator;
 
 	/**
 	 * Creates a new GenericInterpolator using a type converter to map between T and float[] and vice versa and an Interpolator<float[]> to interpolate the values.
@@ -41,6 +36,19 @@ public class GenericInterpolator<T> implements Interpolator<T> {
 	 */
 	public GenericInterpolator(TypeConverter<T> converter) {
 		this(converter, new FloatArrayInterpolator(converter.variables()));
+	}
+
+	/**
+	 * Creates a new GenericInterpolator using a type converter to map between T and float[] and vice versa.
+	 * 
+	 * @param mutableObject
+	 *            The mutable object to be modified when interpolating.
+	 * @param converter
+	 *            The TypeConverter to be used between T and float[].
+	 */
+	public GenericInterpolator(T mutableObject, TypeConverter<T> converter) {
+		this(converter, new FloatArrayInterpolator(converter.variables()));
+		this.object = mutableObject;
 	}
 
 	/**

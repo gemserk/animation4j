@@ -118,5 +118,20 @@ public class GenericInterpolatorTest {
 		System.out.println("free memory after: " + Runtime.getRuntime().freeMemory());
 
 	}
+	
+	@Test
+	public void shouldModifyMutableObjectWhenInterpolating() {
+		Vector2f mutableVector = new Vector2f(-500f, -200f);
+		
+		Interpolator<Vector2f> interpolator = new GenericInterpolator<Vector2f>(mutableVector, new Vector2fConverter());
+
+		Vector2f a = new Vector2f(100, 100);
+		Vector2f b = new Vector2f(200, 200);
+
+		interpolator.interpolate(a, b, 0.5f);
+		
+		assertThat(mutableVector.x, IsEqual.equalTo(150f));
+		assertThat(mutableVector.y, IsEqual.equalTo(150f));
+	}
 
 }
