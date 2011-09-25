@@ -103,16 +103,26 @@ This class provides an easy way to build a Transition<T> that could be used to b
 		.end(new Vector2f(50, 50))  // This line defines the ending value of the transition
 		.time(0.5f)					// This line defines the duration of the transition to be half a second
 
-### Animation and Animation package...
-
-TODO
-
 How to use it
 ------------
 
-The first example shows how to register an object to be synchronized 
+There are different ways of using the framework, the next sections shows some of them.
 
-	Transition<
+### Using the Synchronizer 
+
+The first example shows how to register an object to be synchronized by using the Synchronizer and the TransitionBuilder.
+
+	// this code registers a new TypeConverter for the class Vector2f, to be used by 
+	// the framework internally
+	Converters.register(Vector2f.class, new Vector2fConverter());
+	Vector2f v = new Vector2f(50f, 50f);
+	Synchronizer.transition(v, Transitions.transitionBuilder()
+				.end(new Vector2f(100f, 100f))
+				.time(0.5f));
+	// now we call the synchronizer to preform the transitions and synchronize the new value with v
+	Synchronizer.synchronize(0.25f);
+	// this should print (75,75)
+	System.out.println("(" + v.x + "," + v.y ")");
 
 Limitations
 ------------
@@ -125,7 +135,7 @@ TODO List
 ------------
 
 * Improve API to make it easier to use.
-* More examples.
+* Improve current documentation and add documentation about animation and time line features.
 * Make a way to create transitions using the TransitionBuilder specifying the first and last values of the object without having to create a new object, could be something like .start(50, 50) instead .start(new Vector(50,50)), to avoid generating garbage. Of course, that could be handled by the library user instead.
 
 Contributing
