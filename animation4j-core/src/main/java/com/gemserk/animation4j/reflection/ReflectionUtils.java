@@ -88,4 +88,20 @@ public class ReflectionUtils {
 		}
 	}
 
+	public static void setField(Object object, String fieldName, Object value) {
+		Class<?> clazz = object.getClass();
+		Method setter = ReflectionUtils.getSetter(clazz, fieldName);
+
+		String setterName = getSetterName(fieldName);
+
+		if (setter == null)
+			throw new RuntimeException(setterName + "() method not found in " + object.getClass());
+
+		try {
+			setter.invoke(object, value);
+		} catch (Exception e) {
+			throw new RuntimeException("failed to set value on " + setterName + "() method from " + object.getClass(), e);
+		}
+	}
+
 }
