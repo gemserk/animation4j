@@ -28,8 +28,6 @@ import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.ResourceManagerImpl;
 import com.gemserk.resources.datasources.ClassPathDataSource;
 import com.gemserk.resources.java2d.dataloaders.ImageLoader;
-import com.gemserk.resources.resourceloaders.CachedResourceLoader;
-import com.gemserk.resources.resourceloaders.ResourceLoaderImpl;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -105,7 +103,8 @@ public class Example3 extends Java2dDesktopApplication {
 
 			Java2dConverters.init();
 
-			resourceManager.add("House", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("house-128x92.png")))));
+			resourceManager.add("House", new ImageLoader(new ClassPathDataSource("house-128x92.png")));
+			
 			houseImageResource = resourceManager.get("House");
 			creditsPane = new JEditorPane("text/html", new FileHelper("license-lostgarden.html").read()) {
 				{

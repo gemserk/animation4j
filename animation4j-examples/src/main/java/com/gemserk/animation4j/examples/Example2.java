@@ -40,8 +40,6 @@ import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.ResourceManagerImpl;
 import com.gemserk.resources.datasources.ClassPathDataSource;
 import com.gemserk.resources.java2d.dataloaders.ImageLoader;
-import com.gemserk.resources.resourceloaders.CachedResourceLoader;
-import com.gemserk.resources.resourceloaders.ResourceLoaderImpl;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -138,9 +136,9 @@ public class Example2 extends Java2dDesktopApplication {
 
 			Converters.init();
 			Java2dConverters.init();
-
-			resourceManager.add("Globe", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("globe-256x176.png")))));
-			resourceManager.add("House", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("house-128x92.png")))));
+			
+			resourceManager.add("Globe", new ImageLoader(new ClassPathDataSource("globe-256x176.png")));
+			resourceManager.add("House", new ImageLoader(new ClassPathDataSource("house-128x92.png")));
 
 			globeImageResource = resourceManager.get("Globe");
 			houseImageResource = resourceManager.get("House");
