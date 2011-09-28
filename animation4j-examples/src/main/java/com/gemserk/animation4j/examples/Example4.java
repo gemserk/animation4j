@@ -1,7 +1,5 @@
 package com.gemserk.animation4j.examples;
 
-import static com.gemserk.animation4j.examples.Properties.interpolatedProperty;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -29,8 +27,6 @@ import com.gemserk.componentsengine.java2d.render.Java2dImageRenderObject;
 import com.gemserk.componentsengine.java2d.render.Java2dRenderer;
 import com.gemserk.componentsengine.modules.BasicModule;
 import com.gemserk.componentsengine.modules.ResourcesManagerModule;
-import com.gemserk.componentsengine.properties.Property;
-import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.datasources.ClassPathDataSource;
@@ -90,15 +86,15 @@ public class Example4 extends Java2dDesktopApplication {
 
 		class Button {
 
-			Property<Point2D> position;
+			Transition<Point2D.Float> position;
 
-			Property<Color> color;
+			Transition<Color> color;
 
-			Property<Color> glowColor;
+			Transition<Color> glowColor;
 
-			Property<Point2D> size;
+			Transition<Point2D.Float> size;
 
-			Property<Boolean> mouseInside = new SimpleProperty<Boolean>(false);
+			Boolean mouseInside = false;
 
 		}
 
@@ -106,7 +102,7 @@ public class Example4 extends Java2dDesktopApplication {
 
 		@Override
 		public void init() {
-			
+
 			Java2dConverters.init();
 
 			resourceManager.add("Background", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("example4/background.jpg")))));
@@ -121,10 +117,10 @@ public class Example4 extends Java2dDesktopApplication {
 
 			buttons.add(new Button() {
 				{
-					position = interpolatedProperty(Transitions.transitionBuilder(new Point2D.Float(320, 625)).speed(1f).typeConverter(Java2dConverters.point2d()).build());
-					size = interpolatedProperty(Transitions.transitionBuilder(new Point2D.Float(1f, 1f)).speed(5f).typeConverter(Java2dConverters.point2d()).build());
-					color = interpolatedProperty(Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build());
-					glowColor = interpolatedProperty(Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build());
+					position = Transitions.transitionBuilder(new Point2D.Float(320, 625)).speed(1f).typeConverter(Java2dConverters.point2d()).build();
+					size = Transitions.transitionBuilder(new Point2D.Float(1f, 1f)).speed(5f).typeConverter(Java2dConverters.point2d()).build();
+					color = Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build();
+					glowColor = Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build();
 
 					position.set(new Point2D.Float(320, 125));
 				}
@@ -132,10 +128,10 @@ public class Example4 extends Java2dDesktopApplication {
 
 			buttons.add(new Button() {
 				{
-					position = interpolatedProperty(Transitions.transitionBuilder(new Point2D.Float(320, 725)).speed(1f).typeConverter(Java2dConverters.point2d()).build());
-					size = interpolatedProperty(Transitions.transitionBuilder(new Point2D.Float(1f, 1f)).speed(5f).typeConverter(Java2dConverters.point2d()).build());
-					color = interpolatedProperty(Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build());
-					glowColor = interpolatedProperty(Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build());
+					position = Transitions.transitionBuilder(new Point2D.Float(320, 725)).speed(1f).typeConverter(Java2dConverters.point2d()).build();
+					size = Transitions.transitionBuilder(new Point2D.Float(1f, 1f)).speed(5f).typeConverter(Java2dConverters.point2d()).build();
+					color = Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build();
+					glowColor = Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build();
 
 					position.set(new Point2D.Float(320, 225));
 				}
@@ -143,10 +139,10 @@ public class Example4 extends Java2dDesktopApplication {
 
 			buttons.add(new Button() {
 				{
-					position = interpolatedProperty(Transitions.transitionBuilder(new Point2D.Float(320, 825)).speed(1f).typeConverter(Java2dConverters.point2d()).build());
-					size = interpolatedProperty(Transitions.transitionBuilder(new Point2D.Float(1f, 1f)).speed(5f).typeConverter(Java2dConverters.point2d()).build());
-					color = interpolatedProperty(Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build());
-					glowColor = interpolatedProperty(Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build());
+					position = Transitions.transitionBuilder(new Point2D.Float(320, 825)).speed(1f).typeConverter(Java2dConverters.point2d()).build();
+					size = Transitions.transitionBuilder(new Point2D.Float(1f, 1f)).speed(5f).typeConverter(Java2dConverters.point2d()).build();
+					color = Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build();
+					glowColor = Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build();
 
 					position.set(new Point2D.Float(320, 325));
 				}
@@ -183,9 +179,10 @@ public class Example4 extends Java2dDesktopApplication {
 				float sy = (float) size.getY();
 
 				Color color = button.color.get();
+				Color glowColor = button.glowColor.get();
 
 				java2dRenderer.render(new Java2dImageRenderObject(1, buttonImageResource.get(), x, y, sx, sy, 0f, color));
-				java2dRenderer.render(new Java2dImageRenderObject(1, buttonGlowImageResource.get(), x, y, sx, sy, 0f, button.glowColor.get()));
+				java2dRenderer.render(new Java2dImageRenderObject(1, buttonGlowImageResource.get(), x, y, sx, sy, 0f, glowColor));
 
 			}
 
@@ -209,16 +206,16 @@ public class Example4 extends Java2dDesktopApplication {
 				int y = (int) position.getY();
 
 				if (new Rectangle(x - width / 2, y - height / 2, width, height).contains(mousePosition.x, mousePosition.y)) {
-					if (!button.mouseInside.get()) {
-						button.mouseInside.set(true);
+					if (!button.mouseInside) {
+						button.mouseInside = true;
 						// when the mouse is over the image, we set the color to white
 						button.color.set(new Color(1f, 1f, 1f, 1f));
 						button.glowColor.set(new Color(1f, 0f, 0f, 1f));
 						button.size.set(new Point2D.Float(1.05f, 1.05f));
 					}
 				} else {
-					if (button.mouseInside.get()) {
-						button.mouseInside.set(false);
+					if (button.mouseInside) {
+						button.mouseInside = false;
 						// when the mouse left the image, we set again the color to the previous color.
 						button.color.set(new Color(1f, 1f, 1f, 1f));
 						button.glowColor.set(new Color(1f, 0f, 0f, 0f));
