@@ -8,7 +8,7 @@ import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.converters.TypeConverter;
 
 /**
- * Provides type converters for common java2d classes like Color and Point2D.
+ * Provides examples of TypeConverter implementations for common java2d classes like Color and Point2D.
  * @author acoppes
  */
 public class Java2dConverters {
