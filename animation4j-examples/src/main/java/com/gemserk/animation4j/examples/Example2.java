@@ -30,24 +30,21 @@ import com.gemserk.animation4j.timeline.sync.SynchronizedAnimation;
 import com.gemserk.animation4j.timeline.sync.TimelineSynchronizer;
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
 import com.gemserk.componentsengine.java2d.Java2dGame;
-import com.gemserk.componentsengine.java2d.Java2dModule;
 import com.gemserk.componentsengine.java2d.input.KeyboardInput;
 import com.gemserk.componentsengine.java2d.input.MouseInput;
 import com.gemserk.componentsengine.java2d.render.CurrentGraphicsProvider;
-import com.gemserk.componentsengine.java2d.render.InitJava2dRenderer;
 import com.gemserk.componentsengine.java2d.render.Java2dImageRenderObject;
 import com.gemserk.componentsengine.java2d.render.Java2dRenderer;
-import com.gemserk.componentsengine.modules.BasicModule;
-import com.gemserk.componentsengine.modules.ResourcesManagerModule;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
+import com.gemserk.resources.ResourceManagerImpl;
 import com.gemserk.resources.datasources.ClassPathDataSource;
 import com.gemserk.resources.java2d.dataloaders.ImageLoader;
-import com.gemserk.resources.resourceloaders.CachedResourceLoader;
-import com.gemserk.resources.resourceloaders.ResourceLoaderImpl;
+import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.google.inject.Singleton;
 
 public class Example2 extends Java2dDesktopApplication {
 
@@ -65,8 +62,17 @@ public class Example2 extends Java2dDesktopApplication {
 
 	@Override
 	public void init() {
-		Injector injector = Guice.createInjector(new Java2dModule(), new BasicModule(), new ResourcesManagerModule());
-		injector.getInstance(InitJava2dRenderer.class).config();
+		
+		Injector injector = Guice.createInjector(new AbstractModule() {
+			@Override
+			protected void configure() {
+				bind(ResourceManager.class).to(ResourceManagerImpl.class).in(Singleton.class);
+				bind(CurrentGraphicsProvider.class).in(Singleton.class);
+				bind(KeyboardInput.class).in(Singleton.class);
+				bind(MouseInput.class).in(Singleton.class);
+			}
+		});
+		
 		Dimension resolution = new Dimension(640, 480);
 		ExampleInternalGame game = injector.getInstance(ExampleInternalGame.class);
 		createWindow("Example2", resolution, game, injector);
@@ -130,9 +136,9 @@ public class Example2 extends Java2dDesktopApplication {
 
 			Converters.init();
 			Java2dConverters.init();
-
-			resourceManager.add("Globe", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("globe-256x176.png")))));
-			resourceManager.add("House", new CachedResourceLoader<Image>(new ResourceLoaderImpl<Image>(new ImageLoader(new ClassPathDataSource("house-128x92.png")))));
+			
+			resourceManager.add("Globe", new ImageLoader(new ClassPathDataSource("globe-256x176.png")));
+			resourceManager.add("House", new ImageLoader(new ClassPathDataSource("house-128x92.png")));
 
 			globeImageResource = resourceManager.get("Globe");
 			houseImageResource = resourceManager.get("House");

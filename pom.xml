@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gemserk.animation4j</groupId>
 	<artifactId>animation4j</artifactId>
-	<version>0.0.14</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Parent module for Animations 4 Java</name>
 	<description>Parent module for Animations 4 Java</description>
@@ -64,16 +64,15 @@
 
 	<modules>
 		<module>animation4j-core</module>
-		<module>animation4j-componentsengine</module>
 		<module>animation4j-examples</module>
 		<module>animation4j-java2d</module>
-		<module>animation4j-slick</module>
+		<!-- <module>animation4j-slick</module> This module is disabled because 
+			the required dependencies are not available on maven central. -->
 	</modules>
 
 	<properties>
 		<compiler.version>1.6</compiler.version>
 		<maven.version>2.0.10</maven.version>
-		<componentsengine.version>0.0.10-SNAPSHOT</componentsengine.version>
 	</properties>
 
 	<build>
@@ -206,12 +205,6 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>animation4j-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>animation4j-componentsengine</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
