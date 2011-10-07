@@ -9,7 +9,7 @@ import com.gemserk.animation4j.transitions.Transitions.TransitionBuilder;
 import com.gemserk.animation4j.transitions.event.TransitionEventHandler;
 
 public class Synchronizer {
-	
+
 	class TransitionUpdater {
 
 		ArrayList<Transition> transitions = new ArrayList<Transition>();
@@ -26,12 +26,12 @@ public class Synchronizer {
 			if (toRemoveTransitions.isEmpty())
 				return;
 
-			for (int i = 0; i < toRemoveTransitions.size(); i++) 
+			for (int i = 0; i < toRemoveTransitions.size(); i++)
 				transitions.remove(toRemoveTransitions.get(i));
-			
+
 			toRemoveTransitions.clear();
 		}
-		
+
 		public void add(Transition transition) {
 			transitions.add(transition);
 		}
@@ -46,7 +46,7 @@ public class Synchronizer {
 	 */
 	private UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
 	private SystemTimeProvider systemTimeProvider = new SystemTimeProvider();
-	
+
 	private TransitionUpdater transitionUpdater;
 
 	private float lastTime;
@@ -135,6 +135,16 @@ public class Synchronizer {
 	public void transition(Object object, Transition transition) {
 		transitionUpdater.add(transition);
 		synchronizedTransitionManager.objectSynchronizer(object, transition);
+	}
+
+	/**
+	 * Adds the transition to be updated by the synchronizer.
+	 * 
+	 * @param transition
+	 *            The transition to be registered.
+	 */
+	public void transition(Transition transition) {
+		transitionUpdater.add(transition);
 	}
 
 	/**

@@ -20,12 +20,12 @@ public class MutableObjectTransition<T> implements Transition<T> {
 	public void setFunctions(InterpolationFunction... functions) {
 		this.functions = functions;
 	}
-	
+
 	@Override
 	public float getSpeed() {
 		return speed;
 	}
-	
+
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
@@ -39,9 +39,9 @@ public class MutableObjectTransition<T> implements Transition<T> {
 		this.x = new float[typeConverter.variables()];
 
 		typeConverter.copyFromObject(mutableObject, this.x);
-		
-//		System.arraycopy(x, 0, a, 0, x.length);
-//		System.arraycopy(x, 0, b, 0, x.length);
+
+		// System.arraycopy(x, 0, a, 0, x.length);
+		// System.arraycopy(x, 0, b, 0, x.length);
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class MutableObjectTransition<T> implements Transition<T> {
 	public void set(T t, float time) {
 		started = true;
 		finished = false;
-		
+
 		System.arraycopy(x, 0, a, 0, Math.min(x.length, a.length));
 		typeConverter.copyFromObject(t, b);
 
@@ -103,7 +103,7 @@ public class MutableObjectTransition<T> implements Transition<T> {
 	public void update(float delta) {
 		if (!isStarted())
 			return;
-		
+
 		timeTransition.update(delta * speed);
 		FloatArrayInterpolator.interpolate(a, b, x, timeTransition.get(), functions);
 		typeConverter.copyToObject(mutableObject, x);

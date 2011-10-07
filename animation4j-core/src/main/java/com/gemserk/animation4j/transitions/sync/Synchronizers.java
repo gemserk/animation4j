@@ -80,6 +80,16 @@ public class Synchronizers {
 	public static void transition(Object object, Transition transition) {
 		getInstance().transition(object, transition);
 	}
+	
+	/**
+	 * Adds the transition to be updated by the synchronizer.
+	 * 
+	 * @param transition
+	 *            The transition to be registered.
+	 */
+	public static void transition(Transition transition) {
+		getInstance().transition(transition);
+	}
 
 	/**
 	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
