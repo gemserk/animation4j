@@ -108,7 +108,7 @@ public class Example4 extends Java2dDesktopApplication {
 		public void init() {
 
 			Java2dConverters.init();
-			
+
 			resourceManager.add("Background", new ImageLoader(new ClassPathDataSource("example4/background.jpg")));
 			resourceManager.add("Button", new ImageLoader(new ClassPathDataSource("example4/settings-button.png")));
 			resourceManager.add("ButtonGlow", new ImageLoader(new ClassPathDataSource("example4/settings-button-glow.png")));
@@ -117,42 +117,48 @@ public class Example4 extends Java2dDesktopApplication {
 			buttonGlowImageResource = resourceManager.get("ButtonGlow");
 
 			final InterpolationFunction linearInterpolationFunction = InterpolationFunctions.linear();
-			
+
 			final Vector2fConverter vector2fConverter = new Vector2fConverter();
 
 			buttons.add(new Button() {
 				{
-					position = Transitions.transitionBuilder(new Vector2f(320, 625)).speed(1f).typeConverter(vector2fConverter).build();
+					position = Transitions.mutableTransition(new Vector2f(320, 625), vector2fConverter) //
+							.speed(1f) //
+							.end(1f, 320f, 125f) //
+							.build();
+
 					size = Transitions.transitionBuilder(new Vector2f(1f, 1f)).speed(5f).typeConverter(vector2fConverter).build();
-					
+
 					color = Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build();
 					glowColor = Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build();
-
-					position.set(new Vector2f(320, 125), 1f);
 				}
 			});
 
 			buttons.add(new Button() {
 				{
-					position = Transitions.transitionBuilder(new Vector2f(320, 725)).speed(1f).typeConverter(vector2fConverter).build();
+					position = Transitions.mutableTransition(new Vector2f(320, 725), vector2fConverter) //
+							.speed(1f) //
+							.end(1f, 320f, 225f) //
+							.build();
+
 					size = Transitions.transitionBuilder(new Vector2f(1f, 1f)).speed(5f).typeConverter(vector2fConverter).build();
-					
+
 					color = Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build();
 					glowColor = Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build();
-
-					position.set(new Vector2f(320, 225), 1f);
 				}
 			});
 
 			buttons.add(new Button() {
 				{
-					position = Transitions.transitionBuilder(new Vector2f(320, 825)).speed(1f).typeConverter(vector2fConverter).build();
+					position = Transitions.mutableTransition(new Vector2f(320, 825), vector2fConverter) //
+							.speed(1f) //
+							.end(1f, 320f, 325f) //
+							.build();
+
 					size = Transitions.transitionBuilder(new Vector2f(1f, 1f)).speed(5f).typeConverter(vector2fConverter).build();
-					
+
 					color = Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build();
 					glowColor = Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build();
-
-					position.set(new Vector2f(320, 325), 1f);
 				}
 			});
 
@@ -198,7 +204,7 @@ public class Example4 extends Java2dDesktopApplication {
 
 		@Override
 		public void update(int delta) {
-			
+
 			backgroundColor.update(0.001f * (float) delta);
 
 			BufferedImage image = buttonImageResource.get();
@@ -209,7 +215,7 @@ public class Example4 extends Java2dDesktopApplication {
 			int width = image.getWidth();
 
 			for (Button button : buttons) {
-				
+
 				button.color.update(0.001f * (float) delta);
 				button.glowColor.update(0.001f * (float) delta);
 				button.position.update(0.001f * (float) delta);

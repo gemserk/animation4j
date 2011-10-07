@@ -132,6 +132,11 @@ public class Transitions {
 		private void setTypeConverter(TypeConverter<T> typeConverter) {
 			this.typeConverter = typeConverter;
 		}
+		
+		public MutableObjectTransitionBuilder<T> speed(float speed) {
+			mutableObjectTransition.setSpeed(speed);
+			return this;
+		}
 
 		public MutableObjectTransitionBuilder<T> start(float... values) {
 			mutableObjectTransition.set(values);
