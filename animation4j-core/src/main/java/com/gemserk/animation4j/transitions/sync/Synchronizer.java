@@ -89,7 +89,7 @@ public class Synchronizer {
 	 * @param transition
 	 *            The transition to synchronize with the object field.
 	 */
-	private void transition(Object object, String field, Transition transition) {
+	public void transition(Object object, String field, Transition transition) {
 		transitionUpdater.add(transition);
 		synchronizedTransitionManager.reflectionObjectSynchronizer(object, field, transition);
 	}
@@ -132,7 +132,7 @@ public class Synchronizer {
 	 * @param transition
 	 *            The transition to use to modify the object.
 	 */
-	private void transition(Object object, Transition transition) {
+	public void transition(Object object, Transition transition) {
 		transitionUpdater.add(transition);
 		synchronizedTransitionManager.objectSynchronizer(object, transition);
 	}
@@ -161,7 +161,7 @@ public class Synchronizer {
 	 * @param transitionEventHandler
 	 *            The event handler to handle Transition status change events.
 	 */
-	private void transition(Object object, Transition transition, TransitionEventHandler transitionEventHandler) {
+	public void transition(Object object, Transition transition, TransitionEventHandler transitionEventHandler) {
 		transition(object, transition);
 		transitionHandlersManager.handle(transition, transitionEventHandler);
 	}
