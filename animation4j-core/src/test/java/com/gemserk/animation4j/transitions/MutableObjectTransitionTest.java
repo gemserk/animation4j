@@ -147,11 +147,11 @@ public class MutableObjectTransitionTest {
 		myObject.x = 40f;
 		myObject.y = 40f;
 
-		Transition transition = Transitions.mutableTransition(myObject, new MyObjectTypeConverter()) //
+		Transition<float[]> transition = Transitions.mutableTransition(myObject, new MyObjectTypeConverter()) //
 				.start(0f, 0f) //
 				.end(2f, 20f) //
 				.build();
-
+		
 		assertThat(myObject.x, IsEqual.equalTo(0f));
 		assertThat(myObject.y, IsEqual.equalTo(0f));
 

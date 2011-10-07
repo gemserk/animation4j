@@ -5,6 +5,14 @@ public class Vector2f {
 	// Example of a mutable class used in the examples when making interpolations.
 
 	float x, y;
+	
+	public float getX() {
+		return x;
+	}
+	
+	public float getY() {
+		return y;
+	}
 
 	public Vector2f(float x, float y) {
 		set(x, y);

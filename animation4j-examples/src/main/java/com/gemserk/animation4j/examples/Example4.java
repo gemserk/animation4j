@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -91,13 +90,13 @@ public class Example4 extends Java2dDesktopApplication {
 
 		class Button {
 
-			Transition<Point2D.Float> position;
+			Transition<Vector2f> position;
 
 			Transition<Color> color;
 
 			Transition<Color> glowColor;
 
-			Transition<Point2D.Float> size;
+			Transition<Vector2f> size;
 
 			Boolean mouseInside = false;
 
@@ -118,37 +117,42 @@ public class Example4 extends Java2dDesktopApplication {
 			buttonGlowImageResource = resourceManager.get("ButtonGlow");
 
 			final InterpolationFunction linearInterpolationFunction = InterpolationFunctions.linear();
+			
+			final Vector2fConverter vector2fConverter = new Vector2fConverter();
 
 			buttons.add(new Button() {
 				{
-					position = Transitions.transitionBuilder(new Point2D.Float(320, 625)).speed(1f).typeConverter(Java2dConverters.point2d()).build();
-					size = Transitions.transitionBuilder(new Point2D.Float(1f, 1f)).speed(5f).typeConverter(Java2dConverters.point2d()).build();
+					position = Transitions.transitionBuilder(new Vector2f(320, 625)).speed(1f).typeConverter(vector2fConverter).build();
+					size = Transitions.transitionBuilder(new Vector2f(1f, 1f)).speed(5f).typeConverter(vector2fConverter).build();
+					
 					color = Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build();
 					glowColor = Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build();
 
-					position.set(new Point2D.Float(320, 125));
+					position.set(new Vector2f(320, 125), 1f);
 				}
 			});
 
 			buttons.add(new Button() {
 				{
-					position = Transitions.transitionBuilder(new Point2D.Float(320, 725)).speed(1f).typeConverter(Java2dConverters.point2d()).build();
-					size = Transitions.transitionBuilder(new Point2D.Float(1f, 1f)).speed(5f).typeConverter(Java2dConverters.point2d()).build();
+					position = Transitions.transitionBuilder(new Vector2f(320, 725)).speed(1f).typeConverter(vector2fConverter).build();
+					size = Transitions.transitionBuilder(new Vector2f(1f, 1f)).speed(5f).typeConverter(vector2fConverter).build();
+					
 					color = Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build();
 					glowColor = Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build();
 
-					position.set(new Point2D.Float(320, 225));
+					position.set(new Vector2f(320, 225), 1f);
 				}
 			});
 
 			buttons.add(new Button() {
 				{
-					position = Transitions.transitionBuilder(new Point2D.Float(320, 825)).speed(1f).typeConverter(Java2dConverters.point2d()).build();
-					size = Transitions.transitionBuilder(new Point2D.Float(1f, 1f)).speed(5f).typeConverter(Java2dConverters.point2d()).build();
+					position = Transitions.transitionBuilder(new Vector2f(320, 825)).speed(1f).typeConverter(vector2fConverter).build();
+					size = Transitions.transitionBuilder(new Vector2f(1f, 1f)).speed(5f).typeConverter(vector2fConverter).build();
+					
 					color = Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build();
 					glowColor = Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build();
 
-					position.set(new Point2D.Float(320, 325));
+					position.set(new Vector2f(320, 325), 1f);
 				}
 			});
 
@@ -172,9 +176,9 @@ public class Example4 extends Java2dDesktopApplication {
 			// render the image using the color of the transition
 
 			for (Button button : buttons) {
-				Point2D position = button.position.get();
+				Vector2f position = button.position.get();
 
-				Point2D size = button.size.get();
+				Vector2f size = button.size.get();
 
 				float x = (float) position.getX();
 				float y = (float) position.getY();
@@ -211,7 +215,7 @@ public class Example4 extends Java2dDesktopApplication {
 				button.position.update(0.001f * (float) delta);
 				button.size.update(0.001f * (float) delta);
 
-				Point2D position = button.position.get();
+				Vector2f position = button.position.get();
 
 				int x = (int) position.getX();
 				int y = (int) position.getY();
@@ -222,7 +226,7 @@ public class Example4 extends Java2dDesktopApplication {
 						// when the mouse is over the image, we set the color to white
 						button.color.set(new Color(1f, 1f, 1f, 1f));
 						button.glowColor.set(new Color(1f, 0f, 0f, 1f));
-						button.size.set(new Point2D.Float(1.05f, 1.05f));
+						button.size.set(new Vector2f(1.05f, 1.05f));
 					}
 				} else {
 					if (button.mouseInside) {
@@ -230,7 +234,7 @@ public class Example4 extends Java2dDesktopApplication {
 						// when the mouse left the image, we set again the color to the previous color.
 						button.color.set(new Color(1f, 1f, 1f, 1f));
 						button.glowColor.set(new Color(1f, 0f, 0f, 0f));
-						button.size.set(new Point2D.Float(1f, 1f));
+						button.size.set(new Vector2f(1f, 1f));
 					}
 				}
 

@@ -158,7 +158,7 @@ public class Transitions {
 			return this;
 		}
 
-		public Transition build() {
+		public Transition<float[]> build() {
 			return mutableObjectTransition;
 		}
 
