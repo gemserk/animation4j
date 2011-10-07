@@ -192,4 +192,22 @@ public class MutableObjectTransitionTest {
 		assertThat(myObject.x, IsEqual.equalTo(20f));
 		assertThat(myObject.y, IsEqual.equalTo(0f));
 	}
+	
+	@Test
+	public void testBuilder2() {
+		MyObject myObject = new MyObject();
+		myObject.x = 40f;
+		myObject.y = 40f;
+
+		Transition<MyObject> transition = Transitions.mutableTransition(myObject, new MyObjectTypeConverter()) //
+				.build();
+		
+		assertThat(myObject.x, IsEqual.equalTo(40f));
+		assertThat(myObject.y, IsEqual.equalTo(40f));
+		
+		transition.update(1f);
+		
+		assertThat(myObject.x, IsEqual.equalTo(40f));
+		assertThat(myObject.y, IsEqual.equalTo(40f));
+	}
 }

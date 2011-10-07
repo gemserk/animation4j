@@ -127,7 +127,9 @@ public class Example4 extends Java2dDesktopApplication {
 							.end(1f, 320f, 125f) //
 							.build();
 
-					size = Transitions.transitionBuilder(new Vector2f(1f, 1f)).speed(5f).typeConverter(vector2fConverter).build();
+					size = Transitions.mutableTransition(new Vector2f(1f, 1f), vector2fConverter) //
+							.speed(5f) //
+							.build();
 
 					color = Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build();
 					glowColor = Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build();
@@ -141,7 +143,9 @@ public class Example4 extends Java2dDesktopApplication {
 							.end(1f, 320f, 225f) //
 							.build();
 
-					size = Transitions.transitionBuilder(new Vector2f(1f, 1f)).speed(5f).typeConverter(vector2fConverter).build();
+					size = Transitions.mutableTransition(new Vector2f(1f, 1f), vector2fConverter) //
+							.speed(5f) //
+							.build();
 
 					color = Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build();
 					glowColor = Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build();
@@ -155,7 +159,9 @@ public class Example4 extends Java2dDesktopApplication {
 							.end(1f, 320f, 325f) //
 							.build();
 
-					size = Transitions.transitionBuilder(new Vector2f(1f, 1f)).speed(5f).typeConverter(vector2fConverter).build();
+					size = Transitions.mutableTransition(new Vector2f(1f, 1f), vector2fConverter) //
+							.speed(5f) //
+							.build();
 
 					color = Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build();
 					glowColor = Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build();
@@ -230,17 +236,17 @@ public class Example4 extends Java2dDesktopApplication {
 					if (!button.mouseInside) {
 						button.mouseInside = true;
 						// when the mouse is over the image, we set the color to white
-						button.color.set(new Color(1f, 1f, 1f, 1f));
-						button.glowColor.set(new Color(1f, 0f, 0f, 1f));
-						button.size.set(new Vector2f(1.05f, 1.05f));
+						button.color.set(new Color(1f, 1f, 1f, 1f), 0.25f);
+						button.glowColor.set(new Color(1f, 0f, 0f, 1f), 0.25f);
+						button.size.set(new Vector2f(1.05f, 1.05f), 0.25f);
 					}
 				} else {
 					if (button.mouseInside) {
 						button.mouseInside = false;
 						// when the mouse left the image, we set again the color to the previous color.
-						button.color.set(new Color(1f, 1f, 1f, 1f));
-						button.glowColor.set(new Color(1f, 0f, 0f, 0f));
-						button.size.set(new Vector2f(1f, 1f));
+						button.color.set(new Color(1f, 1f, 1f, 1f), 0.25f);
+						button.glowColor.set(new Color(1f, 0f, 0f, 0f), 0.25f);
+						button.size.set(new Vector2f(1f, 1f), 0.25f);
 					}
 				}
 
