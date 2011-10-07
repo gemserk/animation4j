@@ -7,51 +7,8 @@ import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 import com.gemserk.animation4j.converters.TypeConverter;
-import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 
 public class MutableObjectTransitionTest {
-
-	class MutableObjectTransitionBuilder {
-
-		private TypeConverter typeConverter;
-		private MutableObjectTransition mutableObjectTransition;
-
-		MutableObjectTransitionBuilder start(float... values) {
-			mutableObjectTransition.set(values);
-			return this;
-		}
-
-		MutableObjectTransitionBuilder from(Object start) {
-			mutableObjectTransition.set(typeConverter.copyFromObject(start, null));
-			return this;
-		}
-
-		MutableObjectTransitionBuilder end(float time, float... values) {
-			mutableObjectTransition.set(values, time);
-			return this;
-		}
-
-		MutableObjectTransitionBuilder to(float time, Object end) {
-			mutableObjectTransition.set(typeConverter.copyFromObject(end, null), time);
-			return this;
-		}
-
-		MutableObjectTransitionBuilder functions(InterpolationFunction... functions) {
-			mutableObjectTransition.setFunctions(functions);
-			return this;
-		}
-
-		Transition build() {
-			return mutableObjectTransition;
-		}
-
-		@SuppressWarnings("rawtypes")
-		public MutableObjectTransitionBuilder(Object mutableObject, TypeConverter typeConverter) {
-			this.typeConverter = typeConverter;
-			mutableObjectTransition = new MutableObjectTransition(mutableObject, typeConverter);
-		}
-
-	}
 
 	class MyObject {
 
@@ -100,7 +57,7 @@ public class MutableObjectTransitionTest {
 		assertEquals(false, transition.isStarted());
 		assertEquals(true, transition.isFinished());
 	}
-	
+
 	@Test
 	public void shouldSetOnlyFirstArrayValues() {
 		float a[] = { 10f };
@@ -113,7 +70,7 @@ public class MutableObjectTransitionTest {
 
 		transition.set(a);
 	}
-	
+
 	@Test
 	public void shouldSetOnlyFirstArrayValuesWhenSettingWithTime() {
 		float a[] = { 10f };
@@ -183,25 +140,24 @@ public class MutableObjectTransitionTest {
 		assertThat(myObject.x, IsEqual.equalTo(50f));
 		assertThat(myObject.y, IsEqual.equalTo(50f));
 	}
-	
+
 	@Test
 	public void testBuilder() {
 		MyObject myObject = new MyObject();
 		myObject.x = 40f;
 		myObject.y = 40f;
 
-		Transition transition = new MutableObjectTransitionBuilder(myObject, new MyObjectTypeConverter())
-			.start(0f, 0f) //
-			.end(2f, 20f) //
-			.build();
-		
+		Transition transition = Transitions.mutableTransition(myObject, new MyObjectTypeConverter()) //
+				.start(0f, 0f) //
+				.end(2f, 20f) //
+				.build();
+
 		assertThat(myObject.x, IsEqual.equalTo(0f));
 		assertThat(myObject.y, IsEqual.equalTo(0f));
-		
+
 		transition.update(2f);
-		
+
 		assertThat(myObject.x, IsEqual.equalTo(20f));
 		assertThat(myObject.y, IsEqual.equalTo(0f));
-
 	}
 }

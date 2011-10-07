@@ -15,6 +15,7 @@ import com.gemserk.animation4j.reflection.ReflectionUtils;
 public class Transitions {
 
 	private static final TransitionBuilder transitionBuilder = new TransitionBuilder();
+	private static final MutableObjectTransitionBuilder mutableObjectTransitionBuilder = new MutableObjectTransitionBuilder();
 
 	/**
 	 * Provides an easy way to specify all the different values of a transition and to build it.
@@ -61,7 +62,7 @@ public class Transitions {
 		public TransitionBuilder<T> time(int time) {
 			return time((float) time * 0.001f);
 		}
-		
+
 		public TransitionBuilder<T> time(float time) {
 			this.time = time;
 			return this;
@@ -117,6 +118,80 @@ public class Transitions {
 				return new FloatArrayInterpolator(typeConverter.variables());
 		}
 
+	}
+
+	public static class MutableObjectTransitionBuilder {
+
+		private TypeConverter typeConverter;
+		private MutableObjectTransition mutableObjectTransition;
+
+		private void setMutableObjectTransition(MutableObjectTransition mutableObjectTransition) {
+			this.mutableObjectTransition = mutableObjectTransition;
+		}
+
+		private void setTypeConverter(TypeConverter typeConverter) {
+			this.typeConverter = typeConverter;
+		}
+
+		public MutableObjectTransitionBuilder start(float... values) {
+			mutableObjectTransition.set(values);
+			return this;
+		}
+
+		public MutableObjectTransitionBuilder startObject(Object start) {
+			mutableObjectTransition.set(typeConverter.copyFromObject(start, null));
+			return this;
+		}
+
+		public MutableObjectTransitionBuilder end(float time, float... values) {
+			mutableObjectTransition.set(values, time);
+			return this;
+		}
+
+		public MutableObjectTransitionBuilder endObject(float time, Object end) {
+			mutableObjectTransition.set(typeConverter.copyFromObject(end, null), time);
+			return this;
+		}
+
+		public MutableObjectTransitionBuilder functions(InterpolationFunction... functions) {
+			mutableObjectTransition.setFunctions(functions);
+			return this;
+		}
+
+		public Transition build() {
+			return mutableObjectTransition;
+		}
+
+		private MutableObjectTransitionBuilder() {
+
+		}
+
+	}
+
+	/**
+	 * Returns a new TransitionBuilder to build mutable object transitions.
+	 * 
+	 * @param mutableObject
+	 *            The mutable object to be used in the transition.
+	 * @param typeConverter
+	 *            The TypeConverter used to convert between float[] to the object and vice versa.
+	 * @return The TransitionBuilder to build the new transition.
+	 */
+	public static MutableObjectTransitionBuilder mutableTransition(Object mutableObject, TypeConverter typeConverter) {
+		mutableObjectTransitionBuilder.setMutableObjectTransition(new MutableObjectTransition(mutableObject, typeConverter));
+		mutableObjectTransitionBuilder.setTypeConverter(typeConverter);
+		return mutableObjectTransitionBuilder;
+	}
+
+	/**
+	 * Returns a new TransitionBuilder to build mutable object transitions, it internally uses the TypeConverter registered on Converters for the object class.
+	 * 
+	 * @param mutableObject
+	 *            The mutable object to be used in the transition.
+	 * @return The TransitionBuilder to build the new transition.
+	 */
+	public static MutableObjectTransitionBuilder mutableTransition(Object mutableObject) {
+		return mutableTransition(mutableObject, (TypeConverter) Converters.converter(mutableObject.getClass()));
 	}
 
 	/**
