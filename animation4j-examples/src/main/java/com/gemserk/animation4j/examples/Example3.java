@@ -154,7 +154,9 @@ public class Example3 extends Java2dDesktopApplication {
 
 		@Override
 		public void update(int delta) {
-
+			
+			colorTransition.update(0.001f * (float)delta);
+			
 			Point mousePosition = mouseInput.getPosition();
 			if (new Rectangle(320 - 64, 340 - 46, 128, 92).contains(mousePosition.x, mousePosition.y)) {
 				if (!mouseInside) {

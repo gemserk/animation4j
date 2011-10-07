@@ -27,26 +27,26 @@ public class TransitionMonitorExample {
 		System.out.println("Transition was finished: " + transitionMonitor.wasFinished());
 		
 		transition.set(new Vector2f(100f, 100f), 500);
-		Thread.sleep(300);
+		transition.update(300);
 		
 		transitionMonitor.update();
 
 		System.out.println("Transition was started: " + transitionMonitor.wasStarted());
 		System.out.println("Transition was finished: " + transitionMonitor.wasFinished());
 
-		Thread.sleep(300);
+		transition.update(300);
 
 		transitionMonitor.update();
 
 		System.out.println("Transition was started: " + transitionMonitor.wasStarted());
 		System.out.println("Transition was finished: " + transitionMonitor.wasFinished());
 		
-		Thread.sleep(200);
+		transition.update(200);
 
 		transitionMonitor.update();
 
 		System.out.println("Transition was started: " + transitionMonitor.wasStarted());
-		System.out.println("Transition was finished: " + transitionMonitor.wasStarted());
+		System.out.println("Transition was finished: " + transitionMonitor.wasFinished());
 	}
 
 

@@ -105,7 +105,7 @@ public class Synchronizer {
 	 *            the TransitionBuilder used to build internally the transition.
 	 */
 	public void transition(Object object, String field, TransitionBuilder transitionBuilder) {
-		this.transition(object, field, transitionBuilder.timeProvider(timeProvider).build());
+		this.transition(object, field, transitionBuilder.build());
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class Synchronizer {
 	 *            the TransitionBuilder used to build internally the transition.
 	 */
 	public void transition(Object object, String field, TransitionBuilder transitionBuilder, TransitionEventHandler transitionEventHandler) {
-		Transition transition = transitionBuilder.timeProvider(timeProvider).build();
+		Transition transition = transitionBuilder.build();
 		this.transition(object, field, transition);
 		transitionHandlersManager.handle(transition, transitionEventHandler);
 	}
@@ -148,7 +148,7 @@ public class Synchronizer {
 	public void transition(Object object, TransitionBuilder transitionBuilder) {
 		if (!transitionBuilder.isStartValueSet())
 			transitionBuilder.start(object);
-		transition(object, transitionBuilder.timeProvider(timeProvider).build());
+		transition(object, transitionBuilder.build());
 	}
 
 	/**
@@ -179,7 +179,7 @@ public class Synchronizer {
 	public void transition(Object object, TransitionBuilder transitionBuilder, TransitionEventHandler transitionEventHandler) {
 		if (!transitionBuilder.isStartValueSet())
 			transitionBuilder.start(object);
-		transition(object, transitionBuilder.timeProvider(timeProvider).build(), transitionEventHandler);
+		transition(object, transitionBuilder.build(), transitionEventHandler);
 	}
 
 }

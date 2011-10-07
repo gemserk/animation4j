@@ -6,8 +6,6 @@ import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.interpolator.Interpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 import com.gemserk.animation4j.reflection.ReflectionUtils;
-import com.gemserk.animation4j.time.SystemTimeProvider;
-import com.gemserk.animation4j.time.TimeProvider;
 
 /**
  * Transitions factory provides a TransitionBuilder to specify Transitions in an easy way.
@@ -23,8 +21,6 @@ public class Transitions {
 	 */
 	public static class TransitionBuilder<T> {
 
-		private static final TimeProvider systemTypeProvider = new SystemTimeProvider();
-
 		private static final float defaultTransitionSpeed = 1f;
 
 		private T startValue;
@@ -39,8 +35,6 @@ public class Transitions {
 
 		private TypeConverter typeConverter;
 
-		private TimeProvider timeProvider;
-
 		TransitionBuilder() {
 			reset();
 		}
@@ -51,7 +45,6 @@ public class Transitions {
 			startValue = null;
 			endValue = null;
 			time = 0;
-			timeProvider = systemTypeProvider;
 			typeConverter = null;
 		}
 
@@ -86,12 +79,6 @@ public class Transitions {
 
 		public TransitionBuilder<T> converter(TypeConverter<T> typeConverter) {
 			this.typeConverter = typeConverter;
-			return this;
-		}
-
-		public TransitionBuilder<T> timeProvider(TimeProvider timeProvider) {
-			if (this.timeProvider == systemTypeProvider)
-				this.timeProvider = timeProvider;
 			return this;
 		}
 

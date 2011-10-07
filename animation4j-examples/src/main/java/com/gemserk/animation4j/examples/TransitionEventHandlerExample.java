@@ -15,11 +15,11 @@ public class TransitionEventHandlerExample {
 	public static void main(String[] args) throws InterruptedException {
 		// register a type converter for Vector2f class.
 		Converters.register(Vector2f.class, new Vector2fConverter());
-		// testWithDefaultSystemProvider();
+		testUsingTransitionMonitor();
 		testUsingSynchronizers();
 	}
 
-	protected static void testWithDefaultSystemProvider() throws InterruptedException {
+	protected static void testUsingTransitionMonitor() throws InterruptedException {
 		Transition<Vector2f> transition = Transitions.transitionBuilder(new Vector2f(0f, 0f)).end(new Vector2f(100f, 100f)).time(500).build();
 
 		TransitionMonitor transitionMonitor = new TransitionMonitor();
@@ -42,9 +42,9 @@ public class TransitionEventHandlerExample {
 		});
 
 		transitionMonitorProcessor.update();
-		Thread.sleep(300);
+		transition.update(300);
 		transitionMonitorProcessor.update();
-		Thread.sleep(300);
+		transition.update(300);
 		transitionMonitorProcessor.update();
 
 	}

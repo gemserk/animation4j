@@ -194,6 +194,8 @@ public class Example4 extends Java2dDesktopApplication {
 
 		@Override
 		public void update(int delta) {
+			
+			backgroundColor.update(0.001f * (float) delta);
 
 			BufferedImage image = buttonImageResource.get();
 
@@ -203,6 +205,11 @@ public class Example4 extends Java2dDesktopApplication {
 			int width = image.getWidth();
 
 			for (Button button : buttons) {
+				
+				button.color.update(0.001f * (float) delta);
+				button.glowColor.update(0.001f * (float) delta);
+				button.position.update(0.001f * (float) delta);
+				button.size.update(0.001f * (float) delta);
 
 				Point2D position = button.position.get();
 
