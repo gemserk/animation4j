@@ -7,9 +7,92 @@ import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 import com.gemserk.animation4j.converters.TypeConverter;
+import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 
 
 public class MutableObjectTransitionTest {
+	
+	class AnotherTransitionBuilder {
+		
+		private InterpolationFunction[] functions;
+		private float[] start;
+		private float[] end;
+		private Object mutableObject;
+		private TypeConverter typeConverter;
+		
+		private float time = 0f;
+
+		AnotherTransitionBuilder start(float... values) {
+			this.start = values;
+			return this;
+		}
+
+		AnotherTransitionBuilder end(float... values) {
+			this.end = values;
+			return this;
+		}
+		
+		AnotherTransitionBuilder time(float time) {
+			this.time = time;
+			return this;
+		}
+
+		AnotherTransitionBuilder functions(InterpolationFunction... functions) {
+			this.functions = functions;
+			return this;
+		}
+
+		Transition build() {
+			MutableObjectTransition mutableObjectTransition = new MutableObjectTransition(mutableObject, typeConverter);
+			
+			mutableObjectTransition.setFunctions(functions);
+			
+			if (start != null)
+				mutableObjectTransition.set(start);
+			
+			if (end != null)
+				mutableObjectTransition.set(end, time);
+			
+			return mutableObjectTransition;
+		}
+		
+		@SuppressWarnings("rawtypes")
+		public AnotherTransitionBuilder(Object mutableObject, TypeConverter typeConverter) {
+			this.mutableObject = mutableObject;
+			this.typeConverter = typeConverter;
+		}
+
+	}
+	
+	class AnotherTransitionBuilder2 {
+		
+		private MutableObjectTransition mutableObjectTransition;
+
+		AnotherTransitionBuilder2 from(float... values) {
+			mutableObjectTransition.set(values);
+			return this;
+		}
+
+		AnotherTransitionBuilder2 to(float time, float... values) {
+			mutableObjectTransition.set(values, time);
+			return this;
+		}
+		
+		AnotherTransitionBuilder2 functions(InterpolationFunction... functions) {
+			mutableObjectTransition.setFunctions(functions);
+			return this;
+		}
+
+		Transition build() {
+			return mutableObjectTransition;
+		}
+		
+		@SuppressWarnings("rawtypes")
+		public AnotherTransitionBuilder2(Object mutableObject, TypeConverter typeConverter) {
+			mutableObjectTransition = new MutableObjectTransition(mutableObject, typeConverter);
+		}
+
+	}
 	
 	class MyObject {
 		
@@ -91,6 +174,28 @@ public class MutableObjectTransitionTest {
 
 		assertEquals(false, transition.isStarted());
 		assertEquals(true, transition.isFinished());
+	}
+	
+	@Test
+	public void shouldTransitionFromCurrentValueToEndValue() {
+		float b[] = {50f, 50f};
+		
+		MyObject myObject = new MyObject();
+		myObject.x = 40f;
+		myObject.y = 40f;
+		
+		MutableObjectTransition transition = new MutableObjectTransition(myObject, new MyObjectTypeConverter());
+		
+		transition.set(b, 1f);
+		
+		transition.update(0f);
+		
+		assertThat(myObject.x, IsEqual.equalTo(40f));
+		assertThat(myObject.y, IsEqual.equalTo(40f));
+		
+		transition.update(1f);
 
+		assertThat(myObject.x, IsEqual.equalTo(50f));
+		assertThat(myObject.y, IsEqual.equalTo(50f));
 	}
 }

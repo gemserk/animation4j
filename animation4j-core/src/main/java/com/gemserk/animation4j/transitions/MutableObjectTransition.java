@@ -50,6 +50,7 @@ public class MutableObjectTransition implements Transition<float[]> {
 		started = true;
 		finished = false;
 
+		System.arraycopy(x, 0, a, 0, a.length);
 		System.arraycopy(t, 0, b, 0, b.length);
 
 		timeTransition.start(time);
