@@ -1,5 +1,7 @@
 package com.gemserk.animation4j.transitions.sync;
 
+import java.util.ArrayList;
+
 import com.gemserk.animation4j.time.SystemTimeProvider;
 import com.gemserk.animation4j.time.UpdateableTimeProvider;
 import com.gemserk.animation4j.transitions.Transition;
@@ -7,6 +9,34 @@ import com.gemserk.animation4j.transitions.Transitions.TransitionBuilder;
 import com.gemserk.animation4j.transitions.event.TransitionEventHandler;
 
 public class Synchronizer {
+	
+	class TransitionUpdater {
+
+		ArrayList<Transition> transitions = new ArrayList<Transition>();
+		ArrayList<Transition> toRemoveTransitions = new ArrayList<Transition>();
+
+		public void update(float delta) {
+			for (int i = 0; i < transitions.size(); i++) {
+				Transition transition = transitions.get(i);
+				transition.update(delta);
+				if (transition.isFinished())
+					toRemoveTransitions.add(transition);
+			}
+
+			if (toRemoveTransitions.isEmpty())
+				return;
+
+			for (int i = 0; i < toRemoveTransitions.size(); i++) 
+				transitions.remove(toRemoveTransitions.get(i));
+			
+			toRemoveTransitions.clear();
+		}
+		
+		public void add(Transition transition) {
+			transitions.add(transition);
+		}
+
+	}
 
 	private SynchronizedTransitionManager synchronizedTransitionManager = new SynchronizedTransitionManager();
 	private TransitionHandlersManager transitionHandlersManager = new TransitionHandlersManager();
@@ -16,11 +46,14 @@ public class Synchronizer {
 	 */
 	private UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
 	private SystemTimeProvider systemTimeProvider = new SystemTimeProvider();
+	
+	private TransitionUpdater transitionUpdater;
 
 	private float lastTime;
 
 	public Synchronizer() {
 		lastTime = systemTimeProvider.getTime();
+		transitionUpdater = new TransitionUpdater();
 	}
 
 	/**
@@ -34,14 +67,14 @@ public class Synchronizer {
 	}
 
 	/**
-	 * Performs a synchronization of all internal objects with the corresponding registered transitions using the specified delta. 
-	 * It will only work (for now) for those transitions registered using a TransitionBuilder.
+	 * Performs a synchronization of all internal objects with the corresponding registered transitions using the specified delta. It will only work (for now) for those transitions registered using a TransitionBuilder.
 	 * 
 	 * @param delta
 	 *            The delta time in Seconds to use to synchronize.
 	 */
 	public void synchronize(float delta) {
 		timeProvider.update(delta);
+		transitionUpdater.update(delta);
 		synchronizedTransitionManager.synchronize();
 		transitionHandlersManager.update();
 	}
@@ -57,9 +90,10 @@ public class Synchronizer {
 	 *            The transition to synchronize with the object field.
 	 */
 	private void transition(Object object, String field, Transition transition) {
+		transitionUpdater.add(transition);
 		synchronizedTransitionManager.reflectionObjectSynchronizer(object, field, transition);
 	}
-	
+
 	/**
 	 * Starts a transition and a synchronizer to modify the specified object's field through the transition.
 	 * 
@@ -73,7 +107,7 @@ public class Synchronizer {
 	public void transition(Object object, String field, TransitionBuilder transitionBuilder) {
 		this.transition(object, field, transitionBuilder.timeProvider(timeProvider).build());
 	}
-	
+
 	/**
 	 * Starts a transition and a synchronizer to modify the specified object's field through the transition.
 	 * 
@@ -99,6 +133,7 @@ public class Synchronizer {
 	 *            The transition to use to modify the object.
 	 */
 	private void transition(Object object, Transition transition) {
+		transitionUpdater.add(transition);
 		synchronizedTransitionManager.objectSynchronizer(object, transition);
 	}
 

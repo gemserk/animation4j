@@ -39,4 +39,9 @@ public class MockTransition<T> implements Transition<T> {
 		return finished;
 	}
 
+	@Override
+	public void update(float delta) {
+		
+	}
+
 }

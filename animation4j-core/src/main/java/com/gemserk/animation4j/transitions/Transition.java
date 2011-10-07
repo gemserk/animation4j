@@ -42,5 +42,13 @@ public interface Transition<T> {
 	 * Returns true whenever the transition was finished, false otherwise.
 	 */
 	boolean isFinished();
-	
+
+	/**
+	 * Updates the transition interpolating from a to b using the specified delta time.
+	 * 
+	 * @param delta
+	 *            The time to update the transition.
+	 */
+	void update(float delta);
+
 }

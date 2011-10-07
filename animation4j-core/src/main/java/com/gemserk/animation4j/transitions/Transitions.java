@@ -112,7 +112,7 @@ public class Transitions {
 				typeConverter = Converters.converter(startValue.getClass());
 
 			InternalTransition<T> internalTransition = new InternalTransition<T>(startValue, typeConverter, getInterpolator());
-			Transition<T> transition = new TransitionImpl<T>(internalTransition, speed, timeProvider);
+			Transition<T> transition = new TransitionImpl<T>(internalTransition, speed);
 
 			if (endValue != null)
 				transition.set(endValue, time);

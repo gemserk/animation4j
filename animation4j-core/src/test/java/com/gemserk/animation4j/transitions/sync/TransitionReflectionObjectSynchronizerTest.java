@@ -14,7 +14,6 @@ import com.gemserk.animation4j.Vector2f;
 import com.gemserk.animation4j.Vector2fConverter;
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.converters.TypeConverter;
-import com.gemserk.animation4j.time.UpdateableTimeProvider;
 import com.gemserk.animation4j.transitions.MockTransition;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
@@ -224,13 +223,11 @@ public class TransitionReflectionObjectSynchronizerTest {
 
 		Converters.register(Vector2f.class, new Vector2fConverter());
 
-		UpdateableTimeProvider timeProvider = new UpdateableTimeProvider();
-
 		Vector2f position = new Vector2f(50, 50);
 
 		MutableObjectSynchronizer mutableObjectSynchronizer = new MutableObjectSynchronizer(position);
 
-		Transition<Vector2f> transition = Transitions.transitionBuilder(position).timeProvider(timeProvider).build();
+		Transition<Vector2f> transition = Transitions.transitionBuilder(position).build();
 		transition.set(new Vector2f(100, 100), 500);
 
 		TransitionMutableObjectSynchronizer transitionMutableObjectSynchronizer = new TransitionMutableObjectSynchronizer(mutableObjectSynchronizer, transition);
@@ -238,7 +235,7 @@ public class TransitionReflectionObjectSynchronizerTest {
 
 		assertThat(position, IsEqual.equalTo(new Vector2f(50f, 50f)));
 
-		timeProvider.update(250);
+		transition.update(250);
 		transitionMutableObjectSynchronizer.synchronize();
 
 		assertThat(position, IsEqual.equalTo(new Vector2f(75, 75)));

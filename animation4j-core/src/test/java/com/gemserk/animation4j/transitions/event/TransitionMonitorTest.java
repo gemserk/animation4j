@@ -10,7 +10,6 @@ import org.junit.Test;
 import com.gemserk.animation4j.Vector2f;
 import com.gemserk.animation4j.Vector2fConverter;
 import com.gemserk.animation4j.converters.Converters;
-import com.gemserk.animation4j.time.UpdateableTimeProvider;
 import com.gemserk.animation4j.transitions.MockTransition;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
@@ -125,14 +124,15 @@ public class TransitionMonitorTest {
 	
 	@Test
 	public void testMonitorChangesWhenUpdateTimeIsGreaterThanTransitionTime() {
-		UpdateableTimeProvider updateableTimeProvider = new UpdateableTimeProvider();
+//		UpdateableTimeProvider updateableTimeProvider = new UpdateableTimeProvider();
 
 		final TransitionMonitor transitionMonitor = new TransitionMonitor();
-		final Transition<Vector2f> transition = Transitions.transitionBuilder(new Vector2f(50, 50)).end(new Vector2f(100, 100)).time(500).timeProvider(updateableTimeProvider).build();
+		final Transition<Vector2f> transition = Transitions.transitionBuilder(new Vector2f(50, 50)).end(new Vector2f(100, 100)).time(500).build();
 		
 		transitionMonitor.monitor(transition);
 
-		updateableTimeProvider.update(1000);
+		transition.update(1000);
+//		updateableTimeProvider.update(1000);
 		transitionMonitor.update();
 		
 		assertThat(transitionMonitor.wasStarted(), IsEqual.equalTo(true));

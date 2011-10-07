@@ -1,6 +1,5 @@
 package com.gemserk.animation4j.transitions;
 
-import com.gemserk.animation4j.time.TimeProvider;
 
 /**
  * Provides default implementation of transition.
@@ -9,28 +8,26 @@ import com.gemserk.animation4j.time.TimeProvider;
  */
 public class TransitionImpl<T> implements Transition<T> {
 
-	private final TimeProvider timeProvider;
-
 	/**
 	 * Used internally to multiply delta when updating the transition, 2f implies 2x the interpolation speed.
 	 */
-	private final float speed;
-
-	private float lastTime;
+	private float speed;
 
 	private InternalTransition<T> transition;
 
 	private boolean started = false;
 	private boolean finished = true;
 
-	public TransitionImpl(InternalTransition<T> transition, float speed, TimeProvider timeProvider) {
+	public TransitionImpl(InternalTransition<T> transition) {
+		this(transition, 1f);
+	}
+
+	public TransitionImpl(InternalTransition<T> transition, float speed) {
 		this.speed = speed;
-		this.timeProvider = timeProvider;
 		this.transition = transition;
 	}
 
 	public T get() {
-		updateTransition();
 		return transition.get();
 	}
 
@@ -39,19 +36,26 @@ public class TransitionImpl<T> implements Transition<T> {
 	}
 
 	public void set(T t, float time) {
-		lastTime = timeProvider.getTime();
 		transition.set(t, time);
 
-		started = false;
+		started = true;
 		finished = false;
 	}
 
-	protected void updateTransition() {
+	@Override
+	public boolean isStarted() {
+		return started;
+	}
+
+	@Override
+	public boolean isFinished() {
+		return finished;
+	}
+
+	@Override
+	public void update(float delta) {
 		if (finished)
 			return;
-
-		float currentTime = timeProvider.getTime();
-		float delta = currentTime - lastTime;
 
 		started = true;
 
@@ -60,20 +64,7 @@ public class TransitionImpl<T> implements Transition<T> {
 
 		float time = delta * speed;
 		transition.update(time);
-		lastTime = currentTime;
 
 		finished = transition.isFinished();
-	}
-
-	@Override
-	public boolean isStarted() {
-		updateTransition();
-		return started;
-	}
-
-	@Override
-	public boolean isFinished() {
-		updateTransition();
-		return finished;
 	}
 }
