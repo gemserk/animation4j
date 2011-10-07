@@ -39,8 +39,8 @@ public class MutableObjectTransition implements Transition<float[]> {
 
 	@Override
 	public void set(float[] t) {
-		System.arraycopy(t, 0, a, 0, a.length);
-		System.arraycopy(t, 0, x, 0, x.length);
+		System.arraycopy(t, 0, a, 0, Math.min(t.length, a.length));
+		System.arraycopy(t, 0, x, 0, Math.min(t.length, x.length));
 		typeConverter.copyToObject(mutableObject, x);
 		finished = true;
 	}
@@ -50,8 +50,8 @@ public class MutableObjectTransition implements Transition<float[]> {
 		started = true;
 		finished = false;
 
-		System.arraycopy(x, 0, a, 0, a.length);
-		System.arraycopy(t, 0, b, 0, b.length);
+		System.arraycopy(x, 0, a, 0, Math.min(x.length, a.length));
+		System.arraycopy(t, 0, b, 0, Math.min(t.length, b.length));
 
 		timeTransition.start(time);
 	}
