@@ -4,24 +4,23 @@ import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 
-public class MutableObjectTransition implements Transition<float[]> {
+public class MutableObjectTransition<T> implements Transition<T> {
 
 	private final TimeTransition timeTransition = new TimeTransition();
 
-	Object mutableObject;
-	TypeConverter typeConverter;
+	T mutableObject;
+	TypeConverter<T> typeConverter;
 	float[] a, b, x;
 	InterpolationFunction[] functions;
 
 	boolean started;
 	boolean finished;
-	
+
 	public void setFunctions(InterpolationFunction... functions) {
 		this.functions = functions;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public MutableObjectTransition(Object mutableObject, TypeConverter typeConverter) {
+	public MutableObjectTransition(T mutableObject, TypeConverter<T> typeConverter) {
 		this.mutableObject = mutableObject;
 		this.typeConverter = typeConverter;
 
@@ -33,11 +32,33 @@ public class MutableObjectTransition implements Transition<float[]> {
 	}
 
 	@Override
-	public float[] get() {
+	public T get() {
+		return mutableObject;
+	}
+
+	public float[] getValue() {
 		return x;
 	}
 
 	@Override
+	public void set(T t) {
+		typeConverter.copyFromObject(t, x);
+		typeConverter.copyFromObject(t, a);
+		typeConverter.copyToObject(mutableObject, x);
+		finished = true;
+	}
+
+	@Override
+	public void set(T t, float time) {
+		started = true;
+		finished = false;
+		
+		System.arraycopy(x, 0, a, 0, Math.min(x.length, a.length));
+		typeConverter.copyFromObject(t, b);
+
+		timeTransition.start(time);
+	}
+
 	public void set(float[] t) {
 		System.arraycopy(t, 0, a, 0, Math.min(t.length, a.length));
 		System.arraycopy(t, 0, x, 0, Math.min(t.length, x.length));
@@ -45,7 +66,6 @@ public class MutableObjectTransition implements Transition<float[]> {
 		finished = true;
 	}
 
-	@Override
 	public void set(float[] t, float time) {
 		started = true;
 		finished = false;

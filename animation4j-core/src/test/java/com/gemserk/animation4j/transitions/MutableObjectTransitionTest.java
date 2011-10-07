@@ -154,11 +154,23 @@ public class MutableObjectTransitionTest {
 
 		transition.update(0.5f);
 
-		float x[] = transition.get();
+		float x[] = transition.getValue();
 		
 		assertNotNull(x);
 		assertThat(x[0], IsEqual.equalTo(45f));
 		assertThat(x[1], IsEqual.equalTo(45f));
+	}
+	
+	@Test
+	public void shouldReturnMutableObject() {
+		float b[] = { 50f, 50f };
+
+		MyObject myObject = new MyObject();
+		myObject.x = 40f;
+		myObject.y = 40f;
+
+		MutableObjectTransition transition = new MutableObjectTransition(myObject, new MyObjectTypeConverter());
+		assertSame(myObject, transition.get());
 	}
 
 	@Test
