@@ -1,7 +1,6 @@
 package com.gemserk.animation4j.transitions;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
@@ -139,6 +138,27 @@ public class MutableObjectTransitionTest {
 
 		assertThat(myObject.x, IsEqual.equalTo(50f));
 		assertThat(myObject.y, IsEqual.equalTo(50f));
+	}
+	
+	@Test
+	public void shouldReturnCurrentValueWhenGet() {
+		float b[] = { 50f, 50f };
+
+		MyObject myObject = new MyObject();
+		myObject.x = 40f;
+		myObject.y = 40f;
+
+		MutableObjectTransition transition = new MutableObjectTransition(myObject, new MyObjectTypeConverter());
+
+		transition.set(b, 1f);
+
+		transition.update(0.5f);
+
+		float x[] = transition.get();
+		
+		assertNotNull(x);
+		assertThat(x[0], IsEqual.equalTo(45f));
+		assertThat(x[1], IsEqual.equalTo(45f));
 	}
 
 	@Test

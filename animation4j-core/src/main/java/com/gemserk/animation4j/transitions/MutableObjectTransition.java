@@ -34,7 +34,7 @@ public class MutableObjectTransition implements Transition<float[]> {
 
 	@Override
 	public float[] get() {
-		return null;
+		return x;
 	}
 
 	@Override
