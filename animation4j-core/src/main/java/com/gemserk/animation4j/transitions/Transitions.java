@@ -120,35 +120,35 @@ public class Transitions {
 
 	}
 
-	public static class MutableObjectTransitionBuilder {
+	public static class MutableObjectTransitionBuilder<T> {
 
-		private TypeConverter typeConverter;
-		private MutableObjectTransition mutableObjectTransition;
+		private TypeConverter<T> typeConverter;
+		private MutableObjectTransition<T> mutableObjectTransition;
 
-		private void setMutableObjectTransition(MutableObjectTransition mutableObjectTransition) {
+		private void setMutableObjectTransition(MutableObjectTransition<T> mutableObjectTransition) {
 			this.mutableObjectTransition = mutableObjectTransition;
 		}
 
-		private void setTypeConverter(TypeConverter typeConverter) {
+		private void setTypeConverter(TypeConverter<T> typeConverter) {
 			this.typeConverter = typeConverter;
 		}
 
-		public MutableObjectTransitionBuilder start(float... values) {
+		public MutableObjectTransitionBuilder<T> start(float... values) {
 			mutableObjectTransition.set(values);
 			return this;
 		}
 
-		public MutableObjectTransitionBuilder startObject(Object start) {
+		public MutableObjectTransitionBuilder<T> startObject(T start) {
 			mutableObjectTransition.set(typeConverter.copyFromObject(start, null));
 			return this;
 		}
 
-		public MutableObjectTransitionBuilder end(float time, float... values) {
+		public MutableObjectTransitionBuilder<T> end(float time, float... values) {
 			mutableObjectTransition.set(values, time);
 			return this;
 		}
 
-		public MutableObjectTransitionBuilder endObject(float time, Object end) {
+		public MutableObjectTransitionBuilder<T> endObject(float time, T end) {
 			mutableObjectTransition.set(typeConverter.copyFromObject(end, null), time);
 			return this;
 		}
@@ -158,7 +158,7 @@ public class Transitions {
 			return this;
 		}
 
-		public Transition<float[]> build() {
+		public Transition<T> build() {
 			return mutableObjectTransition;
 		}
 
@@ -177,7 +177,7 @@ public class Transitions {
 	 *            The TypeConverter used to convert between float[] to the object and vice versa.
 	 * @return The TransitionBuilder to build the new transition.
 	 */
-	public static MutableObjectTransitionBuilder mutableTransition(Object mutableObject, TypeConverter typeConverter) {
+	public static <T> MutableObjectTransitionBuilder<T> mutableTransition(T mutableObject, TypeConverter typeConverter) {
 		mutableObjectTransitionBuilder.setMutableObjectTransition(new MutableObjectTransition(mutableObject, typeConverter));
 		mutableObjectTransitionBuilder.setTypeConverter(typeConverter);
 		return mutableObjectTransitionBuilder;
@@ -190,7 +190,7 @@ public class Transitions {
 	 *            The mutable object to be used in the transition.
 	 * @return The TransitionBuilder to build the new transition.
 	 */
-	public static MutableObjectTransitionBuilder mutableTransition(Object mutableObject) {
+	public static <T> MutableObjectTransitionBuilder<T> mutableTransition(T mutableObject) {
 		return mutableTransition(mutableObject, (TypeConverter) Converters.converter(mutableObject.getClass()));
 	}
 

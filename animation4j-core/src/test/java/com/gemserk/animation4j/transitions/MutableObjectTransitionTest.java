@@ -179,7 +179,7 @@ public class MutableObjectTransitionTest {
 		myObject.x = 40f;
 		myObject.y = 40f;
 
-		Transition<float[]> transition = Transitions.mutableTransition(myObject, new MyObjectTypeConverter()) //
+		Transition<MyObject> transition = Transitions.mutableTransition(myObject, new MyObjectTypeConverter()) //
 				.start(0f, 0f) //
 				.end(2f, 20f) //
 				.build();
