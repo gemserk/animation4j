@@ -44,4 +44,17 @@ public class MockTransition<T> implements Transition<T> {
 		
 	}
 
+	@Override
+	public float getSpeed() {
+		// TODO Auto-generated function stub
+		return 0;
+		
+	}
+
+	@Override
+	public void setSpeed(float speed) {
+		// TODO Auto-generated function stub
+		
+	}
+
 }

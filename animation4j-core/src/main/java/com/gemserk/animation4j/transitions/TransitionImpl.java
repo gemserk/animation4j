@@ -67,4 +67,14 @@ public class TransitionImpl<T> implements Transition<T> {
 
 		finished = transition.isFinished();
 	}
+
+	@Override
+	public float getSpeed() {
+		return speed;
+	}
+
+	@Override
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
 }

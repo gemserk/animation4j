@@ -51,4 +51,17 @@ public interface Transition<T> {
 	 */
 	void update(float delta);
 
+	/**
+	 * Returns the current speed of the Transition.
+	 */
+	float getSpeed();
+
+	/**
+	 * Sets the specified speed for the transition.
+	 * 
+	 * @param speed
+	 *            The speed to be set.
+	 */
+	void setSpeed(float speed);
+
 }
