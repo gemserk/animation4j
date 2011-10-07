@@ -139,7 +139,7 @@ public class MutableObjectTransitionTest {
 		assertThat(myObject.x, IsEqual.equalTo(50f));
 		assertThat(myObject.y, IsEqual.equalTo(50f));
 	}
-	
+
 	@Test
 	public void shouldReturnCurrentValueWhenGet() {
 		float b[] = { 50f, 50f };
@@ -155,12 +155,12 @@ public class MutableObjectTransitionTest {
 		transition.update(0.5f);
 
 		float x[] = transition.getValue();
-		
+
 		assertNotNull(x);
 		assertThat(x[0], IsEqual.equalTo(45f));
 		assertThat(x[1], IsEqual.equalTo(45f));
 	}
-	
+
 	@Test
 	public void shouldReturnMutableObject() {
 		float b[] = { 50f, 50f };
@@ -183,7 +183,7 @@ public class MutableObjectTransitionTest {
 				.start(0f, 0f) //
 				.end(2f, 20f) //
 				.build();
-		
+
 		assertThat(myObject.x, IsEqual.equalTo(0f));
 		assertThat(myObject.y, IsEqual.equalTo(0f));
 
@@ -192,7 +192,7 @@ public class MutableObjectTransitionTest {
 		assertThat(myObject.x, IsEqual.equalTo(20f));
 		assertThat(myObject.y, IsEqual.equalTo(0f));
 	}
-	
+
 	@Test
 	public void testBuilder2() {
 		MyObject myObject = new MyObject();
@@ -201,13 +201,54 @@ public class MutableObjectTransitionTest {
 
 		Transition<MyObject> transition = Transitions.mutableTransition(myObject, new MyObjectTypeConverter()) //
 				.build();
-		
+
 		assertThat(myObject.x, IsEqual.equalTo(40f));
 		assertThat(myObject.y, IsEqual.equalTo(40f));
-		
+
 		transition.update(1f);
-		
+
 		assertThat(myObject.x, IsEqual.equalTo(40f));
 		assertThat(myObject.y, IsEqual.equalTo(40f));
+	}
+
+	@Test
+	public void testBuilderWithCustomTypeConverter() {
+		MyObject myObject = new MyObject();
+		myObject.x = 40f;
+		myObject.y = 40f;
+
+		Transition<MyObject> transition = Transitions.mutableTransition(myObject, new MyObjectTypeConverter() {
+
+			@Override
+			public int variables() {
+				return 3;
+			}
+
+			@Override
+			public MyObject copyToObject(MyObject object, float[] x) {
+				object.x = 2f * x[0] - 1f;
+				object.y = -1f * x[1] - x[2] + 5f;
+				return object;
+			}
+
+			@Override
+			public float[] copyFromObject(MyObject object, float[] x) {
+				x[0] = object.x;
+				x[1] = object.y;
+				x[2] = object.x + object.y;
+				return x;
+			}
+
+		}).start(1f, 2f, 3f) //
+				.end(1f, 10f, 20f, 30f) //
+				.build();
+
+		assertThat(myObject.x, IsEqual.equalTo(1f));
+		assertThat(myObject.y, IsEqual.equalTo(0f));
+
+		transition.update(1f);
+
+		assertThat(myObject.x, IsEqual.equalTo(19f));
+		assertThat(myObject.y, IsEqual.equalTo(-45f));
 	}
 }
