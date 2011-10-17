@@ -106,6 +106,20 @@ This class provides an easy way to build a Transition<T> that could be used to b
 How to use it
 ------------
 
+### Importing the project
+
+First of all, you need to import the required jars of the project, if you are using maven, add:
+
+	<dependency>
+		<groupId>com.gemserk.animation4j</groupId>
+		<artifactId>animation4j-core</artifactId>
+		<version>0.0.14</version>
+	</dependency>
+
+(note: 0.0.14 is the latest version uploaded to maven central by the time this document was made)
+
+Otherwise, you can download the jars from the [downloads](https://github.com/gemserk/animation4j/downloads) section.
+
 There are different ways of using the framework, the next sections shows some of them.
 
 ### Using the Synchronizer 
@@ -123,6 +137,7 @@ The first example shows how to register an object to be synchronized by using th
 	Synchronizer.synchronize(0.25f);
 	// this should print (75,75)
 	System.out.println("(" + v.x + "," + v.y ")");
+
 
 Limitations
 ------------
