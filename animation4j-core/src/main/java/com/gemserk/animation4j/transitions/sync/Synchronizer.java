@@ -175,6 +175,10 @@ public class Synchronizer {
 		transition(object, transition);
 		transitionHandlersManager.handle(transition, transitionEventHandler);
 	}
+	
+	public void monitor(Transition transition, TransitionEventHandler transitionEventHandler) {
+		transitionHandlersManager.handle(transition, transitionEventHandler);
+	}
 
 	/**
 	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
