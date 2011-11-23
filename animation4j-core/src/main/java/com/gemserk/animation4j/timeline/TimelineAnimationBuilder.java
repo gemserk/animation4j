@@ -41,10 +41,10 @@ public class TimelineAnimationBuilder {
 	 * @return The time line animation.
 	 */
 	public TimelineAnimation build() {
-		TimelineAnimation timelineAnimation = new TimelineAnimation(buildTimeline(), started);
+		TimelineAnimation timelineAnimation = new TimelineAnimation(buildTimeline(), calculateDuration(), started);
 		timelineAnimation.setSpeed(speed);
 		timelineAnimation.setDelay(delay);
-		timelineAnimation.setDuration(calculateDuration());
+//		timelineAnimation.setDuration(calculateDuration());
 		return timelineAnimation;
 	}
 

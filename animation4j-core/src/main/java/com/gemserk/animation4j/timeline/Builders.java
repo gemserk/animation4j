@@ -88,9 +88,9 @@ public class Builders {
 
 			return this;
 		}
-		
+
 		public <T> Builders.TimelineValueBuilder keyFrame(int time, T value, InterpolationFunction... functions) {
-			return keyFrame((float)time * 0.001f, value, functions);
+			return keyFrame((float) time * 0.001f, value, functions);
 		}
 
 		public TimelineValue build() {
@@ -199,8 +199,8 @@ public class Builders {
 		public TimelineAnimation build() {
 			float duration = timelineBuilder.getDuration();
 
-			TimelineAnimation timelineAnimation = new TimelineAnimation(timelineBuilder.build(), started);
-			timelineAnimation.setDuration(duration);
+			TimelineAnimation timelineAnimation = new TimelineAnimation(timelineBuilder.build(), duration, started);
+			// timelineAnimation.setDuration(duration);
 			timelineAnimation.setDelay(delay);
 			timelineAnimation.setSpeed(speed);
 

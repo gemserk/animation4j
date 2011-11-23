@@ -273,10 +273,9 @@ public class TimelineAnimationTest {
 		
 		float totalTime = 20f;
 		
-		Converters.register(Float.class, Converters.floatValue());
-		
 		TimelineAnimation animation = Builders.animation(Builders.timeline() //
 				.value(Builders.timelineValue("alpha") //
+						.typeConverter(Converters.floatValue()) //
 						.keyFrame(0, 0f) //
 						.keyFrame(0.2f, 1f) //
 						.keyFrame(0.8f, 1f) //
@@ -293,8 +292,19 @@ public class TimelineAnimationTest {
 		animation.update(totalTime * 0.5f);
 		
 		assertTrue(animation.isFinished());
+	}
+	
+	@Test
+	public void bugTimelineAnimationShouldHaveTimelineDuration() {
+		Timeline timeline = Builders.timeline() //
+				.value(Builders.timelineValue("alpha") //
+						.typeConverter(Converters.floatValue()) //
+						.keyFrame(0, 0f) //
+						.keyFrame(0.2f, 1f)).build();
 		
-		Converters.unregister(Float.class);
+		TimelineAnimation animation = new TimelineAnimation(timeline, 0.2f);
+		
+		assertThat(animation.getDuration(), IsEqual.equalTo(0.2f));
 	}
 
 }

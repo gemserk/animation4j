@@ -46,17 +46,18 @@ public class TimelineAnimation implements Animation {
 		return animation.getDelay();
 	}
 
-	public TimelineAnimation(Timeline timeline) {
-		this(timeline, false);
+	public TimelineAnimation(Timeline timeline, float duration) {
+		this(timeline, duration, false);
 	}
 
-	public TimelineAnimation(Timeline timeline, boolean started) {
-		this(timeline, started, false);
+	public TimelineAnimation(Timeline timeline, float duration, boolean started) {
+		this(timeline, duration, started, false);
 	}
 
-	public TimelineAnimation(Timeline timeline, boolean started, boolean alternateDirection) {
+	public TimelineAnimation(Timeline timeline, float duration, boolean started, boolean alternateDirection) {
 		this.timeline = timeline;
 		this.animation = new AnimationImpl(started, alternateDirection);
+		this.animation.setDuration(duration);
 	}
 
 	/**
