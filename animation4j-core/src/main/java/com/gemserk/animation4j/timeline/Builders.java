@@ -34,38 +34,10 @@ public class Builders {
 			return this;
 		}
 
-		@Deprecated
-		public Builders.TimelineValueBuilder<T> name(String name) {
-			return this;
-		}
-
 		public Builders.TimelineValueBuilder<T> typeConverter(TypeConverter<T> typeConverter) {
 			this.typeConverter = typeConverter;
 			return this;
 		}
-
-		// /**
-		// * Defines a new key frame in the time line value.
-		// *
-		// * @param time
-		// * The time when the key frame starts (in milliseconds).
-		// * @param value
-		// * The value the variable should have in the key frame.
-		// */
-		// public <T> Builders.TimelineValueBuilder keyFrame(float time, T value) {
-		// if (typeConverter == null)
-		// typeConverter = (TypeConverter) Converters.converter(value.getClass());
-		//
-		// // TODO: do not allow time less than last time to avoid defining key frames between other key frames.
-		//
-		// float timeInSeconds = time * 0.001f;
-		//
-		// KeyFrame keyFrame = new KeyFrame(time, typeConverter.copyFromObject(value, null));
-		// this.keyFrames.add(keyFrame);
-		//
-		// duration = Math.max(duration, timeInSeconds);
-		// return this;
-		// }
 
 		/**
 		 * Defines a new key frame in the time line value.
@@ -220,7 +192,7 @@ public class Builders {
 
 	@Deprecated
 	public static Builders.TimelineValueBuilder timelineValue(String name) {
-		return timelineValueBuilder.name(name);
+		return timelineValueBuilder;
 	}
 
 	public static <T> Builders.TimelineValueBuilder<T> timelineValue(T mutableObject) {
