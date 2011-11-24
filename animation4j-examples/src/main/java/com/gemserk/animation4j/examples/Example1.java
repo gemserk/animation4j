@@ -14,9 +14,8 @@ import com.gemserk.animation4j.animations.events.AnimationHandlerManager;
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
 import com.gemserk.animation4j.java2d.converters.Java2dConverters;
+import com.gemserk.animation4j.timeline.Builders;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
-import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
-import com.gemserk.animation4j.timeline.TimelineValueBuilder;
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
 import com.gemserk.componentsengine.java2d.Java2dGame;
 import com.gemserk.componentsengine.java2d.input.KeyboardInput;
@@ -83,6 +82,10 @@ public class Example1 extends Java2dDesktopApplication {
 		AnimationHandlerManager animationHandlerManager;
 
 		Resource<Image> critterImageResource;
+		
+		FloatValue x = new FloatValue(0f);
+		FloatValue y = new FloatValue(0f);
+		FloatValue angle = new FloatValue(0f);
 
 		@Override
 		public void init() {
@@ -93,17 +96,21 @@ public class Example1 extends Java2dDesktopApplication {
 			resourceManager.add("Critter", new ImageLoader(new ClassPathDataSource("critter.png")));
 
 			critterImageResource = resourceManager.get("Critter");
-
-			animation = new TimelineAnimationBuilder() {
-				{
-					speed(2f);
-					started(false);
-
-					value("x", new TimelineValueBuilder().keyFrame(0, 150f, InterpolationFunctions.easeIn()).keyFrame(1000, 350f));
-					value("y", new TimelineValueBuilder().keyFrame(0, 325f));
-					value("angle", new TimelineValueBuilder().keyFrame(0, 0f, InterpolationFunctions.easeIn()).keyFrame(1000, (float) Math.PI / 2));
-				}
-			}.build();
+			
+			animation = Builders.animation(Builders.timeline() //
+					.value(Builders.timelineValue(x, new FloatValueConverter()) //
+							.keyFrame(0f, new FloatValue(150f), InterpolationFunctions.easeIn()) //
+							.keyFrame(1f, new FloatValue(350f)) //
+					) //
+					.value(Builders.timelineValue(y, new FloatValueConverter()) //
+							.keyFrame(0f, new FloatValue(325f)) //
+					) //
+					.value(Builders.timelineValue(angle, new FloatValueConverter()) //
+							.keyFrame(0f, new FloatValue(0f), InterpolationFunctions.easeIn()) //
+							.keyFrame(1f, new FloatValue((float) Math.PI / 2)) //
+					) //
+					) //
+					.build();
 
 			animation.start(2, true);
 
@@ -142,12 +149,8 @@ public class Example1 extends Java2dDesktopApplication {
 			graphics.setBackground(Color.blue);
 			graphics.clearRect(0, 0, 800, 600);
 
-			Float x = animation.getValue("x");
-			Float y = animation.getValue("y");
-			Float angle = animation.getValue("angle");
-
 			currentGraphicsProvider.setGraphics(graphics);
-			java2dRenderer.render(new Java2dImageRenderObject(1, critterImageResource.get(), x, y, 1, 1, angle));
+			java2dRenderer.render(new Java2dImageRenderObject(1, critterImageResource.get(), x.value, y.value, 1, 1, angle.value));
 
 			panel.paint(graphics);
 
@@ -157,9 +160,9 @@ public class Example1 extends Java2dDesktopApplication {
 		public void update(int delta) {
 
 			animation.update((float) delta * 0.001f);
+			
 			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
 				animation.restart();
-				// animationHandlerManager.with(new DumpAnimationStateHandler()).handleChangesOf(animation);
 			}
 
 			animationHandlerManager.checkAnimationChanges();
