@@ -21,9 +21,6 @@ import com.gemserk.animation4j.states.StateMachine;
 import com.gemserk.animation4j.states.StateTransition;
 import com.gemserk.animation4j.states.StateTransitionCondition;
 import com.gemserk.animation4j.timeline.Builders;
-import com.gemserk.animation4j.timeline.sync.ObjectSynchronizer;
-import com.gemserk.animation4j.timeline.sync.ReflectionObjectSynchronizer;
-import com.gemserk.animation4j.timeline.sync.TimelineSynchronizer;
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
 import com.gemserk.componentsengine.java2d.Java2dGame;
 import com.gemserk.componentsengine.java2d.input.KeyboardInput;
@@ -119,9 +116,6 @@ public class Example2 extends Java2dDesktopApplication {
 			element.alpha = new FloatValue(0f);
 			element.textAlpha = new FloatValue(0f);
 
-			ObjectSynchronizer objectSynchronizer = new ReflectionObjectSynchronizer();
-			timelineSynchronizer = new TimelineSynchronizer(objectSynchronizer, element);
-
 			showAnimation = Builders.animation(Builders.timeline() //
 					.value(Builders.timelineValue(element.position, new Vector2fConverter()) //
 							.keyFrame(0f, new Vector2f(320, 260), InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //
@@ -140,22 +134,6 @@ public class Example2 extends Java2dDesktopApplication {
 					.speed(1.5f)//
 					.build();
 
-			// showAnimation = new SynchronizedAnimation(new TimelineAnimationBuilder() {
-			// {
-			// speed(1.5f);
-			// // value("position", new TimelineValueBuilder()
-			// // .keyFrame(0, new Point(320, 260), InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //
-			// // .keyFrame(1000, new Point(320, 220)));
-			// // value("alpha", new TimelineValueBuilder()
-			// // .keyFrame(0, 0f, InterpolationFunctions.easeOut())
-			// // .keyFrame(1000, 1f));
-			// value("textAlpha", new TimelineValueBuilder()
-			// .keyFrame(0, 0f, InterpolationFunctions.easeOut()) //
-			// .keyFrame(500, 0f)
-			// .keyFrame(1500, 1f));
-			// }
-			// }.build(), timelineSynchronizer);
-
 			hideAnimation = Builders.animation(Builders.timeline() //
 					.value(Builders.timelineValue(element.position, new Vector2fConverter()) //
 							.keyFrame(0f, new Vector2f(320, 220)) //
@@ -172,21 +150,6 @@ public class Example2 extends Java2dDesktopApplication {
 					) //
 					.speed(2f)//
 					.build();
-
-			// hideAnimation = new SynchronizedAnimation(new TimelineAnimationBuilder() {
-			// {
-			// speed(2f);
-			// value("position", new TimelineValueBuilder()
-			// .keyFrame(0, new Point(320, 220)));
-			// value("alpha", new TimelineValueBuilder()
-			// .keyFrame(0, 1f, InterpolationFunctions.easeOut()) //
-			// .keyFrame(500, 1f)
-			// .keyFrame(1000, 0f));
-			// value("textAlpha", new TimelineValueBuilder()
-			// .keyFrame(0, 1f, InterpolationFunctions.easeOut()) //
-			// .keyFrame(500, 0f));
-			// }
-			// }.build(), timelineSynchronizer);
 
 			currentAnimation = showAnimation;
 
@@ -284,8 +247,6 @@ public class Example2 extends Java2dDesktopApplication {
 		private Animation hideAnimation;
 
 		private Animation currentAnimation;
-
-		private TimelineSynchronizer timelineSynchronizer;
 
 		private JEditorPane creditsPane;
 
