@@ -1,6 +1,5 @@
 package com.gemserk.animation4j.examples;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -33,6 +32,8 @@ import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
 public class Example4 extends Java2dDesktopApplication {
+
+	static ColorConverter colorConverter = new ColorConverter();
 
 	public static void main(String[] args) {
 		Java2dDesktopApplication java2dDesktopApplication = new Example4() {
@@ -128,11 +129,16 @@ public class Example4 extends Java2dDesktopApplication {
 							.build();
 
 					size = Transitions.mutableTransition(new Vector2f(1f, 1f), vector2fConverter) //
-							.speed(5f) //
+							.speed(1f) //
 							.build();
 
-					color = Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build();
-					glowColor = Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build();
+					color = Transitions.mutableTransition(new Color(1f, 1f, 1f, 1f), colorConverter) //
+							.speed(5f) //
+							.build();
+					glowColor = Transitions.mutableTransition(new Color(1f, 0f, 0f, 0f), colorConverter) //
+							.speed(2f) //
+							.build();
+
 				}
 			});
 
@@ -144,11 +150,16 @@ public class Example4 extends Java2dDesktopApplication {
 							.build();
 
 					size = Transitions.mutableTransition(new Vector2f(1f, 1f), vector2fConverter) //
-							.speed(5f) //
+							.speed(1f) //
 							.build();
 
-					color = Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build();
-					glowColor = Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build();
+					color = Transitions.mutableTransition(new Color(1f, 1f, 1f, 1f), colorConverter) //
+							.speed(5f) //
+							.build();
+					glowColor = Transitions.mutableTransition(new Color(1f, 0f, 0f, 0f), colorConverter) //
+							.speed(2f) //
+							.build();
+					
 				}
 			});
 
@@ -160,19 +171,33 @@ public class Example4 extends Java2dDesktopApplication {
 							.build();
 
 					size = Transitions.mutableTransition(new Vector2f(1f, 1f), vector2fConverter) //
+							.speed(1f) //
+							.build();
+
+					color = Transitions.mutableTransition(new Color(1f, 1f, 1f, 1f), colorConverter) //
 							.speed(5f) //
 							.build();
 
-					color = Transitions.transitionBuilder(new Color(1f, 1f, 1f, 1f)).speed(5f).build();
-					glowColor = Transitions.transitionBuilder(new Color(1f, 0f, 0f, 0f)).speed(2f).build();
+					glowColor = Transitions.mutableTransition(new Color(1f, 0f, 0f, 0f), colorConverter) //
+							.speed(2f) //
+							.build();
+
 				}
 			});
 
-			backgroundColor = Transitions.transitionBuilder(new Color(0.4f, 0.4f, 0.4f, 0f)).speed(1f).build();
+			backgroundColor = Transitions.mutableTransition(new Color(0.4f, 0.4f, 0.4f, 0f), colorConverter) //
+					.speed(1f) //
+					.build();
+
 			backgroundColor.set(new Color(0.4f, 0.4f, 0.4f, 0.6f), 1f);
 		}
 
 		Transition<Color> backgroundColor;
+
+		java.awt.Color getColor(Transition<Color> transition) {
+			Color color = transition.get();
+			return new java.awt.Color(color.r, color.g, color.b, color.a);
+		}
 
 		@Override
 		public void render(Graphics2D graphics) {
@@ -182,7 +207,7 @@ public class Example4 extends Java2dDesktopApplication {
 			Resource<BufferedImage> backgroundResource = resourceManager.get("Background");
 			java2dRenderer.render(new Java2dImageRenderObject(0, backgroundResource.get(), 320, 240, 1, 1, 0f));
 
-			graphics.setColor(backgroundColor.get());
+			graphics.setColor(getColor(backgroundColor));
 			graphics.fillRect(0, 0, 640, 480);
 
 			// render the image using the color of the transition
@@ -198,11 +223,11 @@ public class Example4 extends Java2dDesktopApplication {
 				float sx = (float) size.getX();
 				float sy = (float) size.getY();
 
-				Color color = button.color.get();
-				Color glowColor = button.glowColor.get();
-
-				java2dRenderer.render(new Java2dImageRenderObject(1, buttonImageResource.get(), x, y, sx, sy, 0f, color));
+				java.awt.Color color = getColor(button.color);
+				java.awt.Color glowColor = getColor(button.glowColor);
+				
 				java2dRenderer.render(new Java2dImageRenderObject(1, buttonGlowImageResource.get(), x, y, sx, sy, 0f, glowColor));
+				java2dRenderer.render(new Java2dImageRenderObject(1, buttonImageResource.get(), x, y, sx, sy, 0f, color));
 
 			}
 
@@ -210,6 +235,8 @@ public class Example4 extends Java2dDesktopApplication {
 
 		@Override
 		public void update(int delta) {
+			
+			float deltaF = 0.001f * (float) delta;
 
 			backgroundColor.update(0.001f * (float) delta);
 
@@ -222,8 +249,8 @@ public class Example4 extends Java2dDesktopApplication {
 
 			for (Button button : buttons) {
 
-				button.color.update(0.001f * (float) delta);
-				button.glowColor.update(0.001f * (float) delta);
+				button.color.update(deltaF);
+				button.glowColor.update(deltaF);
 				button.position.update(0.001f * (float) delta);
 				button.size.update(0.001f * (float) delta);
 
@@ -237,7 +264,7 @@ public class Example4 extends Java2dDesktopApplication {
 						button.mouseInside = true;
 						// when the mouse is over the image, we set the color to white
 						button.color.set(new Color(1f, 1f, 1f, 1f), 0.25f);
-						button.glowColor.set(new Color(1f, 0f, 0f, 1f), 0.25f);
+						button.glowColor.set(new Color(1f, 0f, 0f, 1f), 1f);
 						button.size.set(new Vector2f(1.05f, 1.05f), 0.25f);
 					}
 				} else {

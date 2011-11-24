@@ -1,6 +1,5 @@
 package com.gemserk.animation4j.examples;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -104,7 +103,7 @@ public class Example3 extends Java2dDesktopApplication {
 			Java2dConverters.init();
 
 			resourceManager.add("House", new ImageLoader(new ClassPathDataSource("house-128x92.png")));
-			
+
 			houseImageResource = resourceManager.get("House");
 			creditsPane = new JEditorPane("text/html", new FileHelper("license-lostgarden.html").read()) {
 				{
@@ -124,18 +123,22 @@ public class Example3 extends Java2dDesktopApplication {
 
 			// Creates a Color transition using a color interpolator with a linear interpolation function.
 
-			colorTransition = Transitions.transitionBuilder(new Color(0.3f, 0.3f, 0.8f, 1f)).functions(functions).build();
+			colorTransition = Transitions.mutableTransition(new Color(0.3f, 0.3f, 0.8f, 1f), new ColorConverter()) //
+					.functions(functions) //
+					.build();
 		}
 
 		@Override
 		public void render(Graphics2D graphics) {
-			graphics.setBackground(Color.black);
+			graphics.setBackground(java.awt.Color.black);
 			graphics.clearRect(0, 0, 800, 600);
 			currentGraphicsProvider.setGraphics(graphics);
 
 			{
 				// render the image using the color of the transition
-				java2dRenderer.render(new Java2dImageRenderObject(1, houseImageResource.get(), 320, 340, 1, 1, 0f, colorTransition.get()));
+				Color c = colorTransition.get();
+				java.awt.Color color = new java.awt.Color(c.r, c.g, c.b, c.a);
+				java2dRenderer.render(new Java2dImageRenderObject(1, houseImageResource.get(), 320, 340, 1, 1, 0f, color));
 			}
 
 			{
@@ -154,9 +157,9 @@ public class Example3 extends Java2dDesktopApplication {
 
 		@Override
 		public void update(int delta) {
-			
-			colorTransition.update(0.001f * (float)delta);
-			
+
+			colorTransition.update(0.001f * (float) delta);
+
 			Point mousePosition = mouseInput.getPosition();
 			if (new Rectangle(320 - 64, 340 - 46, 128, 92).contains(mousePosition.x, mousePosition.y)) {
 				if (!mouseInside) {
