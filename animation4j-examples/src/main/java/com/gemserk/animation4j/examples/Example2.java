@@ -5,10 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 
 import javax.swing.JEditorPane;
 
@@ -22,11 +20,9 @@ import com.gemserk.animation4j.java2d.converters.Java2dConverters;
 import com.gemserk.animation4j.states.StateMachine;
 import com.gemserk.animation4j.states.StateTransition;
 import com.gemserk.animation4j.states.StateTransitionCondition;
-import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
-import com.gemserk.animation4j.timeline.TimelineValueBuilder;
+import com.gemserk.animation4j.timeline.Builders;
 import com.gemserk.animation4j.timeline.sync.ObjectSynchronizer;
 import com.gemserk.animation4j.timeline.sync.ReflectionObjectSynchronizer;
-import com.gemserk.animation4j.timeline.sync.SynchronizedAnimation;
 import com.gemserk.animation4j.timeline.sync.TimelineSynchronizer;
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
 import com.gemserk.componentsengine.java2d.Java2dGame;
@@ -62,7 +58,7 @@ public class Example2 extends Java2dDesktopApplication {
 
 	@Override
 	public void init() {
-		
+
 		Injector injector = Guice.createInjector(new AbstractModule() {
 			@Override
 			protected void configure() {
@@ -72,7 +68,7 @@ public class Example2 extends Java2dDesktopApplication {
 				bind(MouseInput.class).in(Singleton.class);
 			}
 		});
-		
+
 		Dimension resolution = new Dimension(640, 480);
 		ExampleInternalGame game = injector.getInstance(ExampleInternalGame.class);
 		createWindow("Example2", resolution, game, injector);
@@ -97,35 +93,11 @@ public class Example2 extends Java2dDesktopApplication {
 
 		public static class Element {
 
-			Point2D position;
+			Vector2f position;
 
-			float alpha;
+			FloatValue alpha;
 
-			float textAlpha;
-
-			public void setPosition(Point2D position) {
-				this.position = position;
-			}
-
-			public Point2D getPosition() {
-				return position;
-			}
-
-			public void setAlpha(float alpha) {
-				this.alpha = alpha;
-			}
-
-			public float getAlpha() {
-				return alpha;
-			}
-
-			public void setTextAlpha(float textAlpha) {
-				this.textAlpha = textAlpha;
-			}
-
-			public float getTextAlpha() {
-				return textAlpha;
-			}
+			FloatValue textAlpha;
 
 		}
 
@@ -136,41 +108,85 @@ public class Example2 extends Java2dDesktopApplication {
 
 			Converters.init();
 			Java2dConverters.init();
-			
+
 			resourceManager.add("Globe", new ImageLoader(new ClassPathDataSource("globe-256x176.png")));
 			resourceManager.add("House", new ImageLoader(new ClassPathDataSource("house-128x92.png")));
 
 			globeImageResource = resourceManager.get("Globe");
 			houseImageResource = resourceManager.get("House");
 
-			element.position = new Point(100, 100);
-			element.alpha = 0f;
-			element.textAlpha = 0f;
+			element.position = new Vector2f(100f, 100f);
+			element.alpha = new FloatValue(0f);
+			element.textAlpha = new FloatValue(0f);
 
 			ObjectSynchronizer objectSynchronizer = new ReflectionObjectSynchronizer();
 			timelineSynchronizer = new TimelineSynchronizer(objectSynchronizer, element);
 
-			showAnimation = new SynchronizedAnimation(new TimelineAnimationBuilder() {
-				{
-					speed(1.5f);
-					value("position", new TimelineValueBuilder().keyFrame(0, new Point(320, 260), InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //
-							.keyFrame(1000, new Point(320, 220)));
-					value("alpha", new TimelineValueBuilder().keyFrame(0, 0f, InterpolationFunctions.easeOut()).keyFrame(1000, 1f));
-					value("textAlpha", new TimelineValueBuilder().keyFrame(0, 0f, InterpolationFunctions.easeOut()) //
-							.keyFrame(500, 0f).keyFrame(1500, 1f));
-				}
-			}.build(), timelineSynchronizer);
+			showAnimation = Builders.animation(Builders.timeline() //
+					.value(Builders.timelineValue(element.position, new Vector2fConverter()) //
+							.keyFrame(0f, new Vector2f(320, 260), InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //
+							.keyFrame(1f, new Vector2f(320, 220)) //
+					) //
+					.value(Builders.timelineValue(element.alpha, new FloatValueConverter()) //
+							.keyFrame(0f, new FloatValue(0f), InterpolationFunctions.easeOut()) //
+							.keyFrame(1f, new FloatValue(1f)) //
+					) //
+					.value(Builders.timelineValue(element.textAlpha, new FloatValueConverter()) //
+							.keyFrame(0f, new FloatValue(0f), InterpolationFunctions.easeOut()) //
+							.keyFrame(0.5f, new FloatValue(0f)) //
+							.keyFrame(1.5f, new FloatValue(1f)) //
+					) //
+					) //
+					.speed(1.5f)//
+					.build();
 
-			hideAnimation = new SynchronizedAnimation(new TimelineAnimationBuilder() {
-				{
-					speed(2f);
-					value("position", new TimelineValueBuilder().keyFrame(0, new Point(320, 220)));
-					value("alpha", new TimelineValueBuilder().keyFrame(0, 1f, InterpolationFunctions.easeOut()) //
-							.keyFrame(500, 1f).keyFrame(1000, 0f));
-					value("textAlpha", new TimelineValueBuilder().keyFrame(0, 1f, InterpolationFunctions.easeOut()) //
-							.keyFrame(500, 0f));
-				}
-			}.build(), timelineSynchronizer);
+			// showAnimation = new SynchronizedAnimation(new TimelineAnimationBuilder() {
+			// {
+			// speed(1.5f);
+			// // value("position", new TimelineValueBuilder()
+			// // .keyFrame(0, new Point(320, 260), InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //
+			// // .keyFrame(1000, new Point(320, 220)));
+			// // value("alpha", new TimelineValueBuilder()
+			// // .keyFrame(0, 0f, InterpolationFunctions.easeOut())
+			// // .keyFrame(1000, 1f));
+			// value("textAlpha", new TimelineValueBuilder()
+			// .keyFrame(0, 0f, InterpolationFunctions.easeOut()) //
+			// .keyFrame(500, 0f)
+			// .keyFrame(1500, 1f));
+			// }
+			// }.build(), timelineSynchronizer);
+
+			hideAnimation = Builders.animation(Builders.timeline() //
+					.value(Builders.timelineValue(element.position, new Vector2fConverter()) //
+							.keyFrame(0f, new Vector2f(320, 220)) //
+					) //
+					.value(Builders.timelineValue(element.alpha, new FloatValueConverter()) //
+							.keyFrame(0f, new FloatValue(1f), InterpolationFunctions.easeOut()) //
+							.keyFrame(0.5f, new FloatValue(1f)) //
+							.keyFrame(1f, new FloatValue(0f)) //
+					) //
+					.value(Builders.timelineValue(element.textAlpha, new FloatValueConverter()) //
+							.keyFrame(0f, new FloatValue(1f), InterpolationFunctions.easeOut()) //
+							.keyFrame(0.5f, new FloatValue(0f)) //
+					) //
+					) //
+					.speed(2f)//
+					.build();
+
+			// hideAnimation = new SynchronizedAnimation(new TimelineAnimationBuilder() {
+			// {
+			// speed(2f);
+			// value("position", new TimelineValueBuilder()
+			// .keyFrame(0, new Point(320, 220)));
+			// value("alpha", new TimelineValueBuilder()
+			// .keyFrame(0, 1f, InterpolationFunctions.easeOut()) //
+			// .keyFrame(500, 1f)
+			// .keyFrame(1000, 0f));
+			// value("textAlpha", new TimelineValueBuilder()
+			// .keyFrame(0, 1f, InterpolationFunctions.easeOut()) //
+			// .keyFrame(500, 0f));
+			// }
+			// }.build(), timelineSynchronizer);
 
 			currentAnimation = showAnimation;
 
@@ -300,16 +316,16 @@ public class Example2 extends Java2dDesktopApplication {
 
 			graphics.setTransform(previousTransform);
 
-			Point2D position = element.position;
+			Vector2f position = element.position;
 
 			java2dRenderer.render(new Java2dImageRenderObject(1, houseImageResource.get(), 320, 340, 1, 1, 0f));
-			java2dRenderer.render(new Java2dImageRenderObject(1, globeImageResource.get(), (float) position.getX(), (float) position.getY(), 1, 1, 0f, new Color(1f, 1f, 1f, element.alpha)));
+			java2dRenderer.render(new Java2dImageRenderObject(1, globeImageResource.get(), (float) position.getX(), (float) position.getY(), 1, 1, 0f, new Color(1f, 1f, 1f, element.alpha.value)));
 
 			previousTransform = graphics.getTransform();
 
 			graphics.translate(position.getX() + 10 - 110, position.getY() + 10 - 70);
 
-			graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, element.textAlpha));
+			graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, element.textAlpha.value));
 			textPane.paint(graphics);
 
 			graphics.setTransform(previousTransform);
