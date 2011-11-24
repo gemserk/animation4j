@@ -4,17 +4,14 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.gemserk.animation4j.FloatValue;
+import com.gemserk.animation4j.FloatValueConverter;
 import com.gemserk.animation4j.animations.Animation;
 import com.gemserk.animation4j.animations.MockAnimation;
-import com.gemserk.animation4j.animations.events.AnimationEvent;
-import com.gemserk.animation4j.animations.events.AnimationEventHandler;
-import com.gemserk.animation4j.animations.events.AnimationMonitor;
-import com.gemserk.animation4j.converters.Converters;
-import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
-import com.gemserk.animation4j.timeline.TimelineValueBuilder;
+import com.gemserk.animation4j.timeline.Builders;
 
 public class AnimationMonitorImplTest {
-	
+
 	@Test
 	public void onEndShouldNotBeCalledIfAnimationNotFinished() {
 		Animation animation = new MockAnimation() {
@@ -158,16 +155,16 @@ public class AnimationMonitorImplTest {
 	@Test
 	public void testAnimationHandlerManagerWithTimelineAnimation() {
 
-		Animation animation = new TimelineAnimationBuilder() {
-			{
-				value("myvalue", new TimelineValueBuilder(Converters.floatValue()) {
-					{
-						keyFrame(0, 100f);
-						keyFrame(100, 200f);
-					}
-				});
-			}
-		}.build();
+		FloatValue floatValue = new FloatValue(0f);
+
+		FloatValueConverter typeConverter = new FloatValueConverter();
+
+		Animation animation = Builders.animation(Builders.timeline() //
+				.value(Builders.timelineValue(floatValue, typeConverter) //
+						.keyFrame(0f, new FloatValue(100f)) //
+						.keyFrame(0.1f, new FloatValue(200f)) //
+				) //
+				).build();
 
 		AnimationMonitor animationMonitor = new AnimationMonitor(animation);
 		animationMonitor.addAnimationHandler(new AnimationEventHandler() {
@@ -249,7 +246,7 @@ public class AnimationMonitorImplTest {
 		assertEquals(false, animationEventHandler.onIterationChangedCalled);
 
 	}
-	
+
 	@Test
 	public void shouldCallStartAgainIfAnimationRestarted() {
 
@@ -269,7 +266,7 @@ public class AnimationMonitorImplTest {
 
 		assertEquals(false, animationEventHandler.onStartCalled);
 		assertEquals(false, animationEventHandler.onFinishCalled);
-		
+
 		animation.setStarted(true);
 		animationEventHandler.reset();
 		animationMonitor.checkAnimationChanges();
@@ -283,14 +280,14 @@ public class AnimationMonitorImplTest {
 
 		assertEquals(false, animationEventHandler.onStartCalled);
 		assertEquals(true, animationEventHandler.onFinishCalled);
-		
+
 		animation.restart();
 		animationEventHandler.reset();
 		animationMonitor.checkAnimationChanges();
 
 		assertEquals(false, animationEventHandler.onStartCalled);
 		assertEquals(false, animationEventHandler.onFinishCalled);
-		
+
 		animation.setStarted(true);
 		animationEventHandler.reset();
 		animationMonitor.checkAnimationChanges();
@@ -305,9 +302,8 @@ public class AnimationMonitorImplTest {
 		assertEquals(false, animationEventHandler.onStartCalled);
 		assertEquals(true, animationEventHandler.onFinishCalled);
 
-
 	}
-	
+
 	@Test
 	public void shouldNotCallIterationChangedOnAnimationRestart() {
 
@@ -326,7 +322,7 @@ public class AnimationMonitorImplTest {
 		animationMonitor.checkAnimationChanges();
 
 		assertEquals(false, animationEventHandler.onIterationChangedCalled);
-		
+
 		animation.restart();
 		animationEventHandler.reset();
 		animationMonitor.checkAnimationChanges();

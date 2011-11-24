@@ -11,6 +11,8 @@ public class FloatValueConverter implements TypeConverter<FloatValue> {
 
 	@Override
 	public float[] copyFromObject(FloatValue object, float[] x) {
+		if (x == null)
+			x = new float[variables()];
 		x[0] = object.value;
 		return x;
 	}

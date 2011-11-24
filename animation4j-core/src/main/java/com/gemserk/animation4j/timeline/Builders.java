@@ -2,7 +2,6 @@ package com.gemserk.animation4j.timeline;
 
 import java.util.ArrayList;
 
-import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 
@@ -50,9 +49,6 @@ public class Builders {
 		 *            The interpolation functions to be used when interpolating this keyframe.
 		 */
 		public Builders.TimelineValueBuilder<T> keyFrame(float time, T value, InterpolationFunction... functions) {
-			if (typeConverter == null)
-				typeConverter = (TypeConverter) Converters.converter(value.getClass());
-
 			KeyFrame keyFrame = new KeyFrame(time, typeConverter.copyFromObject(value, null), functions);
 			this.keyFrames.add(keyFrame);
 
@@ -195,8 +191,8 @@ public class Builders {
 		return timelineValueBuilder;
 	}
 
-	public static <T> Builders.TimelineValueBuilder<T> timelineValue(T mutableObject) {
-		return timelineValueBuilder.mutableObject(mutableObject);
+	public static <T> Builders.TimelineValueBuilder<T> timelineValue(T mutableObject, TypeConverter<T> typeConverter) {
+		return timelineValueBuilder.mutableObject(mutableObject).typeConverter(typeConverter);
 	}
 
 }

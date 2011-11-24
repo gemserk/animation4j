@@ -12,12 +12,13 @@ import com.gemserk.animation4j.Vector2fConverter;
 @SuppressWarnings({ "rawtypes", "serial" })
 public class TimelineTest {
 	
+	Vector2fConverter vector2fConverter = new Vector2fConverter();
+	
 	@Test
 	public void shouldSetValuesForTheStartOfTheTimeline() {
 		Vector2f position = new Vector2f(0f, 0f);
 		
-		final TimelineValue<Vector2f> timelineValue = Builders.timelineValue(position)
-			.typeConverter(new Vector2fConverter()) //
+		final TimelineValue<Vector2f> timelineValue = Builders.timelineValue(position, vector2fConverter)
 			.keyFrame(0f, new Vector2f(50f, 50f)) //
 			.keyFrame(1f, new Vector2f(100f, 50f)) //
 			.build();
@@ -41,8 +42,7 @@ public class TimelineTest {
 	public void shouldSetValuesForTheEndOfTheTimeline() {
 		Vector2f position = new Vector2f(0f, 0f);
 		
-		final TimelineValue<Vector2f> timelineValue = Builders.timelineValue(position)
-			.typeConverter(new Vector2fConverter()) //
+		final TimelineValue<Vector2f> timelineValue = Builders.timelineValue(position, vector2fConverter)
 			.keyFrame(0f, new Vector2f(50f, 50f)) //
 			.keyFrame(1f, new Vector2f(100f, 75f)) //
 			.build();
@@ -66,8 +66,7 @@ public class TimelineTest {
 	public void shouldSetValuesForTimeline() {
 		Vector2f position = new Vector2f(0f, 0f);
 		
-		final TimelineValue<Vector2f> timelineValue = Builders.timelineValue(position)
-			.typeConverter(new Vector2fConverter()) //
+		final TimelineValue<Vector2f> timelineValue = Builders.timelineValue(position, vector2fConverter)
 			.keyFrame(0f, new Vector2f(50f, 0f)) //
 			.keyFrame(1f, new Vector2f(100f, 200f)) //
 			.build();
@@ -89,8 +88,7 @@ public class TimelineTest {
 
 		Vector2f position = new Vector2f(0f, 0f);
 		
-		final TimelineValue<Vector2f> timelineValue = Builders.timelineValue(position)
-			.typeConverter(new Vector2fConverter()) //
+		final TimelineValue<Vector2f> timelineValue = Builders.timelineValue(position, vector2fConverter)
 			.keyFrame(0f, new Vector2f(50f, 0f)) //
 			.keyFrame(1f, new Vector2f(100f, 200f)) //
 			.build();
