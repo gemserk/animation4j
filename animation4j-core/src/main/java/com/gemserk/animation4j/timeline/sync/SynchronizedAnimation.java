@@ -9,6 +9,7 @@ import com.gemserk.animation4j.timeline.TimelineIterator;
  * 
  * @author acoppes
  */
+@Deprecated
 public class SynchronizedAnimation implements Animation {
 
 	private final TimelineAnimation animation;

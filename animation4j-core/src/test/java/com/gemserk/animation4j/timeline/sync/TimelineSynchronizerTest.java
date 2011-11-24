@@ -40,7 +40,7 @@ public class TimelineSynchronizerTest {
 				// oneOf(timelineValue).getName();
 				// will(returnValue("x"));
 
-				oneOf(timelineValue).getValue(10);
+				oneOf(timelineValue).setTime(10);
 				will(returnValue(100f));
 
 				oneOf(objectSynchronizer).setValue(myObject, "x", 100f);

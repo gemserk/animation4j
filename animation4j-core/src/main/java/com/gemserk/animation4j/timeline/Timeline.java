@@ -20,10 +20,6 @@ public class Timeline {
 		this.values = values;
 	}
 
-	// public Timeline(Map<String, TimelineValue> values) {
-	// this.values = values;
-	// }
-
 	/**
 	 * Moves the time line to the specified time, internally modifies all values.
 	 * 
@@ -32,7 +28,7 @@ public class Timeline {
 	 */
 	public void move(float time) {
 		for (int i = 0; i < values.size(); i++) 
-			values.get(i).getValue(time);
+			values.get(i).setTime(time);
 	}
 
 	/**
@@ -76,12 +72,4 @@ public class Timeline {
 		throw new RuntimeException("deprecated");
 	}
 
-	// @Override
-	// public String toString() {
-	// StringBuffer stringBuffer = new StringBuffer("[");
-	// for (String key : values.keySet())
-	// stringBuffer.append(values.get(key).toString());
-	// stringBuffer.append("]");
-	// return stringBuffer.toString();
-	// }
 }

@@ -38,18 +38,16 @@ public class TimelineValue<T> {
 	}
 
 	/**
-	 * Returns the value for the given time, interpolating between corresponding key frames.
+	 * Modifies the mutable object by interpolating between corresponding key frames.
 	 * 
 	 * @param time
 	 *            The time to use when calculating the value.
-	 * @return An interpolated value based on corresponding to specified time key frames.
 	 */
-	public T getValue(float time) {
+	public void setTime(float time) {
 		if (keyFrames.isEmpty())
-			return null;
+			throw new RuntimeException("cant interpolate without keyframes");
 		float[] value = getFloatValue(time);
-		mutableObject = typeConverter.copyToObject(mutableObject, value);
-		return mutableObject;
+		typeConverter.copyToObject(mutableObject, value);
 	}
 
 	float[] getFloatValue(float time) {
@@ -93,8 +91,6 @@ public class TimelineValue<T> {
 	@Override
 	public String toString() {
 		StringBuffer stringBuffer = new StringBuffer("[");
-		// stringBuffer.append("current: ");
-		// stringBuffer.append(name);
 		stringBuffer.append(", keyframes:");
 		for (KeyFrame keyFrame : keyFrames)
 			stringBuffer.append(keyFrame.toString());

@@ -61,6 +61,26 @@ public class TimelineTest {
 		assertEquals(100f, position.x, 0.01f);
 		assertEquals(75f, position.y, 0.01f);
 	}
+	
+	@Test
+	public void shouldSetValuesForTimeline() {
+		Vector2f position = new Vector2f(0f, 0f);
+		
+		final TimelineValue<Vector2f> timelineValue = Builders.timelineValue(position)
+			.typeConverter(new Vector2fConverter()) //
+			.keyFrame(0f, new Vector2f(50f, 0f)) //
+			.keyFrame(1f, new Vector2f(100f, 200f)) //
+			.build();
+		
+		Timeline timeline = new Timeline(new ArrayList<TimelineValue>(){{
+			add(timelineValue);
+		}});
+		
+		timeline.move(0.5f);
+		
+		assertEquals(75f, position.x, 0.01f);
+		assertEquals(100f, position.y, 0.01f);
+	}
 
 //	@Test
 //	public void testGetValueForAGivenTime() {
