@@ -186,11 +186,6 @@ public class Builders {
 		return timelineAnimationBuilder.setTimelineBuilder(timelineBuilder);
 	}
 
-	@Deprecated
-	public static Builders.TimelineValueBuilder timelineValue(String name) {
-		return timelineValueBuilder;
-	}
-
 	public static <T> Builders.TimelineValueBuilder<T> timelineValue(T mutableObject, TypeConverter<T> typeConverter) {
 		return timelineValueBuilder.mutableObject(mutableObject).typeConverter(typeConverter);
 	}

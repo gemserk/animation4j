@@ -67,11 +67,6 @@ public class TimelineAnimation implements Animation {
 		return animation.isIterationFinished();
 	}
 
-	@Deprecated
-	public <T> T getValue(String name) {
-		return (T) timeline.getValue(getCurrentTime() - getDelay(), name);
-	}
-
 	public Timeline getTimeline() {
 		return timeline;
 	}

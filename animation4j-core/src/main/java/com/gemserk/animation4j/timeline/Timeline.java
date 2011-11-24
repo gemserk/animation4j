@@ -30,20 +30,4 @@ public class Timeline {
 			values.get(i).setTime(time);
 	}
 
-	/**
-	 * Returns the value of an element identified by name in the specified time.
-	 * 
-	 * @param time
-	 *            The time to use to get the value of the element.
-	 * @param name
-	 *            The identifier of the element in the time line.
-	 * @return The value of the element for that given time.
-	 */
-	@SuppressWarnings("unchecked")
-	@Deprecated
-	public <T> T getValue(float time, String name) {
-		// return (T) values.get(name).getValue(time);
-		throw new RuntimeException("deprecated");
-	}
-
 }
