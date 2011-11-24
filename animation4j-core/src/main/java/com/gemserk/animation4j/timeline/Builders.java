@@ -1,7 +1,6 @@
 package com.gemserk.animation4j.timeline;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.converters.TypeConverter;
@@ -9,12 +8,12 @@ import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 
 public class Builders {
 
-	public static class TimelineValueBuilder {
+	public static class TimelineValueBuilder<T> {
 
-		private TypeConverter typeConverter;
-		private String name;
+		private TypeConverter<T> typeConverter;
 		private float duration;
 		private ArrayList<KeyFrame> keyFrames = new ArrayList<KeyFrame>();
+		private T mutableObject;
 
 		private TimelineValueBuilder() {
 			reset();
@@ -29,19 +28,20 @@ public class Builders {
 		public float getDuration() {
 			return duration;
 		}
-
-		public Builders.TimelineValueBuilder name(String name) {
-			this.name = name;
+		
+		public Builders.TimelineValueBuilder<T> mutableObject(T mutableObject) {
+			this.mutableObject = mutableObject;
 			return this;
 		}
 
-		public Builders.TimelineValueBuilder typeConverter(TypeConverter typeConverter) {
+		@Deprecated
+		public Builders.TimelineValueBuilder<T> name(String name) {
+			return this;
+		}
+
+		public Builders.TimelineValueBuilder<T> typeConverter(TypeConverter<T> typeConverter) {
 			this.typeConverter = typeConverter;
 			return this;
-		}
-
-		private String getName() {
-			return name;
 		}
 
 		// /**
@@ -77,7 +77,7 @@ public class Builders {
 		 * @param functions
 		 *            The interpolation functions to be used when interpolating this keyframe.
 		 */
-		public <T> Builders.TimelineValueBuilder keyFrame(float time, T value, InterpolationFunction... functions) {
+		public Builders.TimelineValueBuilder<T> keyFrame(float time, T value, InterpolationFunction... functions) {
 			if (typeConverter == null)
 				typeConverter = (TypeConverter) Converters.converter(value.getClass());
 
@@ -89,12 +89,12 @@ public class Builders {
 			return this;
 		}
 
-		public <T> Builders.TimelineValueBuilder keyFrame(int time, T value, InterpolationFunction... functions) {
+		public Builders.TimelineValueBuilder<T> keyFrame(int time, T value, InterpolationFunction... functions) {
 			return keyFrame((float) time * 0.001f, value, functions);
 		}
 
-		public TimelineValue build() {
-			TimelineValue timelineValue = new TimelineValue(name, typeConverter);
+		public TimelineValue<T> build() {
+			TimelineValue<T> timelineValue = new TimelineValue<T>(mutableObject, typeConverter);
 			for (int i = 0; i < keyFrames.size(); i++)
 				timelineValue.addKeyFrame(keyFrames.get(i));
 			reset();
@@ -105,7 +105,8 @@ public class Builders {
 
 	public static class TimelineBuilder {
 
-		private HashMap<String, TimelineValue> values;
+//		private HashMap<String, TimelineValue> values;
+		private ArrayList<TimelineValue> values;
 		private float duration;
 
 		private TimelineBuilder() {
@@ -117,7 +118,8 @@ public class Builders {
 		}
 
 		private void reset() {
-			values = new HashMap<String, TimelineValue>();
+//			values = new HashMap<String, TimelineValue>();
+			values = new ArrayList<TimelineValue>();
 			duration = 0f;
 		}
 
@@ -126,7 +128,7 @@ public class Builders {
 		 */
 		public Builders.TimelineBuilder value(Builders.TimelineValueBuilder timelineValueBuilder) {
 			duration = Math.max(duration, timelineValueBuilder.getDuration());
-			values.put(timelineValueBuilder.getName(), timelineValueBuilder.build());
+//			values.put(timelineValueBuilder.getName(), timelineValueBuilder.build());
 			return this;
 		}
 
@@ -222,8 +224,13 @@ public class Builders {
 		return timelineAnimationBuilder.setTimelineBuilder(timelineBuilder);
 	}
 
+	@Deprecated
 	public static Builders.TimelineValueBuilder timelineValue(String name) {
 		return timelineValueBuilder.name(name);
+	}
+	
+	public static <T> Builders.TimelineValueBuilder<T> timelineValue(T mutableObject) {
+		return timelineValueBuilder.mutableObject(mutableObject);
 	}
 
 }

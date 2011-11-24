@@ -15,21 +15,19 @@ import com.gemserk.animation4j.converters.TypeConverter;
 public class TimelineValue<T> {
 
 	private final TypeConverter<T> typeConverter;
-	
+
 	private final float[] x;
 
 	private final LinkedList<KeyFrame> keyFrames;
 
-	private final String name;
-
-	private T currentValue;
-
-	public String getName() {
-		return name;
+	private T mutableObject;
+	
+	public void setMutableObject(T mutableObject) {
+		this.mutableObject = mutableObject;
 	}
 
-	public TimelineValue(String name, TypeConverter<T> typeConverter) {
-		this.name = name;
+	public TimelineValue(T mutableObject, TypeConverter<T> typeConverter) {
+		this.mutableObject = mutableObject;
 		this.typeConverter = typeConverter;
 		this.x = new float[typeConverter.variables()];
 		keyFrames = new LinkedList<KeyFrame>();
@@ -50,8 +48,8 @@ public class TimelineValue<T> {
 		if (keyFrames.isEmpty())
 			return null;
 		float[] value = getFloatValue(time);
-		currentValue = typeConverter.copyToObject(currentValue, value);
-		return currentValue;
+		mutableObject = typeConverter.copyToObject(mutableObject, value);
+		return mutableObject;
 	}
 
 	float[] getFloatValue(float time) {
@@ -91,17 +89,17 @@ public class TimelineValue<T> {
 			return null;
 		return keyFrames.get(currentKeyFrameIndex - 1);
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuffer stringBuffer = new StringBuffer("[");
-		stringBuffer.append("name: ");
-		stringBuffer.append(name);
+		// stringBuffer.append("current: ");
+		// stringBuffer.append(name);
 		stringBuffer.append(", keyframes:");
-		for (KeyFrame keyFrame : keyFrames) 
+		for (KeyFrame keyFrame : keyFrames)
 			stringBuffer.append(keyFrame.toString());
 		stringBuffer.append("]");
-		return stringBuffer.toString();		
+		return stringBuffer.toString();
 	}
 
 }

@@ -2,8 +2,6 @@ package com.gemserk.animation4j.timeline;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This builder class gives the user an easy way to build time line animations.
@@ -11,6 +9,7 @@ import java.util.Map;
  * @author acoppes
  */
 @SuppressWarnings("rawtypes")
+@Deprecated
 public class TimelineAnimationBuilder {
 
 	Collection<TimelineValueBuilder> timelineValueBuilders = new ArrayList<TimelineValueBuilder>();
@@ -29,10 +28,12 @@ public class TimelineAnimationBuilder {
 	}
 
 	private Timeline buildTimeline() {
-		Map<String, TimelineValue> timelineValues = new HashMap<String, TimelineValue>();
+		ArrayList<TimelineValue> values = new ArrayList<TimelineValue>();
+		// Map<String, TimelineValue> timelineValues = new HashMap<String, TimelineValue>();
 		for (TimelineValueBuilder timelineValueBuilder : timelineValueBuilders)
-			timelineValues.put(timelineValueBuilder.getName(), timelineValueBuilder.build());
-		return new Timeline(timelineValues);
+			// timelineValues.put(timelineValueBuilder.getName(), timelineValueBuilder.build());
+			values.add(timelineValueBuilder.build());
+		return new Timeline(values);
 	}
 
 	/**
@@ -44,7 +45,7 @@ public class TimelineAnimationBuilder {
 		TimelineAnimation timelineAnimation = new TimelineAnimation(buildTimeline(), calculateDuration(), started);
 		timelineAnimation.setSpeed(speed);
 		timelineAnimation.setDelay(delay);
-//		timelineAnimation.setDuration(calculateDuration());
+		// timelineAnimation.setDuration(calculateDuration());
 		return timelineAnimation;
 	}
 
@@ -74,7 +75,7 @@ public class TimelineAnimationBuilder {
 		this.delay = time;
 		return this;
 	}
-	
+
 	/**
 	 * Specifies the delay to start of the animation.
 	 * 

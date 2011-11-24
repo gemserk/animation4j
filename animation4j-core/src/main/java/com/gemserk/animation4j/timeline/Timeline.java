@@ -1,6 +1,6 @@
 package com.gemserk.animation4j.timeline;
 
-import java.util.Map;
+import java.util.ArrayList;
 
 /**
  * Represents the concept of a time line with a group of values. Each time line value will handle its own key frames.
@@ -10,13 +10,29 @@ import java.util.Map;
 @SuppressWarnings("rawtypes")
 public class Timeline {
 
-	private Map<String, TimelineValue> values;
+	// private Map<String, TimelineValue> values;
+	private ArrayList<TimelineValue> values;
 
 	/**
 	 * Build a new time line using the specified values.
 	 */
-	public Timeline(Map<String, TimelineValue> values) {
+	public Timeline(ArrayList<TimelineValue> values) {
 		this.values = values;
+	}
+
+	// public Timeline(Map<String, TimelineValue> values) {
+	// this.values = values;
+	// }
+
+	/**
+	 * Moves the time line to the specified time, internally modifies all values.
+	 * 
+	 * @param time
+	 *            The time where you want the time line to be.
+	 */
+	public void move(float time) {
+		for (int i = 0; i < values.size(); i++) 
+			values.get(i).getValue(time);
 	}
 
 	/**
@@ -29,10 +45,12 @@ public class Timeline {
 	 * @return The value of the element for that given time.
 	 */
 	@SuppressWarnings("unchecked")
+	@Deprecated
 	public <T> T getValue(float time, String name) {
-		return (T) values.get(name).getValue(time);
+		// return (T) values.get(name).getValue(time);
+		throw new RuntimeException("deprecated");
 	}
-	
+
 	/**
 	 * Returns the value of an element identified by name in the specified time.
 	 * 
@@ -43,23 +61,27 @@ public class Timeline {
 	 * @return The value of the element for that given time.
 	 */
 	@SuppressWarnings("unchecked")
+	@Deprecated
 	public <T> T getValue(int time, String name) {
-		return (T) values.get(name).getValue((float) time * 0.001f);
+		// return (T) values.get(name).getValue((float) time * 0.001f);
+		throw new RuntimeException("deprecated");
 	}
-	
+
 	/**
 	 * Returns an iterator which lets you iterate between the time line values.
 	 */
+	@Deprecated
 	public TimelineIterator getIterator() {
-		return new TimelineIterator(values);
+		// return new TimelineIterator(values);
+		throw new RuntimeException("deprecated");
 	}
-	
-	@Override
-	public String toString() {
-		StringBuffer stringBuffer = new StringBuffer("[");
-		for (String key : values.keySet()) 
-			stringBuffer.append(values.get(key).toString());
-		stringBuffer.append("]");
-		return stringBuffer.toString();
-	}
+
+	// @Override
+	// public String toString() {
+	// StringBuffer stringBuffer = new StringBuffer("[");
+	// for (String key : values.keySet())
+	// stringBuffer.append(values.get(key).toString());
+	// stringBuffer.append("]");
+	// return stringBuffer.toString();
+	// }
 }
