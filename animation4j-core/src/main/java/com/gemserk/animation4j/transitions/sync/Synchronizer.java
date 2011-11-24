@@ -5,9 +5,15 @@ import java.util.ArrayList;
 import com.gemserk.animation4j.time.SystemTimeProvider;
 import com.gemserk.animation4j.time.UpdateableTimeProvider;
 import com.gemserk.animation4j.transitions.Transition;
-import com.gemserk.animation4j.transitions.Transitions.TransitionBuilder;
 import com.gemserk.animation4j.transitions.event.TransitionEventHandler;
 
+/**
+ * Provides different methods to register Transitions to be updated and/or monitored to call different event handlers.
+ * 
+ * @author acoppes
+ * 
+ */
+@SuppressWarnings("rawtypes")
 public class Synchronizer {
 
 	class TransitionUpdater {
@@ -38,7 +44,6 @@ public class Synchronizer {
 
 	}
 
-	private SynchronizedTransitionManager synchronizedTransitionManager = new SynchronizedTransitionManager();
 	private TransitionHandlersManager transitionHandlersManager = new TransitionHandlersManager();
 
 	/**
@@ -75,66 +80,7 @@ public class Synchronizer {
 	public void synchronize(float delta) {
 		timeProvider.update(delta);
 		transitionUpdater.update(delta);
-		synchronizedTransitionManager.synchronize();
 		transitionHandlersManager.update();
-	}
-
-	/**
-	 * Starts a transition and a synchronizer to modify the specified object's field through the transition.
-	 * 
-	 * @param object
-	 *            The container of the field to be modified.
-	 * @param field
-	 *            The name of the field which contains the object to be modified.
-	 * @param transition
-	 *            The transition to synchronize with the object field.
-	 */
-	public void transition(Object object, String field, Transition transition) {
-		transitionUpdater.add(transition);
-		synchronizedTransitionManager.reflectionObjectSynchronizer(object, field, transition);
-	}
-
-	/**
-	 * Starts a transition and a synchronizer to modify the specified object's field through the transition.
-	 * 
-	 * @param object
-	 *            The container of the field to be modified.
-	 * @param field
-	 *            The name of the field which contains the object to be modified.
-	 * @param transitionBuilder
-	 *            the TransitionBuilder used to build internally the transition.
-	 */
-	public void transition(Object object, String field, TransitionBuilder transitionBuilder) {
-		this.transition(object, field, transitionBuilder.build());
-	}
-
-	/**
-	 * Starts a transition and a synchronizer to modify the specified object's field through the transition.
-	 * 
-	 * @param object
-	 *            The container of the field to be modified.
-	 * @param field
-	 *            The name of the field which contains the object to be modified.
-	 * @param transitionBuilder
-	 *            the TransitionBuilder used to build internally the transition.
-	 */
-	public void transition(Object object, String field, TransitionBuilder transitionBuilder, TransitionEventHandler transitionEventHandler) {
-		Transition transition = transitionBuilder.build();
-		this.transition(object, field, transition);
-		transitionHandlersManager.handle(transition, transitionEventHandler);
-	}
-
-	/**
-	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
-	 * 
-	 * @param object
-	 *            The <b>mutable</b> object to be modified in through the transition.
-	 * @param transition
-	 *            The transition to use to modify the object.
-	 */
-	public void transition(Object object, Transition transition) {
-		transitionUpdater.add(transition);
-		synchronizedTransitionManager.objectSynchronizer(object, transition);
 	}
 
 	/**
@@ -148,52 +94,28 @@ public class Synchronizer {
 	}
 
 	/**
-	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
+	 * Convenient method which to avoid calling transition(transition) and then monitor(transition, transitionEventHandler).
 	 * 
-	 * @param object
-	 *            The <b>mutable</b> object to be modified in through the transition.
-	 * @param transitionBuilder
-	 *            the TransitionBuilder used to build internally the transition.
+	 * @param transition
+	 *            The Transition to be registered.
+	 * @param transitionEventHandler
+	 *            The TransitionEventHandler to be called when the Transition changes its state.
 	 */
-	public void transition(Object object, TransitionBuilder transitionBuilder) {
-		if (!transitionBuilder.isStartValueSet())
-			transitionBuilder.start(object);
-		transition(object, transitionBuilder.build());
+	public void transition(Transition transition, TransitionEventHandler transitionEventHandler) {
+		transition(transition);
+		monitor(transition, transitionEventHandler);
 	}
 
 	/**
-	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
+	 * Monitors the specified Transition by calling the specified TransitionEventHandler whenever the Transition changes its state.
 	 * 
-	 * @param object
-	 *            The <b>mutable</b> object to be modified in through the transition.
 	 * @param transition
-	 *            The transition to use to modify the object.
+	 *            The Transition to be monitored.
 	 * @param transitionEventHandler
-	 *            The event handler to handle Transition status change events.
+	 *            The TransitionEventHandler to be called when the Transition changes its state.
 	 */
-	public void transition(Object object, Transition transition, TransitionEventHandler transitionEventHandler) {
-		transition(object, transition);
-		transitionHandlersManager.handle(transition, transitionEventHandler);
-	}
-	
 	public void monitor(Transition transition, TransitionEventHandler transitionEventHandler) {
 		transitionHandlersManager.handle(transition, transitionEventHandler);
-	}
-
-	/**
-	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
-	 * 
-	 * @param object
-	 *            The <b>mutable</b> object to be modified in through the transition.
-	 * @param transitionBuilder
-	 *            The transition builder to create the transition.
-	 * @param transitionEventHandler
-	 *            The event handler to handle Transition status change events.
-	 */
-	public void transition(Object object, TransitionBuilder transitionBuilder, TransitionEventHandler transitionEventHandler) {
-		if (!transitionBuilder.isStartValueSet())
-			transitionBuilder.start(object);
-		transition(object, transitionBuilder.build(), transitionEventHandler);
 	}
 
 }

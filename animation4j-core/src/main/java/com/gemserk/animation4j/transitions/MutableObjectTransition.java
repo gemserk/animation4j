@@ -101,7 +101,7 @@ public class MutableObjectTransition<T> implements Transition<T> {
 
 	@Override
 	public void update(float delta) {
-		if (!isStarted())
+		if (!isStarted() || isFinished())
 			return;
 
 		timeTransition.update(delta * speed);
@@ -109,7 +109,7 @@ public class MutableObjectTransition<T> implements Transition<T> {
 		typeConverter.copyToObject(mutableObject, x);
 
 		if (timeTransition.isFinished()) {
-			started = false;
+//			started = false;
 			finished = true;
 		}
 	}

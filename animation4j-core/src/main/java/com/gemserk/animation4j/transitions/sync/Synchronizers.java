@@ -1,7 +1,6 @@
 package com.gemserk.animation4j.transitions.sync;
 
 import com.gemserk.animation4j.transitions.Transition;
-import com.gemserk.animation4j.transitions.Transitions.TransitionBuilder;
 import com.gemserk.animation4j.transitions.event.TransitionEventHandler;
 
 public class Synchronizers {
@@ -30,58 +29,6 @@ public class Synchronizers {
 	}
 
 	/**
-	 * Starts a transition and a synchronizer to modify the specified object's field through the transition.
-	 * 
-	 * @param object
-	 *            The container of the field to be modified.
-	 * @param field
-	 *            The name of the field which contains the object to be modified.
-	 * @param transitionBuilder
-	 *            the TransitionBuilder used to build internally the transition.
-	 */
-	public static void transition(Object object, String field, TransitionBuilder transitionBuilder) {
-		getInstance().transition(object, field, transitionBuilder);
-	}
-
-	/**
-	 * Starts a transition and a synchronizer to modify the specified object's field through the transition.
-	 * 
-	 * @param object
-	 *            The container of the field to be modified.
-	 * @param field
-	 *            The name of the field which contains the object to be modified.
-	 * @param transition
-	 *            The transition to be synchronized with the object's field.
-	 */
-	public static void transition(Object object, String field, Transition transition) {
-		getInstance().transition(object, field, transition);
-	}
-
-	/**
-	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
-	 * 
-	 * @param object
-	 *            The <b>mutable</b> object to be modified in through the transition.
-	 * @param transitionBuilder
-	 *            the TransitionBuilder used to build internally the transition.
-	 */
-	public static void transition(Object object, TransitionBuilder transitionBuilder) {
-		getInstance().transition(object, transitionBuilder);
-	}
-
-	/**
-	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
-	 * 
-	 * @param object
-	 *            The <b>mutable</b> object to be modified in through the transition.
-	 * @param transition
-	 *            The transition to be synchronized with the specified object.
-	 */
-	public static void transition(Object object, Transition transition) {
-		getInstance().transition(object, transition);
-	}
-	
-	/**
 	 * Adds the transition to be updated by the synchronizer.
 	 * 
 	 * @param transition
@@ -90,32 +37,29 @@ public class Synchronizers {
 	public static void transition(Transition transition) {
 		getInstance().transition(transition);
 	}
-
+	
 	/**
-	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
+	 * Convenient method which to avoid calling transition(transition) and then monitor(transition, transitionEventHandler).
 	 * 
-	 * @param object
-	 *            The <b>mutable</b> object to be modified in through the transition.
-	 * @param transitionBuilder
-	 *            The transition builder to create the transition.
-	 * @param transitionEventHandler
-	 *            The event handler to handle Transition status change events.
-	 */
-	public static void transition(Object object, TransitionBuilder transitionBuilder, TransitionEventHandler transitionEventHandler) {
-		getInstance().transition(object, transitionBuilder, transitionEventHandler);
-	}
-
-	/**
-	 * Starts a transition and a synchronizer of the transition current value with the specified object. The object must be <b>mutable</b> in order to be modified.
-	 * 
-	 * @param object
-	 *            The <b>mutable</b> object to be modified in through the transition.
-	 * @param transitionBuilder
-	 *            The transition builder to create the transition.
 	 * @param transition
-	 *            The transition to be synchronized with the specified object.
+	 *            The Transition to be registered.
+	 * @param transitionEventHandler
+	 *            The TransitionEventHandler to be called when the Transition changes its state.
 	 */
-	public static void transition(Object object, Transition transition, TransitionEventHandler transitionEventHandler) {
-		getInstance().transition(object, transition, transitionEventHandler);
+	public static void transition(Transition transition, TransitionEventHandler transitionEventHandler) {
+		getInstance().transition(transition, transitionEventHandler);
 	}
+
+	/**
+	 * Monitors the specified Transition by calling the specified TransitionEventHandler whenever the Transition changes its state.
+	 * 
+	 * @param transition
+	 *            The Transition to be monitored.
+	 * @param transitionEventHandler
+	 *            The TransitionEventHandler to be called when the Transition changes its state.
+	 */
+	public static void monitor(Transition transition, TransitionEventHandler transitionEventHandler) {
+		getInstance().monitor(transition, transitionEventHandler);
+	}
+
 }

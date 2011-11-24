@@ -3,28 +3,17 @@ package com.gemserk.animation4j.transitions.event;
 import static org.junit.Assert.assertThat;
 
 import org.hamcrest.core.IsEqual;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.gemserk.animation4j.Vector2f;
 import com.gemserk.animation4j.Vector2fConverter;
-import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.transitions.MockTransition;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
 
 public class TransitionMonitorTest {
-
-	@Before
-	public void startUp() {
-		Converters.register(Vector2f.class, new Vector2fConverter());
-	}
 	
-	@After
-	public void after() {
-		Converters.unregister(Vector2f.class);
-	}
+	Vector2fConverter vector2fConverter = new Vector2fConverter();
 
 	@Test
 	public void shouldReturnTransitionNotStartedIfTransitionDidntStart() {
@@ -124,15 +113,16 @@ public class TransitionMonitorTest {
 	
 	@Test
 	public void testMonitorChangesWhenUpdateTimeIsGreaterThanTransitionTime() {
-//		UpdateableTimeProvider updateableTimeProvider = new UpdateableTimeProvider();
 
 		final TransitionMonitor transitionMonitor = new TransitionMonitor();
-		final Transition<Vector2f> transition = Transitions.transitionBuilder(new Vector2f(50, 50)).end(new Vector2f(100, 100)).time(500).build();
+		final Transition<Vector2f> transition = Transitions.mutableTransition(new Vector2f(0f, 0f), new Vector2fConverter()) //
+			.start(50f, 50f) //
+			.end(0.5f, 100f, 100f) //
+			.build();
 		
 		transitionMonitor.monitor(transition);
 
-		transition.update(1000);
-//		updateableTimeProvider.update(1000);
+		transition.update(1f);
 		transitionMonitor.update();
 		
 		assertThat(transitionMonitor.wasStarted(), IsEqual.equalTo(true));

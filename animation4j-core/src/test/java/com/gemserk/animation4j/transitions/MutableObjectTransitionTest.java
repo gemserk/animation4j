@@ -113,7 +113,7 @@ public class MutableObjectTransitionTest {
 		assertThat(myObject.x, IsEqual.equalTo(50f));
 		assertThat(myObject.y, IsEqual.equalTo(50f));
 
-		assertEquals(false, transition.isStarted());
+		assertEquals(true, transition.isStarted());
 		assertEquals(true, transition.isFinished());
 	}
 
