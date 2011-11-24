@@ -276,7 +276,7 @@ public class TimelineAnimationTest {
 		TimelineAnimation animation = Builders.animation(Builders.timeline() //
 				.value(Builders.timelineValue("alpha") //
 						.typeConverter(Converters.floatValue()) //
-						.keyFrame(0, 0f) //
+						.keyFrame(0f, 0f) //
 						.keyFrame(0.2f, 1f) //
 						.keyFrame(0.8f, 1f) //
 						.keyFrame(1f, 0f)) //
@@ -299,7 +299,7 @@ public class TimelineAnimationTest {
 		Timeline timeline = Builders.timeline() //
 				.value(Builders.timelineValue("alpha") //
 						.typeConverter(Converters.floatValue()) //
-						.keyFrame(0, 0f) //
+						.keyFrame(0f, 0f) //
 						.keyFrame(0.2f, 1f)).build();
 		
 		TimelineAnimation animation = new TimelineAnimation(timeline, 0.2f);

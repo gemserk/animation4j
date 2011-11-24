@@ -10,7 +10,6 @@ import java.util.ArrayList;
 @SuppressWarnings("rawtypes")
 public class Timeline {
 
-	// private Map<String, TimelineValue> values;
 	private ArrayList<TimelineValue> values;
 
 	/**

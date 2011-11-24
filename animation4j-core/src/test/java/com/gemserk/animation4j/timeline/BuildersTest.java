@@ -31,14 +31,14 @@ public class BuildersTest {
 				Builders.timeline() //
 						.value(Builders.timelineValue("alpha") //
 								.typeConverter(Converters.floatValue()) //
-								.keyFrame(0, 500f) //
-								.keyFrame(500, 12500f) //
-								.keyFrame(1000, 500f) //
+								.keyFrame(0f, 500f) //
+								.keyFrame(0.5f, 12500f) //
+								.keyFrame(1f, 500f) //
 						) //
 						.value(Builders.timelineValue("gamma") //
-								.keyFrame(0, 3f) //
-								.keyFrame(500, 10f) //
-								.keyFrame(1000, 50f) //
+								.keyFrame(0f, 3f) //
+								.keyFrame(0.5f, 10f) //
+								.keyFrame(1f, 50f) //
 						)) //
 				.speed(2f) //
 				.delay(0.2f) //

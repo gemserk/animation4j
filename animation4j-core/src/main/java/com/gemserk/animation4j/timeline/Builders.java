@@ -28,7 +28,7 @@ public class Builders {
 		public float getDuration() {
 			return duration;
 		}
-		
+
 		public Builders.TimelineValueBuilder<T> mutableObject(T mutableObject) {
 			this.mutableObject = mutableObject;
 			return this;
@@ -89,10 +89,6 @@ public class Builders {
 			return this;
 		}
 
-		public Builders.TimelineValueBuilder<T> keyFrame(int time, T value, InterpolationFunction... functions) {
-			return keyFrame((float) time * 0.001f, value, functions);
-		}
-
 		public TimelineValue<T> build() {
 			TimelineValue<T> timelineValue = new TimelineValue<T>(mutableObject, typeConverter);
 			for (int i = 0; i < keyFrames.size(); i++)
@@ -105,7 +101,6 @@ public class Builders {
 
 	public static class TimelineBuilder {
 
-//		private HashMap<String, TimelineValue> values;
 		private ArrayList<TimelineValue> values;
 		private float duration;
 
@@ -118,7 +113,6 @@ public class Builders {
 		}
 
 		private void reset() {
-//			values = new HashMap<String, TimelineValue>();
 			values = new ArrayList<TimelineValue>();
 			duration = 0f;
 		}
@@ -128,7 +122,7 @@ public class Builders {
 		 */
 		public Builders.TimelineBuilder value(Builders.TimelineValueBuilder timelineValueBuilder) {
 			duration = Math.max(duration, timelineValueBuilder.getDuration());
-//			values.put(timelineValueBuilder.getName(), timelineValueBuilder.build());
+			values.add(timelineValueBuilder.build());
 			return this;
 		}
 
@@ -228,7 +222,7 @@ public class Builders {
 	public static Builders.TimelineValueBuilder timelineValue(String name) {
 		return timelineValueBuilder.name(name);
 	}
-	
+
 	public static <T> Builders.TimelineValueBuilder<T> timelineValue(T mutableObject) {
 		return timelineValueBuilder.mutableObject(mutableObject);
 	}
