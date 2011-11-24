@@ -2,7 +2,6 @@ package com.gemserk.animation4j.timeline.sync;
 
 import com.gemserk.animation4j.animations.Animation;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
-import com.gemserk.animation4j.timeline.TimelineIterator;
 
 /**
  * Animation implementation which decorates the TimelineAnimation using a synchronizer to synchronize time line values with an object.
@@ -16,13 +15,13 @@ public class SynchronizedAnimation implements Animation {
 
 	private final TimelineSynchronizer timelineSynchronizer;
 
-	private final TimelineIterator iterator;
+	// private final TimelineIterator iterator;
 
 	public SynchronizedAnimation(TimelineAnimation animation, TimelineSynchronizer timelineSynchronizer) {
 		this.animation = animation;
 		this.timelineSynchronizer = timelineSynchronizer;
 
-		iterator = animation.getTimeline().getIterator();
+		// iterator = animation.getTimeline().getIterator();
 	}
 
 	public void start() {
@@ -69,11 +68,12 @@ public class SynchronizedAnimation implements Animation {
 		return animation.getPlayingDirection();
 	}
 
+	@Deprecated
 	public void update(float delta) {
 		animation.update(delta);
-		iterator.restart();
-		float time = animation.getCurrentTime();
-		timelineSynchronizer.syncrhonize(iterator, time);
+		// iterator.restart();
+		// float time = animation.getCurrentTime();
+		// timelineSynchronizer.syncrhonize(iterator, time);
 	}
 
 }

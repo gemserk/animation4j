@@ -33,8 +33,8 @@ public class SyncrhonizedAnimationTest {
 				oneOf(animation).getTimeline();
 				will(returnValue(timeline));
 
-				oneOf(timeline).getIterator();
-				will(returnValue(timelineIterator));
+//				oneOf(timeline).getIterator();
+//				will(returnValue(timelineIterator));
 
 				oneOf(animation).update(10f);
 				oneOf(animation).getCurrentTime();
@@ -64,8 +64,8 @@ public class SyncrhonizedAnimationTest {
 			{
 				oneOf(animation).getTimeline();
 				will(returnValue(timeline));
-				oneOf(timeline).getIterator();
-				will(returnValue(timelineIterator));
+//				oneOf(timeline).getIterator();
+//				will(returnValue(timelineIterator));
 			}
 		});
 
