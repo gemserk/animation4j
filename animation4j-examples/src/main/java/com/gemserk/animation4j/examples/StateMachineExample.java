@@ -22,7 +22,7 @@ public class StateMachineExample {
 
 		// final Transition<Vector2f> transition = Transitions.transitionBuilder(a).typeConverter(vector2fConverter).build();
 
-		final Transition<Vector2f> transition = Transitions.mutableTransition(a, vector2fConverter) //
+		final Transition<Vector2f> transition = Transitions.transition(a, vector2fConverter) //
 				.build();
 
 		transition.set(b, 0.2f);

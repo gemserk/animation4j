@@ -11,9 +11,9 @@ import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
  */
 public class Transitions {
 
-	private static final MutableObjectTransitionBuilder mutableObjectTransitionBuilder = new MutableObjectTransitionBuilder();
+	private static final TransitionBuilder transitionBuilder = new TransitionBuilder();
 
-	public static class MutableObjectTransitionBuilder<T> {
+	public static class TransitionBuilder<T> {
 
 		private TypeConverter<T> typeConverter;
 		private TransitionImpl<T> transitionImpl;
@@ -26,32 +26,32 @@ public class Transitions {
 			this.typeConverter = typeConverter;
 		}
 		
-		public MutableObjectTransitionBuilder<T> speed(float speed) {
+		public TransitionBuilder<T> speed(float speed) {
 			transitionImpl.setSpeed(speed);
 			return this;
 		}
 
-		public MutableObjectTransitionBuilder<T> start(float... values) {
+		public TransitionBuilder<T> start(float... values) {
 			transitionImpl.set(values);
 			return this;
 		}
 
-		public MutableObjectTransitionBuilder<T> startObject(T start) {
+		public TransitionBuilder<T> startObject(T start) {
 			transitionImpl.set(typeConverter.copyFromObject(start, null));
 			return this;
 		}
 
-		public MutableObjectTransitionBuilder<T> end(float time, float... values) {
+		public TransitionBuilder<T> end(float time, float... values) {
 			transitionImpl.set(values, time);
 			return this;
 		}
 
-		public MutableObjectTransitionBuilder<T> endObject(float time, T end) {
+		public TransitionBuilder<T> endObject(float time, T end) {
 			transitionImpl.set(typeConverter.copyFromObject(end, null), time);
 			return this;
 		}
 
-		public MutableObjectTransitionBuilder functions(InterpolationFunction... functions) {
+		public TransitionBuilder functions(InterpolationFunction... functions) {
 			transitionImpl.setFunctions(functions);
 			return this;
 		}
@@ -60,7 +60,7 @@ public class Transitions {
 			return transitionImpl;
 		}
 
-		private MutableObjectTransitionBuilder() {
+		private TransitionBuilder() {
 
 		}
 
@@ -75,10 +75,10 @@ public class Transitions {
 	 *            The TypeConverter used to convert between float[] to the object and vice versa.
 	 * @return The TransitionBuilder to build the new transition.
 	 */
-	public static <T> MutableObjectTransitionBuilder<T> mutableTransition(T mutableObject, TypeConverter typeConverter) {
-		mutableObjectTransitionBuilder.setMutableObjectTransition(new TransitionImpl(mutableObject, typeConverter));
-		mutableObjectTransitionBuilder.setTypeConverter(typeConverter);
-		return mutableObjectTransitionBuilder;
+	public static <T> TransitionBuilder<T> transition(T mutableObject, TypeConverter typeConverter) {
+		transitionBuilder.setMutableObjectTransition(new TransitionImpl(mutableObject, typeConverter));
+		transitionBuilder.setTypeConverter(typeConverter);
+		return transitionBuilder;
 	}
 
 	/**
@@ -88,8 +88,8 @@ public class Transitions {
 	 *            The mutable object to be used in the transition.
 	 * @return The TransitionBuilder to build the new transition.
 	 */
-	public static <T> MutableObjectTransitionBuilder<T> mutableTransition(T mutableObject) {
-		return mutableTransition(mutableObject, (TypeConverter) Converters.converter(mutableObject.getClass()));
+	public static <T> TransitionBuilder<T> transition(T mutableObject) {
+		return transition(mutableObject, (TypeConverter) Converters.converter(mutableObject.getClass()));
 	}
 
 }

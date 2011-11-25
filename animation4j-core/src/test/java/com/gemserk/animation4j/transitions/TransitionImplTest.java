@@ -179,7 +179,7 @@ public class TransitionImplTest {
 		myObject.x = 40f;
 		myObject.y = 40f;
 
-		Transition<MyObject> transition = Transitions.mutableTransition(myObject, new MyObjectTypeConverter()) //
+		Transition<MyObject> transition = Transitions.transition(myObject, new MyObjectTypeConverter()) //
 				.start(0f, 0f) //
 				.end(2f, 20f) //
 				.build();
@@ -199,7 +199,7 @@ public class TransitionImplTest {
 		myObject.x = 40f;
 		myObject.y = 40f;
 
-		Transition<MyObject> transition = Transitions.mutableTransition(myObject, new MyObjectTypeConverter()) //
+		Transition<MyObject> transition = Transitions.transition(myObject, new MyObjectTypeConverter()) //
 				.build();
 
 		assertThat(myObject.x, IsEqual.equalTo(40f));
@@ -217,7 +217,7 @@ public class TransitionImplTest {
 		myObject.x = 40f;
 		myObject.y = 40f;
 
-		Transition<MyObject> transition = Transitions.mutableTransition(myObject, new MyObjectTypeConverter() {
+		Transition<MyObject> transition = Transitions.transition(myObject, new MyObjectTypeConverter() {
 
 			@Override
 			public int variables() {

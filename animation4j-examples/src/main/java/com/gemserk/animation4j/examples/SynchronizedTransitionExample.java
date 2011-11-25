@@ -23,11 +23,11 @@ public class SynchronizedTransitionExample {
 	protected static void example1() throws InterruptedException {
 		MyObject myObject = new MyObject();
 
-		synchronizer.transition(Transitions.mutableTransition(myObject.position, new Vector2fConverter()) //
+		synchronizer.transition(Transitions.transition(myObject.position, new Vector2fConverter()) //
 				.endObject(0.5f, new Vector2f(50f, 50f)) //
 				.build());
 
-		synchronizer.transition(Transitions.mutableTransition(myObject.size, new Vector2fConverter()) //
+		synchronizer.transition(Transitions.transition(myObject.size, new Vector2fConverter()) //
 				.endObject(0.5f, new Vector2f(1f, 1f)) //
 				.build());
 

@@ -115,7 +115,7 @@ public class TransitionMonitorTest {
 	public void testMonitorChangesWhenUpdateTimeIsGreaterThanTransitionTime() {
 
 		final TransitionMonitor transitionMonitor = new TransitionMonitor();
-		final Transition<Vector2f> transition = Transitions.mutableTransition(new Vector2f(0f, 0f), new Vector2fConverter()) //
+		final Transition<Vector2f> transition = Transitions.transition(new Vector2f(0f, 0f), new Vector2fConverter()) //
 			.start(50f, 50f) //
 			.end(0.5f, 100f, 100f) //
 			.build();

@@ -22,7 +22,7 @@ public class TransitionEventHandlerExample {
 		
 		Vector2f object1 = new Vector2f(0f, 0f);
 
-		Transition<Vector2f> transition = Transitions.mutableTransition(object1, vector2fConverter) //
+		Transition<Vector2f> transition = Transitions.transition(object1, vector2fConverter) //
 				.end(0.5f, 100f, 100f) //
 				.build();
 		
@@ -71,7 +71,7 @@ public class TransitionEventHandlerExample {
 
 		Vector2f object1 = new Vector2f(0f, 0f);
 
-		Transition<Vector2f> transition = Transitions.mutableTransition(object1, vector2fConverter) //
+		Transition<Vector2f> transition = Transitions.transition(object1, vector2fConverter) //
 				.end(0.5f, 100f, 100f) //
 				.build();
 		

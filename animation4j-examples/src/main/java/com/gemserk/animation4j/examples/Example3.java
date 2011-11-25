@@ -120,7 +120,7 @@ public class Example3 extends Java2dDesktopApplication {
 
 			// Creates a Color transition using a color interpolator with a linear interpolation function.
 
-			colorTransition = Transitions.mutableTransition(new Color(0.3f, 0.3f, 0.8f, 1f), new ColorConverter()) //
+			colorTransition = Transitions.transition(new Color(0.3f, 0.3f, 0.8f, 1f), new ColorConverter()) //
 					.functions(functions) //
 					.build();
 		}

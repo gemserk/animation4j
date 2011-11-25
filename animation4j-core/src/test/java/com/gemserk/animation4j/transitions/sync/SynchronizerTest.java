@@ -20,10 +20,10 @@ public class SynchronizerTest {
 		Vector2f object1 = new Vector2f(50, 50);
 		Vector2f object2 = new Vector2f(100, 100);
 
-		synchronizer1.transition(Transitions.mutableTransition(object1, new Vector2fConverter()) //
+		synchronizer1.transition(Transitions.transition(object1, new Vector2fConverter()) //
 				.endObject(1000f, new Vector2f(0f, 0f)).build());
 
-		synchronizer2.transition(Transitions.mutableTransition(object2, new Vector2fConverter()) //
+		synchronizer2.transition(Transitions.transition(object2, new Vector2fConverter()) //
 				.endObject(1000f, new Vector2f(250f, 250f)).build());
 
 		assertThat(object1, IsEqual.equalTo(new Vector2f(50, 50)));
@@ -43,7 +43,7 @@ public class SynchronizerTest {
 		Synchronizer synchronizer1 = new Synchronizer();
 		Vector2f object1 = new Vector2f(50, 50);
 
-		synchronizer1.transition(Transitions.mutableTransition(object1, new Vector2fConverter()) //
+		synchronizer1.transition(Transitions.transition(object1, new Vector2fConverter()) //
 				.endObject(1f, new Vector2f(0f, 0f)).build());
 
 		synchronizer1.synchronize(0);
@@ -60,7 +60,7 @@ public class SynchronizerTest {
 		Synchronizer synchronizer1 = new Synchronizer();
 		Vector2f object1 = new Vector2f(50, 50);
 
-		synchronizer1.transition(Transitions.mutableTransition(object1, new Vector2fConverter()) //
+		synchronizer1.transition(Transitions.transition(object1, new Vector2fConverter()) //
 				.endObject(0.1f, new Vector2f(0f, 0f)).build(), mockTransitionEventHandler);
 
 		synchronizer1.synchronize(0.2f);

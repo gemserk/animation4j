@@ -120,19 +120,19 @@ public class Example4 extends Java2dDesktopApplication {
 
 			buttons.add(new Button() {
 				{
-					position = Transitions.mutableTransition(new Vector2f(320, 625), vector2fConverter) //
+					position = Transitions.transition(new Vector2f(320, 625), vector2fConverter) //
 							.speed(1f) //
 							.end(1f, 320f, 125f) //
 							.build();
 
-					size = Transitions.mutableTransition(new Vector2f(1f, 1f), vector2fConverter) //
+					size = Transitions.transition(new Vector2f(1f, 1f), vector2fConverter) //
 							.speed(1f) //
 							.build();
 
-					color = Transitions.mutableTransition(new Color(1f, 1f, 1f, 1f), colorConverter) //
+					color = Transitions.transition(new Color(1f, 1f, 1f, 1f), colorConverter) //
 							.speed(5f) //
 							.build();
-					glowColor = Transitions.mutableTransition(new Color(1f, 0f, 0f, 0f), colorConverter) //
+					glowColor = Transitions.transition(new Color(1f, 0f, 0f, 0f), colorConverter) //
 							.speed(2f) //
 							.build();
 
@@ -141,19 +141,19 @@ public class Example4 extends Java2dDesktopApplication {
 
 			buttons.add(new Button() {
 				{
-					position = Transitions.mutableTransition(new Vector2f(320, 725), vector2fConverter) //
+					position = Transitions.transition(new Vector2f(320, 725), vector2fConverter) //
 							.speed(1f) //
 							.end(1f, 320f, 225f) //
 							.build();
 
-					size = Transitions.mutableTransition(new Vector2f(1f, 1f), vector2fConverter) //
+					size = Transitions.transition(new Vector2f(1f, 1f), vector2fConverter) //
 							.speed(1f) //
 							.build();
 
-					color = Transitions.mutableTransition(new Color(1f, 1f, 1f, 1f), colorConverter) //
+					color = Transitions.transition(new Color(1f, 1f, 1f, 1f), colorConverter) //
 							.speed(5f) //
 							.build();
-					glowColor = Transitions.mutableTransition(new Color(1f, 0f, 0f, 0f), colorConverter) //
+					glowColor = Transitions.transition(new Color(1f, 0f, 0f, 0f), colorConverter) //
 							.speed(2f) //
 							.build();
 					
@@ -162,27 +162,27 @@ public class Example4 extends Java2dDesktopApplication {
 
 			buttons.add(new Button() {
 				{
-					position = Transitions.mutableTransition(new Vector2f(320, 825), vector2fConverter) //
+					position = Transitions.transition(new Vector2f(320, 825), vector2fConverter) //
 							.speed(1f) //
 							.end(1f, 320f, 325f) //
 							.build();
 
-					size = Transitions.mutableTransition(new Vector2f(1f, 1f), vector2fConverter) //
+					size = Transitions.transition(new Vector2f(1f, 1f), vector2fConverter) //
 							.speed(1f) //
 							.build();
 
-					color = Transitions.mutableTransition(new Color(1f, 1f, 1f, 1f), colorConverter) //
+					color = Transitions.transition(new Color(1f, 1f, 1f, 1f), colorConverter) //
 							.speed(5f) //
 							.build();
 
-					glowColor = Transitions.mutableTransition(new Color(1f, 0f, 0f, 0f), colorConverter) //
+					glowColor = Transitions.transition(new Color(1f, 0f, 0f, 0f), colorConverter) //
 							.speed(2f) //
 							.build();
 
 				}
 			});
 
-			backgroundColor = Transitions.mutableTransition(new Color(0.4f, 0.4f, 0.4f, 0f), colorConverter) //
+			backgroundColor = Transitions.transition(new Color(0.4f, 0.4f, 0.4f, 0f), colorConverter) //
 					.speed(1f) //
 					.build();
 

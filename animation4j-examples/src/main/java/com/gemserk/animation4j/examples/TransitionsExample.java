@@ -19,11 +19,11 @@ public class TransitionsExample {
 
 		Vector2f object1 = new Vector2f(0f, 0f);
 		
-		Transition<Vector2f> transition = Transitions.mutableTransition(object1, vector2fConverter) //
+		Transition<Vector2f> transition = Transitions.transition(object1, vector2fConverter) //
 			.functions(functions) //
 			.build();
 		
-		Transition<Vector2f> anotherTransition = Transitions.mutableTransition(object1, vector2fConverter) //
+		Transition<Vector2f> anotherTransition = Transitions.transition(object1, vector2fConverter) //
 			.build();
 		
 		System.out.println("Transition value: " + transition.get());
