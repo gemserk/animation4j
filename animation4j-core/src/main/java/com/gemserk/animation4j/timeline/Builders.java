@@ -51,12 +51,17 @@ public class Builders {
 		public Builders.TimelineValueBuilder<T> keyFrame(float time, T value, InterpolationFunction... functions) {
 			KeyFrame keyFrame = new KeyFrame(time, typeConverter.copyFromObject(value, null), functions);
 			this.keyFrames.add(keyFrame);
-
 			duration = Math.max(duration, time);
-
 			return this;
 		}
-
+		
+		public Builders.TimelineValueBuilder<T> keyFrame(float time, float[] value, InterpolationFunction... functions) {
+			KeyFrame keyFrame = new KeyFrame(time, value, functions);
+			this.keyFrames.add(keyFrame);
+			duration = Math.max(duration, time);
+			return this;
+		}
+		
 		public TimelineValue<T> build() {
 			TimelineValue<T> timelineValue = new TimelineValue<T>(mutableObject, typeConverter);
 			for (int i = 0; i < keyFrames.size(); i++)
