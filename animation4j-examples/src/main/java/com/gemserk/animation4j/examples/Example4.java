@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import com.gemserk.animation4j.animations.events.AnimationHandlerManager;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
-import com.gemserk.animation4j.java2d.converters.Java2dConverters;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
@@ -107,8 +106,6 @@ public class Example4 extends Java2dDesktopApplication {
 
 		@Override
 		public void init() {
-
-			Java2dConverters.init();
 
 			resourceManager.add("Background", new ImageLoader(new ClassPathDataSource("example4/background.jpg")));
 			resourceManager.add("Button", new ImageLoader(new ClassPathDataSource("example4/settings-button.png")));

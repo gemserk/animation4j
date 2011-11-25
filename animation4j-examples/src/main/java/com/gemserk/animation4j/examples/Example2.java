@@ -16,7 +16,6 @@ import com.gemserk.animation4j.animations.events.AnimationEventHandler;
 import com.gemserk.animation4j.animations.events.AnimationHandlerManager;
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
-import com.gemserk.animation4j.java2d.converters.Java2dConverters;
 import com.gemserk.animation4j.states.StateMachine;
 import com.gemserk.animation4j.states.StateTransition;
 import com.gemserk.animation4j.states.StateTransitionCondition;
@@ -104,7 +103,6 @@ public class Example2 extends Java2dDesktopApplication {
 		public void init() {
 
 			Converters.init();
-			Java2dConverters.init();
 
 			resourceManager.add("Globe", new ImageLoader(new ClassPathDataSource("globe-256x176.png")));
 			resourceManager.add("House", new ImageLoader(new ClassPathDataSource("house-128x92.png")));

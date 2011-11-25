@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import com.gemserk.animation4j.animations.events.AnimationHandlerManager;
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
-import com.gemserk.animation4j.java2d.converters.Java2dConverters;
 import com.gemserk.animation4j.timeline.Builders;
 import com.gemserk.animation4j.timeline.TimelineAnimation;
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
@@ -91,7 +90,6 @@ public class Example1 extends Java2dDesktopApplication {
 		public void init() {
 
 			Converters.init();
-			Java2dConverters.init();
 
 			resourceManager.add("Critter", new ImageLoader(new ClassPathDataSource("critter.png")));
 

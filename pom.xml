@@ -65,7 +65,6 @@
 	<modules>
 		<module>animation4j-core</module>
 		<module>animation4j-examples</module>
-		<module>animation4j-java2d</module>
 	</modules>
 
 	<properties>
