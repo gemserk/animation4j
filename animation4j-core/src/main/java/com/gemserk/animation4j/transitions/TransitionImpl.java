@@ -4,7 +4,13 @@ import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 
-public class MutableObjectTransition<T> implements Transition<T> {
+/**
+ * Default implementation of Transition interface which works over a mutable object by using a TypeConverter.
+ * 
+ * @author acoppes
+ * 
+ */
+public class TransitionImpl<T> implements Transition<T> {
 
 	private final TimeTransition timeTransition = new TimeTransition();
 
@@ -30,7 +36,7 @@ public class MutableObjectTransition<T> implements Transition<T> {
 		this.speed = speed;
 	}
 
-	public MutableObjectTransition(T mutableObject, TypeConverter<T> typeConverter) {
+	public TransitionImpl(T mutableObject, TypeConverter<T> typeConverter) {
 		this.mutableObject = mutableObject;
 		this.typeConverter = typeConverter;
 
@@ -105,7 +111,7 @@ public class MutableObjectTransition<T> implements Transition<T> {
 		FloatArrayInterpolator.interpolate(a, b, x, timeTransition.get(), functions);
 		typeConverter.copyToObject(mutableObject, x);
 
-		if (timeTransition.isFinished()) 
+		if (timeTransition.isFinished())
 			finished = true;
 	}
 

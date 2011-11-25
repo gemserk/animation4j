@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import com.gemserk.animation4j.converters.TypeConverter;
 
-public class MutableObjectTransitionTest {
+public class TransitionImplTest {
 
 	class MyObject {
 
@@ -46,7 +46,7 @@ public class MutableObjectTransitionTest {
 		myObject.x = 0f;
 		myObject.y = 0f;
 
-		MutableObjectTransition transition = new MutableObjectTransition(myObject, new MyObjectTypeConverter());
+		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
 		transition.set(a);
 
@@ -65,7 +65,7 @@ public class MutableObjectTransitionTest {
 		myObject.x = 0f;
 		myObject.y = 0f;
 
-		MutableObjectTransition transition = new MutableObjectTransition(myObject, new MyObjectTypeConverter());
+		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
 		transition.set(a);
 	}
@@ -78,7 +78,7 @@ public class MutableObjectTransitionTest {
 		myObject.x = 0f;
 		myObject.y = 0f;
 
-		MutableObjectTransition transition = new MutableObjectTransition(myObject, new MyObjectTypeConverter());
+		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
 		transition.set(a, 5f);
 	}
@@ -92,7 +92,7 @@ public class MutableObjectTransitionTest {
 		myObject.x = 0f;
 		myObject.y = 0f;
 
-		MutableObjectTransition transition = new MutableObjectTransition(myObject, new MyObjectTypeConverter());
+		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
 		transition.set(a);
 		transition.set(b, 1f);
@@ -125,7 +125,7 @@ public class MutableObjectTransitionTest {
 		myObject.x = 40f;
 		myObject.y = 40f;
 
-		MutableObjectTransition transition = new MutableObjectTransition(myObject, new MyObjectTypeConverter());
+		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
 		transition.set(b, 1f);
 
@@ -148,7 +148,7 @@ public class MutableObjectTransitionTest {
 		myObject.x = 40f;
 		myObject.y = 40f;
 
-		MutableObjectTransition transition = new MutableObjectTransition(myObject, new MyObjectTypeConverter());
+		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
 		transition.set(b, 1f);
 
@@ -169,7 +169,7 @@ public class MutableObjectTransitionTest {
 		myObject.x = 40f;
 		myObject.y = 40f;
 
-		MutableObjectTransition transition = new MutableObjectTransition(myObject, new MyObjectTypeConverter());
+		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 		assertSame(myObject, transition.get());
 	}
 
