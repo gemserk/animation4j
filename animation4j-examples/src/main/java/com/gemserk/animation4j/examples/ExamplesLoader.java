@@ -56,10 +56,10 @@ public class ExamplesLoader {
 		mainFrame.setVisible(true);
 
 		options = new Option[] { //
-				new Option("Example1", new Example1()), //
-				new Option("Example2", new Example2()), //
-				new Option("Example3", new Example3()), //
-				new Option("Example4", new Example4()), //
+				new Option("Example1 - Basic Animation", new Example1()), //
+				new Option("Example2 - Advanced Animation", new Example2()), //
+				new Option("Example3 - Basic Transition", new Example3()), //
+				new Option("Example4 - Advanced Transition", new Example4()), //
 		};
 
 		selectedOption = options[0];

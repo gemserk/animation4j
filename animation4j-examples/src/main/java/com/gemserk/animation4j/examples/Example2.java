@@ -20,7 +20,7 @@ import com.gemserk.animation4j.states.StateTransition;
 import com.gemserk.animation4j.states.StateTransitionCondition;
 import com.gemserk.animation4j.timeline.Builders;
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
-import com.gemserk.componentsengine.java2d.Java2dGame;
+import com.gemserk.componentsengine.java2d.Java2dGameAdapter;
 import com.gemserk.componentsengine.java2d.input.KeyboardInput;
 import com.gemserk.componentsengine.java2d.input.MouseInput;
 import com.gemserk.componentsengine.java2d.render.CurrentGraphicsProvider;
@@ -65,7 +65,7 @@ public class Example2 extends Java2dDesktopApplication {
 		createWindow("Example2", resolution, game);
 	}
 
-	static class ExampleInternalGame implements Java2dGame {
+	static class ExampleInternalGame extends Java2dGameAdapter {
 
 		@Inject
 		KeyboardInput keyboardInput;
