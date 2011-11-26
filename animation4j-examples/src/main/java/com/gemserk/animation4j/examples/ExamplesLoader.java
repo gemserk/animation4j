@@ -116,7 +116,8 @@ public class ExamplesLoader {
 			}
 		});
 		
-		mainFrame.repaint();
+		mainFrame.invalidate();
+		mainFrame.validate();
 		
 	}
 
