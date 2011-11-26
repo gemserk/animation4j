@@ -64,38 +64,33 @@
 		</profile>
 
 		<profile>
-			<id>github-upload-runnable-DISABLED</id>
+			<id>github-upload-artifacts</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<build>
 				<plugins>
 					<plugin>
-						<groupId>com.github.maven.plugin</groupId>
-						<artifactId>maven-github-plugin</artifactId>
-						<version>1.0-SNAPSHOT</version>
+						  <groupId>com.github.github</groupId>
+						  <artifactId>downloads-maven-plugin</artifactId>
+						  <version>0.3</version>
 						<configuration>
-							<repository>https://github.com/gemserk/animation4j</repository>
-							<artifacts>
-								<artifact>
-									<file>${project.build.directory}/animation4j-examples-${project.version}-jar-with-dependencies.jar</file>
-									<description>Latest runnable jar with examples of animation4j
-										library </description>
-									<override>true</override>
-									<finalName>animation4j-examples-runnable.jar</finalName>
-								</artifact>
-							</artifacts>
+							<description>Runnable jar with examples.</description>
+							<override>true</override>
+							<includes>
+								<param>animation4j-examples-${project.version}-jar-with-dependencies.jar</param>
+							</includes>
 						</configuration>
 						<executions>
-							<execution>
-								<id>upload-artifacts</id>
-								<phase>package</phase>
-								<goals>
-									<goal>deploy</goal>
-								</goals>
-							</execution>
+						  <execution>
+							<goals>
+							  <goal>upload</goal>
+							</goals>
+							<phase>install</phase>
+						  </execution>
 						</executions>
 					</plugin>
+
 				</plugins>
 			</build>
 		</profile>
