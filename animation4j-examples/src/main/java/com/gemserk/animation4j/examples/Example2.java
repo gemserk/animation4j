@@ -37,6 +37,28 @@ public class Example2 extends Java2dGameAdapter {
 	@Inject
 	AnimationHandlerManager animationHandlerManager;
 
+	@Inject
+	Java2dRenderer java2dRenderer;
+
+	@Inject
+	CurrentGraphicsProvider currentGraphicsProvider;
+
+	private Animation showAnimation;
+
+	private Animation hideAnimation;
+
+	private Animation currentAnimation;
+
+	private JEditorPane creditsPane;
+
+	private JEditorPane textPane;
+
+	private int currentText;
+
+	private String[] texts;
+
+	private StateMachine<Animation> animationStateMachine;
+
 	BufferedImage globeImage;
 	BufferedImage houseImage;
 
@@ -54,7 +76,6 @@ public class Example2 extends Java2dGameAdapter {
 
 	@Override
 	public void init() {
-		
 		globeImage = ImageUtils.load("globe-256x176.png");
 		houseImage = ImageUtils.load("house-128x92.png");
 
@@ -179,28 +200,6 @@ public class Example2 extends Java2dGameAdapter {
 		});
 
 	}
-
-	@Inject
-	Java2dRenderer java2dRenderer;
-
-	@Inject
-	CurrentGraphicsProvider currentGraphicsProvider;
-
-	private Animation showAnimation;
-
-	private Animation hideAnimation;
-
-	private Animation currentAnimation;
-
-	private JEditorPane creditsPane;
-
-	private JEditorPane textPane;
-
-	private int currentText;
-
-	private String[] texts;
-
-	private StateMachine<Animation> animationStateMachine;
 
 	@Override
 	public void render(Graphics2D graphics) {

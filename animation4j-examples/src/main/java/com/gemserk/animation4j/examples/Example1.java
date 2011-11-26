@@ -45,7 +45,7 @@ public class Example1 extends Java2dGameAdapter {
 	BufferedImage critterImage;
 
 	FloatValue x = new FloatValue(0f);
-	FloatValue y = new FloatValue(0f);
+	FloatValue y = new FloatValue(325f);
 	FloatValue angle = new FloatValue(0f);
 
 	@Override
@@ -57,9 +57,6 @@ public class Example1 extends Java2dGameAdapter {
 				.value(Builders.timelineValue(x, new FloatValueConverter()) //
 						.keyFrame(0f, new FloatValue(150f), InterpolationFunctions.easeIn()) //
 						.keyFrame(1f, new FloatValue(350f)) //
-				) //
-				.value(Builders.timelineValue(y, new FloatValueConverter()) //
-						.keyFrame(0f, new FloatValue(325f)) //
 				) //
 				.value(Builders.timelineValue(angle, new FloatValueConverter()) //
 						.keyFrame(0f, new FloatValue(0f), InterpolationFunctions.easeIn()) //
@@ -92,7 +89,7 @@ public class Example1 extends Java2dGameAdapter {
 
 	@Override
 	public void render(Graphics2D graphics) {
-		graphics.setBackground(Color.blue);
+		graphics.setBackground(Color.black);
 		graphics.clearRect(0, 0, 800, 600);
 
 		currentGraphicsProvider.setGraphics(graphics);

@@ -41,6 +41,8 @@ public class Example4 extends Java2dGameAdapter {
 	BufferedImage backgroundImage;
 	BufferedImage buttonImage;
 	BufferedImage buttonGlowImage;
+
+	Transition<Color> backgroundColor;
 	
 	class Button {
 
@@ -139,8 +141,6 @@ public class Example4 extends Java2dGameAdapter {
 
 		backgroundColor.set(new Color(0.4f, 0.4f, 0.4f, 0.6f), 1f);
 	}
-
-	Transition<Color> backgroundColor;
 
 	java.awt.Color getColor(Transition<Color> transition) {
 		Color color = transition.get();

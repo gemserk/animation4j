@@ -40,13 +40,13 @@ public class Example3 extends Java2dGameAdapter {
 	@Inject
 	CurrentGraphicsProvider currentGraphicsProvider;
 
-	private Transition<Color> colorTransition;
+	Transition<Color> colorTransition;
 
 	boolean mouseInside = false;
 
-	private JEditorPane textPane;
+	JEditorPane textPane;
 
-	private JEditorPane creditsPane;
+	JEditorPane creditsPane;
 
 	@Override
 	public void init() {
