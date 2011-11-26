@@ -26,20 +26,17 @@
 						  <artifactId>downloads-maven-plugin</artifactId>
 						  <version>0.3</version>
 						<configuration>
-							<description>Main artifacts<description>
-							<github.downloads.includeAttached>true</github.downloads.includeAttached>
-							<github.downloads.override>false</github.downloads.override>
+							<description>Main artifacts</description>
+							<includeAttached>true</includeAttached>
+							<override>true</override>
 						</configuration>
 						<executions>
-							<execution>
-								<id>upload-artifacts</id>
-								<!-- would be ideal to have it on package phase, but for now javadocs 
-									and sources are created on install phase, and we need those here to be uploaded -->
-								<phase>install</phase>
-								<goals>
-									<goal>deploy</goal>
-								</goals>
-							</execution>
+						  <execution>
+							<goals>
+							  <goal>upload</goal>
+							</goals>
+							<phase>install</phase>
+						  </execution>
 						</executions>
 					</plugin>
 
