@@ -13,7 +13,6 @@
 	<description>This module contains example applications using animation4j for the user to get started</description>
 
 	<properties>
-		<resourcesmanager.version>0.1.0</resourcesmanager.version>
 		<guice.version>3.0</guice.version>
 	</properties>
 
@@ -106,11 +105,6 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>animation4j-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.gemserk.resources</groupId>
-			<artifactId>resourcesmanager-java2dmodule</artifactId>
-			<version>${resourcesmanager.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.inject</groupId>

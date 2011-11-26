@@ -11,11 +11,17 @@ import com.gemserk.componentsengine.java2d.input.KeyboardInput;
 import com.gemserk.componentsengine.java2d.input.MouseInput;
 import com.gemserk.componentsengine.java2d.renderstrategy.Java2dRenderStrategy;
 import com.gemserk.componentsengine.java2d.renderstrategy.VolatileImageJava2dRenderStrategy;
-import com.google.inject.Injector;
+import com.google.inject.Inject;
 
 public class Java2dDesktopApplication {
 
 	private Java2dWindow java2dWindow;
+	
+	@Inject
+	KeyboardInput keyboardInput;
+	
+	@Inject
+	MouseInput mouseInput;
 
 	public void init() {
 
@@ -29,10 +35,7 @@ public class Java2dDesktopApplication {
 		java2dWindow.stop();
 	}
 
-	protected void createWindow(String title, Dimension resolution, Java2dGame game, Injector injector) {
-		KeyboardInput keyboardInput = injector.getInstance(KeyboardInput.class);
-		MouseInput mouseInput = injector.getInstance(MouseInput.class);
-
+	protected void createWindow(String title, Dimension resolution, Java2dGame game) {
 		Canvas canvas = new Canvas();
 
 		canvas.addKeyListener(keyboardInput);

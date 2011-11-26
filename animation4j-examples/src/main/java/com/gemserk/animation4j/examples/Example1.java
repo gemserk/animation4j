@@ -4,8 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
@@ -21,11 +21,6 @@ import com.gemserk.componentsengine.java2d.input.MouseInput;
 import com.gemserk.componentsengine.java2d.render.CurrentGraphicsProvider;
 import com.gemserk.componentsengine.java2d.render.Java2dImageRenderObject;
 import com.gemserk.componentsengine.java2d.render.Java2dRenderer;
-import com.gemserk.resources.Resource;
-import com.gemserk.resources.ResourceManager;
-import com.gemserk.resources.ResourceManagerImpl;
-import com.gemserk.resources.datasources.ClassPathDataSource;
-import com.gemserk.resources.java2d.dataloaders.ImageLoader;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -52,16 +47,17 @@ public class Example1 extends Java2dDesktopApplication {
 		Injector injector = Guice.createInjector(new AbstractModule() {
 			@Override
 			protected void configure() {
-				bind(ResourceManager.class).to(ResourceManagerImpl.class).in(Singleton.class);
 				bind(CurrentGraphicsProvider.class).in(Singleton.class);
 				bind(KeyboardInput.class).in(Singleton.class);
 				bind(MouseInput.class).in(Singleton.class);
 			}
 		});
 
+		injector.injectMembers(this);
+
 		Dimension resolution = new Dimension(640, 480);
 		ExampleInternalGame game = injector.getInstance(ExampleInternalGame.class);
-		createWindow("Example1", resolution, game, injector);
+		createWindow("Example1", resolution, game);
 	}
 
 	static class ExampleInternalGame implements Java2dGame {
@@ -72,15 +68,11 @@ public class Example1 extends Java2dDesktopApplication {
 		@Inject
 		MouseInput mouseInput;
 
-		@SuppressWarnings("rawtypes")
-		@Inject
-		ResourceManager resourceManager;
-
 		@Inject
 		AnimationHandlerManager animationHandlerManager;
 
-		Resource<Image> critterImageResource;
-		
+		BufferedImage critterImage;
+
 		FloatValue x = new FloatValue(0f);
 		FloatValue y = new FloatValue(0f);
 		FloatValue angle = new FloatValue(0f);
@@ -88,10 +80,8 @@ public class Example1 extends Java2dDesktopApplication {
 		@Override
 		public void init() {
 
-			resourceManager.add("Critter", new ImageLoader(new ClassPathDataSource("critter.png")));
+			critterImage = ImageUtils.load("critter.png");
 
-			critterImageResource = resourceManager.get("Critter");
-			
 			animation = Builders.animation(Builders.timeline() //
 					.value(Builders.timelineValue(x, new FloatValueConverter()) //
 							.keyFrame(0f, new FloatValue(150f), InterpolationFunctions.easeIn()) //
@@ -145,17 +135,16 @@ public class Example1 extends Java2dDesktopApplication {
 			graphics.clearRect(0, 0, 800, 600);
 
 			currentGraphicsProvider.setGraphics(graphics);
-			java2dRenderer.render(new Java2dImageRenderObject(1, critterImageResource.get(), x.value, y.value, 1, 1, angle.value));
+			java2dRenderer.render(new Java2dImageRenderObject(1, critterImage, x.value, y.value, 1, 1, angle.value));
 
 			panel.paint(graphics);
-
 		}
 
 		@Override
 		public void update(int delta) {
 
 			animation.update((float) delta * 0.001f);
-			
+
 			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
 				animation.restart();
 			}

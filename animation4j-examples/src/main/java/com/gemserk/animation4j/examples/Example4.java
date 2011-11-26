@@ -19,11 +19,6 @@ import com.gemserk.componentsengine.java2d.input.MouseInput;
 import com.gemserk.componentsengine.java2d.render.CurrentGraphicsProvider;
 import com.gemserk.componentsengine.java2d.render.Java2dImageRenderObject;
 import com.gemserk.componentsengine.java2d.render.Java2dRenderer;
-import com.gemserk.resources.Resource;
-import com.gemserk.resources.ResourceManager;
-import com.gemserk.resources.ResourceManagerImpl;
-import com.gemserk.resources.datasources.ClassPathDataSource;
-import com.gemserk.resources.java2d.dataloaders.ImageLoader;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -52,16 +47,17 @@ public class Example4 extends Java2dDesktopApplication {
 		Injector injector = Guice.createInjector(new AbstractModule() {
 			@Override
 			protected void configure() {
-				bind(ResourceManager.class).to(ResourceManagerImpl.class).in(Singleton.class);
 				bind(CurrentGraphicsProvider.class).in(Singleton.class);
 				bind(KeyboardInput.class).in(Singleton.class);
 				bind(MouseInput.class).in(Singleton.class);
 			}
 		});
+		
+		injector.injectMembers(this);
 
 		Dimension resolution = new Dimension(640, 480);
 		ExampleInternalGame game = injector.getInstance(ExampleInternalGame.class);
-		createWindow("Example4", resolution, game, injector);
+		createWindow("Example4", resolution, game);
 	}
 
 	static class ExampleInternalGame implements Java2dGame {
@@ -73,9 +69,6 @@ public class Example4 extends Java2dDesktopApplication {
 		MouseInput mouseInput;
 
 		@Inject
-		ResourceManager resourceManager;
-
-		@Inject
 		AnimationHandlerManager animationHandlerManager;
 
 		@Inject
@@ -84,10 +77,10 @@ public class Example4 extends Java2dDesktopApplication {
 		@Inject
 		CurrentGraphicsProvider currentGraphicsProvider;
 
-		private Resource<BufferedImage> buttonImageResource;
-
-		private Resource<BufferedImage> buttonGlowImageResource;
-
+		BufferedImage backgroundImage;
+		BufferedImage buttonImage;
+		BufferedImage buttonGlowImage;
+		
 		class Button {
 
 			Transition<Vector2f> position;
@@ -106,13 +99,10 @@ public class Example4 extends Java2dDesktopApplication {
 
 		@Override
 		public void init() {
-
-			resourceManager.add("Background", new ImageLoader(new ClassPathDataSource("example4/background.jpg")));
-			resourceManager.add("Button", new ImageLoader(new ClassPathDataSource("example4/settings-button.png")));
-			resourceManager.add("ButtonGlow", new ImageLoader(new ClassPathDataSource("example4/settings-button-glow.png")));
-
-			buttonImageResource = resourceManager.get("Button");
-			buttonGlowImageResource = resourceManager.get("ButtonGlow");
+			
+			backgroundImage = ImageUtils.load("example4/background.jpg");
+			buttonImage = ImageUtils.load("example4/settings-button.png");
+			buttonGlowImage = ImageUtils.load("example4/settings-button-glow.png");
 
 			final InterpolationFunction linearInterpolationFunction = InterpolationFunctions.linear();
 
@@ -201,8 +191,7 @@ public class Example4 extends Java2dDesktopApplication {
 
 			currentGraphicsProvider.setGraphics(graphics);
 
-			Resource<BufferedImage> backgroundResource = resourceManager.get("Background");
-			java2dRenderer.render(new Java2dImageRenderObject(0, backgroundResource.get(), 320, 240, 1, 1, 0f));
+			java2dRenderer.render(new Java2dImageRenderObject(0, backgroundImage, 320, 240, 1, 1, 0f));
 
 			graphics.setColor(getColor(backgroundColor));
 			graphics.fillRect(0, 0, 640, 480);
@@ -223,8 +212,8 @@ public class Example4 extends Java2dDesktopApplication {
 				java.awt.Color color = getColor(button.color);
 				java.awt.Color glowColor = getColor(button.glowColor);
 				
-				java2dRenderer.render(new Java2dImageRenderObject(1, buttonGlowImageResource.get(), x, y, sx, sy, 0f, glowColor));
-				java2dRenderer.render(new Java2dImageRenderObject(1, buttonImageResource.get(), x, y, sx, sy, 0f, color));
+				java2dRenderer.render(new Java2dImageRenderObject(1, buttonGlowImage, x, y, sx, sy, 0f, glowColor));
+				java2dRenderer.render(new Java2dImageRenderObject(1, buttonImage, x, y, sx, sy, 0f, color));
 
 			}
 
@@ -237,12 +226,10 @@ public class Example4 extends Java2dDesktopApplication {
 
 			backgroundColor.update(0.001f * (float) delta);
 
-			BufferedImage image = buttonImageResource.get();
-
 			Point mousePosition = mouseInput.getPosition();
 
-			int height = image.getHeight();
-			int width = image.getWidth();
+			int height = buttonImage.getHeight();
+			int width = buttonImage.getWidth();
 
 			for (Button button : buttons) {
 

@@ -4,9 +4,9 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JEditorPane;
 
@@ -26,11 +26,6 @@ import com.gemserk.componentsengine.java2d.input.MouseInput;
 import com.gemserk.componentsengine.java2d.render.CurrentGraphicsProvider;
 import com.gemserk.componentsengine.java2d.render.Java2dImageRenderObject;
 import com.gemserk.componentsengine.java2d.render.Java2dRenderer;
-import com.gemserk.resources.Resource;
-import com.gemserk.resources.ResourceManager;
-import com.gemserk.resources.ResourceManagerImpl;
-import com.gemserk.resources.datasources.ClassPathDataSource;
-import com.gemserk.resources.java2d.dataloaders.ImageLoader;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -57,16 +52,17 @@ public class Example2 extends Java2dDesktopApplication {
 		Injector injector = Guice.createInjector(new AbstractModule() {
 			@Override
 			protected void configure() {
-				bind(ResourceManager.class).to(ResourceManagerImpl.class).in(Singleton.class);
 				bind(CurrentGraphicsProvider.class).in(Singleton.class);
 				bind(KeyboardInput.class).in(Singleton.class);
 				bind(MouseInput.class).in(Singleton.class);
 			}
 		});
+		
+		injector.injectMembers(this);
 
 		Dimension resolution = new Dimension(640, 480);
 		ExampleInternalGame game = injector.getInstance(ExampleInternalGame.class);
-		createWindow("Example2", resolution, game, injector);
+		createWindow("Example2", resolution, game);
 	}
 
 	static class ExampleInternalGame implements Java2dGame {
@@ -77,14 +73,11 @@ public class Example2 extends Java2dDesktopApplication {
 		@Inject
 		MouseInput mouseInput;
 
-		@SuppressWarnings("rawtypes")
-		@Inject
-		ResourceManager resourceManager;
-
 		@Inject
 		AnimationHandlerManager animationHandlerManager;
 
-		Resource<Image> globeImageResource;
+		BufferedImage globeImage;
+		BufferedImage houseImage;
 
 		public static class Element {
 
@@ -100,12 +93,9 @@ public class Example2 extends Java2dDesktopApplication {
 
 		@Override
 		public void init() {
-
-			resourceManager.add("Globe", new ImageLoader(new ClassPathDataSource("globe-256x176.png")));
-			resourceManager.add("House", new ImageLoader(new ClassPathDataSource("house-128x92.png")));
-
-			globeImageResource = resourceManager.get("Globe");
-			houseImageResource = resourceManager.get("House");
+			
+			globeImage = ImageUtils.load("globe-256x176.png");
+			houseImage = ImageUtils.load("house-128x92.png");
 
 			element.position = new Vector2f(100f, 100f);
 			element.alpha = new FloatValue(0f);
@@ -237,8 +227,6 @@ public class Example2 extends Java2dDesktopApplication {
 
 		private Animation showAnimation;
 
-		private Resource<Image> houseImageResource;
-
 		private Animation hideAnimation;
 
 		private Animation currentAnimation;
@@ -274,8 +262,8 @@ public class Example2 extends Java2dDesktopApplication {
 
 			Vector2f position = element.position;
 
-			java2dRenderer.render(new Java2dImageRenderObject(1, houseImageResource.get(), 320, 340, 1, 1, 0f));
-			java2dRenderer.render(new Java2dImageRenderObject(1, globeImageResource.get(), (float) position.getX(), (float) position.getY(), 1, 1, 0f, new Color(1f, 1f, 1f, element.alpha.value)));
+			java2dRenderer.render(new Java2dImageRenderObject(1, houseImage, 320, 340, 1, 1, 0f));
+			java2dRenderer.render(new Java2dImageRenderObject(1, globeImage, (float) position.getX(), (float) position.getY(), 1, 1, 0f, new Color(1f, 1f, 1f, element.alpha.value)));
 
 			previousTransform = graphics.getTransform();
 
