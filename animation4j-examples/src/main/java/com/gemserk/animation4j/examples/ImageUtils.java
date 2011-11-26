@@ -8,7 +8,7 @@ public class ImageUtils {
 
 	public static BufferedImage load(String file) {
 		try {
-			return ImageIO.read(Example1.class.getClassLoader().getResourceAsStream(file));
+			return ImageIO.read(ImageUtils.class.getClassLoader().getResourceAsStream(file));
 		} catch (Exception e) {
 			throw new RuntimeException("failed to get image from " + file, e);
 		}

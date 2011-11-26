@@ -2,7 +2,6 @@ package com.gemserk.animation4j.examples;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
@@ -19,278 +18,238 @@ import com.gemserk.animation4j.states.StateMachine;
 import com.gemserk.animation4j.states.StateTransition;
 import com.gemserk.animation4j.states.StateTransitionCondition;
 import com.gemserk.animation4j.timeline.Builders;
-import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
 import com.gemserk.componentsengine.java2d.Java2dGameAdapter;
 import com.gemserk.componentsengine.java2d.input.KeyboardInput;
 import com.gemserk.componentsengine.java2d.input.MouseInput;
 import com.gemserk.componentsengine.java2d.render.CurrentGraphicsProvider;
 import com.gemserk.componentsengine.java2d.render.Java2dImageRenderObject;
 import com.gemserk.componentsengine.java2d.render.Java2dRenderer;
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
 import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Singleton;
 
-public class Example2 extends Java2dDesktopApplication {
+public class Example2 extends Java2dGameAdapter {
 
-	public static void main(String[] args) {
-		Java2dDesktopApplication java2dDesktopApplication = new Example2() {
-			@Override
-			public void stop() {
-				super.stop();
-				System.exit(0);
-			}
-		};
-		java2dDesktopApplication.init();
-		java2dDesktopApplication.start();
+	@Inject
+	KeyboardInput keyboardInput;
+
+	@Inject
+	MouseInput mouseInput;
+
+	@Inject
+	AnimationHandlerManager animationHandlerManager;
+
+	BufferedImage globeImage;
+	BufferedImage houseImage;
+
+	public static class Element {
+
+		Vector2f position;
+
+		FloatValue alpha;
+
+		FloatValue textAlpha;
+
 	}
+
+	Example2.Element element = new Element();
 
 	@Override
 	public void init() {
+		
+		globeImage = ImageUtils.load("globe-256x176.png");
+		houseImage = ImageUtils.load("house-128x92.png");
 
-		Injector injector = Guice.createInjector(new AbstractModule() {
+		element.position = new Vector2f(100f, 100f);
+		element.alpha = new FloatValue(0f);
+		element.textAlpha = new FloatValue(0f);
+
+		showAnimation = Builders.animation(Builders.timeline() //
+				.value(Builders.timelineValue(element.position, new Vector2fConverter()) //
+						.keyFrame(0f, new Vector2f(320, 260), InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //
+						.keyFrame(1f, new Vector2f(320, 220)) //
+				) //
+				.value(Builders.timelineValue(element.alpha, new FloatValueConverter()) //
+						.keyFrame(0f, new FloatValue(0f), InterpolationFunctions.easeOut()) //
+						.keyFrame(1f, new FloatValue(1f)) //
+				) //
+				.value(Builders.timelineValue(element.textAlpha, new FloatValueConverter()) //
+						.keyFrame(0f, new FloatValue(0f), InterpolationFunctions.easeOut()) //
+						.keyFrame(0.5f, new FloatValue(0f)) //
+						.keyFrame(1.5f, new FloatValue(1f)) //
+				) //
+				) //
+				.speed(1.5f)//
+				.build();
+
+		hideAnimation = Builders.animation(Builders.timeline() //
+				.value(Builders.timelineValue(element.position, new Vector2fConverter()) //
+						.keyFrame(0f, new Vector2f(320, 220)) //
+				) //
+				.value(Builders.timelineValue(element.alpha, new FloatValueConverter()) //
+						.keyFrame(0f, new FloatValue(1f), InterpolationFunctions.easeOut()) //
+						.keyFrame(0.5f, new FloatValue(1f)) //
+						.keyFrame(1f, new FloatValue(0f)) //
+				) //
+				.value(Builders.timelineValue(element.textAlpha, new FloatValueConverter()) //
+						.keyFrame(0f, new FloatValue(1f), InterpolationFunctions.easeOut()) //
+						.keyFrame(0.5f, new FloatValue(0f)) //
+				) //
+				) //
+				.speed(2f)//
+				.build();
+
+		currentAnimation = showAnimation;
+
+		currentAnimation.start(1, false);
+
+		animationHandlerManager.with(new DumpAnimationStateHandler("show")).handleChangesOf(showAnimation);
+		animationHandlerManager.with(new DumpAnimationStateHandler("hide")).handleChangesOf(hideAnimation);
+
+		String html = new FileHelper("license-lostgarden.html").read();
+
+		creditsPane = new JEditorPane("text/html", html) {
+			{
+				setSize(600, 40);
+				setEditable(false);
+				setOpaque(false);
+			}
+		};
+
+		textPane = new JEditorPane("text/html", "") {
+			{
+				setSize(226, 156);
+				setEditable(false);
+				setOpaque(false);
+			}
+		};
+
+		texts = new String[] { "<div>We need help! The enemies are near, we cannot let them conquer our lands</div>", //
+				"<div>Now is the time, gather your forces and prepare for the battle!</div>", //
+				"<div>People <strong>trust</strong> in you!</div>", //
+				"<div>You are our last hope!</div>" };
+
+		currentText = 0;
+
+		animationHandlerManager.with(new AnimationEventHandler() {
 			@Override
-			protected void configure() {
-				bind(CurrentGraphicsProvider.class).in(Singleton.class);
-				bind(KeyboardInput.class).in(Singleton.class);
-				bind(MouseInput.class).in(Singleton.class);
+			public void onAnimationStarted(AnimationEvent e) {
+				if (currentText < texts.length)
+					textPane.setText(texts[currentText]);
+				else
+					textPane.setText("");
+			}
+		}).handleChangesOf(showAnimation);
+
+		animationStateMachine = new StateMachine<Animation>(showAnimation);
+
+		animationStateMachine.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
+			@Override
+			public boolean matches(Animation sourceState, Animation targetState) {
+				return keyboardInput.keyDownOnce(KeyEvent.VK_ENTER) && currentText < texts.length;
+			}
+		}, showAnimation, showAnimation) {
+			@Override
+			protected void afterTransition(Animation sourceState, Animation targetState) {
+				targetState.restart();
 			}
 		});
-		
-		injector.injectMembers(this);
 
-		Dimension resolution = new Dimension(640, 480);
-		ExampleInternalGame game = injector.getInstance(ExampleInternalGame.class);
-		createWindow("Example2", resolution, game);
+		animationStateMachine.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
+			@Override
+			public boolean matches(Animation sourceState, Animation targetState) {
+				return keyboardInput.keyDownOnce(KeyEvent.VK_ENTER) && currentText >= texts.length;
+			}
+		}, showAnimation, hideAnimation) {
+			@Override
+			protected void afterTransition(Animation sourceState, Animation targetState) {
+				targetState.restart();
+			}
+		});
+
+		animationStateMachine.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
+			@Override
+			public boolean matches(Animation sourceState, Animation targetState) {
+				return keyboardInput.keyDownOnce(KeyEvent.VK_ENTER);
+			}
+		}, hideAnimation, showAnimation) {
+			@Override
+			public void afterTransition(Animation sourceState, Animation targetState) {
+				targetState.restart();
+				currentText = 0;
+			}
+		});
+
 	}
 
-	static class ExampleInternalGame extends Java2dGameAdapter {
+	@Inject
+	Java2dRenderer java2dRenderer;
 
-		@Inject
-		KeyboardInput keyboardInput;
+	@Inject
+	CurrentGraphicsProvider currentGraphicsProvider;
 
-		@Inject
-		MouseInput mouseInput;
+	private Animation showAnimation;
 
-		@Inject
-		AnimationHandlerManager animationHandlerManager;
+	private Animation hideAnimation;
 
-		BufferedImage globeImage;
-		BufferedImage houseImage;
+	private Animation currentAnimation;
 
-		public static class Element {
+	private JEditorPane creditsPane;
 
-			Vector2f position;
+	private JEditorPane textPane;
 
-			FloatValue alpha;
+	private int currentText;
 
-			FloatValue textAlpha;
+	private String[] texts;
 
+	private StateMachine<Animation> animationStateMachine;
+
+	@Override
+	public void render(Graphics2D graphics) {
+		graphics.setBackground(Color.black);
+		graphics.clearRect(0, 0, 800, 600);
+
+		currentGraphicsProvider.setGraphics(graphics);
+
+		graphics.setColor(Color.white);
+		graphics.drawString("Press Enter to go on with the animation.", 20, 50);
+
+		AffineTransform previousTransform = graphics.getTransform();
+
+		graphics.translate(20, 400);
+
+		// graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, element.textAlpha));
+		creditsPane.paint(graphics);
+
+		graphics.setTransform(previousTransform);
+
+		Vector2f position = element.position;
+
+		java2dRenderer.render(new Java2dImageRenderObject(1, houseImage, 320, 340, 1, 1, 0f));
+		java2dRenderer.render(new Java2dImageRenderObject(1, globeImage, (float) position.getX(), (float) position.getY(), 1, 1, 0f, new Color(1f, 1f, 1f, element.alpha.value)));
+
+		previousTransform = graphics.getTransform();
+
+		graphics.translate(position.getX() + 10 - 110, position.getY() + 10 - 70);
+
+		graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, element.textAlpha.value));
+		textPane.paint(graphics);
+
+		graphics.setTransform(previousTransform);
+
+	}
+
+	@Override
+	public void update(int delta) {
+
+		currentAnimation.update((float) delta * 0.001f);
+
+		if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
+			currentText++;
 		}
 
-		Element element = new Element();
+		animationStateMachine.checkTransitionConditions();
+		currentAnimation = animationStateMachine.getCurrentState();
 
-		@Override
-		public void init() {
-			
-			globeImage = ImageUtils.load("globe-256x176.png");
-			houseImage = ImageUtils.load("house-128x92.png");
-
-			element.position = new Vector2f(100f, 100f);
-			element.alpha = new FloatValue(0f);
-			element.textAlpha = new FloatValue(0f);
-
-			showAnimation = Builders.animation(Builders.timeline() //
-					.value(Builders.timelineValue(element.position, new Vector2fConverter()) //
-							.keyFrame(0f, new Vector2f(320, 260), InterpolationFunctions.easeIn(), InterpolationFunctions.easeIn()) //
-							.keyFrame(1f, new Vector2f(320, 220)) //
-					) //
-					.value(Builders.timelineValue(element.alpha, new FloatValueConverter()) //
-							.keyFrame(0f, new FloatValue(0f), InterpolationFunctions.easeOut()) //
-							.keyFrame(1f, new FloatValue(1f)) //
-					) //
-					.value(Builders.timelineValue(element.textAlpha, new FloatValueConverter()) //
-							.keyFrame(0f, new FloatValue(0f), InterpolationFunctions.easeOut()) //
-							.keyFrame(0.5f, new FloatValue(0f)) //
-							.keyFrame(1.5f, new FloatValue(1f)) //
-					) //
-					) //
-					.speed(1.5f)//
-					.build();
-
-			hideAnimation = Builders.animation(Builders.timeline() //
-					.value(Builders.timelineValue(element.position, new Vector2fConverter()) //
-							.keyFrame(0f, new Vector2f(320, 220)) //
-					) //
-					.value(Builders.timelineValue(element.alpha, new FloatValueConverter()) //
-							.keyFrame(0f, new FloatValue(1f), InterpolationFunctions.easeOut()) //
-							.keyFrame(0.5f, new FloatValue(1f)) //
-							.keyFrame(1f, new FloatValue(0f)) //
-					) //
-					.value(Builders.timelineValue(element.textAlpha, new FloatValueConverter()) //
-							.keyFrame(0f, new FloatValue(1f), InterpolationFunctions.easeOut()) //
-							.keyFrame(0.5f, new FloatValue(0f)) //
-					) //
-					) //
-					.speed(2f)//
-					.build();
-
-			currentAnimation = showAnimation;
-
-			currentAnimation.start(1, false);
-
-			animationHandlerManager.with(new DumpAnimationStateHandler("show")).handleChangesOf(showAnimation);
-			animationHandlerManager.with(new DumpAnimationStateHandler("hide")).handleChangesOf(hideAnimation);
-
-			String html = new FileHelper("license-lostgarden.html").read();
-
-			creditsPane = new JEditorPane("text/html", html) {
-				{
-					setSize(600, 40);
-					setEditable(false);
-					setOpaque(false);
-				}
-			};
-
-			textPane = new JEditorPane("text/html", "") {
-				{
-					setSize(226, 156);
-					setEditable(false);
-					setOpaque(false);
-				}
-			};
-
-			texts = new String[] { "<div>We need help! The enemies are near, we cannot let them conquer our lands</div>", //
-					"<div>Now is the time, gather your forces and prepare for the battle!</div>", //
-					"<div>People <strong>trust</strong> in you!</div>", //
-					"<div>You are our last hope!</div>" };
-
-			currentText = 0;
-
-			animationHandlerManager.with(new AnimationEventHandler() {
-				@Override
-				public void onAnimationStarted(AnimationEvent e) {
-					if (currentText < texts.length)
-						textPane.setText(texts[currentText]);
-					else
-						textPane.setText("");
-				}
-			}).handleChangesOf(showAnimation);
-
-			animationStateMachine = new StateMachine<Animation>(showAnimation);
-
-			animationStateMachine.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
-				@Override
-				public boolean matches(Animation sourceState, Animation targetState) {
-					return keyboardInput.keyDownOnce(KeyEvent.VK_ENTER) && currentText < texts.length;
-				}
-			}, showAnimation, showAnimation) {
-				@Override
-				protected void afterTransition(Animation sourceState, Animation targetState) {
-					targetState.restart();
-				}
-			});
-
-			animationStateMachine.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
-				@Override
-				public boolean matches(Animation sourceState, Animation targetState) {
-					return keyboardInput.keyDownOnce(KeyEvent.VK_ENTER) && currentText >= texts.length;
-				}
-			}, showAnimation, hideAnimation) {
-				@Override
-				protected void afterTransition(Animation sourceState, Animation targetState) {
-					targetState.restart();
-				}
-			});
-
-			animationStateMachine.addTransition(new StateTransition<Animation>(new StateTransitionCondition<Animation>() {
-				@Override
-				public boolean matches(Animation sourceState, Animation targetState) {
-					return keyboardInput.keyDownOnce(KeyEvent.VK_ENTER);
-				}
-			}, hideAnimation, showAnimation) {
-				@Override
-				public void afterTransition(Animation sourceState, Animation targetState) {
-					targetState.restart();
-					currentText = 0;
-				}
-			});
-
-		}
-
-		@Inject
-		Java2dRenderer java2dRenderer;
-
-		@Inject
-		CurrentGraphicsProvider currentGraphicsProvider;
-
-		private Animation showAnimation;
-
-		private Animation hideAnimation;
-
-		private Animation currentAnimation;
-
-		private JEditorPane creditsPane;
-
-		private JEditorPane textPane;
-
-		private int currentText;
-
-		private String[] texts;
-
-		private StateMachine<Animation> animationStateMachine;
-
-		@Override
-		public void render(Graphics2D graphics) {
-			graphics.setBackground(Color.black);
-			graphics.clearRect(0, 0, 800, 600);
-
-			currentGraphicsProvider.setGraphics(graphics);
-
-			graphics.setColor(Color.white);
-			graphics.drawString("Press Enter to go on with the animation.", 20, 50);
-
-			AffineTransform previousTransform = graphics.getTransform();
-
-			graphics.translate(20, 400);
-
-			// graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, element.textAlpha));
-			creditsPane.paint(graphics);
-
-			graphics.setTransform(previousTransform);
-
-			Vector2f position = element.position;
-
-			java2dRenderer.render(new Java2dImageRenderObject(1, houseImage, 320, 340, 1, 1, 0f));
-			java2dRenderer.render(new Java2dImageRenderObject(1, globeImage, (float) position.getX(), (float) position.getY(), 1, 1, 0f, new Color(1f, 1f, 1f, element.alpha.value)));
-
-			previousTransform = graphics.getTransform();
-
-			graphics.translate(position.getX() + 10 - 110, position.getY() + 10 - 70);
-
-			graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, element.textAlpha.value));
-			textPane.paint(graphics);
-
-			graphics.setTransform(previousTransform);
-
-		}
-
-		@Override
-		public void update(int delta) {
-
-			currentAnimation.update((float) delta * 0.001f);
-
-			if (keyboardInput.keyDownOnce(KeyEvent.VK_ENTER)) {
-				currentText++;
-			}
-
-			animationStateMachine.checkTransitionConditions();
-			currentAnimation = animationStateMachine.getCurrentState();
-
-			animationHandlerManager.checkAnimationChanges();
-
-		}
+		animationHandlerManager.checkAnimationChanges();
 
 	}
 

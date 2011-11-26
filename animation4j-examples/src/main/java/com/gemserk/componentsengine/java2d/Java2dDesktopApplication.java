@@ -15,16 +15,22 @@ import com.google.inject.Inject;
 
 public class Java2dDesktopApplication {
 
-	private Java2dWindow java2dWindow;
+	Java2dWindow java2dWindow;
 	
 	@Inject
 	KeyboardInput keyboardInput;
 	
 	@Inject
 	MouseInput mouseInput;
+	
+	@Inject
+	Java2dGame java2dGame;
 
-	public void init() {
+	boolean exitOnClose;
 
+	public void init(String title, Dimension dimension, boolean exitOnClose) {
+		this.exitOnClose = exitOnClose;
+		createWindow(title, dimension, java2dGame);
 	}
 	
 	public void start() {
@@ -33,6 +39,8 @@ public class Java2dDesktopApplication {
 	
 	public void stop() {
 		java2dWindow.stop();
+		if (exitOnClose)
+			System.exit(0);
 	}
 
 	protected void createWindow(String title, Dimension resolution, Java2dGame game) {

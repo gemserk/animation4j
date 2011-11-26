@@ -1,6 +1,5 @@
 package com.gemserk.animation4j.examples;
 
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -14,156 +13,116 @@ import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
-import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
 import com.gemserk.componentsengine.java2d.Java2dGameAdapter;
 import com.gemserk.componentsengine.java2d.input.KeyboardInput;
 import com.gemserk.componentsengine.java2d.input.MouseInput;
 import com.gemserk.componentsengine.java2d.render.CurrentGraphicsProvider;
 import com.gemserk.componentsengine.java2d.render.Java2dImageRenderObject;
 import com.gemserk.componentsengine.java2d.render.Java2dRenderer;
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
 import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Singleton;
 
-public class Example3 extends Java2dDesktopApplication {
+public class Example3 extends Java2dGameAdapter {
 
-	public static void main(String[] args) {
-		Java2dDesktopApplication java2dDesktopApplication = new Example3() {
-			@Override
-			public void stop() {
-				super.stop();
-				System.exit(0);
-			}
-		};
-		java2dDesktopApplication.init();
-		java2dDesktopApplication.start();
-	}
+	@Inject
+	KeyboardInput keyboardInput;
+
+	@Inject
+	MouseInput mouseInput;
+
+	@Inject
+	AnimationHandlerManager animationHandlerManager;
+
+	BufferedImage houseImage;
+
+	@Inject
+	Java2dRenderer java2dRenderer;
+
+	@Inject
+	CurrentGraphicsProvider currentGraphicsProvider;
+
+	private Transition<Color> colorTransition;
+
+	boolean mouseInside = false;
+
+	private JEditorPane textPane;
+
+	private JEditorPane creditsPane;
 
 	@Override
 	public void init() {
-
-		Injector injector = Guice.createInjector(new AbstractModule() {
-			@Override
-			protected void configure() {
-				bind(CurrentGraphicsProvider.class).in(Singleton.class);
-				bind(KeyboardInput.class).in(Singleton.class);
-				bind(MouseInput.class).in(Singleton.class);
-			}
-		});
 		
-		injector.injectMembers(this);
+		houseImage = ImageUtils.load("house-128x92.png");
+		
+		creditsPane = new JEditorPane("text/html", new FileHelper("license-lostgarden.html").read()) {
+			{
+				setSize(600, 40);
+				setEditable(false);
+				setOpaque(false);
+			}
+		};
+		textPane = new JEditorPane("text/html", new FileHelper("example3.html").read()) {
+			{
+				setSize(600, 240);
+				setEditable(false);
+				setOpaque(false);
+			}
+		};
+		InterpolationFunction[] functions = { InterpolationFunctions.linear() };
 
-		Dimension resolution = new Dimension(640, 480);
-		ExampleInternalGame game = injector.getInstance(ExampleInternalGame.class);
-		createWindow("Example3", resolution, game);
+		// Creates a Color transition using a color interpolator with a linear interpolation function.
+
+		colorTransition = Transitions.transition(new Color(0.3f, 0.3f, 0.8f, 1f), new ColorConverter()) //
+				.functions(functions) //
+				.build();
 	}
 
-	static class ExampleInternalGame extends Java2dGameAdapter {
+	@Override
+	public void render(Graphics2D graphics) {
+		graphics.setBackground(java.awt.Color.black);
+		graphics.clearRect(0, 0, 800, 600);
+		currentGraphicsProvider.setGraphics(graphics);
 
-		@Inject
-		KeyboardInput keyboardInput;
-
-		@Inject
-		MouseInput mouseInput;
-
-		@Inject
-		AnimationHandlerManager animationHandlerManager;
-
-		BufferedImage houseImage;
-
-		@Inject
-		Java2dRenderer java2dRenderer;
-
-		@Inject
-		CurrentGraphicsProvider currentGraphicsProvider;
-
-		private Transition<Color> colorTransition;
-
-		boolean mouseInside = false;
-
-		private JEditorPane textPane;
-
-		private JEditorPane creditsPane;
-
-		@Override
-		public void init() {
-			
-			houseImage = ImageUtils.load("house-128x92.png");
-			
-			creditsPane = new JEditorPane("text/html", new FileHelper("license-lostgarden.html").read()) {
-				{
-					setSize(600, 40);
-					setEditable(false);
-					setOpaque(false);
-				}
-			};
-			textPane = new JEditorPane("text/html", new FileHelper("example3.html").read()) {
-				{
-					setSize(600, 240);
-					setEditable(false);
-					setOpaque(false);
-				}
-			};
-			InterpolationFunction[] functions = { InterpolationFunctions.linear() };
-
-			// Creates a Color transition using a color interpolator with a linear interpolation function.
-
-			colorTransition = Transitions.transition(new Color(0.3f, 0.3f, 0.8f, 1f), new ColorConverter()) //
-					.functions(functions) //
-					.build();
+		{
+			// render the image using the color of the transition
+			Color c = colorTransition.get();
+			java.awt.Color color = new java.awt.Color(c.r, c.g, c.b, c.a);
+			java2dRenderer.render(new Java2dImageRenderObject(1, houseImage, 320, 340, 1, 1, 0f, color));
 		}
 
-		@Override
-		public void render(Graphics2D graphics) {
-			graphics.setBackground(java.awt.Color.black);
-			graphics.clearRect(0, 0, 800, 600);
-			currentGraphicsProvider.setGraphics(graphics);
+		{
+			// render texts in the screen
+			AffineTransform previousTransform = graphics.getTransform();
+			graphics.translate(40, 20);
+			textPane.paint(graphics);
+			graphics.setTransform(previousTransform);
 
-			{
-				// render the image using the color of the transition
-				Color c = colorTransition.get();
-				java.awt.Color color = new java.awt.Color(c.r, c.g, c.b, c.a);
-				java2dRenderer.render(new Java2dImageRenderObject(1, houseImage, 320, 340, 1, 1, 0f, color));
-			}
-
-			{
-				// render texts in the screen
-				AffineTransform previousTransform = graphics.getTransform();
-				graphics.translate(40, 20);
-				textPane.paint(graphics);
-				graphics.setTransform(previousTransform);
-
-				previousTransform = graphics.getTransform();
-				graphics.translate(20, 400);
-				creditsPane.paint(graphics);
-				graphics.setTransform(previousTransform);
-			}
+			previousTransform = graphics.getTransform();
+			graphics.translate(20, 400);
+			creditsPane.paint(graphics);
+			graphics.setTransform(previousTransform);
 		}
+	}
 
-		@Override
-		public void update(int delta) {
+	@Override
+	public void update(int delta) {
 
-			colorTransition.update(0.001f * (float) delta);
+		colorTransition.update(0.001f * (float) delta);
 
-			Point mousePosition = mouseInput.getPosition();
-			if (new Rectangle(320 - 64, 340 - 46, 128, 92).contains(mousePosition.x, mousePosition.y)) {
-				if (!mouseInside) {
-					mouseInside = true;
+		Point mousePosition = mouseInput.getPosition();
+		if (new Rectangle(320 - 64, 340 - 46, 128, 92).contains(mousePosition.x, mousePosition.y)) {
+			if (!mouseInside) {
+				mouseInside = true;
 
-					// when the mouse is over the image, we set the color to white
-					colorTransition.set(new Color(1f, 1f, 1f, 1f), 0.6f);
-				}
-			} else {
-				if (mouseInside) {
-					mouseInside = false;
-
-					// when the mouse left the image, we set again the color to the previous color.
-					colorTransition.set(new Color(0.3f, 0.3f, 0.8f, 1f), 0.6f);
-				}
+				// when the mouse is over the image, we set the color to white
+				colorTransition.set(new Color(1f, 1f, 1f, 1f), 0.6f);
 			}
+		} else {
+			if (mouseInside) {
+				mouseInside = false;
 
+				// when the mouse left the image, we set again the color to the previous color.
+				colorTransition.set(new Color(0.3f, 0.3f, 0.8f, 1f), 0.6f);
+			}
 		}
 
 	}
