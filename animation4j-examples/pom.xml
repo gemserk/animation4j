@@ -64,7 +64,7 @@
 		</profile>
 
 		<profile>
-			<id>github-upload-runnable</id>
+			<id>github-upload-runnable-DISABLED</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>

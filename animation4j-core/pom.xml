@@ -22,11 +22,13 @@
 			<build>
 				<plugins>
 					<plugin>
-						<groupId>com.github.maven.plugin</groupId>
-						<artifactId>maven-github-plugin</artifactId>
-						<version>1.0-SNAPSHOT</version>
+						  <groupId>com.github.github</groupId>
+						  <artifactId>downloads-maven-plugin</artifactId>
+						  <version>0.3</version>
 						<configuration>
-							<repository>https://github.com/gemserk/animation4j</repository>
+							<description>Main artifacts<description>
+							<github.downloads.includeAttached>true</github.downloads.includeAttached>
+							<github.downloads.override>false</github.downloads.override>
 						</configuration>
 						<executions>
 							<execution>
