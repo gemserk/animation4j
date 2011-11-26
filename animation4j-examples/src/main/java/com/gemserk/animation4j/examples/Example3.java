@@ -3,7 +3,6 @@ package com.gemserk.animation4j.examples;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JEditorPane;
@@ -17,6 +16,7 @@ import com.gemserk.componentsengine.java2d.Java2dGameAdapter;
 import com.gemserk.componentsengine.java2d.input.KeyboardInput;
 import com.gemserk.componentsengine.java2d.input.MouseInput;
 import com.gemserk.componentsengine.java2d.render.CurrentGraphicsProvider;
+import com.gemserk.componentsengine.java2d.render.Graphics2dHelper;
 import com.gemserk.componentsengine.java2d.render.Java2dImageRenderObject;
 import com.gemserk.componentsengine.java2d.render.Java2dRenderer;
 import com.google.inject.Inject;
@@ -39,6 +39,9 @@ public class Example3 extends Java2dGameAdapter {
 
 	@Inject
 	CurrentGraphicsProvider currentGraphicsProvider;
+	
+	@Inject
+	Graphics2dHelper graphics2dHelper;
 
 	Transition<Color> colorTransition;
 
@@ -91,16 +94,19 @@ public class Example3 extends Java2dGameAdapter {
 
 		{
 			// render texts in the screen
-			AffineTransform previousTransform = graphics.getTransform();
+			graphics2dHelper.pushTransform();
 			graphics.translate(40, 20);
 			textPane.paint(graphics);
-			graphics.setTransform(previousTransform);
-
-			previousTransform = graphics.getTransform();
+			graphics2dHelper.popTransform();
+		}
+		
+		{
+			graphics2dHelper.pushTransform();
 			graphics.translate(20, 400);
 			creditsPane.paint(graphics);
-			graphics.setTransform(previousTransform);
+			graphics2dHelper.popTransform();
 		}
+		
 	}
 
 	@Override
