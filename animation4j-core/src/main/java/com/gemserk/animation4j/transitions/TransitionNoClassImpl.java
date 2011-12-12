@@ -20,6 +20,10 @@ public class TransitionNoClassImpl implements Transition<float[]> {
 	boolean started;
 	boolean finished;
 
+	public void setFunctions(InterpolationFunction... functions) {
+		this.functions = functions;
+	}
+
 	@Override
 	public float getSpeed() {
 		return speed;
