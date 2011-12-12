@@ -18,6 +18,8 @@ public class Synchronizer {
 
 	class TransitionUpdater {
 
+		// Should be a set of transitions?
+		
 		ArrayList<Transition> transitions = new ArrayList<Transition>();
 		ArrayList<Transition> toRemoveTransitions = new ArrayList<Transition>();
 
