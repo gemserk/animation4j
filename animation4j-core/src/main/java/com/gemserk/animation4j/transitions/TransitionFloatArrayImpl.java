@@ -38,6 +38,13 @@ public class TransitionFloatArrayImpl implements Transition<float[]> {
 		this.b = new float[variables];
 		this.x = new float[variables];
 	}
+	
+	public TransitionFloatArrayImpl(float[] value) {
+		this.a = new float[value.length];
+		this.b = new float[value.length];
+		this.x = new float[value.length];
+		set(value);
+	}
 
 	@Override
 	public float[] get() {
