@@ -9,7 +9,7 @@ import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
  * @author acoppes
  * 
  */
-public class TransitionNoClassImpl implements Transition<float[]> {
+public class TransitionFloatArrayImpl implements Transition<float[]> {
 
 	private final TimeTransition timeTransition = new TimeTransition();
 
@@ -33,7 +33,7 @@ public class TransitionNoClassImpl implements Transition<float[]> {
 		this.speed = speed;
 	}
 
-	public TransitionNoClassImpl(int variables) {
+	public TransitionFloatArrayImpl(int variables) {
 		this.a = new float[variables];
 		this.b = new float[variables];
 		this.x = new float[variables];

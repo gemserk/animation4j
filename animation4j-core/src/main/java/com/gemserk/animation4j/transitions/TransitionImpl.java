@@ -14,7 +14,7 @@ public class TransitionImpl<T> implements Transition<T> {
 	T mutableObject;
 	TypeConverter<T> typeConverter;
 	
-	TransitionNoClassImpl transition;
+	TransitionFloatArrayImpl transition;
 
 	public void setFunctions(InterpolationFunction... functions) {
 		transition.setFunctions(functions);
@@ -32,7 +32,7 @@ public class TransitionImpl<T> implements Transition<T> {
 	public TransitionImpl(T mutableObject, TypeConverter<T> typeConverter) {
 		this.mutableObject = mutableObject;
 		this.typeConverter = typeConverter;
-		transition = new TransitionNoClassImpl(typeConverter.variables());
+		transition = new TransitionFloatArrayImpl(typeConverter.variables());
 		typeConverter.copyFromObject(mutableObject, transition.get());
 	}
 
