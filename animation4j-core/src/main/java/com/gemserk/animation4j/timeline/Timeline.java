@@ -7,15 +7,14 @@ import java.util.ArrayList;
  * 
  * @author acoppes
  */
-@SuppressWarnings("rawtypes")
 public class Timeline {
 
-	private ArrayList<TimelineValue> values;
+	private ArrayList<TimelineValueInterface> values;
 
 	/**
 	 * Build a new time line using the specified values.
 	 */
-	public Timeline(ArrayList<TimelineValue> values) {
+	public Timeline(ArrayList<TimelineValueInterface> values) {
 		this.values = values;
 	}
 

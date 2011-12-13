@@ -2,11 +2,23 @@ package com.gemserk.animation4j.timeline;
 
 import java.util.LinkedList;
 
-public class TimelineValueFloatArray {
+/**
+ * Implementation of TimelineValueInterface which works modifying a float[].
+ * 
+ * @author acoppes
+ * 
+ */
+public class TimelineValueFloatArray implements TimelineValueInterface {
 
 	float[] x;
 	LinkedList<KeyFrame> keyFrames;
 
+	/**
+	 * Creates a new TimelineValueFloatArray using the specified float[] as the array to be modified.
+	 * 
+	 * @param x
+	 *            The float array to be modified on setTime().
+	 */
 	public TimelineValueFloatArray(float[] x) {
 		this.x = x;
 		keyFrames = new LinkedList<KeyFrame>();
@@ -35,7 +47,7 @@ public class TimelineValueFloatArray {
 
 		previousKeyFrame.interpolate(keyFrame, x, weight);
 	}
-	
+
 	KeyFrame getKeyFrame(float time) {
 		if (keyFrames.size() == 1)
 			return keyFrames.getFirst();
