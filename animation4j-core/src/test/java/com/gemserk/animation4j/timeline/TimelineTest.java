@@ -23,7 +23,7 @@ public class TimelineTest {
 			.keyFrame(1f, new Vector2f(100f, 50f)) //
 			.build();
 		
-		Timeline timeline = new Timeline(new ArrayList<TimelineValueInterface>(){{
+		Timeline timeline = new Timeline(new ArrayList<TimelineValue>(){{
 			add(timelineValue);
 		}});
 		
@@ -47,7 +47,7 @@ public class TimelineTest {
 			.keyFrame(1f, new Vector2f(100f, 75f)) //
 			.build();
 		
-		Timeline timeline = new Timeline(new ArrayList<TimelineValueInterface>(){{
+		Timeline timeline = new Timeline(new ArrayList<TimelineValue>(){{
 			add(timelineValue);
 		}});
 		
@@ -71,7 +71,7 @@ public class TimelineTest {
 			.keyFrame(1f, new Vector2f(100f, 200f)) //
 			.build();
 		
-		Timeline timeline = new Timeline(new ArrayList<TimelineValueInterface>(){{
+		Timeline timeline = new Timeline(new ArrayList<TimelineValue>(){{
 			add(timelineValue);
 		}});
 		
@@ -93,7 +93,7 @@ public class TimelineTest {
 			.keyFrame(1f, new Vector2f(100f, 200f)) //
 			.build();
 
-		Timeline timeline = new Timeline(new ArrayList<TimelineValueInterface>(){{
+		Timeline timeline = new Timeline(new ArrayList<TimelineValue>(){{
 			add(timelineValue);
 		}});
 

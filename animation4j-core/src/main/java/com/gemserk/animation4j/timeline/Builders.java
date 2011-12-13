@@ -74,7 +74,7 @@ public class Builders {
 
 	public static class TimelineBuilder {
 
-		private ArrayList<TimelineValueInterface> values;
+		private ArrayList<TimelineValue> values;
 		private float duration;
 
 		private TimelineBuilder() {
@@ -86,7 +86,7 @@ public class Builders {
 		}
 
 		private void reset() {
-			values = new ArrayList<TimelineValueInterface>();
+			values = new ArrayList<TimelineValue>();
 			duration = 0f;
 		}
 

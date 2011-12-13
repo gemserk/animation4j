@@ -6,7 +6,7 @@ package com.gemserk.animation4j.timeline;
  * @author acoppes
  * 
  */
-public interface TimelineValueInterface {
+public interface TimelineValue {
 
 	/**
 	 * Adds a new KeyFrame to the TimelineValue.

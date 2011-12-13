@@ -10,7 +10,7 @@ import com.gemserk.animation4j.converters.TypeConverter;
  * @param <T>
  *            The type of the value.
  */
-public class TimelineValueMutableObjectImpl<T> implements TimelineValueInterface {
+public class TimelineValueMutableObjectImpl<T> implements TimelineValue {
 
 	private final TypeConverter<T> typeConverter;
 	private final float[] x;
@@ -20,7 +20,7 @@ public class TimelineValueMutableObjectImpl<T> implements TimelineValueInterface
 	private final TimelineValueFloatArrayImpl timelineValueFloatArrayImpl;
 
 	/**
-	 * Creates a new TimelineValue which works over the specified mutable object.
+	 * Creates a new instance which works over the specified mutable object.
 	 * 
 	 * @param mutableObject
 	 *            The object to be modified on setTime(time).

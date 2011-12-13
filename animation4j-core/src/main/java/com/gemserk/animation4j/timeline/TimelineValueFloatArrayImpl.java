@@ -8,13 +8,13 @@ import java.util.LinkedList;
  * @author acoppes
  * 
  */
-public class TimelineValueFloatArrayImpl implements TimelineValueInterface {
+public class TimelineValueFloatArrayImpl implements TimelineValue {
 
 	float[] x;
 	LinkedList<KeyFrame> keyFrames;
 
 	/**
-	 * Creates a new TimelineValueFloatArray using the specified float[] as the array to be modified.
+	 * Creates a new instance using the specified float[] as the array to be modified.
 	 * 
 	 * @param x
 	 *            The float array to be modified on setTime().

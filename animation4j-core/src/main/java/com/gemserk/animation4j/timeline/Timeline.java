@@ -9,12 +9,12 @@ import java.util.ArrayList;
  */
 public class Timeline {
 
-	private ArrayList<TimelineValueInterface> values;
+	private ArrayList<TimelineValue> values;
 
 	/**
 	 * Build a new time line using the specified values.
 	 */
-	public Timeline(ArrayList<TimelineValueInterface> values) {
+	public Timeline(ArrayList<TimelineValue> values) {
 		this.values = values;
 	}
 
