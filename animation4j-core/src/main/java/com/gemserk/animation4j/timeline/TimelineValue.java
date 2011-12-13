@@ -1,7 +1,5 @@
 package com.gemserk.animation4j.timeline;
 
-import java.util.LinkedList;
-
 import com.gemserk.animation4j.converters.TypeConverter;
 
 /**
@@ -15,13 +13,12 @@ import com.gemserk.animation4j.converters.TypeConverter;
 public class TimelineValue<T> {
 
 	private final TypeConverter<T> typeConverter;
-
 	private final float[] x;
 
-	private final LinkedList<KeyFrame> keyFrames;
-
 	private T mutableObject;
-	
+
+	private final TimelineValueFloatArray timelineValueFloatArray;
+
 	public void setMutableObject(T mutableObject) {
 		this.mutableObject = mutableObject;
 	}
@@ -30,11 +27,17 @@ public class TimelineValue<T> {
 		this.mutableObject = mutableObject;
 		this.typeConverter = typeConverter;
 		this.x = new float[typeConverter.variables()];
-		keyFrames = new LinkedList<KeyFrame>();
+		timelineValueFloatArray = new TimelineValueFloatArray(x);
 	}
 
+	/**
+	 * Adds a new KeyFrame to the TimelineValue.
+	 * 
+	 * @throws IllegalArgumentException
+	 *             if the KeyFrame value is not of the expected size.
+	 */
 	public void addKeyFrame(KeyFrame keyFrame) {
-		keyFrames.add(keyFrame);
+		timelineValueFloatArray.addKeyFrame(keyFrame);
 	}
 
 	/**
@@ -44,58 +47,13 @@ public class TimelineValue<T> {
 	 *            The time to use when calculating the value.
 	 */
 	public void setTime(float time) {
-		if (keyFrames.isEmpty())
-			throw new RuntimeException("cant interpolate without keyframes");
-		float[] value = getFloatValue(time);
-		typeConverter.copyToObject(mutableObject, value);
-	}
-
-	float[] getFloatValue(float time) {
-		KeyFrame keyFrame = getKeyFrame(time);
-		KeyFrame previousKeyFrame = getPreviousKeyFrame(keyFrame);
-
-		if (previousKeyFrame == null)
-			return keyFrame.getValue();
-
-		float interval = keyFrame.getTime() - previousKeyFrame.getTime();
-		float weight = (time - previousKeyFrame.getTime()) / interval;
-
-		return previousKeyFrame.interpolate(keyFrame, x, weight);
-	}
-
-	KeyFrame getKeyFrame(float time) {
-		if (keyFrames.size() == 1)
-			return keyFrames.getFirst();
-
-		KeyFrame firstKeyFrame = keyFrames.getFirst();
-
-		if (time < firstKeyFrame.getTime())
-			return firstKeyFrame;
-
-		for (int i = 0; i < keyFrames.size(); i++) {
-			KeyFrame currentKeyFrame = keyFrames.get(i);
-			if (currentKeyFrame.getTime() > time)
-				return currentKeyFrame;
-		}
-
-		return keyFrames.getLast();
-	}
-
-	KeyFrame getPreviousKeyFrame(KeyFrame keyFrame) {
-		int currentKeyFrameIndex = keyFrames.indexOf(keyFrame);
-		if (currentKeyFrameIndex - 1 < 0)
-			return null;
-		return keyFrames.get(currentKeyFrameIndex - 1);
+		timelineValueFloatArray.setTime(time);
+		typeConverter.copyToObject(mutableObject, x);
 	}
 
 	@Override
 	public String toString() {
-		StringBuffer stringBuffer = new StringBuffer("[");
-		stringBuffer.append(", keyframes:");
-		for (KeyFrame keyFrame : keyFrames)
-			stringBuffer.append(keyFrame.toString());
-		stringBuffer.append("]");
-		return stringBuffer.toString();
+		return timelineValueFloatArray.toString();
 	}
 
 }
