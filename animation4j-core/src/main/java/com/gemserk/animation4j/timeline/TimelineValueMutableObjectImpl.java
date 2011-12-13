@@ -10,14 +10,14 @@ import com.gemserk.animation4j.converters.TypeConverter;
  * @param <T>
  *            The type of the value.
  */
-public class TimelineValue<T> implements TimelineValueInterface {
+public class TimelineValueMutableObjectImpl<T> implements TimelineValueInterface {
 
 	private final TypeConverter<T> typeConverter;
 	private final float[] x;
 
 	private T mutableObject;
 
-	private final TimelineValueFloatArray timelineValueFloatArray;
+	private final TimelineValueFloatArrayImpl timelineValueFloatArrayImpl;
 
 	/**
 	 * Creates a new TimelineValue which works over the specified mutable object.
@@ -27,25 +27,25 @@ public class TimelineValue<T> implements TimelineValueInterface {
 	 * @param typeConverter
 	 *            The TypeConverter to be used when modifying the object.
 	 */
-	public TimelineValue(T mutableObject, TypeConverter<T> typeConverter) {
+	public TimelineValueMutableObjectImpl(T mutableObject, TypeConverter<T> typeConverter) {
 		this.mutableObject = mutableObject;
 		this.typeConverter = typeConverter;
 		this.x = new float[typeConverter.variables()];
-		timelineValueFloatArray = new TimelineValueFloatArray(x);
+		timelineValueFloatArrayImpl = new TimelineValueFloatArrayImpl(x);
 	}
 
 	public void addKeyFrame(KeyFrame keyFrame) {
-		timelineValueFloatArray.addKeyFrame(keyFrame);
+		timelineValueFloatArrayImpl.addKeyFrame(keyFrame);
 	}
 
 	public void setTime(float time) {
-		timelineValueFloatArray.setTime(time);
+		timelineValueFloatArrayImpl.setTime(time);
 		typeConverter.copyToObject(mutableObject, x);
 	}
 
 	@Override
 	public String toString() {
-		return timelineValueFloatArray.toString();
+		return timelineValueFloatArrayImpl.toString();
 	}
 
 }
