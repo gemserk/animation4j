@@ -13,6 +13,15 @@ public class TransitionImplTest {
 
 		float x, y;
 
+		public MyObject(float x, float y) {
+			this.x = x;
+			this.y = y;
+		}
+
+		public MyObject() {
+			this(0f, 0f);
+		}
+
 	}
 
 	class MyObjectTypeConverter implements TypeConverter<MyObject> {
@@ -24,6 +33,8 @@ public class TransitionImplTest {
 
 		@Override
 		public float[] copyFromObject(MyObject object, float[] x) {
+			if (x == null)
+				x = new float[variables()];
 			x[0] = object.x;
 			x[1] = object.y;
 			return x;
@@ -233,6 +244,8 @@ public class TransitionImplTest {
 
 			@Override
 			public float[] copyFromObject(MyObject object, float[] x) {
+				if (x == null)
+					x = new float[variables()];
 				x[0] = object.x;
 				x[1] = object.y;
 				x[2] = object.x + object.y;
@@ -251,4 +264,40 @@ public class TransitionImplTest {
 		assertThat(myObject.x, IsEqual.equalTo(19f));
 		assertThat(myObject.y, IsEqual.equalTo(-45f));
 	}
+
+	@Test
+	public void shouldReturnModifiedObjectWhenSetWithNoTime() {
+		MyObject myObject = new MyObject(50f, 50f);
+		Transition<MyObject> transition = new TransitionImpl<TransitionImplTest.MyObject>(myObject, new MyObjectTypeConverter());
+		
+		MyObject state = transition.get();
+		
+		assertEquals(50f, state.x, 0.01f);
+		assertEquals(50f, state.y, 0.01f);
+		
+		transition.set(new MyObject(25f, 75f));
+
+		state = transition.get();
+		
+		assertEquals(25f, state.x, 0.01f);
+		assertEquals(75f, state.y, 0.01f);
+	}
+	
+	@Test
+	public void bugTransitionStartingFromEndWhenSetAndThenSetWithTime() {
+		MyObject myObject = new MyObject(50f, 50f);
+		Transition<MyObject> transition = new TransitionImpl<TransitionImplTest.MyObject>(myObject, new MyObjectTypeConverter());
+		
+		MyObject state = transition.get();
+		
+		transition.set(new MyObject(0f, 0f));
+		transition.set(new MyObject(200f, 200f), 5f);
+
+		transition.update(0f);
+		state = transition.get();
+		
+		assertEquals(0f, state.x, 0.01f);
+		assertEquals(0f, state.y, 0.01f);
+	}
+	
 }
