@@ -121,7 +121,7 @@
 				<version>2.7</version>
 				<executions>
 					<execution>
-						<phase>install</phase>
+						<phase>package</phase>
 						<goals>
 							<goal>jar</goal>
 						</goals>
@@ -205,18 +205,6 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>animation4j-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>animation4j-java2d</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>animation4j-slick</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
