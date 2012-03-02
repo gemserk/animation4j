@@ -332,4 +332,18 @@ public class TransitionImplTest {
 		assertEquals(50f, myObject.y, 0.01f);
 	}
 	
+	@Test
+	public void shouldNotStartNewTransitionIfStartingOrEndingValueSet() {
+		MyObject myObject = new MyObject(50f, 50f);
+		Transition<MyObject> transition = new TransitionImpl<TransitionImplTest.MyObject>(myObject, new MyObjectTypeConverter());
+
+		assertThat(transition.isFinished(), IsEqual.equalTo(true));
+		transition.setStart(new MyObject(100f, 100f));
+		transition.update(1f);
+		assertThat(transition.isFinished(), IsEqual.equalTo(true));
+		transition.setEnd(new MyObject(100f, 100f));
+		transition.update(1f);
+		assertThat(transition.isFinished(), IsEqual.equalTo(true));
+	}
+	
 }
