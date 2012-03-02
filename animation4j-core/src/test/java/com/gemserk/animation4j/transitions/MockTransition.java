@@ -81,4 +81,16 @@ public class MockTransition<T> implements Transition<T> {
 		
 	}
 
+	@Override
+	public void setStartingValue(float[] value) {
+		// TODO Auto-generated function stub
+		
+	}
+
+	@Override
+	public void setEndingValue(float[] value) {
+		// TODO Auto-generated function stub
+		
+	}
+
 }

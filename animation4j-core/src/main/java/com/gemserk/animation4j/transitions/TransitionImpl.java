@@ -93,8 +93,18 @@ public class TransitionImpl<T> implements Transition<T> {
 	}
 
 	@Override
+	public void setStartingValue(float[] value) {
+		transition.setStartingValue(value);
+	}
+
+	@Override
 	public void setEndingValue(T t) {
 		transition.setEndingValue(typeConverter.copyFromObject(t, tmp));
+	}
+
+	@Override
+	public void setEndingValue(float[] value) {
+		transition.setEndingValue(value);
 	}
 
 }

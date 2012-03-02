@@ -60,12 +60,28 @@ public interface Transition<T> {
 	void setStartingValue(T t);
 
 	/**
+	 * Modifies the starting value of the transition.
+	 * 
+	 * @param value
+	 *            The value to set to the starting transition value.
+	 */
+	void setStartingValue(float[] value);
+
+	/**
 	 * Modifies the ending value of the transition.
 	 * 
 	 * @param t
 	 *            The value to set to the ending transition value.
 	 */
 	void setEndingValue(T t);
+
+	/**
+	 * Modifies the ending value of the transition.
+	 * 
+	 * @param value
+	 *            The value to set to the ending transition value.
+	 */
+	void setEndingValue(float[] value);
 
 	/**
 	 * Returns true whenever the transition was started, false otherwise.
