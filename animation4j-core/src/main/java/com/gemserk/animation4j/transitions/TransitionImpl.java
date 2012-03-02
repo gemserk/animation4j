@@ -88,13 +88,13 @@ public class TransitionImpl<T> implements Transition<T> {
 	}
 
 	@Override
-	public void setStart(T t) {
-		transition.setStart(typeConverter.copyFromObject(t, tmp));
+	public void setStartingValue(T t) {
+		transition.setStartingValue(typeConverter.copyFromObject(t, tmp));
 	}
 
 	@Override
-	public void setEnd(T t) {
-		transition.setEnd(typeConverter.copyFromObject(t, tmp));
+	public void setEndingValue(T t) {
+		transition.setEndingValue(typeConverter.copyFromObject(t, tmp));
 	}
 
 }

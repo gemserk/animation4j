@@ -58,13 +58,25 @@ public class MockTransition<T> implements Transition<T> {
 	}
 
 	@Override
-	public void setStart(T t) {
+	public void setStartingValue(T t) {
 		// TODO Auto-generated function stub
 		
 	}
 
 	@Override
-	public void setEnd(T t) {
+	public void setEndingValue(T t) {
+		// TODO Auto-generated function stub
+		
+	}
+
+	@Override
+	public void set(float[] t) {
+		// TODO Auto-generated function stub
+		
+	}
+
+	@Override
+	public void set(float[] value, float time) {
 		// TODO Auto-generated function stub
 		
 	}

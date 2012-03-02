@@ -96,12 +96,12 @@ public class TransitionFloatArrayImpl implements Transition<float[]> {
 	}
 
 	@Override
-	public void setStart(float[] value) {
+	public void setStartingValue(float[] value) {
 		System.arraycopy(value, 0, a, 0, Math.min(value.length, a.length));
 	}
 
 	@Override
-	public void setEnd(float[] value) {
+	public void setEndingValue(float[] value) {
 		System.arraycopy(value, 0, b, 0, Math.min(value.length, b.length));
 	}
 

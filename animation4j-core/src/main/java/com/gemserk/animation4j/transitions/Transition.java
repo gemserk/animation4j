@@ -16,12 +16,20 @@ public interface Transition<T> {
 	T get();
 
 	/**
-	 * Start an interpolation from a to b in the specified default time.
+	 * Instantly modifies current value of the transition to the specified value and stops the interpolation.
 	 * 
 	 * @param t
-	 *            The wanted new value.
+	 *            The value to set.
 	 */
 	void set(T t);
+
+	/**
+	 * Instantly modifies current value of the transition to the specified value and stops the interpolation.
+	 * 
+	 * @param t
+	 *            The value to set.
+	 */
+	void set(float[] t);
 
 	/**
 	 * Start an interpolation from a to b in the specified time.
@@ -34,12 +42,22 @@ public interface Transition<T> {
 	void set(T t, float time);
 
 	/**
+	 * Starts an interpolation using the current value as the interpolation starting value and the specified value as the interpolation ending value.
+	 * 
+	 * @param value
+	 *            The new interpolation ending value.
+	 * @param time
+	 *            The time of the transition.
+	 */
+	void set(float[] value, float time);
+
+	/**
 	 * Modifies the starting value of the transition.
 	 * 
 	 * @param t
 	 *            The value to set to the starting transition value.
 	 */
-	void setStart(T t);
+	void setStartingValue(T t);
 
 	/**
 	 * Modifies the ending value of the transition.
@@ -47,7 +65,7 @@ public interface Transition<T> {
 	 * @param t
 	 *            The value to set to the ending transition value.
 	 */
-	void setEnd(T t);
+	void setEndingValue(T t);
 
 	/**
 	 * Returns true whenever the transition was started, false otherwise.

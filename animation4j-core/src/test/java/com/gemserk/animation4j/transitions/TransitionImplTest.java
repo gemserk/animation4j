@@ -308,7 +308,7 @@ public class TransitionImplTest {
 		transition.set(new MyObject(0f, 0f));
 		transition.set(new MyObject(200f, 200f), 5f);
 		
-		transition.setStart(new MyObject(100f, 100f));
+		transition.setStartingValue(new MyObject(100f, 100f));
 
 		transition.update(2.5f);
 		
@@ -324,7 +324,7 @@ public class TransitionImplTest {
 		transition.set(new MyObject(0f, 0f));
 		transition.set(new MyObject(200f, 200f), 5f);
 		
-		transition.setEnd(new MyObject(100f, 100f));
+		transition.setEndingValue(new MyObject(100f, 100f));
 
 		transition.update(2.5f);
 		
@@ -338,10 +338,10 @@ public class TransitionImplTest {
 		Transition<MyObject> transition = new TransitionImpl<TransitionImplTest.MyObject>(myObject, new MyObjectTypeConverter());
 
 		assertThat(transition.isFinished(), IsEqual.equalTo(true));
-		transition.setStart(new MyObject(100f, 100f));
+		transition.setStartingValue(new MyObject(100f, 100f));
 		transition.update(1f);
 		assertThat(transition.isFinished(), IsEqual.equalTo(true));
-		transition.setEnd(new MyObject(100f, 100f));
+		transition.setEndingValue(new MyObject(100f, 100f));
 		transition.update(1f);
 		assertThat(transition.isFinished(), IsEqual.equalTo(true));
 	}
