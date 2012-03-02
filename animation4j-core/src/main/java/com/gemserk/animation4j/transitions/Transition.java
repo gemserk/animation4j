@@ -34,6 +34,22 @@ public interface Transition<T> {
 	void set(T t, float time);
 
 	/**
+	 * Modifies the starting value of the transition.
+	 * 
+	 * @param t
+	 *            The value to set to the starting transition value.
+	 */
+	void setStart(T t);
+
+	/**
+	 * Modifies the ending value of the transition.
+	 * 
+	 * @param t
+	 *            The value to set to the ending transition value.
+	 */
+	void setEnd(T t);
+
+	/**
 	 * Returns true whenever the transition was started, false otherwise.
 	 */
 	boolean isStarted();

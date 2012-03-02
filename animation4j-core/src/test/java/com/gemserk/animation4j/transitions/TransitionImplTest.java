@@ -300,4 +300,36 @@ public class TransitionImplTest {
 		assertEquals(0f, state.y, 0.01f);
 	}
 	
+	@Test
+	public void shouldUpdateBasedOnNewStartingValue() {
+		MyObject myObject = new MyObject(50f, 50f);
+		Transition<MyObject> transition = new TransitionImpl<TransitionImplTest.MyObject>(myObject, new MyObjectTypeConverter());
+		
+		transition.set(new MyObject(0f, 0f));
+		transition.set(new MyObject(200f, 200f), 5f);
+		
+		transition.setStart(new MyObject(100f, 100f));
+
+		transition.update(2.5f);
+		
+		assertEquals(150f, myObject.x, 0.01f);
+		assertEquals(150f, myObject.y, 0.01f);
+	}
+	
+	@Test
+	public void shouldUpdateBasedOnNewEndingValue() {
+		MyObject myObject = new MyObject(50f, 50f);
+		Transition<MyObject> transition = new TransitionImpl<TransitionImplTest.MyObject>(myObject, new MyObjectTypeConverter());
+		
+		transition.set(new MyObject(0f, 0f));
+		transition.set(new MyObject(200f, 200f), 5f);
+		
+		transition.setEnd(new MyObject(100f, 100f));
+
+		transition.update(2.5f);
+		
+		assertEquals(50f, myObject.x, 0.01f);
+		assertEquals(50f, myObject.y, 0.01f);
+	}
+	
 }

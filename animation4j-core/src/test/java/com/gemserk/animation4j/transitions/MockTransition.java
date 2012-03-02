@@ -57,4 +57,16 @@ public class MockTransition<T> implements Transition<T> {
 		
 	}
 
+	@Override
+	public void setStart(T t) {
+		// TODO Auto-generated function stub
+		
+	}
+
+	@Override
+	public void setEnd(T t) {
+		// TODO Auto-generated function stub
+		
+	}
+
 }

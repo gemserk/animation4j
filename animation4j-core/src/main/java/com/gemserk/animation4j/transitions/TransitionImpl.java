@@ -87,4 +87,14 @@ public class TransitionImpl<T> implements Transition<T> {
 		typeConverter.copyToObject(mutableObject, transition.get());
 	}
 
+	@Override
+	public void setStart(T t) {
+		transition.setStart(typeConverter.copyFromObject(t, tmp));
+	}
+
+	@Override
+	public void setEnd(T t) {
+		transition.setEnd(typeConverter.copyFromObject(t, tmp));
+	}
+
 }
