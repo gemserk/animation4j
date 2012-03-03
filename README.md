@@ -6,7 +6,7 @@ This project provides an easy way to animate values between time intervals.
 Features
 ------------
 
-* Animation of any object you want.
+* Animation an transitions of any object you want.
 * API based on CSS3 definitions for animations and transitions.
 * Optional event listeners for animation and transition state changes.
 * Low dependence to animation4j classes by providing black box interaction (optional).
@@ -22,11 +22,11 @@ To know how to use the project, you should know a bit about the following classe
 	
 	}
 
-(note: I removed some boilerplate code for the documentation examples)
+(note: I removed some boilerplate code for the documentation examples, like class and fields visibility declaration for example)
 
 ### Transition<T>
 
-This class provides a way to modify an object from one value to another in a specified time, the API:
+This class provides a way to perform a transition of an object from an starting value to an ending value in a specified time. The API looks like this:
 
 	Transition<T> {
 
@@ -45,11 +45,32 @@ This class provides a way to modify an object from one value to another in a spe
 		// returns true whenever the transition was finished, false otherwise.
 		boolean isFinished();
 
+		// updates the transition the specified time.
+		update(float delta)
+
 	}
+
+### TransitionBuilder
+
+Provides an easy way to build Transitions of objects. It is based on the fact that Transitions work over mutable objects. To create a new transition you specify the object to be modified, the type converter to use to modify it, the starting and ending values and the duration of the transition.
+
+The next example shows how to create a Transition<Vector2f>:
+
+	Vector2f myVector = new Vector2f();
+	Vector2fConverter vector2fConverter = new Vector2fConverter();
+	Transitions.stransition(myVector, vector2fConverter) // This line asks for a TransitionBuilder
+		.start(new Vector2f(10, 10))  // This line defines the starting value of the transition
+		.end(5f, new Vector2f(50, 50));  // This line defines the ending value and the duration of the transition.
+
+TransitionBuilder allows also to specify the values in float arrays instead having to create new objects, for example:
+
+	Transitions.stransition(myVector, vector2fConverter) // This line asks for a TransitionBuilder
+		.start(10f, 10f)  // This line defines the starting value of the transition
+		.end(5f, 50f, 50f);  // This line defines the ending value and the duration of the transition.
 
 ### TypeConverter
 
-Provides a way to let the framework copy values to your object and vice versa, this is the API:
+Provides a way to let the framework copy values to your object and vice versa. This is the API:
 
 	TypeConverter<T> {
 
@@ -65,7 +86,7 @@ Provides a way to let the framework copy values to your object and vice versa, t
 
 	}
 
-Using the previously defined Vector2f, an implementation of TypeConverter<Vector2f> could be something like this:
+Using the previously defined Vector2f, an example implementation of TypeConverter<Vector2f> looks like this:
 
 	Vector2fConverter implements TypeConverter<Vector2f> {
 	
@@ -90,18 +111,11 @@ Using the previously defined Vector2f, an implementation of TypeConverter<Vector
 		}
 	}
 
+
+
 ### Synchronizer
 
-This class provides an easy way to interact with the framework by registering transitions of objects you want to perform and then call the update method to synchronize the interpolated values of the registered transition with your object.
-
-### TransitionBuilder
-
-This class provides an easy way to build a Transition<T> that could be used to be registered on the Synchronizer. The next example shows how to create a Transition<Vector2f>:
-
-	Transitions.transitionBuilder() // This line asks for a TransitionBuilder
-		.start(new Vector2f(10, 10))  // This line defines the starting value of the transition
-		.end(new Vector2f(50, 50))  // This line defines the ending value of the transition
-		.time(0.5f)					// This line defines the duration of the transition to be half a second
+Initially, it was a class which performed synchronization of values between a transition and an object, but now that transitions work over mutable objects, this class lost his value. For now, it can be used to register transitions and call the update() method only once.
 
 How to use it
 ------------
@@ -113,10 +127,10 @@ First of all, you need to import the required jars of the project, if you are us
 	<dependency>
 		<groupId>com.gemserk.animation4j</groupId>
 		<artifactId>animation4j-core</artifactId>
-		<version>0.0.14</version>
+		<version>0.2.0</version>
 	</dependency>
 
-(note: 0.0.14 is the latest version uploaded to maven central by the time this document was made)
+(note: 0.2.0 is the latest version uploaded to maven central by the time this document was made)
 
 Otherwise, you can download the jars from the [downloads](https://github.com/gemserk/animation4j/downloads) section.
 
