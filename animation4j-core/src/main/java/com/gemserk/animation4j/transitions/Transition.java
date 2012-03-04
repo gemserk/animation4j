@@ -52,7 +52,7 @@ public interface Transition<T> {
 	void set(float[] value, float time);
 
 	/**
-	 * Modifies the starting value of the transition.
+	 * Modifies the starting value of the transition. If a transition is being performed, interpolation is calculated using the new value set.
 	 * 
 	 * @param t
 	 *            The value to set to the starting transition value.
@@ -60,7 +60,7 @@ public interface Transition<T> {
 	void setStartingValue(T t);
 
 	/**
-	 * Modifies the starting value of the transition.
+	 * Modifies the starting value of the transition. If a transition is being performed, interpolation is calculated using the new value set.
 	 * 
 	 * @param value
 	 *            The value to set to the starting transition value.
@@ -68,7 +68,7 @@ public interface Transition<T> {
 	void setStartingValue(float[] value);
 
 	/**
-	 * Modifies the ending value of the transition.
+	 * Modifies the ending value of the transition. If a transition is being performed, interpolation is calculated using the new value set.
 	 * 
 	 * @param t
 	 *            The value to set to the ending transition value.
@@ -76,7 +76,7 @@ public interface Transition<T> {
 	void setEndingValue(T t);
 
 	/**
-	 * Modifies the ending value of the transition.
+	 * Modifies the ending value of the transition. If a transition is being performed, interpolation is calculated using the new value set.
 	 * 
 	 * @param value
 	 *            The value to set to the ending transition value.
