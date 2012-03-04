@@ -42,12 +42,12 @@ public class Transitions {
 		}
 
 		public TransitionBuilder<T> end(float time, float... values) {
-			transitionImpl.start(values, time);
+			transitionImpl.start(time, values);
 			return this;
 		}
 
 		public TransitionBuilder<T> endObject(float time, T end) {
-			transitionImpl.start(typeConverter.copyFromObject(end, null), time);
+			transitionImpl.start(time, typeConverter.copyFromObject(end, null));
 			return this;
 		}
 

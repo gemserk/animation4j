@@ -120,14 +120,14 @@ public class Example3 extends Java2dGameAdapter {
 				mouseInside = true;
 
 				// when the mouse is over the image, we set the color to white
-				colorTransition.start(new Color(1f, 1f, 1f, 1f), 0.6f);
+				colorTransition.start(0.6f, new Color(1f, 1f, 1f, 1f));
 			}
 		} else {
 			if (mouseInside) {
 				mouseInside = false;
 
 				// when the mouse left the image, we set again the color to the previous color.
-				colorTransition.start(new Color(0.3f, 0.3f, 0.8f, 1f), 0.6f);
+				colorTransition.start(0.6f, new Color(0.3f, 0.3f, 0.8f, 1f));
 			}
 		}
 

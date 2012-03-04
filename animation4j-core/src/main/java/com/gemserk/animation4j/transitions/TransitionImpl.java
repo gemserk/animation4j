@@ -65,18 +65,18 @@ public class TransitionImpl<T> implements Transition<T> {
 	}
 
 	@Override
-	public void start(T t, float time) {
+	public void start(float time, T t) {
 		typeConverter.copyFromObject(t, tmp);
-		transition.start(tmp, time);
+		transition.start(time, tmp);
 	}
 
-	public void start(float[] t) {
-		transition.start(t);
+	public void start(float... value) {
+		transition.start(value);
 		typeConverter.copyToObject(mutableObject, transition.get());
 	}
 
-	public void start(float[] t, float time) {
-		transition.start(t, time);
+	public void start(float time, float... value) {
+		transition.start(time, value);
 	}
 
 	@Override

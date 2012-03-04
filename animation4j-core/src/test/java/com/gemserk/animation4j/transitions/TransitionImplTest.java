@@ -91,7 +91,7 @@ public class TransitionImplTest {
 
 		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
-		transition.start(a, 5f);
+		transition.start(5f, a);
 	}
 
 	@Test
@@ -106,7 +106,7 @@ public class TransitionImplTest {
 		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
 		transition.start(a);
-		transition.start(b, 1f);
+		transition.start(1f, b);
 
 		assertEquals(true, transition.isStarted());
 		assertEquals(false, transition.isFinished());
@@ -138,7 +138,7 @@ public class TransitionImplTest {
 
 		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
-		transition.start(b, 1f);
+		transition.start(1f, b);
 
 		transition.update(0f);
 
@@ -161,7 +161,7 @@ public class TransitionImplTest {
 
 		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
-		transition.start(b, 1f);
+		transition.start(1f, b);
 
 		transition.update(0.5f);
 
@@ -291,7 +291,7 @@ public class TransitionImplTest {
 		MyObject state = transition.get();
 		
 		transition.start(new MyObject(0f, 0f));
-		transition.start(new MyObject(200f, 200f), 5f);
+		transition.start(5f, new MyObject(200f, 200f));
 
 		transition.update(0f);
 		state = transition.get();
@@ -306,7 +306,7 @@ public class TransitionImplTest {
 		Transition<MyObject> transition = new TransitionImpl<TransitionImplTest.MyObject>(myObject, new MyObjectTypeConverter());
 		
 		transition.start(new MyObject(0f, 0f));
-		transition.start(new MyObject(200f, 200f), 5f);
+		transition.start(5f, new MyObject(200f, 200f));
 		
 		transition.setStartingValue(new MyObject(100f, 100f));
 
@@ -322,7 +322,7 @@ public class TransitionImplTest {
 		Transition<MyObject> transition = new TransitionImpl<TransitionImplTest.MyObject>(myObject, new MyObjectTypeConverter());
 		
 		transition.start(new MyObject(0f, 0f));
-		transition.start(new MyObject(200f, 200f), 5f);
+		transition.start(5f, new MyObject(200f, 200f));
 		
 		transition.setEndingValue(new MyObject(100f, 100f));
 
