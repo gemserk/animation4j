@@ -36,7 +36,7 @@ public class TransitionImpl<T> implements Transition<T> {
 		this.typeConverter = typeConverter;
 		transition = new TransitionFloatArrayImpl(typeConverter.variables());
 		tmp = typeConverter.copyFromObject(mutableObject, tmp);
-		transition.set(tmp);
+		transition.start(tmp);
 	}
 
 	/**
@@ -59,24 +59,24 @@ public class TransitionImpl<T> implements Transition<T> {
 	}
 
 	@Override
-	public void set(T t) {
+	public void start(T t) {
 		typeConverter.copyFromObject(t, tmp);
-		set(tmp);
+		start(tmp);
 	}
 
 	@Override
-	public void set(T t, float time) {
+	public void start(T t, float time) {
 		typeConverter.copyFromObject(t, tmp);
-		transition.set(tmp, time);
+		transition.start(tmp, time);
 	}
 
-	public void set(float[] t) {
-		transition.set(t);
+	public void start(float[] t) {
+		transition.start(t);
 		typeConverter.copyToObject(mutableObject, transition.get());
 	}
 
-	public void set(float[] t, float time) {
-		transition.set(t, time);
+	public void start(float[] t, float time) {
+		transition.start(t, time);
 	}
 
 	@Override

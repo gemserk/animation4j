@@ -12,12 +12,12 @@ public class MockTransition<T> implements Transition<T> {
 	}
 
 	@Override
-	public void set(T t) {
+	public void start(T t) {
 
 	}
 
 	@Override
-	public void set(T t, float time) {
+	public void start(T t, float time) {
 
 	}
 
@@ -70,13 +70,13 @@ public class MockTransition<T> implements Transition<T> {
 	}
 
 	@Override
-	public void set(float[] t) {
+	public void start(float[] t) {
 		// TODO Auto-generated function stub
 		
 	}
 
 	@Override
-	public void set(float[] value, float time) {
+	public void start(float[] value, float time) {
 		// TODO Auto-generated function stub
 		
 	}

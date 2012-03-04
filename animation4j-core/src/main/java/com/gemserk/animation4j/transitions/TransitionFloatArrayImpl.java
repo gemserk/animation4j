@@ -43,7 +43,7 @@ public class TransitionFloatArrayImpl implements Transition<float[]> {
 		this.a = new float[value.length];
 		this.b = new float[value.length];
 		this.x = new float[value.length];
-		set(value);
+		start(value);
 	}
 
 	@Override
@@ -56,14 +56,14 @@ public class TransitionFloatArrayImpl implements Transition<float[]> {
 	}
 
 	@Override
-	public void set(float[] t) {
+	public void start(float[] t) {
 		System.arraycopy(t, 0, a, 0, Math.min(t.length, a.length));
 		System.arraycopy(t, 0, x, 0, Math.min(t.length, x.length));
 		finished = true;
 	}
 
 	@Override
-	public void set(float[] t, float time) {
+	public void start(float[] t, float time) {
 		started = true;
 		finished = false;
 

@@ -139,7 +139,7 @@ public class Example4 extends Java2dGameAdapter {
 				.speed(1f) //
 				.build();
 
-		backgroundColor.set(new Color(0.4f, 0.4f, 0.4f, 0.6f), 1f);
+		backgroundColor.start(new Color(0.4f, 0.4f, 0.4f, 0.6f), 1f);
 	}
 
 	java.awt.Color getColor(Transition<Color> transition) {
@@ -208,17 +208,17 @@ public class Example4 extends Java2dGameAdapter {
 				if (!button.mouseInside) {
 					button.mouseInside = true;
 					// when the mouse is over the image, we set the color to white
-					button.color.set(new Color(1f, 1f, 1f, 1f), 0.25f);
-					button.glowColor.set(new Color(1f, 0f, 0f, 1f), 1f);
-					button.size.set(new Vector2f(1.05f, 1.05f), 0.25f);
+					button.color.start(new Color(1f, 1f, 1f, 1f), 0.25f);
+					button.glowColor.start(new Color(1f, 0f, 0f, 1f), 1f);
+					button.size.start(new Vector2f(1.05f, 1.05f), 0.25f);
 				}
 			} else {
 				if (button.mouseInside) {
 					button.mouseInside = false;
 					// when the mouse left the image, we set again the color to the previous color.
-					button.color.set(new Color(1f, 1f, 1f, 1f), 0.25f);
-					button.glowColor.set(new Color(1f, 0f, 0f, 0f), 0.25f);
-					button.size.set(new Vector2f(1f, 1f), 0.25f);
+					button.color.start(new Color(1f, 1f, 1f, 1f), 0.25f);
+					button.glowColor.start(new Color(1f, 0f, 0f, 0f), 0.25f);
+					button.size.start(new Vector2f(1f, 1f), 0.25f);
 				}
 			}
 
