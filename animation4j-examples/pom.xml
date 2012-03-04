@@ -4,16 +4,15 @@
 	<parent>
 		<artifactId>animation4j</artifactId>
 		<groupId>com.gemserk.animation4j</groupId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>0.2.1-SNAPSHOT</version>
 	</parent>
 	<groupId>com.gemserk.animation4j</groupId>
 	<artifactId>animation4j-examples</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.2.1-SNAPSHOT</version>
 	<name>Examples module of animation4j</name>
 	<description>This module contains example applications using animation4j for the user to get started</description>
 
 	<properties>
-		<resourcesmanager.version>0.1.0</resourcesmanager.version>
 		<guice.version>3.0</guice.version>
 	</properties>
 
@@ -65,38 +64,33 @@
 		</profile>
 
 		<profile>
-			<id>github-upload-runnable</id>
+			<id>github-upload-artifacts</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<build>
 				<plugins>
 					<plugin>
-						<groupId>com.github.maven.plugin</groupId>
-						<artifactId>maven-github-plugin</artifactId>
-						<version>1.0-SNAPSHOT</version>
+						  <groupId>com.github.github</groupId>
+						  <artifactId>downloads-maven-plugin</artifactId>
+						  <version>0.3</version>
 						<configuration>
-							<repository>https://github.com/gemserk/animation4j</repository>
-							<artifacts>
-								<artifact>
-									<file>${project.build.directory}/animation4j-examples-${project.version}-jar-with-dependencies.jar</file>
-									<description>Latest runnable jar with examples of animation4j
-										library </description>
-									<override>true</override>
-									<finalName>animation4j-examples-runnable.jar</finalName>
-								</artifact>
-							</artifacts>
+							<description>Runnable jar with examples.</description>
+							<override>true</override>
+							<includes>
+								<param>animation4j-examples-${project.version}-jar-with-dependencies.jar</param>
+							</includes>
 						</configuration>
 						<executions>
-							<execution>
-								<id>upload-artifacts</id>
-								<phase>package</phase>
-								<goals>
-									<goal>deploy</goal>
-								</goals>
-							</execution>
+						  <execution>
+							<goals>
+							  <goal>upload</goal>
+							</goals>
+							<phase>install</phase>
+						  </execution>
 						</executions>
 					</plugin>
+
 				</plugins>
 			</build>
 		</profile>
@@ -106,15 +100,6 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>animation4j-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>animation4j-java2d</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.gemserk.resources</groupId>
-			<artifactId>resourcesmanager-java2dmodule</artifactId>
-			<version>${resourcesmanager.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.inject</groupId>

@@ -10,4 +10,10 @@ public interface Java2dGame {
 
 	void update(int delta);
 	
+	void pause();
+	
+	void resume();
+	
+	void dispose();
+	
 }

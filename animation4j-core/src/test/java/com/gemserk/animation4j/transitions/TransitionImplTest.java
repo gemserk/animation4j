@@ -1,133 +1,303 @@
 package com.gemserk.animation4j.transitions;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import org.hamcrest.core.IsEqual;
-import org.junit.Before;
 import org.junit.Test;
 
-import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.converters.TypeConverter;
-import com.gemserk.animation4j.interpolator.FloatArrayInterpolator;
 
 public class TransitionImplTest {
 
-	private InternalTransition<Float> internalTransition;
+	class MyObject {
 
-	private TypeConverter<Float> typeConverter = Converters.floatValue();
+		float x, y;
 
-	@Before
-	public void setUp() {
-		internalTransition = new InternalTransition<Float>(100f, typeConverter, new FloatArrayInterpolator(typeConverter.variables()));
+		public MyObject(float x, float y) {
+			this.x = x;
+			this.y = y;
+		}
+
+		public MyObject() {
+			this(0f, 0f);
+		}
+
+	}
+
+	class MyObjectTypeConverter implements TypeConverter<MyObject> {
+
+		@Override
+		public int variables() {
+			return 2;
+		}
+
+		@Override
+		public float[] copyFromObject(MyObject object, float[] x) {
+			if (x == null)
+				x = new float[variables()];
+			x[0] = object.x;
+			x[1] = object.y;
+			return x;
+		}
+
+		@Override
+		public MyObject copyToObject(MyObject object, float[] x) {
+			object.x = x[0];
+			object.y = x[1];
+			return object;
+		}
+
 	}
 
 	@Test
-	public void shouldTransitionFromValueToValue() {
-		Transition<Float> transition = new TransitionImpl<Float>(internalTransition, 1f);
-		assertThat(transition.get(), IsEqual.equalTo(100f));
-		transition.set(200f);
-		assertThat(transition.get(), IsEqual.equalTo(100f));
-		transition.update(0.1f);
-		assertThat(transition.get(), IsEqual.equalTo(110f));
+	public void shouldSetObjectOnSetWithNoTime() {
+		float a[] = { 10f, 20f };
+
+		MyObject myObject = new MyObject();
+		myObject.x = 0f;
+		myObject.y = 0f;
+
+		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
+
+		transition.set(a);
+
+		assertThat(myObject.x, IsEqual.equalTo(10f));
+		assertThat(myObject.y, IsEqual.equalTo(20f));
+
+		assertEquals(false, transition.isStarted());
+		assertEquals(true, transition.isFinished());
 	}
 
 	@Test
-	public void shouldReturnFirstValueWhenNoTimePassed() {
-		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 1f);
-		assertThat(transition.get(), IsEqual.equalTo(100f));
-		transition.set(200f);
-		assertThat(transition.get(), IsEqual.equalTo(100f));
+	public void shouldSetOnlyFirstArrayValues() {
+		float a[] = { 10f };
+
+		MyObject myObject = new MyObject();
+		myObject.x = 0f;
+		myObject.y = 0f;
+
+		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
+
+		transition.set(a);
 	}
 
 	@Test
-	public void shouldReturnSecondValueWhenTimePassed() {
-		Transition<Float> transition = new TransitionImpl<Float>(internalTransition, 1f);
-		assertThat(transition.get(), IsEqual.equalTo(100f));
-		transition.set(200f);
-		transition.update(10000);
-		assertThat(transition.get(), IsEqual.equalTo(200f));
+	public void shouldSetOnlyFirstArrayValuesWhenSettingWithTime() {
+		float a[] = { 10f };
+
+		MyObject myObject = new MyObject();
+		myObject.x = 0f;
+		myObject.y = 0f;
+
+		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
+
+		transition.set(a, 5f);
 	}
 
 	@Test
-	public void shouldReturnInterpolatedValue() {
-		Transition<Float> transition = new TransitionImpl<Float>(internalTransition, 10f);
-		assertThat(transition.get(), IsEqual.equalTo(100f));
-		transition.set(200f);
-		transition.update(0.05f);
-		assertThat(transition.get(), IsEqual.equalTo(150f));
-		transition.update(0.025f);
-		assertThat(transition.get(), IsEqual.equalTo(175f));
+	public void shouldSetObjectValuesOnUpdateWhenSetWithTime() {
+		float a[] = { 0f, 0f };
+		float b[] = { 50f, 50f };
+
+		MyObject myObject = new MyObject();
+		myObject.x = 0f;
+		myObject.y = 0f;
+
+		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
+
+		transition.set(a);
+		transition.set(b, 1f);
+
+		assertEquals(true, transition.isStarted());
+		assertEquals(false, transition.isFinished());
+
+		transition.update(0.5f);
+
+		assertThat(myObject.x, IsEqual.equalTo(25f));
+		assertThat(myObject.y, IsEqual.equalTo(25f));
+
+		assertEquals(true, transition.isStarted());
+		assertEquals(false, transition.isFinished());
+
+		transition.update(0.5f);
+
+		assertThat(myObject.x, IsEqual.equalTo(50f));
+		assertThat(myObject.y, IsEqual.equalTo(50f));
+
+		assertEquals(true, transition.isStarted());
+		assertEquals(true, transition.isFinished());
 	}
 
 	@Test
-	public void testSeveralSetAndUpdates() {
-		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f);
-		assertThat(transition.get(), IsEqual.equalTo(100f));
-		transition.set(200f);
-		transition.update(0.05f);
-		assertThat(transition.get(), IsEqual.equalTo(150f));
-		transition.update(0.025f);
-		assertThat(transition.get(), IsEqual.equalTo(175f));
+	public void shouldTransitionFromCurrentValueToEndValue() {
+		float b[] = { 50f, 50f };
 
-		transition.set(0f);
-		assertThat(transition.get(), IsEqual.equalTo(175f));
-		transition.update(0.1f);
+		MyObject myObject = new MyObject();
+		myObject.x = 40f;
+		myObject.y = 40f;
 
-		assertThat(transition.get(), IsEqual.equalTo(0f));
+		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
-		transition.set(100f);
-		transition.update(0.025f);
-		assertEquals(25f, transition.get(), 0.01f);
-		transition.update(0.025f);
-		assertEquals(50f, transition.get(), 0.01f);
-		transition.update(0.025f);
-		assertEquals(75f, transition.get(), 0.01f);
-		transition.update(0.025f);
-		assertEquals(100f, transition.get(), 0.01f);
+		transition.set(b, 1f);
+
+		transition.update(0f);
+
+		assertThat(myObject.x, IsEqual.equalTo(40f));
+		assertThat(myObject.y, IsEqual.equalTo(40f));
+
+		transition.update(1f);
+
+		assertThat(myObject.x, IsEqual.equalTo(50f));
+		assertThat(myObject.y, IsEqual.equalTo(50f));
 	}
 
 	@Test
-	public void shouldNotBeStartedWhenCreated() {
-		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f);
-		assertThat(transition.isStarted(), IsEqual.equalTo(false));
+	public void shouldReturnCurrentValueWhenGet() {
+		float b[] = { 50f, 50f };
+
+		MyObject myObject = new MyObject();
+		myObject.x = 40f;
+		myObject.y = 40f;
+
+		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
+
+		transition.set(b, 1f);
+
+		transition.update(0.5f);
+
+		float x[] = transition.getValue();
+
+		assertNotNull(x);
+		assertThat(x[0], IsEqual.equalTo(45f));
+		assertThat(x[1], IsEqual.equalTo(45f));
 	}
 
 	@Test
-	public void shouldBeFinishedWhenCreated() {
-		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f);
-		assertThat(transition.isFinished(), IsEqual.equalTo(true));
+	public void shouldReturnMutableObject() {
+		float b[] = { 50f, 50f };
+
+		MyObject myObject = new MyObject();
+		myObject.x = 40f;
+		myObject.y = 40f;
+
+		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
+		assertSame(myObject, transition.get());
 	}
 
 	@Test
-	public void shouldBeStartedWhenTimeHasNotPassedButSetCalled() {
-		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f);
-		transition.set(500f, 2000);
-		assertThat(transition.isStarted(), IsEqual.equalTo(true));
+	public void testBuilder() {
+		MyObject myObject = new MyObject();
+		myObject.x = 40f;
+		myObject.y = 40f;
+
+		Transition<MyObject> transition = Transitions.transition(myObject, new MyObjectTypeConverter()) //
+				.start(0f, 0f) //
+				.end(2f, 20f) //
+				.build();
+
+		assertThat(myObject.x, IsEqual.equalTo(0f));
+		assertThat(myObject.y, IsEqual.equalTo(0f));
+
+		transition.update(2f);
+
+		assertThat(myObject.x, IsEqual.equalTo(20f));
+		assertThat(myObject.y, IsEqual.equalTo(0f));
 	}
 
 	@Test
-	public void shouldNotBeFinishedWhenTimeHasNotPassedButSetCalled() {
-		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f);
-		transition.set(500f, 2000);
-		assertThat(transition.isFinished(), IsEqual.equalTo(false));
+	public void testBuilder2() {
+		MyObject myObject = new MyObject();
+		myObject.x = 40f;
+		myObject.y = 40f;
+
+		Transition<MyObject> transition = Transitions.transition(myObject, new MyObjectTypeConverter()) //
+				.build();
+
+		assertThat(myObject.x, IsEqual.equalTo(40f));
+		assertThat(myObject.y, IsEqual.equalTo(40f));
+
+		transition.update(1f);
+
+		assertThat(myObject.x, IsEqual.equalTo(40f));
+		assertThat(myObject.y, IsEqual.equalTo(40f));
 	}
 
 	@Test
-	public void shouldKeepBeingInTransitionWhenTwoOrMoreSetCalled() {
-		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f);
-		transition.set(500f, 1000);
-		transition.update(500);
-		transition.set(250f, 1000);
-		assertThat(transition.isFinished(), IsEqual.equalTo(false));
+	public void testBuilderWithCustomTypeConverter() {
+		MyObject myObject = new MyObject();
+		myObject.x = 40f;
+		myObject.y = 40f;
+
+		Transition<MyObject> transition = Transitions.transition(myObject, new MyObjectTypeConverter() {
+
+			@Override
+			public int variables() {
+				return 3;
+			}
+
+			@Override
+			public MyObject copyToObject(MyObject object, float[] x) {
+				object.x = 2f * x[0] - 1f;
+				object.y = -1f * x[1] - x[2] + 5f;
+				return object;
+			}
+
+			@Override
+			public float[] copyFromObject(MyObject object, float[] x) {
+				if (x == null)
+					x = new float[variables()];
+				x[0] = object.x;
+				x[1] = object.y;
+				x[2] = object.x + object.y;
+				return x;
+			}
+
+		}).start(1f, 2f, 3f) //
+				.end(1f, 10f, 20f, 30f) //
+				.build();
+
+		assertThat(myObject.x, IsEqual.equalTo(1f));
+		assertThat(myObject.y, IsEqual.equalTo(0f));
+
+		transition.update(1f);
+
+		assertThat(myObject.x, IsEqual.equalTo(19f));
+		assertThat(myObject.y, IsEqual.equalTo(-45f));
 	}
 
 	@Test
-	public void shouldNotBeInTransitionWhenTimeHasPassed() {
-		TransitionImpl<Float> transition = new TransitionImpl<Float>(internalTransition, 10f);
-		transition.set(500f, 1000);
-		transition.update(1000);
-		assertThat(transition.isFinished(), IsEqual.equalTo(true));
-	}
+	public void shouldReturnModifiedObjectWhenSetWithNoTime() {
+		MyObject myObject = new MyObject(50f, 50f);
+		Transition<MyObject> transition = new TransitionImpl<TransitionImplTest.MyObject>(myObject, new MyObjectTypeConverter());
+		
+		MyObject state = transition.get();
+		
+		assertEquals(50f, state.x, 0.01f);
+		assertEquals(50f, state.y, 0.01f);
+		
+		transition.set(new MyObject(25f, 75f));
 
+		state = transition.get();
+		
+		assertEquals(25f, state.x, 0.01f);
+		assertEquals(75f, state.y, 0.01f);
+	}
+	
+	@Test
+	public void bugTransitionStartingFromEndWhenSetAndThenSetWithTime() {
+		MyObject myObject = new MyObject(50f, 50f);
+		Transition<MyObject> transition = new TransitionImpl<TransitionImplTest.MyObject>(myObject, new MyObjectTypeConverter());
+		
+		MyObject state = transition.get();
+		
+		transition.set(new MyObject(0f, 0f));
+		transition.set(new MyObject(200f, 200f), 5f);
+
+		transition.update(0f);
+		state = transition.get();
+		
+		assertEquals(0f, state.x, 0.01f);
+		assertEquals(0f, state.y, 0.01f);
+	}
+	
 }

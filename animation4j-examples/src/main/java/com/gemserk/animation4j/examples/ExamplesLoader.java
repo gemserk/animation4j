@@ -1,5 +1,6 @@
 package com.gemserk.animation4j.examples;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,17 +13,25 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import com.gemserk.componentsengine.java2d.Java2dDesktopApplication;
+import com.gemserk.componentsengine.java2d.Java2dGame;
+import com.gemserk.componentsengine.java2d.input.KeyboardInput;
+import com.gemserk.componentsengine.java2d.input.MouseInput;
+import com.gemserk.componentsengine.java2d.render.CurrentGraphicsProvider;
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Singleton;
 
 @SuppressWarnings("serial")
 public class ExamplesLoader {
 
 	static class Option {
 
-		Java2dDesktopApplication app;
+		Java2dGame app;
 
 		String name;
 
-		public Option(String name, Java2dDesktopApplication app) {
+		public Option(String name, Java2dGame app) {
 			this.name = name;
 			this.app = app;
 		}
@@ -56,10 +65,10 @@ public class ExamplesLoader {
 		mainFrame.setVisible(true);
 
 		options = new Option[] { //
-				new Option("Example1", new Example1()), //
-				new Option("Example2", new Example2()), //
-				new Option("Example3", new Example3()), //
-				new Option("Example4", new Example4()), //
+		new Option("Example1 - Basic Animation", new Example1()), //
+		 new Option("Example2 - Advanced Animation", new Example2()), //
+		 new Option("Example3 - Basic Transition", new Example3()), //
+		 new Option("Example4 - Advanced Transition", new Example4()), //
 		};
 
 		selectedOption = options[0];
@@ -94,15 +103,25 @@ public class ExamplesLoader {
 						System.out.println("Starting " + selectedOption.name);
 
 						try {
-							// mainFrame.setVisible(false);
+							final Java2dDesktopApplication application = new Java2dDesktopApplication();
 
-							final Java2dDesktopApplication exampleInstance = selectedOption.app;
-							
-							exampleInstance.init();
-							
-							new Thread() { 
+							Injector injector = Guice.createInjector(new AbstractModule() {
+								@Override
+								protected void configure() {
+									bind(CurrentGraphicsProvider.class).in(Singleton.class);
+									bind(KeyboardInput.class).in(Singleton.class);
+									bind(MouseInput.class).in(Singleton.class);
+									bind(Java2dGame.class).toInstance(selectedOption.app);
+								}
+							});
+
+							injector.injectMembers(application);
+
+							application.init(selectedOption.name, new Dimension(640, 480), false);
+
+							new Thread() {
 								public void run() {
-									exampleInstance.start();
+									application.start();
 								};
 							}.start();
 
@@ -115,9 +134,10 @@ public class ExamplesLoader {
 
 			}
 		});
-		
-		mainFrame.repaint();
-		
+
+		mainFrame.invalidate();
+		mainFrame.validate();
+
 	}
 
 }

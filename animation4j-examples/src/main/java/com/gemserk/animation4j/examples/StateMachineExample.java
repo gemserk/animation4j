@@ -19,12 +19,16 @@ public class StateMachineExample {
 		Vector2f b = new Vector2f(200, 200);
 
 		StateMachine<Vector2f> stateMachine = new StateMachine<Vector2f>(a);
-		
-		final Transition<Vector2f> transition = Transitions.transitionBuilder(a).typeConverter(vector2fConverter).build();
-		transition.set(b, 2f);
+
+		// final Transition<Vector2f> transition = Transitions.transitionBuilder(a).typeConverter(vector2fConverter).build();
+
+		final Transition<Vector2f> transition = Transitions.transition(a, vector2fConverter) //
+				.build();
+
+		transition.set(b, 0.2f);
 
 		stateMachine.addTransition(new StateTransition<Vector2f>(new StateTransitionCondition<Vector2f>() {
-			
+
 			@Override
 			public boolean matches(Vector2f sourceState, Vector2f targetState) {
 				boolean shouldPerform = transition.get().distanceSq(targetState) < 1f;
@@ -34,16 +38,16 @@ public class StateMachineExample {
 			}
 
 		}, a, b) {
-			
+
 			@Override
 			protected void afterTransition(Vector2f sourceState, Vector2f currentState) {
-				transition.set(sourceState, 2f);
+				transition.set(sourceState, 0.2f);
 			}
-			
+
 		});
-		
+
 		stateMachine.addTransition(new StateTransition<Vector2f>(new StateTransitionCondition<Vector2f>() {
-			
+
 			@Override
 			public boolean matches(Vector2f sourceState, Vector2f targetState) {
 				boolean shouldPerform = transition.get().distanceSq(targetState) < 1f;
@@ -56,22 +60,24 @@ public class StateMachineExample {
 
 			@Override
 			protected void afterTransition(Vector2f sourceState, Vector2f currentState) {
-				transition.set(sourceState, 2f);
+				transition.set(sourceState, 0.2f);
 			}
-			
+
 		});
-		
+
 		int time = 0;
-		
-		while (time < 10000) {
+
+		while (time < 1000) {
 			System.out.println("currentState: " + stateMachine.getCurrentState());
 			System.out.println("transition: " + transition.get());
 			
+			transition.update(0.1f);
+
 			Thread.sleep(100);
 			stateMachine.checkTransitionConditions();
-			time+=100;
+			time += 100;
 		}
-		
+
 	}
 
 }

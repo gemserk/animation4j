@@ -1,80 +1,90 @@
 package com.gemserk.animation4j.transitions;
 
+import com.gemserk.animation4j.converters.TypeConverter;
+import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
 
 /**
- * Provides default implementation of transition.
+ * Default implementation of Transition interface which works over a mutable object by using a TypeConverter.
  * 
  * @author acoppes
+ * 
  */
 public class TransitionImpl<T> implements Transition<T> {
 
-	/**
-	 * Used internally to multiply delta when updating the transition, 2f implies 2x the interpolation speed.
-	 */
-	private float speed;
+	T mutableObject;
+	TypeConverter<T> typeConverter;
+	
+	TransitionFloatArrayImpl transition;
+	
+	float[] tmp;
 
-	private InternalTransition<T> transition;
-
-	private boolean started = false;
-	private boolean finished = true;
-
-	public TransitionImpl(InternalTransition<T> transition) {
-		this(transition, 1f);
-	}
-
-	public TransitionImpl(InternalTransition<T> transition, float speed) {
-		this.speed = speed;
-		this.transition = transition;
-	}
-
-	public T get() {
-		return transition.get();
-	}
-
-	public void set(T t) {
-		this.set(t, 1f);
-	}
-
-	public void set(T t, float time) {
-		transition.set(t, time);
-
-		started = true;
-		finished = false;
-	}
-
-	@Override
-	public boolean isStarted() {
-		return started;
-	}
-
-	@Override
-	public boolean isFinished() {
-		return finished;
-	}
-
-	@Override
-	public void update(float delta) {
-		if (finished)
-			return;
-
-		started = true;
-
-		if (delta <= 0)
-			return;
-
-		float time = delta * speed;
-		transition.update(time);
-
-		finished = transition.isFinished();
+	public void setFunctions(InterpolationFunction... functions) {
+		transition.setFunctions(functions);
 	}
 
 	@Override
 	public float getSpeed() {
-		return speed;
+		return transition.getSpeed();
+	}
+
+	public void setSpeed(float speed) {
+		transition.setSpeed(speed);
+	}
+
+	public TransitionImpl(T mutableObject, TypeConverter<T> typeConverter) {
+		this.mutableObject = mutableObject;
+		this.typeConverter = typeConverter;
+		transition = new TransitionFloatArrayImpl(typeConverter.variables());
+		tmp = typeConverter.copyFromObject(mutableObject, tmp);
+		transition.set(tmp);
 	}
 
 	@Override
-	public void setSpeed(float speed) {
-		this.speed = speed;
+	public T get() {
+		return mutableObject;
 	}
+
+	public float[] getValue() {
+		return transition.get();
+	}
+
+	@Override
+	public void set(T t) {
+		typeConverter.copyFromObject(t, tmp);
+		set(tmp);
+	}
+
+	@Override
+	public void set(T t, float time) {
+		typeConverter.copyFromObject(t, tmp);
+		transition.set(tmp, time);
+	}
+
+	public void set(float[] t) {
+		transition.set(t);
+		typeConverter.copyToObject(mutableObject, transition.get());
+	}
+
+	public void set(float[] t, float time) {
+		transition.set(t, time);
+	}
+
+	@Override
+	public boolean isStarted() {
+		return transition.isStarted();
+	}
+
+	@Override
+	public boolean isFinished() {
+		return transition.isFinished();
+	}
+
+	@Override
+	public void update(float delta) {
+		if (!isStarted() || isFinished())
+			return;
+		transition.update(delta);
+		typeConverter.copyToObject(mutableObject, transition.get());
+	}
+
 }

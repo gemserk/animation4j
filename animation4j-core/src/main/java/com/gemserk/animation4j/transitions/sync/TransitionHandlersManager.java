@@ -27,7 +27,7 @@ public class TransitionHandlersManager {
 	private Pool<TransitionMonitorProcessor> monitorProcessorPool = new Pool<TransitionMonitorProcessor>(monitorProcessorFactory, 100);
 
 	/**
-	 * Monitors the Transition and calls the TransitionEventHandler whenever the Transition changes its states.
+	 * Monitors the Transition and calls the TransitionEventHandler whenever the Transition changes its state.
 	 * 
 	 * @param transition
 	 *            The Transition to be monitored.

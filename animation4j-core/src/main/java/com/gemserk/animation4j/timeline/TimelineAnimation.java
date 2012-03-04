@@ -46,17 +46,18 @@ public class TimelineAnimation implements Animation {
 		return animation.getDelay();
 	}
 
-	public TimelineAnimation(Timeline timeline) {
-		this(timeline, false);
+	public TimelineAnimation(Timeline timeline, float duration) {
+		this(timeline, duration, false);
 	}
 
-	public TimelineAnimation(Timeline timeline, boolean started) {
-		this(timeline, started, false);
+	public TimelineAnimation(Timeline timeline, float duration, boolean started) {
+		this(timeline, duration, started, false);
 	}
 
-	public TimelineAnimation(Timeline timeline, boolean started, boolean alternateDirection) {
+	public TimelineAnimation(Timeline timeline, float duration, boolean started, boolean alternateDirection) {
 		this.timeline = timeline;
 		this.animation = new AnimationImpl(started, alternateDirection);
+		this.animation.setDuration(duration);
 	}
 
 	/**
@@ -64,10 +65,6 @@ public class TimelineAnimation implements Animation {
 	 */
 	protected boolean isIterationFinished() {
 		return animation.isIterationFinished();
-	}
-
-	public <T> T getValue(String name) {
-		return (T) timeline.getValue(getCurrentTime() - getDelay(), name);
 	}
 
 	public Timeline getTimeline() {
@@ -82,6 +79,7 @@ public class TimelineAnimation implements Animation {
 	@Override
 	public void start(int iterationCount) {
 		animation.start(iterationCount);
+		timeline.move(animation.getCurrentTime());
 	}
 
 	@Override
@@ -123,11 +121,13 @@ public class TimelineAnimation implements Animation {
 
 	public void update(float time) {
 		animation.update(time);
+		if (animation.isStarted())
+			timeline.move(animation.getCurrentTime() - animation.getDelay());
 	}
 	
-	public void update(int time) {
-		animation.update((float) time * 0.001f);
-	}
+//	public void update(int time) {
+//		animation.update((float) time * 0.001f);
+//	}
 
 	public void nextIteration() {
 		animation.nextIteration();
