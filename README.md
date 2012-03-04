@@ -134,8 +134,6 @@ First of all, you need to import the required jars of the project, if you are us
 
 Otherwise, you can download the jars from the [downloads](https://github.com/gemserk/animation4j/downloads) section.
 
-There are different ways of using the framework, the next sections shows some of them.
-
 ### Example: Using the Transition API 
 
 Start by creating a new transition:
@@ -155,9 +153,9 @@ Now, in some part of the code (probably the update method if you are making a ga
 Limitations
 ------------
 
-* To improve performance of the framework by not generating garbage each time an interpolation is made by the Transition implementation only mutable objects can be used. However, you can create mutable classes to help in perform transitions of immutable objects (TODO: example of this).
+* To improve performance of the framework by not generating garbage each time an interpolation is made by the Transition implementation only mutable objects can be used. However, you can create a mutable class over an immutable class to be able to perform transitions of the immutable class (TODO: example of this).
 
-* You have to create the TypeConverter manually for your own object types as the TypeConverter<Vector2f> of the previous example, Animation4j can't create it by you automatically (at least for now). The good part is you have to do that only once and you can reuse the TypeConverter instance whenever you want since it is stateless.
+* You have to create the TypeConverter manually for your own object types as the TypeConverter<Vector2f> of the previous example. For now, the library can't create them automatically. The good part is you have to do that only once and you can reuse the TypeConverter instance whenever you want since it is stateless.
 
 TODO List
 ------------
