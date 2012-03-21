@@ -51,6 +51,8 @@ public class Example3 extends Java2dGameAdapter {
 
 	JEditorPane creditsPane;
 
+	private Color houseColor;
+
 	@Override
 	public void init() {
 		
@@ -74,7 +76,8 @@ public class Example3 extends Java2dGameAdapter {
 
 		// Creates a Color transition using a color interpolator with a linear interpolation function.
 
-		colorTransition = Transitions.transition(new Color(0.3f, 0.3f, 0.8f, 1f), new ColorConverter()) //
+		houseColor = new Color(0.3f, 0.3f, 0.8f, 1f);
+		colorTransition = Transitions.transition(houseColor, new ColorConverter()) //
 				.functions(functions) //
 				.build();
 	}
@@ -87,8 +90,7 @@ public class Example3 extends Java2dGameAdapter {
 
 		{
 			// render the image using the color of the transition
-			Color c = colorTransition.get();
-			java.awt.Color color = new java.awt.Color(c.r, c.g, c.b, c.a);
+			java.awt.Color color = new java.awt.Color(houseColor.r, houseColor.g, houseColor.b, houseColor.a);
 			java2dRenderer.render(new Java2dImageRenderObject(1, houseImage, 320, 340, 1, 1, 0f, color));
 		}
 

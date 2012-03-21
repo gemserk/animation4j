@@ -19,8 +19,6 @@ public class TimeTransition {
 
 	/**
 	 * Returns the percentage of the current time over the total time.
-	 * 
-	 * @return
 	 */
 	public float get() {
 		if (transitionTime == 0)

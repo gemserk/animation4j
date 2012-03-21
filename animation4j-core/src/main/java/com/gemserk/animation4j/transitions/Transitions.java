@@ -89,7 +89,7 @@ public class Transitions {
 	 * @return The TransitionBuilder to build the new transition.
 	 */
 	public static <T> TransitionBuilder<T> transition(T mutableObject) {
-		return transition(mutableObject, (TypeConverter) Converters.converter(mutableObject.getClass()));
+		return transition(mutableObject, Converters.converter(mutableObject.getClass()));
 	}
 
 }
