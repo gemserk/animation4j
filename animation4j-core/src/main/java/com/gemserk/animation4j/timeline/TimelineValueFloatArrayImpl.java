@@ -1,6 +1,6 @@
 package com.gemserk.animation4j.timeline;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 /**
  * Implementation of TimelineValueInterface which works modifying a float[].
@@ -11,7 +11,7 @@ import java.util.LinkedList;
 public class TimelineValueFloatArrayImpl implements TimelineValue {
 
 	float[] x;
-	LinkedList<KeyFrame> keyFrames;
+	ArrayList<KeyFrame> keyFrames;
 
 	/**
 	 * Creates a new instance using the specified float[] as the array to be modified.
@@ -21,7 +21,7 @@ public class TimelineValueFloatArrayImpl implements TimelineValue {
 	 */
 	public TimelineValueFloatArrayImpl(float[] x) {
 		this.x = x;
-		keyFrames = new LinkedList<KeyFrame>();
+		keyFrames = new ArrayList<KeyFrame>();
 	}
 
 	public void addKeyFrame(KeyFrame keyFrame) {
@@ -50,9 +50,9 @@ public class TimelineValueFloatArrayImpl implements TimelineValue {
 
 	KeyFrame getKeyFrame(float time) {
 		if (keyFrames.size() == 1)
-			return keyFrames.getFirst();
+			return keyFrames.get(0);
 
-		KeyFrame firstKeyFrame = keyFrames.getFirst();
+		KeyFrame firstKeyFrame = keyFrames.get(0);
 
 		if (time < firstKeyFrame.getTime())
 			return firstKeyFrame;
@@ -63,7 +63,7 @@ public class TimelineValueFloatArrayImpl implements TimelineValue {
 				return currentKeyFrame;
 		}
 
-		return keyFrames.getLast();
+		return keyFrames.get(keyFrames.size() - 1);
 	}
 
 	KeyFrame getPreviousKeyFrame(KeyFrame keyFrame) {
