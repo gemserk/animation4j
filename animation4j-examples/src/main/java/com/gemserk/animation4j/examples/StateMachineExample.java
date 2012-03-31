@@ -25,7 +25,7 @@ public class StateMachineExample {
 		final Transition<Vector2f> transition = Transitions.transition(a, vector2fConverter) //
 				.build();
 
-		transition.set(b, 0.2f);
+		transition.start(0.2f, b);
 
 		stateMachine.addTransition(new StateTransition<Vector2f>(new StateTransitionCondition<Vector2f>() {
 
@@ -41,7 +41,7 @@ public class StateMachineExample {
 
 			@Override
 			protected void afterTransition(Vector2f sourceState, Vector2f currentState) {
-				transition.set(sourceState, 0.2f);
+				transition.start(0.2f, sourceState);
 			}
 
 		});
@@ -60,7 +60,7 @@ public class StateMachineExample {
 
 			@Override
 			protected void afterTransition(Vector2f sourceState, Vector2f currentState) {
-				transition.set(sourceState, 0.2f);
+				transition.start(0.2f, sourceState);
 			}
 
 		});

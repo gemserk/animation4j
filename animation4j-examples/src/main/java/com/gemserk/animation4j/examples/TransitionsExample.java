@@ -28,7 +28,7 @@ public class TransitionsExample {
 		
 		System.out.println("Transition value: " + transition.get());
 
-		transition.set(new Vector2f(100f, 100f), 0.5f);
+		transition.start(0.5f, new Vector2f(100f, 100f));
 
 		System.out.println("Transition value: " + transition.get());
 		transition.update(0.3f);
@@ -36,7 +36,7 @@ public class TransitionsExample {
 		transition.update(0.2f);
 		System.out.println("Transition value: " + transition.get());
 
-		transition.set(new Vector2f(200f, 200f), 0f);
+		transition.start(0f, new Vector2f(200f, 200f));
 		System.out.println("Transition value: " + transition.get());
 	}
 

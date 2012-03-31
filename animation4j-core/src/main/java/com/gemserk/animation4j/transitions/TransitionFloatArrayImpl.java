@@ -38,12 +38,12 @@ public class TransitionFloatArrayImpl implements Transition<float[]> {
 		this.b = new float[variables];
 		this.x = new float[variables];
 	}
-	
+
 	public TransitionFloatArrayImpl(float[] value) {
 		this.a = new float[value.length];
 		this.b = new float[value.length];
 		this.x = new float[value.length];
-		set(value);
+		start(value);
 	}
 
 	@Override
@@ -56,19 +56,19 @@ public class TransitionFloatArrayImpl implements Transition<float[]> {
 	}
 
 	@Override
-	public void set(float[] t) {
+	public void start(float... t) {
 		System.arraycopy(t, 0, a, 0, Math.min(t.length, a.length));
 		System.arraycopy(t, 0, x, 0, Math.min(t.length, x.length));
 		finished = true;
 	}
 
 	@Override
-	public void set(float[] t, float time) {
+	public void start(float time, float... value) {
 		started = true;
 		finished = false;
 
 		System.arraycopy(x, 0, a, 0, Math.min(x.length, a.length));
-		System.arraycopy(t, 0, b, 0, Math.min(t.length, b.length));
+		System.arraycopy(value, 0, b, 0, Math.min(value.length, b.length));
 
 		timeTransition.start(time);
 	}
@@ -93,6 +93,16 @@ public class TransitionFloatArrayImpl implements Transition<float[]> {
 
 		if (timeTransition.isFinished())
 			finished = true;
+	}
+
+	@Override
+	public void setStartingValue(float[] value) {
+		System.arraycopy(value, 0, a, 0, Math.min(value.length, a.length));
+	}
+
+	@Override
+	public void setEndingValue(float[] value) {
+		System.arraycopy(value, 0, b, 0, Math.min(value.length, b.length));
 	}
 
 }

@@ -31,7 +31,7 @@ public class TransitionMonitorExample {
 		System.out.println("Transition was started: " + transitionMonitor.wasStarted());
 		System.out.println("Transition was finished: " + transitionMonitor.wasFinished());
 
-		transition.set(new Vector2f(100f, 100f), 500);
+		transition.start(500, new Vector2f(100f, 100f));
 		transition.update(300);
 
 		transitionMonitor.update();

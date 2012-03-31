@@ -59,7 +59,7 @@ public class TransitionImplTest {
 
 		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
-		transition.set(a);
+		transition.start(a);
 
 		assertThat(myObject.x, IsEqual.equalTo(10f));
 		assertThat(myObject.y, IsEqual.equalTo(20f));
@@ -78,7 +78,7 @@ public class TransitionImplTest {
 
 		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
-		transition.set(a);
+		transition.start(a);
 	}
 
 	@Test
@@ -91,7 +91,7 @@ public class TransitionImplTest {
 
 		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
-		transition.set(a, 5f);
+		transition.start(5f, a);
 	}
 
 	@Test
@@ -105,8 +105,8 @@ public class TransitionImplTest {
 
 		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
-		transition.set(a);
-		transition.set(b, 1f);
+		transition.start(a);
+		transition.start(1f, b);
 
 		assertEquals(true, transition.isStarted());
 		assertEquals(false, transition.isFinished());
@@ -138,7 +138,7 @@ public class TransitionImplTest {
 
 		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
-		transition.set(b, 1f);
+		transition.start(1f, b);
 
 		transition.update(0f);
 
@@ -161,7 +161,7 @@ public class TransitionImplTest {
 
 		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
-		transition.set(b, 1f);
+		transition.start(1f, b);
 
 		transition.update(0.5f);
 
@@ -275,7 +275,7 @@ public class TransitionImplTest {
 		assertEquals(50f, state.x, 0.01f);
 		assertEquals(50f, state.y, 0.01f);
 		
-		transition.set(new MyObject(25f, 75f));
+		transition.start(new MyObject(25f, 75f));
 
 		state = transition.get();
 		
@@ -290,14 +290,60 @@ public class TransitionImplTest {
 		
 		MyObject state = transition.get();
 		
-		transition.set(new MyObject(0f, 0f));
-		transition.set(new MyObject(200f, 200f), 5f);
+		transition.start(new MyObject(0f, 0f));
+		transition.start(5f, new MyObject(200f, 200f));
 
 		transition.update(0f);
 		state = transition.get();
 		
 		assertEquals(0f, state.x, 0.01f);
 		assertEquals(0f, state.y, 0.01f);
+	}
+	
+	@Test
+	public void shouldUpdateBasedOnNewStartingValue() {
+		MyObject myObject = new MyObject(50f, 50f);
+		Transition<MyObject> transition = new TransitionImpl<TransitionImplTest.MyObject>(myObject, new MyObjectTypeConverter());
+		
+		transition.start(new MyObject(0f, 0f));
+		transition.start(5f, new MyObject(200f, 200f));
+		
+		transition.setStartingValue(new MyObject(100f, 100f));
+
+		transition.update(2.5f);
+		
+		assertEquals(150f, myObject.x, 0.01f);
+		assertEquals(150f, myObject.y, 0.01f);
+	}
+	
+	@Test
+	public void shouldUpdateBasedOnNewEndingValue() {
+		MyObject myObject = new MyObject(50f, 50f);
+		Transition<MyObject> transition = new TransitionImpl<TransitionImplTest.MyObject>(myObject, new MyObjectTypeConverter());
+		
+		transition.start(new MyObject(0f, 0f));
+		transition.start(5f, new MyObject(200f, 200f));
+		
+		transition.setEndingValue(new MyObject(100f, 100f));
+
+		transition.update(2.5f);
+		
+		assertEquals(50f, myObject.x, 0.01f);
+		assertEquals(50f, myObject.y, 0.01f);
+	}
+	
+	@Test
+	public void shouldNotStartNewTransitionIfStartingOrEndingValueSet() {
+		MyObject myObject = new MyObject(50f, 50f);
+		Transition<MyObject> transition = new TransitionImpl<TransitionImplTest.MyObject>(myObject, new MyObjectTypeConverter());
+
+		assertThat(transition.isFinished(), IsEqual.equalTo(true));
+		transition.setStartingValue(new MyObject(100f, 100f));
+		transition.update(1f);
+		assertThat(transition.isFinished(), IsEqual.equalTo(true));
+		transition.setEndingValue(new MyObject(100f, 100f));
+		transition.update(1f);
+		assertThat(transition.isFinished(), IsEqual.equalTo(true));
 	}
 	
 }

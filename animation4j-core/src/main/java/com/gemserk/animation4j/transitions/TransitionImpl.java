@@ -13,9 +13,9 @@ public class TransitionImpl<T> implements Transition<T> {
 
 	T mutableObject;
 	TypeConverter<T> typeConverter;
-	
+
 	TransitionFloatArrayImpl transition;
-	
+
 	float[] tmp;
 
 	public void setFunctions(InterpolationFunction... functions) {
@@ -36,7 +36,17 @@ public class TransitionImpl<T> implements Transition<T> {
 		this.typeConverter = typeConverter;
 		transition = new TransitionFloatArrayImpl(typeConverter.variables());
 		tmp = typeConverter.copyFromObject(mutableObject, tmp);
-		transition.set(tmp);
+		transition.start(tmp);
+	}
+
+	/**
+	 * Sets the object to be modified by the transition.
+	 * 
+	 * @param object
+	 *            The mutable object to be modified.
+	 */
+	public void setObject(T object) {
+		this.mutableObject = object;
 	}
 
 	@Override
@@ -49,24 +59,24 @@ public class TransitionImpl<T> implements Transition<T> {
 	}
 
 	@Override
-	public void set(T t) {
+	public void start(T t) {
 		typeConverter.copyFromObject(t, tmp);
-		set(tmp);
+		start(tmp);
 	}
 
 	@Override
-	public void set(T t, float time) {
+	public void start(float time, T t) {
 		typeConverter.copyFromObject(t, tmp);
-		transition.set(tmp, time);
+		transition.start(time, tmp);
 	}
 
-	public void set(float[] t) {
-		transition.set(t);
+	public void start(float... value) {
+		transition.start(value);
 		typeConverter.copyToObject(mutableObject, transition.get());
 	}
 
-	public void set(float[] t, float time) {
-		transition.set(t, time);
+	public void start(float time, float... value) {
+		transition.start(time, value);
 	}
 
 	@Override
@@ -85,6 +95,26 @@ public class TransitionImpl<T> implements Transition<T> {
 			return;
 		transition.update(delta);
 		typeConverter.copyToObject(mutableObject, transition.get());
+	}
+
+	@Override
+	public void setStartingValue(T t) {
+		transition.setStartingValue(typeConverter.copyFromObject(t, tmp));
+	}
+
+	@Override
+	public void setStartingValue(float[] value) {
+		transition.setStartingValue(value);
+	}
+
+	@Override
+	public void setEndingValue(T t) {
+		transition.setEndingValue(typeConverter.copyFromObject(t, tmp));
+	}
+
+	@Override
+	public void setEndingValue(float[] value) {
+		transition.setEndingValue(value);
 	}
 
 }

@@ -32,22 +32,22 @@ public class Transitions {
 		}
 
 		public TransitionBuilder<T> start(float... values) {
-			transitionImpl.set(values);
+			transitionImpl.start(values);
 			return this;
 		}
 
 		public TransitionBuilder<T> startObject(T start) {
-			transitionImpl.set(typeConverter.copyFromObject(start, null));
+			transitionImpl.start(typeConverter.copyFromObject(start, null));
 			return this;
 		}
 
 		public TransitionBuilder<T> end(float time, float... values) {
-			transitionImpl.set(values, time);
+			transitionImpl.start(time, values);
 			return this;
 		}
 
 		public TransitionBuilder<T> endObject(float time, T end) {
-			transitionImpl.set(typeConverter.copyFromObject(end, null), time);
+			transitionImpl.start(time, typeConverter.copyFromObject(end, null));
 			return this;
 		}
 
@@ -89,7 +89,7 @@ public class Transitions {
 	 * @return The TransitionBuilder to build the new transition.
 	 */
 	public static <T> TransitionBuilder<T> transition(T mutableObject) {
-		return transition(mutableObject, (TypeConverter) Converters.converter(mutableObject.getClass()));
+		return transition(mutableObject, Converters.converter(mutableObject.getClass()));
 	}
 
 }
