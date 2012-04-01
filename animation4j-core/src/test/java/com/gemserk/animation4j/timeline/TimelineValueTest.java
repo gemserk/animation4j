@@ -132,7 +132,7 @@ public class TimelineValueTest {
 		FloatValue value1 = new FloatValue(10f);
 		FloatValue value2 = new FloatValue(10f);
 		
-		TimelineValueImpl<FloatValue> timelineValue = new TimelineValueImpl<FloatValue>(value1, floatValueConverter);
+		TimelineValue<FloatValue> timelineValue = new TimelineValueImpl<FloatValue>(value1, floatValueConverter);
 
 		KeyFrame firstKeyFrame = new KeyFrame(0f, new float[] { 10f });
 		KeyFrame secondKeyFrame = new KeyFrame(1f, new float[] { 20f });
@@ -151,6 +151,28 @@ public class TimelineValueTest {
 		timelineValue.setTime(0.5f);
 
 		assertThat(value2.value, IsEqual.equalTo(15f));
+	}
+	
+	@Test
+	public void testSetWithObjectAndTime() {
+		FloatValue value1 = new FloatValue(10f);
+		FloatValue value2 = new FloatValue(10f);
+		
+		TimelineValue<FloatValue> timelineValue = new TimelineValueImpl<FloatValue>(value1, floatValueConverter);
+
+		KeyFrame firstKeyFrame = new KeyFrame(0f, new float[] { 10f });
+		KeyFrame secondKeyFrame = new KeyFrame(1f, new float[] { 20f });
+		KeyFrame thirdKeyFrame = new KeyFrame(2f, new float[] { 30f });
+
+		timelineValue.addKeyFrame(firstKeyFrame);
+		timelineValue.addKeyFrame(secondKeyFrame);
+		timelineValue.addKeyFrame(thirdKeyFrame);
+		
+		timelineValue.setTime(value1, 0.5f);
+		timelineValue.setTime(value2, 1f);
+		
+		assertThat(value1.value, IsEqual.equalTo(15f));
+		assertThat(value2.value, IsEqual.equalTo(20f));
 	}
 
 }

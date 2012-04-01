@@ -25,6 +25,16 @@ public interface TimelineValue<T> {
 	void setTime(float time);
 
 	/**
+	 * Modifies the object based on the TimelineValue internal values.
+	 * 
+	 * @param object
+	 *            The object to be modified.
+	 * @param time
+	 *            The time on the timeline.
+	 */
+	void setTime(T object, float time);
+
+	/**
 	 * Binds an object to be modified on the setTime(..).
 	 * 
 	 * @param object

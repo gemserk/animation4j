@@ -14,7 +14,7 @@ public class TimelineValueImpl<T> implements TimelineValue<T> {
 
 	private final float[] x;
 	private final TimelineValueFloatArrayImpl timelineValueFloatArrayImpl;
-	
+
 	private TypeConverter<T> typeConverter;
 
 	/**
@@ -50,6 +50,11 @@ public class TimelineValueImpl<T> implements TimelineValue<T> {
 	}
 
 	public void setTime(float time) {
+		setTime(object, time);
+	}
+
+	@Override
+	public void setTime(T object, float time) {
 		timelineValueFloatArrayImpl.setTime(time);
 		typeConverter.copyToObject(object, x);
 	}
