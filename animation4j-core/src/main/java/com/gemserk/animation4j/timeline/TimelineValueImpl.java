@@ -10,7 +10,7 @@ import com.gemserk.animation4j.converters.TypeConverter;
  * @param <T>
  *            The type of the value.
  */
-public class TimelineValueMutableObjectImpl<T> implements TimelineValue {
+public class TimelineValueImpl<T> implements TimelineValue {
 
 	private final TypeConverter<T> typeConverter;
 	private final float[] x;
@@ -37,7 +37,7 @@ public class TimelineValueMutableObjectImpl<T> implements TimelineValue {
 	 * @param typeConverter
 	 *            The TypeConverter to be used when modifying the object.
 	 */
-	public TimelineValueMutableObjectImpl(T object, TypeConverter<T> typeConverter) {
+	public TimelineValueImpl(T object, TypeConverter<T> typeConverter) {
 		this.object = object;
 		this.typeConverter = typeConverter;
 		this.x = new float[typeConverter.variables()];

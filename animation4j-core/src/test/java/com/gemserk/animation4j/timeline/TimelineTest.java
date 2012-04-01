@@ -18,7 +18,7 @@ public class TimelineTest {
 	public void shouldSetValuesForTheStartOfTheTimeline() {
 		Vector2f position = new Vector2f(0f, 0f);
 		
-		final TimelineValueMutableObjectImpl<Vector2f> timelineValue = Builders.timelineValue(position, vector2fConverter)
+		final TimelineValueImpl<Vector2f> timelineValue = Builders.timelineValue(position, vector2fConverter)
 			.keyFrame(0f, new Vector2f(50f, 50f)) //
 			.keyFrame(1f, new Vector2f(100f, 50f)) //
 			.build();
@@ -42,7 +42,7 @@ public class TimelineTest {
 	public void shouldSetValuesForTheEndOfTheTimeline() {
 		Vector2f position = new Vector2f(0f, 0f);
 		
-		final TimelineValueMutableObjectImpl<Vector2f> timelineValue = Builders.timelineValue(position, vector2fConverter)
+		final TimelineValueImpl<Vector2f> timelineValue = Builders.timelineValue(position, vector2fConverter)
 			.keyFrame(0f, new Vector2f(50f, 50f)) //
 			.keyFrame(1f, new Vector2f(100f, 75f)) //
 			.build();
@@ -66,7 +66,7 @@ public class TimelineTest {
 	public void shouldSetValuesForTimeline() {
 		Vector2f position = new Vector2f(0f, 0f);
 		
-		final TimelineValueMutableObjectImpl<Vector2f> timelineValue = Builders.timelineValue(position, vector2fConverter)
+		final TimelineValueImpl<Vector2f> timelineValue = Builders.timelineValue(position, vector2fConverter)
 			.keyFrame(0f, new Vector2f(50f, 0f)) //
 			.keyFrame(1f, new Vector2f(100f, 200f)) //
 			.build();
@@ -88,7 +88,7 @@ public class TimelineTest {
 
 		Vector2f position = new Vector2f(0f, 0f);
 		
-		final TimelineValueMutableObjectImpl<Vector2f> timelineValue = Builders.timelineValue(position, vector2fConverter)
+		final TimelineValueImpl<Vector2f> timelineValue = Builders.timelineValue(position, vector2fConverter)
 			.keyFrame(0f, new Vector2f(50f, 0f)) //
 			.keyFrame(1f, new Vector2f(100f, 200f)) //
 			.build();

@@ -62,8 +62,8 @@ public class Builders {
 			return this;
 		}
 		
-		public TimelineValueMutableObjectImpl<T> build() {
-			TimelineValueMutableObjectImpl<T> timelineValue = new TimelineValueMutableObjectImpl<T>(mutableObject, typeConverter);
+		public TimelineValueImpl<T> build() {
+			TimelineValueImpl<T> timelineValue = new TimelineValueImpl<T>(mutableObject, typeConverter);
 			for (int i = 0; i < keyFrames.size(); i++)
 				timelineValue.addKeyFrame(keyFrames.get(i));
 			reset();
