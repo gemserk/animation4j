@@ -45,6 +45,9 @@ class TimelineValueFloatArrayImpl {
 		float interval = keyFrame.getTime() - previousKeyFrame.getTime();
 		float weight = (time - previousKeyFrame.getTime()) / interval;
 
+//		if (weight >= 1f)
+//			weight = 1f;
+
 		previousKeyFrame.interpolate(keyFrame, x, weight);
 	}
 

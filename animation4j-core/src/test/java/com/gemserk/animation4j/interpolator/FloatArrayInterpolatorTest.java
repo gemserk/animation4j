@@ -33,10 +33,10 @@ public class FloatArrayInterpolatorTest {
 		float b[] = new float[] {1f, 1f};
 		float c[] = new float[2];
 		
-		FloatArrayInterpolator.interpolate(a, b, c, 0.5f, InterpolationFunctions.linear(), InterpolationFunctions.quadratic(0f, 0.1f, 1f));
+		FloatArrayInterpolator.interpolate(a, b, c, 0.5f, InterpolationFunctions.linear(), InterpolationFunctions.quadraticEaseOut);
 		
 		assertThat(c[0], IsEqual.equalTo(0.5f));
-		assertThat(c[1], IsEqual.equalTo(0.3f));
+		assertThat(c[1], IsEqual.equalTo(0.75f));
 	}
 
 	@Test
