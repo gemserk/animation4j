@@ -9,12 +9,13 @@ import java.util.ArrayList;
  */
 public class Timeline {
 
+	@SuppressWarnings("rawtypes")
 	private ArrayList<TimelineValue> values;
 
 	/**
 	 * Build a new time line using the specified values.
 	 */
-	public Timeline(ArrayList<TimelineValue> values) {
+	public Timeline(@SuppressWarnings("rawtypes") ArrayList<TimelineValue> values) {
 		this.values = values;
 	}
 
@@ -27,6 +28,11 @@ public class Timeline {
 	public void move(float time) {
 		for (int i = 0; i < values.size(); i++) 
 			values.get(i).setTime(time);
+	}
+	
+	@Override
+	public String toString() {
+		return values.toString();
 	}
 
 }

@@ -1,12 +1,12 @@
 package com.gemserk.animation4j.timeline;
 
 /**
- * Provides an API to work with values of a Timeline.
+ * Provides an API to work with timeline values and mutable objects.
  * 
  * @author acoppes
  * 
  */
-public interface TimelineValue {
+public interface TimelineValue<T> {
 
 	/**
 	 * Adds a new KeyFrame to the TimelineValue.
@@ -23,5 +23,18 @@ public interface TimelineValue {
 	 *            The time to use when calculating the value.
 	 */
 	void setTime(float time);
+
+	/**
+	 * Binds an object to be modified on the setTime(..).
+	 * 
+	 * @param object
+	 *            The mutable object to be modified.
+	 */
+	void setObject(T object);
+
+	/**
+	 * Returns the current binded object.
+	 */
+	T getObject();
 
 }

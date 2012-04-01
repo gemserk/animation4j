@@ -10,11 +10,12 @@ import com.gemserk.animation4j.converters.TypeConverter;
  * @param <T>
  *            The type of the value.
  */
-public class TimelineValueImpl<T> implements TimelineValue {
+public class TimelineValueImpl<T> implements TimelineValue<T> {
 
-	private final TypeConverter<T> typeConverter;
 	private final float[] x;
 	private final TimelineValueFloatArrayImpl timelineValueFloatArrayImpl;
+	
+	private TypeConverter<T> typeConverter;
 
 	/**
 	 * The object to be modified with the type converter when processing the timeline value.
