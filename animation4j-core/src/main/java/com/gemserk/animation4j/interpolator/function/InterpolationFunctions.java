@@ -2,7 +2,7 @@ package com.gemserk.animation4j.interpolator.function;
 
 public class InterpolationFunctions {
 
-	public static final InterpolationFunction linear = new LinearBezierInterpolationFunction(0f, 1f);
+	public static final InterpolationFunction linear = new LinearBezierInterpolationFunction();
 	public static final InterpolationFunction easeIn = new CubicBezierInterpolationFunction(0f, 0.42f, 1f, 1f);
 	public static final InterpolationFunction easeOut = new CubicBezierInterpolationFunction(0f, 0f, 0.58f, 1.0f);
 	public static final InterpolationFunction easeInOut = new CubicBezierInterpolationFunction(0f, 0.42f, 0.58f, 1.0f);
