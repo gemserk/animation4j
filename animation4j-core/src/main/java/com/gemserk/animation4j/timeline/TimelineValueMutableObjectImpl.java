@@ -14,21 +14,31 @@ public class TimelineValueMutableObjectImpl<T> implements TimelineValue {
 
 	private final TypeConverter<T> typeConverter;
 	private final float[] x;
-
-	private T mutableObject;
-
 	private final TimelineValueFloatArrayImpl timelineValueFloatArrayImpl;
+
+	/**
+	 * The object to be modified with the type converter when processing the timeline value.
+	 */
+	private T object;
+
+	public void setObject(T object) {
+		this.object = object;
+	}
+
+	public T getObject() {
+		return object;
+	}
 
 	/**
 	 * Creates a new instance which works over the specified mutable object.
 	 * 
-	 * @param mutableObject
-	 *            The object to be modified on setTime(time).
+	 * @param object
+	 *            The mutable object to be modified on setTime(time).
 	 * @param typeConverter
 	 *            The TypeConverter to be used when modifying the object.
 	 */
-	public TimelineValueMutableObjectImpl(T mutableObject, TypeConverter<T> typeConverter) {
-		this.mutableObject = mutableObject;
+	public TimelineValueMutableObjectImpl(T object, TypeConverter<T> typeConverter) {
+		this.object = object;
 		this.typeConverter = typeConverter;
 		this.x = new float[typeConverter.variables()];
 		timelineValueFloatArrayImpl = new TimelineValueFloatArrayImpl(x);
@@ -40,7 +50,7 @@ public class TimelineValueMutableObjectImpl<T> implements TimelineValue {
 
 	public void setTime(float time) {
 		timelineValueFloatArrayImpl.setTime(time);
-		typeConverter.copyToObject(mutableObject, x);
+		typeConverter.copyToObject(object, x);
 	}
 
 	@Override

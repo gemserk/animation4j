@@ -14,9 +14,7 @@ public class KeyFrame {
 	 * Time in seconds of the key frame.
 	 */
 	private final float time;
-
 	private final float[] value;
-
 	private final InterpolationFunction[] functions;
 
 	public float getTime() {
