@@ -126,5 +126,31 @@ public class TimelineValueTest {
 		assertThat(timelineValue.getPreviousKeyFrame(secondKeyFrame), IsSame.sameInstance(firstKeyFrame));
 		assertThat(timelineValue.getPreviousKeyFrame(thirdKeyFrame), IsSame.sameInstance(secondKeyFrame));
 	}
+	
+	@Test
+	public void testChangeBindedObjectOnTheRun() {
+		FloatValue value1 = new FloatValue(10f);
+		FloatValue value2 = new FloatValue(10f);
+		
+		TimelineValueImpl<FloatValue> timelineValue = new TimelineValueImpl<FloatValue>(value1, floatValueConverter);
+
+		KeyFrame firstKeyFrame = new KeyFrame(0f, new float[] { 10f });
+		KeyFrame secondKeyFrame = new KeyFrame(1f, new float[] { 20f });
+		KeyFrame thirdKeyFrame = new KeyFrame(2f, new float[] { 30f });
+
+		timelineValue.addKeyFrame(firstKeyFrame);
+		timelineValue.addKeyFrame(secondKeyFrame);
+		timelineValue.addKeyFrame(thirdKeyFrame);
+		
+		timelineValue.setTime(0.5f);
+		
+		assertThat(value1.value, IsEqual.equalTo(15f));
+		assertThat(value2.value, IsEqual.equalTo(10f));
+		
+		timelineValue.setObject(value2);
+		timelineValue.setTime(0.5f);
+
+		assertThat(value2.value, IsEqual.equalTo(15f));
+	}
 
 }
