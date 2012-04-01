@@ -16,7 +16,7 @@ public class TimelineAnimation implements Animation {
 	public void setDuration(float duration) {
 		animation.setDuration(duration);
 	}
-	
+
 	public float getDuration() {
 		return animation.getDuration();
 	}
@@ -121,13 +121,8 @@ public class TimelineAnimation implements Animation {
 
 	public void update(float time) {
 		animation.update(time);
-		if (animation.isStarted())
-			timeline.move(animation.getCurrentTime() - animation.getDelay());
+		timeline.move(animation.getCurrentTime() - animation.getDelay());
 	}
-	
-//	public void update(int time) {
-//		animation.update((float) time * 0.001f);
-//	}
 
 	public void nextIteration() {
 		animation.nextIteration();

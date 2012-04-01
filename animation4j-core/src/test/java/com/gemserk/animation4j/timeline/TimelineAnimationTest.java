@@ -297,5 +297,23 @@ public class TimelineAnimationTest {
 
 		assertThat(animation.getDuration(), IsEqual.equalTo(0.2f));
 	}
+	
+	@Test
+	public void bugTimelineAnimationShouldModifyToFirstValueWhenDelay() {
+		FloatValue floatValue = new FloatValue(20f);
+		
+		Timeline timeline = Builders.timeline() //
+				.value(Builders.timelineValue(floatValue, floatValueConverter) //
+						.keyFrame(0f, new float[] { -10f }) //
+						.keyFrame(1f, new float[] { 10f })) //
+						.build();
+		
+		TimelineAnimation animation = new TimelineAnimation(timeline, 1f);
+		animation.setDelay(1f);
+		
+		animation.update(0.9f);
+
+		assertThat(floatValue.value, IsEqual.equalTo(-10f));
+	}
 
 }
