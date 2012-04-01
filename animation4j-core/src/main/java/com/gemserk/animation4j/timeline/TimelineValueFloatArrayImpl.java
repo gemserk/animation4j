@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @author acoppes
  * 
  */
-public class TimelineValueFloatArrayImpl {
+class TimelineValueFloatArrayImpl {
 
 	float[] x;
 	ArrayList<KeyFrame> keyFrames;

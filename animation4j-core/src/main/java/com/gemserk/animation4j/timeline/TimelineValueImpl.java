@@ -12,15 +12,11 @@ import com.gemserk.animation4j.converters.TypeConverter;
  */
 public class TimelineValueImpl<T> implements TimelineValue<T> {
 
-	private final float[] x;
-	private final TimelineValueFloatArrayImpl timelineValueFloatArrayImpl;
-
-	private TypeConverter<T> typeConverter;
-
 	/**
 	 * The object to be modified with the type converter when processing the timeline value.
 	 */
 	private T object;
+	private InternalTimelineValue<T> internalTimelineValue;
 
 	public void setObject(T object) {
 		this.object = object;
@@ -40,28 +36,19 @@ public class TimelineValueImpl<T> implements TimelineValue<T> {
 	 */
 	public TimelineValueImpl(T object, TypeConverter<T> typeConverter) {
 		this.object = object;
-		this.typeConverter = typeConverter;
-		this.x = new float[typeConverter.variables()];
-		timelineValueFloatArrayImpl = new TimelineValueFloatArrayImpl(x);
+		internalTimelineValue = new InternalTimelineValue<T>(typeConverter);
 	}
 
 	public void addKeyFrame(KeyFrame keyFrame) {
-		timelineValueFloatArrayImpl.addKeyFrame(keyFrame);
+		internalTimelineValue.addKeyFrame(keyFrame);
 	}
 
 	public void setTime(float time) {
-		setTime(object, time);
+		internalTimelineValue.setTime(object, time);
 	}
 
-	@Override
 	public void setTime(T object, float time) {
-		timelineValueFloatArrayImpl.setTime(time);
-		typeConverter.copyToObject(object, x);
-	}
-
-	@Override
-	public String toString() {
-		return timelineValueFloatArrayImpl.toString();
+		internalTimelineValue.setTime(object, time);
 	}
 
 }

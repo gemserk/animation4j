@@ -11,6 +11,11 @@ public class Timeline {
 
 	@SuppressWarnings("rawtypes")
 	private ArrayList<TimelineValue> values;
+	
+	@SuppressWarnings("rawtypes")
+	public ArrayList<TimelineValue> getValues() {
+		return values;
+	}
 
 	/**
 	 * Build a new time line using the specified values.
