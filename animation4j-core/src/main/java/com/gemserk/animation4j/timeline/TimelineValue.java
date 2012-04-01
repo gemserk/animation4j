@@ -25,7 +25,7 @@ public interface TimelineValue<T> {
 	void setTime(float time);
 
 	/**
-	 * Modifies the object based on the TimelineValue internal values.
+	 * Modifies the object based on the TimelineValue internal values, there is no need of previous binding.
 	 * 
 	 * @param object
 	 *            The object to be modified.
