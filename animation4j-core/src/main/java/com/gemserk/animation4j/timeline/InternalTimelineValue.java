@@ -23,5 +23,18 @@ class InternalTimelineValue<T>  {
 		timelineValueFloatArrayImpl.setTime(time);
 		typeConverter.copyToObject(object, x);
 	}
+	
+	@Override
+	public String toString() {
+		return timelineValueFloatArrayImpl.toString();
+	}
+
+	public int getKeyFramesCount() {
+		return timelineValueFloatArrayImpl.getKeyFramesCount();
+	}
+
+	public KeyFrame getKeyFrame(int i) {
+		return timelineValueFloatArrayImpl.getKeyFrameObject(i);
+	}
 
 }

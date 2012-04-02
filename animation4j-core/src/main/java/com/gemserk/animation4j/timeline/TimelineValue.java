@@ -47,4 +47,17 @@ public interface TimelineValue<T> {
 	 */
 	T getObject();
 
+	/**
+	 * Returns how many key frames the timeline value has.
+	 */
+	int getKeyFramesCount();
+
+	/**
+	 * Returns the corresponding KeyFrame.
+	 * 
+	 * @param i
+	 *            The index of the KeyFrame.
+	 */
+	KeyFrame getKeyFrame(int i);
+
 }

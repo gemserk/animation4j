@@ -54,5 +54,20 @@ public class TimelineValueImpl<T> implements TimelineValue<T> {
 	public void setTime(T object, float time) {
 		internalTimelineValue.setTime(object, time);
 	}
+	
+	@Override
+	public String toString() {
+		return internalTimelineValue.toString();
+	}
+
+	@Override
+	public int getKeyFramesCount() {
+		return internalTimelineValue.getKeyFramesCount();
+	}
+
+	@Override
+	public KeyFrame getKeyFrame(int i) {
+		return internalTimelineValue.getKeyFrame(i);
+	}
 
 }
