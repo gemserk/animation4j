@@ -25,6 +25,10 @@ public class TimelineValueImpl<T> implements TimelineValue<T> {
 	public T getObject() {
 		return object;
 	}
+	
+	public TimelineValueImpl(TypeConverter<T> typeConverter) {
+		internalTimelineValue = new InternalTimelineValue<T>(typeConverter);
+	}
 
 	/**
 	 * Creates a new instance which works over the specified mutable object.
