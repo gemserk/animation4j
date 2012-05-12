@@ -58,15 +58,17 @@ The next example shows how to create a Transition<Vector2f>:
 
 	Vector2f myVector = new Vector2f();
 	Vector2fConverter vector2fConverter = new Vector2fConverter();
-	Transitions.transition(myVector, vector2fConverter) // This line asks for a TransitionBuilder
+	Transition<Vector2f> transition = Transitions.transition(myVector, vector2fConverter) // This line asks for a TransitionBuilder
 		.start(new Vector2f(10, 10))  // This line defines the starting value of the transition
-		.end(5f, new Vector2f(50, 50));  // This line defines the ending value and the duration of the transition.
+		.end(5f, new Vector2f(50, 50))  // This line defines the ending value and the duration of the transition.
+		.build(); // This line actually builds the Transition
 
 TransitionBuilder allows also to specify the values in float arrays instead having to create new objects, for example:
 
-	Transitions.transition(myVector, vector2fConverter) // This line asks for a TransitionBuilder
+	Transition<Vector2f> transition = Transitions.transition(myVector, vector2fConverter) // This line asks for a TransitionBuilder
 		.start(10f, 10f)  // This line defines the starting value of the transition
-		.end(5f, 50f, 50f);  // This line defines the ending value and the duration of the transition.
+		.end(5f, 50f, 50f)  // This line defines the ending value and the duration of the transition.
+		.build(); // This line actually builds the Transition
 
 ### TypeConverter
 
@@ -142,7 +144,8 @@ Start by creating a new transition:
 	Vector2fConverter vector2fConverter = new Vector2fConverter();
 	Transition<Vector2f> transition = Transitions.transition(myVector, vector2fConverter)
 		.start(0f, 0f)
-		.end(5f, 50f, 50f);
+		.end(5f, 50f, 50f)
+		.build();
 
 Now, in some part of the code (probably the update method if you are making a game) you have to update the transition in order to let it interpolate the values of your object instance:
 	
