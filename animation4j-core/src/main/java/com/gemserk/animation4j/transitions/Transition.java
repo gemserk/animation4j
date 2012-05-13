@@ -16,6 +16,14 @@ public interface Transition<T> {
 	T get();
 
 	/**
+	 * As all transitions work over mutable objects now, this method allow the user to change the mutable object so the transition could be reused for multiple objects in an easy way.
+	 * 
+	 * @param t
+	 *            The new object to use for the transition.
+	 */
+	void setObject(T t);
+
+	/**
 	 * Instantly modifies current value of the transition to the specified value and stops the interpolation.
 	 * 
 	 * @param t
@@ -33,6 +41,7 @@ public interface Transition<T> {
 
 	/**
 	 * Start an interpolation from a to b in the specified time.
+	 * 
 	 * @param time
 	 *            The time in seconds to set the new value. If time is zero, then value is applied directly.
 	 * @param t
@@ -42,6 +51,7 @@ public interface Transition<T> {
 
 	/**
 	 * Starts an interpolation using the current value as the interpolation starting value and the specified value as the interpolation ending value.
+	 * 
 	 * @param time
 	 *            The time of the transition.
 	 * @param value

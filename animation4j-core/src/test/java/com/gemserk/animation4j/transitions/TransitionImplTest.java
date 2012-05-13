@@ -346,4 +346,24 @@ public class TransitionImplTest {
 		assertThat(transition.isFinished(), IsEqual.equalTo(true));
 	}
 	
+	@Test
+	public void shouldWorkOverNewMutableObject() {
+		MyObject myObject1 = new MyObject(50f, 50f);
+		MyObject myObject2 = new MyObject(25f, 30f);
+		Transition<MyObject> transition = new TransitionImpl<TransitionImplTest.MyObject>(myObject1, new MyObjectTypeConverter());
+		
+		transition.setObject(myObject2);
+
+		transition.start(new MyObject(0f, 0f));
+		transition.start(1f, new MyObject(200f, 200f));
+
+		transition.update(0.5f);
+		
+		assertEquals(50f, myObject1.x, 0.01f);
+		assertEquals(50f, myObject1.y, 0.01f);
+		
+		assertEquals(100f, myObject2.x, 0.01f);
+		assertEquals(100f, myObject2.y, 0.01f);
+
+	}
 }

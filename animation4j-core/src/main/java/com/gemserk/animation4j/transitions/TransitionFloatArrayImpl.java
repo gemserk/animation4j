@@ -105,4 +105,9 @@ public class TransitionFloatArrayImpl implements Transition<float[]> {
 		System.arraycopy(value, 0, b, 0, Math.min(value.length, b.length));
 	}
 
+	@Override
+	public void setObject(float[] t) {
+		throw new UnsupportedOperationException("cant modify the mutable object for a transition float array");
+	}
+
 }

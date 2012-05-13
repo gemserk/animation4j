@@ -93,4 +93,10 @@ public class MockTransition<T> implements Transition<T> {
 		
 	}
 
+	@Override
+	public void setObject(T t) {
+		// TODO Auto-generated function stub
+		
+	}
+
 }
