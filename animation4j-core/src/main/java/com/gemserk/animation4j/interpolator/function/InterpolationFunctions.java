@@ -2,68 +2,30 @@ package com.gemserk.animation4j.interpolator.function;
 
 public class InterpolationFunctions {
 
-	public static final InterpolationFunction linear = new LimitedInterpolationFunction(new InterpolationFunction() {
-		@Override
-		public float interpolate(float t) {
-			return t;
-		}
-	});
+	public static final InterpolationFunction linear = new LinearInterpolationFunction();
 
-	public static final InterpolationFunction cubicEaseIn = new LimitedInterpolationFunction(new InterpolationFunction() {
-		@Override
-		public float interpolate(float t) {
-			return t * t * t;
-		}
-	});
+	public static final InterpolationFunction cubicEaseIn = new CubicBezierInterpolationFunction(0f, 0.42f, 1f, 1f);
+	public static final InterpolationFunction cubicEaseOut = new CubicBezierInterpolationFunction(0f, 0f, 0.58f, 1.0f);
+	public static final InterpolationFunction cubicEaseInOut = new CubicBezierInterpolationFunction(0f, 0.42f, 0.58f, 1.0f);
+	public static final InterpolationFunction cubicEase = new CubicBezierInterpolationFunction(0f, 0.25f, 0.25f, 1.0f);
 
-	public static final InterpolationFunction cubicEaseOut = new LimitedInterpolationFunction(new InterpolationFunction() {
-		@Override
-		public float interpolate(float t) {
-			return (t - 1) * (t - 1) * (t - 1) + 1;
-		}
-	});
+	static final InterpolationFunction quadraticEaseIn = new QuadraticBezierInterpolationFunction(0f, 1f, 1f);
+	static final InterpolationFunction quadraticEaseOut = new QuadraticBezierInterpolationFunction(0f, 0f, 1f);
 
-	public static final InterpolationFunction cubicEaseInOut = new LimitedInterpolationFunction(new InterpolationFunction() {
-		@Override
-		public float interpolate(float t) {
-			float d = 1f;
-			if ((t /= d / 2) < 1)
-				return 1f / 2 * t * t * t;
-			return 1f / 2 * ((t -= 2) * t * t + 2);
-		}
-	});
+	public static InterpolationFunction cubicBezier(float p0, float p1, float p2, float p3) {
+		return new CubicBezierInterpolationFunction(p0, p1, p2, p3);
+	}
 
-	public static final InterpolationFunction quadraticEaseIn = new LimitedInterpolationFunction(new InterpolationFunction() {
-		@Override
-		public float interpolate(float t) {
-			return t * t;
-		}
-	});
-
-	public static final InterpolationFunction quadraticEaseOut = new LimitedInterpolationFunction(new InterpolationFunction() {
-		@Override
-		public float interpolate(float t) {
-			return -1f * t * (t - 2);
-		}
-	});
-
-	public static final InterpolationFunction quadraticEaseInOut = new LimitedInterpolationFunction(new InterpolationFunction() {
-		@Override
-		public float interpolate(float t) {
-			float d = 1f;
-			float c = 1f;
-			if ((t /= d / 2) < 1)
-				return c / 2 * t * t;
-			return -c / 2 * ((--t) * (t - 2) - 1);
-		}
-	});
-
-	public static InterpolationFunction ease() {
-		return linear;
+	public static InterpolationFunction quadratic(float p0, float p1, float p2) {
+		return new QuadraticBezierInterpolationFunction(p0, p1, p2);
 	}
 
 	public static InterpolationFunction linear() {
 		return linear;
+	}
+
+	public static InterpolationFunction ease() {
+		return cubicEase;
 	}
 
 	public static InterpolationFunction easeIn() {
@@ -78,4 +40,11 @@ public class InterpolationFunctions {
 		return cubicEaseInOut;
 	}
 
+	public static InterpolationFunction quadraticEaseIn() {
+		return quadraticEaseIn;
+	}
+
+	public static InterpolationFunction quadraticEaseOut() {
+		return quadraticEaseIn;
+	}
 }
