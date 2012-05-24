@@ -12,6 +12,7 @@ public class TimeTransition {
 	private float currentTime;
 
 	private boolean finished = true;
+	private boolean started = false; 
 
 	public boolean isFinished() {
 		return finished;
@@ -30,9 +31,17 @@ public class TimeTransition {
 		this.transitionTime = time;
 		this.currentTime = 0;
 		this.finished = false;
+		this.started = true;
+	}
+	
+	public void stop() {
+		this.started = false;
+		this.finished = false;
 	}
 
 	public void update(float time) {
+		if (!started)
+			return;
 		if (finished)
 			return;
 		this.currentTime += time;

@@ -42,5 +42,22 @@ public class TimeTransitionTest {
 		assertThat(timeTransition.get(), IsEqual.equalTo(1f));
 		assertThat(timeTransition.isFinished(), IsEqual.equalTo(true));
 	}
+	
+	@Test
+	public void shouldNotBeStartedNorFinishedAfterStop() {
+		TimeTransition timeTransition = new TimeTransition();
+		timeTransition.stop();
+		assertThat(timeTransition.isFinished(), IsEqual.equalTo(false));
+	}
+	
+	@Test
+	public void shouldNotUpdateIfStop() {
+		TimeTransition timeTransition = new TimeTransition();
+		timeTransition.start(5f);
+		timeTransition.stop();
+		timeTransition.update(2.5f);
+		assertThat(timeTransition.isFinished(), IsEqual.equalTo(false));
+		assertThat(timeTransition.get(), IsEqual.equalTo(0f));
+	}
 
 }
