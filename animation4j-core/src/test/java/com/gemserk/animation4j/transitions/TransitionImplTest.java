@@ -1,8 +1,11 @@
 package com.gemserk.animation4j.transitions;
 
+import static org.easymock.EasyMock.isNull;
 import static org.junit.Assert.*;
 
+import org.easymock.internal.matchers.Null;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNull;
 import org.junit.Test;
 
 import com.gemserk.animation4j.converters.TypeConverter;
@@ -364,6 +367,14 @@ public class TransitionImplTest {
 		
 		assertEquals(100f, myObject2.x, 0.01f);
 		assertEquals(100f, myObject2.y, 0.01f);
-
+	}
+	
+	@Test
+	public void allowTransitionWithNullObject() {
+		Transition<MyObject> transition1 = new TransitionImpl<TransitionImplTest.MyObject>(null, new MyObjectTypeConverter());
+		Transition<MyObject> transition2 = new TransitionImpl<TransitionImplTest.MyObject>(new MyObjectTypeConverter());
+		
+		assertThat(transition1.get(), IsNull.nullValue());
+		assertThat(transition2.get(), IsNull.nullValue());
 	}
 }

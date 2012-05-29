@@ -35,8 +35,15 @@ public class TransitionImpl<T> implements Transition<T> {
 		this.mutableObject = mutableObject;
 		this.typeConverter = typeConverter;
 		transition = new TransitionFloatArrayImpl(typeConverter.variables());
-		tmp = typeConverter.copyFromObject(mutableObject, tmp);
+		if (mutableObject != null)
+			tmp = typeConverter.copyFromObject(mutableObject, tmp);
+		else 
+			tmp = new float[typeConverter.variables()];
 		transition.start(tmp);
+	}
+	
+	public TransitionImpl(TypeConverter<T> typeConverter) {
+		this(null, typeConverter);
 	}
 
 	/**

@@ -25,7 +25,7 @@ public class Transitions {
 		private void setTypeConverter(TypeConverter<T> typeConverter) {
 			this.typeConverter = typeConverter;
 		}
-		
+
 		public TransitionBuilder<T> speed(float speed) {
 			transitionImpl.setSpeed(speed);
 			return this;
@@ -79,6 +79,16 @@ public class Transitions {
 		transitionBuilder.setMutableObjectTransition(new TransitionImpl(mutableObject, typeConverter));
 		transitionBuilder.setTypeConverter(typeConverter);
 		return transitionBuilder;
+	}
+
+	/**
+	 * Returns an empty Transition<T>, should be modified later with setObject(). Useful when you need to cache the Transition.
+	 * 
+	 * @param typeConverter
+	 *            The TypeConverter for the transition.
+	 */
+	public static <T> Transition<T> transition(TypeConverter<T> typeConverter) {
+		return new TransitionImpl<T>(typeConverter);
 	}
 
 	/**
