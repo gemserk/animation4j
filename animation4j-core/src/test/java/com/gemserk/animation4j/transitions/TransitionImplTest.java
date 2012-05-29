@@ -377,4 +377,21 @@ public class TransitionImplTest {
 		assertThat(transition1.get(), IsNull.nullValue());
 		assertThat(transition2.get(), IsNull.nullValue());
 	}
+	
+	@Test
+	public void bugStartShouldStartTransitionFromCurrentObjectValue() {
+		MyObject myObject = new MyObject(50f, 50f);
+		
+		Transition<MyObject> transition = new TransitionImpl<TransitionImplTest.MyObject>(myObject, new MyObjectTypeConverter());
+
+		myObject.x = 100f;
+		myObject.y = 200f;
+		
+		transition.start(10f, new MyObject(1000, 1000));
+		
+		transition.update(0f);
+		
+		assertThat(myObject.x, IsEqual.equalTo(100f));
+		assertThat(myObject.y, IsEqual.equalTo(200f));
+	}
 }

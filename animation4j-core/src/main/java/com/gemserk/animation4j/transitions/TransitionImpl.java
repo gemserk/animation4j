@@ -73,6 +73,7 @@ public class TransitionImpl<T> implements Transition<T> {
 
 	@Override
 	public void start(float time, T t) {
+		typeConverter.copyFromObject(this.mutableObject, transition.x);
 		typeConverter.copyFromObject(t, tmp);
 		transition.start(time, tmp);
 	}

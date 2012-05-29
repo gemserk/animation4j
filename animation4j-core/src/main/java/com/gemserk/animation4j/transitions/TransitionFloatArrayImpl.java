@@ -67,7 +67,7 @@ public class TransitionFloatArrayImpl implements Transition<float[]> {
 		started = true;
 		finished = false;
 
-		System.arraycopy(x, 0, a, 0, Math.min(x.length, a.length));
+		System.arraycopy(x, 0, a, 0, x.length);
 		System.arraycopy(value, 0, b, 0, Math.min(value.length, b.length));
 
 		timeTransition.start(time);
