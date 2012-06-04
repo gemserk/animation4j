@@ -11,10 +11,27 @@ public class Timeline {
 
 	@SuppressWarnings("rawtypes")
 	private ArrayList<TimelineValue> values;
-	
+
 	@SuppressWarnings("rawtypes")
 	public ArrayList<TimelineValue> getValues() {
 		return values;
+	}
+
+	/**
+	 * Returns how many timeline values the timeline has.
+	 */
+	public int getValuesCount() {
+		return values.size();
+	}
+
+	/**
+	 * Returns the TimelineValue in the corresponding index.
+	 * 
+	 * @param index
+	 *            The index of the corresponding index.
+	 */
+	public <T> TimelineValue<T> getTimeLineValue(int index) {
+		return values.get(index);
 	}
 
 	/**
@@ -31,10 +48,10 @@ public class Timeline {
 	 *            The time where you want the time line to be.
 	 */
 	public void move(float time) {
-		for (int i = 0; i < values.size(); i++) 
+		for (int i = 0; i < values.size(); i++)
 			values.get(i).setTime(time);
 	}
-	
+
 	@Override
 	public String toString() {
 		return values.toString();
