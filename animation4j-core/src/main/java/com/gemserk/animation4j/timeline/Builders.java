@@ -194,5 +194,9 @@ public class Builders {
 	public static <T> Builders.TimelineValueBuilder<T> timelineValue(T mutableObject, TypeConverter<T> typeConverter) {
 		return timelineValueBuilder.mutableObject(mutableObject).typeConverter(typeConverter);
 	}
+	
+	public static <T> Builders.TimelineValueBuilder<T> timelineValue(TypeConverter<T> typeConverter) {
+		return timelineValueBuilder.mutableObject(null).typeConverter(typeConverter);
+	}
 
 }
