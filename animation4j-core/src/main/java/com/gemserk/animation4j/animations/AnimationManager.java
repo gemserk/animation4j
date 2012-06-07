@@ -9,10 +9,13 @@ public class AnimationManager {
 
 	private AnimationHandlerManager animationHandlerManager;
 	private ArrayList<Animation> animations;
+	
+	private ArrayList<Animation> animationsToRemove;
 
 	public AnimationManager() {
 		animationHandlerManager = new AnimationHandlerManager();
 		animations = new ArrayList<Animation>();
+		animationsToRemove = new ArrayList<Animation>();
 	}
 
 	public void add(Animation animation) {
@@ -20,8 +23,7 @@ public class AnimationManager {
 	}
 
 	public void remove(Animation animation) {
-		animations.remove(animation);
-		animationHandlerManager.removeMonitorsFor(animation);
+		animationsToRemove.add(animation);
 	}
 
 	public void handleAnimationChanges(Animation animation, AnimationEventHandler animationEventHandler) {
@@ -32,6 +34,14 @@ public class AnimationManager {
 		for (int i = 0; i < animations.size(); i++)
 			animations.get(i).update(delta);
 		animationHandlerManager.checkAnimationChanges();
+		
+		for (int i = 0; i < animationsToRemove.size(); i++) {
+			Animation animation = animationsToRemove.get(i);
+			animationHandlerManager.removeMonitorsFor(animation);
+		}
+		
+		animations.remove(animationsToRemove);
+		animationsToRemove.clear();
 	}
 
 }

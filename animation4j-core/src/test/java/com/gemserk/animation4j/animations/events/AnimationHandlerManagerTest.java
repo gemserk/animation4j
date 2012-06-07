@@ -76,5 +76,5 @@ public class AnimationHandlerManagerTest {
 		
 		assertFalse(animationHandlerManager.animationMonitors.contains(animationMonitor));
 	}
-
+	
 }

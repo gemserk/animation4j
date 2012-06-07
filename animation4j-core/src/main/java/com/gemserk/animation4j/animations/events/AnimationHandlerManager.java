@@ -59,8 +59,9 @@ public class AnimationHandlerManager {
 
 	public void removeMonitorsFor(Animation animation) {
 		for (int i = 0; i < animationMonitors.size(); i++) {
-			if (animationMonitors.get(i).getAnimation() == animation)
-				animationMonitorsToRemove.add(animationMonitors.get(i));
+			AnimationMonitor animationMonitor = animationMonitors.get(i);
+			if (animationMonitor.getAnimation() == animation)
+				animationMonitorsToRemove.add(animationMonitor);
 		}
 		animationMonitors.removeAll(animationMonitorsToRemove);
 		animationMonitorsToRemove.clear();
