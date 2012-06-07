@@ -40,7 +40,7 @@ public class AnimationManager {
 			animationHandlerManager.removeMonitorsFor(animation);
 		}
 		
-		animations.remove(animationsToRemove);
+		animations.removeAll(animationsToRemove);
 		animationsToRemove.clear();
 	}
 
