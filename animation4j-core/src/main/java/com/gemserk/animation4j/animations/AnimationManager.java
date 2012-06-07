@@ -11,6 +11,10 @@ public class AnimationManager {
 	private ArrayList<Animation> animations;
 	
 	private ArrayList<Animation> animationsToRemove;
+	
+	public int getAnimationsCount() { 
+		return animations.size();
+	}
 
 	public AnimationManager() {
 		animationHandlerManager = new AnimationHandlerManager();
