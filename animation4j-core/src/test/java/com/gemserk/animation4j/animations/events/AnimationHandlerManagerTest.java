@@ -20,9 +20,10 @@ public class AnimationHandlerManagerTest {
 			}
 		};
 
-		AnimationMonitor animationMonitor = new AnimationMonitor(animation);
-
 		AnimationHandlerManager animationHandlerManager = new AnimationHandlerManager();
+
+		AnimationMonitor animationMonitor = new AnimationMonitor(animation, null);
+
 		animationHandlerManager.handleAnimationChanges(animationMonitor);
 		
 		assertTrue(animationHandlerManager.animationMonitors.contains(animationMonitor));
@@ -42,7 +43,7 @@ public class AnimationHandlerManagerTest {
 			}
 		};
 
-		AnimationMonitor animationMonitor = new AnimationMonitor(animation);
+		AnimationMonitor animationMonitor = new AnimationMonitor(animation, new AnimationEventHandler());
 
 		AnimationHandlerManager animationHandlerManager = new AnimationHandlerManager();
 		animationHandlerManager.handleAnimationChanges(animationMonitor);
@@ -64,7 +65,7 @@ public class AnimationHandlerManagerTest {
 			}
 		};
 
-		AnimationMonitor animationMonitor = new AnimationMonitor(animation);
+		AnimationMonitor animationMonitor = new AnimationMonitor(animation, new AnimationEventHandler());
 
 		AnimationHandlerManager animationHandlerManager = new AnimationHandlerManager();
 		animationHandlerManager.handleAnimationChanges(animationMonitor);

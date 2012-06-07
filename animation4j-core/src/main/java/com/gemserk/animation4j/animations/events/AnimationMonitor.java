@@ -1,8 +1,5 @@
 package com.gemserk.animation4j.animations.events;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.gemserk.animation4j.animations.Animation;
 
 /**
@@ -16,8 +13,9 @@ public class AnimationMonitor {
 	private boolean wasStarted = false;
 	private int lastIteration = 1;
 	private Animation animation;
-	private List<AnimationEventHandler> animationEventHandlers = new ArrayList<AnimationEventHandler>();
-	
+
+	private AnimationEventHandler animationEventHandler;
+
 	public Animation getAnimation() {
 		return animation;
 	}
@@ -27,17 +25,18 @@ public class AnimationMonitor {
 	}
 
 	public AnimationMonitor(Animation animation, AnimationEventHandler animationEventHandler) {
-		this(animation);
-		addAnimationHandler(animationEventHandler);
+		this.animation = animation;
+		this.animationEventHandler = animationEventHandler;
+		// addAnimationHandler(animationEventHandler);
 	}
 
-	public void addAnimationHandler(AnimationEventHandler animationEventHandler) {
-		animationEventHandlers.add(animationEventHandler);
-	}
-
-	public void removeAnimationHandler(AnimationEventHandler animationEventHandler) {
-		animationEventHandlers.remove(animationEventHandler);
-	}
+	// public void addAnimationHandler(AnimationEventHandler animationEventHandler) {
+	// animationEventHandlers.add(animationEventHandler);
+	// }
+	//
+	// public void removeAnimationHandler(AnimationEventHandler animationEventHandler) {
+	// animationEventHandlers.remove(animationEventHandler);
+	// }
 
 	public void checkAnimationChanges() {
 
@@ -52,19 +51,21 @@ public class AnimationMonitor {
 		if (!callOnFinish && !callOnStart && !callOnIterationChanged)
 			return;
 
-		for (AnimationEventHandler animationEventHandler : animationEventHandlers) {
-			if (callOnFinish)
-				animationEventHandler.onAnimationFinished(new AnimationEvent(animation));
-			if (callOnStart)
-				animationEventHandler.onAnimationStarted(new AnimationEvent(animation));
-			if (callOnIterationChanged)
-				animationEventHandler.onIterationChanged(new AnimationEvent(animation));
-		}
+		if (animationEventHandler == null)
+			return;
+		
+		if (callOnFinish)
+			animationEventHandler.onAnimationFinished(new AnimationEvent(animation));
+		if (callOnStart)
+			animationEventHandler.onAnimationStarted(new AnimationEvent(animation));
+		if (callOnIterationChanged)
+			animationEventHandler.onIterationChanged(new AnimationEvent(animation));
 
 	}
 
 	public boolean hasAnimationHandlers() {
-		return animationEventHandlers.size() > 0;
+		return true;
+		// return animationEventHandlers.size() > 0;
 	}
 
 }
