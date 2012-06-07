@@ -7,28 +7,26 @@ public class TransitionMonitor {
 
 	private Transition transition;
 
-	private boolean wasStarted = false;
+	private boolean previousStarted = false;
+	private boolean previousFinished = false;
 
-	private boolean wasFinished = false;
-
-	private boolean callOnStart;
-
-	private boolean callOnFinish;
+	private boolean wasStarted;
+	private boolean wasFinished;
 
 	public void monitor(Transition transition) {
 		this.transition = transition;
-		this.wasStarted = false;
+		this.previousStarted = false;
+		this.previousFinished = false;
 		this.wasFinished = false;
-		this.callOnFinish = false;
-		this.callOnStart = false;
+		this.wasStarted = false;
 	}
 
 	public boolean wasStarted() {
-		return callOnStart;
+		return wasStarted;
 	}
 
 	public boolean wasFinished() {
-		return callOnFinish;
+		return wasFinished;
 	}
 
 	/**
@@ -42,11 +40,11 @@ public class TransitionMonitor {
 		boolean started = transition.isStarted();
 		boolean finished = transition.isFinished();
 		
-		callOnStart = !wasStarted && started;
-		callOnFinish = !wasFinished && finished;
+		wasStarted = !previousStarted && started;
+		wasFinished = !previousFinished && finished;
 		
-		wasStarted = started;
-		wasFinished = finished;
+		previousStarted = started;
+		previousFinished = finished;
 	}
 
 }

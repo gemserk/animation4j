@@ -33,6 +33,7 @@ public class TransitionMonitorProcessor {
 		return finished;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public void process(Transition transition, TransitionEventHandler transitionEventHandler) {
 		finished = false;
 		this.transitionMonitor.monitor(transition);
