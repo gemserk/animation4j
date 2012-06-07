@@ -24,7 +24,6 @@ public class AnimationMonitorImplTest {
 		MockAnimationEventHandler animationEventHandler = new MockAnimationEventHandler();
 
 		AnimationMonitor animationMonitor = new AnimationMonitor(animation, animationEventHandler);
-		// animationMonitor.addAnimationHandler(animationEventHandler);
 		animationMonitor.checkAnimationChanges();
 
 		assertEquals(false, animationEventHandler.onFinishCalled);
@@ -42,7 +41,6 @@ public class AnimationMonitorImplTest {
 		MockAnimationEventHandler animationEventHandler = new MockAnimationEventHandler();
 
 		AnimationMonitor animationMonitor = new AnimationMonitor(animation, animationEventHandler);
-		// animationMonitor.addAnimationHandler(animationEventHandler);
 		animationMonitor.checkAnimationChanges();
 
 		assertEquals(false, animationEventHandler.onStartCalled);
@@ -84,7 +82,6 @@ public class AnimationMonitorImplTest {
 		MockAnimationEventHandler animationEventHandler = new MockAnimationEventHandler();
 
 		AnimationMonitor animationMonitor = new AnimationMonitor(animation, animationEventHandler);
-		// animationMonitor.addAnimationHandler(animationEventHandler);
 		animationMonitor.checkAnimationChanges();
 
 		assertEquals(false, animationEventHandler.onFinishCalled);
@@ -112,7 +109,6 @@ public class AnimationMonitorImplTest {
 		MockAnimationEventHandler animationEventHandler = new MockAnimationEventHandler();
 
 		AnimationMonitor animationMonitor = new AnimationMonitor(animation, animationEventHandler);
-		// animationMonitor.addAnimationHandler(animationEventHandler);
 		animationMonitor.checkAnimationChanges();
 
 		assertEquals(true, animationEventHandler.onStartCalled);
@@ -134,7 +130,6 @@ public class AnimationMonitorImplTest {
 		MockAnimationEventHandler animationEventHandler = new MockAnimationEventHandler();
 
 		AnimationMonitor animationMonitor = new AnimationMonitor(animation, animationEventHandler);
-		// animationMonitor.addAnimationHandler(animationEventHandler);
 		animationMonitor.checkAnimationChanges();
 
 		assertEquals(true, animationEventHandler.onStartCalled);
@@ -177,7 +172,6 @@ public class AnimationMonitorImplTest {
 				System.out.println("animation stopped!!");
 			}
 		});
-		// animationMonitor.addAnimationHandler();
 		animationMonitor.checkAnimationChanges();
 		animation.resume();
 		animationMonitor.checkAnimationChanges();
@@ -208,7 +202,6 @@ public class AnimationMonitorImplTest {
 		MockAnimationEventHandler animationEventHandler = new MockAnimationEventHandler();
 
 		AnimationMonitor animationMonitor = new AnimationMonitor(animation, animationEventHandler);
-		// animationMonitor.addAnimationHandler();
 		animationMonitor.checkAnimationChanges();
 
 		assertEquals(false, animationEventHandler.onIterationChangedCalled);
@@ -237,7 +230,6 @@ public class AnimationMonitorImplTest {
 		MockAnimationEventHandler animationEventHandler = new MockAnimationEventHandler();
 
 		AnimationMonitor animationMonitor = new AnimationMonitor(animation, animationEventHandler);
-		// animationMonitor.addAnimationHandler(animationEventHandler);
 		animationMonitor.checkAnimationChanges();
 
 		assertEquals(false, animationEventHandler.onIterationChangedCalled);
@@ -261,7 +253,6 @@ public class AnimationMonitorImplTest {
 		MockAnimationEventHandler animationEventHandler = new MockAnimationEventHandler();
 
 		AnimationMonitor animationMonitor = new AnimationMonitor(animation, animationEventHandler);
-		// animationMonitor.addAnimationHandler(animationEventHandler);
 		animationMonitor.checkAnimationChanges();
 
 		assertEquals(false, animationEventHandler.onStartCalled);
@@ -318,7 +309,6 @@ public class AnimationMonitorImplTest {
 		MockAnimationEventHandler animationEventHandler = new MockAnimationEventHandler();
 
 		AnimationMonitor animationMonitor = new AnimationMonitor(animation, animationEventHandler);
-		// animationMonitor.addAnimationHandler(animationEventHandler);
 		animationMonitor.checkAnimationChanges();
 
 		assertEquals(false, animationEventHandler.onIterationChangedCalled);

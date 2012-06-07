@@ -16,6 +16,17 @@ public class AnimationMonitor {
 
 	private AnimationEventHandler animationEventHandler;
 
+	public void setAnimationEventHandler(AnimationEventHandler animationEventHandler) {
+		this.animationEventHandler = animationEventHandler;
+	}
+
+	public void setAnimation(Animation animation) {
+		this.animation = animation;
+		this.wasFinished = false;
+		this.wasStarted = false;
+		this.lastIteration = 1;
+	}
+
 	public Animation getAnimation() {
 		return animation;
 	}
@@ -27,16 +38,7 @@ public class AnimationMonitor {
 	public AnimationMonitor(Animation animation, AnimationEventHandler animationEventHandler) {
 		this.animation = animation;
 		this.animationEventHandler = animationEventHandler;
-		// addAnimationHandler(animationEventHandler);
 	}
-
-	// public void addAnimationHandler(AnimationEventHandler animationEventHandler) {
-	// animationEventHandlers.add(animationEventHandler);
-	// }
-	//
-	// public void removeAnimationHandler(AnimationEventHandler animationEventHandler) {
-	// animationEventHandlers.remove(animationEventHandler);
-	// }
 
 	public void checkAnimationChanges() {
 
@@ -53,7 +55,7 @@ public class AnimationMonitor {
 
 		if (animationEventHandler == null)
 			return;
-		
+
 		if (callOnFinish)
 			animationEventHandler.onAnimationFinished(new AnimationEvent(animation));
 		if (callOnStart)
@@ -65,7 +67,6 @@ public class AnimationMonitor {
 
 	public boolean hasAnimationHandlers() {
 		return true;
-		// return animationEventHandlers.size() > 0;
 	}
 
 }
