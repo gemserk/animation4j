@@ -93,4 +93,17 @@ public class MockAnimation implements Animation {
 		return playingDirection;
 	}
 
+	@Override
+	public void setSpeed(float speed) {
+		// TODO Auto-generated function stub
+		
+	}
+
+	@Override
+	public float getSpeed() {
+		// TODO Auto-generated function stub
+		return 0;
+		
+	}
+
 }

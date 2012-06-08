@@ -132,4 +132,9 @@ public class TimelineAnimation implements Animation {
 		animation.switchDirection();
 	}
 
+	@Override
+	public float getSpeed() {
+		return animation.getSpeed();
+	}
+
 }
