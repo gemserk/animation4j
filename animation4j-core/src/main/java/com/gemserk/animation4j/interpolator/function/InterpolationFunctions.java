@@ -12,6 +12,13 @@ public class InterpolationFunctions {
 	static final InterpolationFunction quadraticEaseIn = new QuadraticBezierInterpolationFunction(0f, 1f, 1f);
 	static final InterpolationFunction quadraticEaseOut = new QuadraticBezierInterpolationFunction(0f, 0f, 1f);
 
+	public static final InterpolationFunction step = new InterpolationFunction() {
+		@Override
+		public float interpolate(float t) {
+			return Math.round(t);
+		}
+	};
+
 	public static InterpolationFunction cubicBezier(float p0, float p1, float p2, float p3) {
 		return new CubicBezierInterpolationFunction(p0, p1, p2, p3);
 	}
