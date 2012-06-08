@@ -41,6 +41,9 @@ public class AnimationManager {
 	}
 
 	public void update(float delta) {
+		if (animations.isEmpty())
+			return;
+		
 		for (int i = 0; i < animations.size(); i++)
 			animations.get(i).update(delta);
 		animationHandlerManager.checkAnimationChanges();
