@@ -26,6 +26,12 @@ public class AnimationManager {
 		animations.add(animation);
 	}
 
+	public void add(Animation animation, AnimationEventHandler... animationEventHandlers) {
+		animations.add(animation);
+		for (int i = 0; i < animationEventHandlers.length; i++) 
+			handleAnimationChanges(animation, animationEventHandlers[i]);
+	}
+
 	public void remove(Animation animation) {
 		animationsToRemove.add(animation);
 	}
