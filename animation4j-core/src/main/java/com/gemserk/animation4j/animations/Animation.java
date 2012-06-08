@@ -12,7 +12,7 @@ public interface Animation {
 	}
 
 	/**
-	 * Starts the animation.
+	 * Starts the animation with the default values of one iteration and no alternate directions.
 	 */
 	void start();
 
@@ -54,8 +54,6 @@ public interface Animation {
 	 */
 	void resume();
 
-	// / used by the monitor
-
 	/**
 	 * Returns true if the animation is started.
 	 */
@@ -78,8 +76,6 @@ public interface Animation {
 	 */
 	PlayingDirection getPlayingDirection();
 
-	// / used to update the animation (should be in the subclass only)
-
 	/**
 	 * Updates the animation.
 	 * 
@@ -87,4 +83,18 @@ public interface Animation {
 	 *            The time to update the animation in Seconds.
 	 */
 	void update(float delta);
+
+	/**
+	 * Sets the animation speed.
+	 * 
+	 * @param speed
+	 *            The new speed of the animation.
+	 */
+	void setSpeed(float speed);
+
+	/**
+	 * Returns the current speed of the animation.
+	 */
+	float getSpeed();
+	
 }

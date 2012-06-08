@@ -26,6 +26,11 @@ public class AnimationImpl implements Animation {
 	public void setDuration(float duration) {
 		this.duration = duration;
 	}
+	
+	@Override
+	public float getSpeed() {
+		return speed;
+	}
 
 	public void setSpeed(float speed) {
 		this.speed = speed;
