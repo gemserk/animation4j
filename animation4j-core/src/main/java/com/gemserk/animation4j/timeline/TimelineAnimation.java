@@ -119,6 +119,10 @@ public class TimelineAnimation implements Animation {
 		return animation.isStarted();
 	}
 
+	public boolean isPlaying() {
+		return animation.isPlaying();
+	}
+
 	public void update(float time) {
 		animation.update(time);
 		timeline.move(animation.getCurrentTime() - animation.getDelay());

@@ -60,6 +60,11 @@ public interface Animation {
 	boolean isStarted();
 
 	/**
+	 * Returns true if the animation is started, not paused and not finished.
+	 */
+	boolean isPlaying();
+
+	/**
 	 * Returns true if the animation is finished.
 	 */
 	boolean isFinished();
@@ -96,5 +101,5 @@ public interface Animation {
 	 * Returns the current speed of the animation.
 	 */
 	float getSpeed();
-	
+
 }

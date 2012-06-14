@@ -106,4 +106,11 @@ public class MockAnimation implements Animation {
 		
 	}
 
+	@Override
+	public boolean isPlaying() {
+		// TODO Auto-generated function stub
+		return false;
+		
+	}
+
 }
