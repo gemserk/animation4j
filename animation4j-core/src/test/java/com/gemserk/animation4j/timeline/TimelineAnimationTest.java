@@ -175,19 +175,19 @@ public class TimelineAnimationTest {
 
 		assertThat(floatValue.value, IsNear.isNear(200f, 0.1f));
 
-		animation.update(100 * 0.001f);
+		animation.update(0.1f);
 		assertThat(floatValue.value, IsNear.isNear(900f, 0.1f));
 
-		animation.update(100 * 0.001f);
+		animation.update(0.1f);
 		assertThat(animation.isStarted(), IsEqual.equalTo(true));
 		assertThat(floatValue.value, IsNear.isNear(2000f, 0.1f));
 
-		animation.update(50 * 0.001f);
+		animation.update(0.05f);
 		assertThat(animation.isStarted(), IsEqual.equalTo(true));
 		assertThat(floatValue.value, IsNear.isNear(1900f, 0.1f));
 		assertThat(animation.isFinished(), IsEqual.equalTo(false));
 
-		animation.update(151 * 0.001f);
+		animation.update(0.151f);
 		assertThat(animation.isFinished(), IsEqual.equalTo(true));
 		assertThat(floatValue.value, IsNear.isNear(200f, 0.1f));
 
@@ -310,6 +310,7 @@ public class TimelineAnimationTest {
 		
 		TimelineAnimation animation = new TimelineAnimation(timeline, 1f);
 		animation.setDelay(1f);
+		animation.start();
 		
 		animation.update(0.9f);
 
