@@ -39,6 +39,12 @@ public class AnimationManager {
 	public void handleAnimationChanges(Animation animation, AnimationEventHandler animationEventHandler) {
 		animationHandlerManager.with(animationEventHandler).handleChangesOf(animation);
 	}
+	
+	public void clear() {
+		for (int i = 0; i < animations.size(); i++) 
+			animationHandlerManager.removeMonitorsFor(animations.get(i));
+		animations.clear();
+	}
 
 	public void update(float delta) {
 		if (animations.isEmpty())
