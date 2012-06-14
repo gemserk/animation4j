@@ -32,22 +32,22 @@ public class Transitions {
 		}
 
 		public TransitionBuilder<T> start(float... values) {
-			transitionImpl.start(values);
+			transitionImpl.startWithFloatArray(values);
 			return this;
 		}
 
 		public TransitionBuilder<T> startObject(T start) {
-			transitionImpl.start(typeConverter.copyFromObject(start, null));
+			transitionImpl.startWithFloatArray(typeConverter.copyFromObject(start, null));
 			return this;
 		}
 
 		public TransitionBuilder<T> end(float time, float... values) {
-			transitionImpl.start(time, values);
+			transitionImpl.startWithFloatArray(time, values);
 			return this;
 		}
 
 		public TransitionBuilder<T> endObject(float time, T end) {
-			transitionImpl.start(time, typeConverter.copyFromObject(end, null));
+			transitionImpl.startWithFloatArray(time, typeConverter.copyFromObject(end, null));
 			return this;
 		}
 

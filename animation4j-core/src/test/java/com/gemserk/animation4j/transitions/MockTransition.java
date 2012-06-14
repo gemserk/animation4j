@@ -70,13 +70,13 @@ public class MockTransition<T> implements Transition<T> {
 	}
 
 	@Override
-	public void start(float[] t) {
+	public void startWithFloatArray(float[] t) {
 		// TODO Auto-generated function stub
 		
 	}
 
 	@Override
-	public void start(float time, float[] value) {
+	public void startWithFloatArray(float time, float[] value) {
 		// TODO Auto-generated function stub
 		
 	}

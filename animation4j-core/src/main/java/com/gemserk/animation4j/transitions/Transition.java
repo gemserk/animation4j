@@ -37,7 +37,7 @@ public interface Transition<T> {
 	 * @param t
 	 *            The value to set.
 	 */
-	void start(float... t);
+	void startWithFloatArray(float... t);
 
 	/**
 	 * Start an interpolation from a to b in the specified time.
@@ -57,7 +57,7 @@ public interface Transition<T> {
 	 * @param value
 	 *            The new interpolation ending value.
 	 */
-	void start(float time, float... value);
+	void startWithFloatArray(float time, float... value);
 
 	/**
 	 * Modifies the starting value of the transition. If a transition is being performed, interpolation is calculated using the new value set.

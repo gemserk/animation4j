@@ -62,7 +62,7 @@ public class TransitionImplTest {
 
 		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
-		transition.start(a);
+		transition.startWithFloatArray(a);
 
 		assertThat(myObject.x, IsEqual.equalTo(10f));
 		assertThat(myObject.y, IsEqual.equalTo(20f));
@@ -81,7 +81,7 @@ public class TransitionImplTest {
 
 		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
-		transition.start(a);
+		transition.startWithFloatArray(a);
 	}
 
 	@Test
@@ -94,7 +94,7 @@ public class TransitionImplTest {
 
 		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
-		transition.start(5f, a);
+		transition.startWithFloatArray(5f, a);
 	}
 
 	@Test
@@ -108,8 +108,8 @@ public class TransitionImplTest {
 
 		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
-		transition.start(a);
-		transition.start(1f, b);
+		transition.startWithFloatArray(a);
+		transition.startWithFloatArray(1f, b);
 
 		assertEquals(true, transition.isStarted());
 		assertEquals(false, transition.isFinished());
@@ -141,7 +141,7 @@ public class TransitionImplTest {
 
 		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
-		transition.start(1f, b);
+		transition.startWithFloatArray(1f, b);
 
 		transition.update(0f);
 
@@ -164,7 +164,7 @@ public class TransitionImplTest {
 
 		TransitionImpl transition = new TransitionImpl(myObject, new MyObjectTypeConverter());
 
-		transition.start(1f, b);
+		transition.startWithFloatArray(1f, b);
 
 		transition.update(0.5f);
 

@@ -43,7 +43,7 @@ public class TransitionFloatArrayImpl implements Transition<float[]> {
 		this.a = new float[value.length];
 		this.b = new float[value.length];
 		this.x = new float[value.length];
-		start(value);
+		startWithFloatArray(value);
 	}
 
 	@Override
@@ -56,14 +56,14 @@ public class TransitionFloatArrayImpl implements Transition<float[]> {
 	}
 
 	@Override
-	public void start(float... t) {
+	public void startWithFloatArray(float... t) {
 		System.arraycopy(t, 0, a, 0, Math.min(t.length, a.length));
 		System.arraycopy(t, 0, x, 0, Math.min(t.length, x.length));
 		finished = true;
 	}
 
 	@Override
-	public void start(float time, float... value) {
+	public void startWithFloatArray(float time, float... value) {
 		started = true;
 		finished = false;
 
@@ -108,6 +108,16 @@ public class TransitionFloatArrayImpl implements Transition<float[]> {
 	@Override
 	public void setObject(float[] t) {
 		throw new UnsupportedOperationException("cant modify the mutable object for a transition float array");
+	}
+
+	@Override
+	public void start(float[] t) {
+		startWithFloatArray(t);
+	}
+
+	@Override
+	public void start(float time, float[] t) {
+		startWithFloatArray(time, t);
 	}
 
 }
