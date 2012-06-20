@@ -128,7 +128,7 @@ public class AnimationImpl implements Animation {
 	public boolean isStarted() {
 		if (iteration > 1)
 			return true;
-		return currentTime >= getDelay();
+		return currentTime > getDelay();
 	}
 	
 
