@@ -1,0 +1,4 @@
+* change Transitions.transition(typeConverter) to be similar as the others, right now it doesnt allow builder methods
+* cache/pool animation monitor stuff
+   - for now, add a pool of monitor
+   - move the responsibility to the user
