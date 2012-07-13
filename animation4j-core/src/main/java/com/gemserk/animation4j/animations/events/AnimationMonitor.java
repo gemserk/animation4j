@@ -12,9 +12,10 @@ public class AnimationMonitor {
 	private boolean wasFinished = false;
 	private boolean wasStarted = false;
 	private int lastIteration = 1;
+	
 	private Animation animation;
-
 	private AnimationEventHandler animationEventHandler;
+	private AnimationEvent animationEvent = new AnimationEvent();
 
 	public void setAnimationEventHandler(AnimationEventHandler animationEventHandler) {
 		this.animationEventHandler = animationEventHandler;
@@ -25,18 +26,23 @@ public class AnimationMonitor {
 		this.wasFinished = false;
 		this.wasStarted = false;
 		this.lastIteration = 1;
+		animationEvent.setAnimation(animation);
 	}
 
 	public Animation getAnimation() {
 		return animation;
 	}
+	
+	public AnimationMonitor() {
+		
+	}
 
 	public AnimationMonitor(Animation animation) {
-		this.animation = animation;
+		setAnimation(animation);
 	}
 
 	public AnimationMonitor(Animation animation, AnimationEventHandler animationEventHandler) {
-		this.animation = animation;
+		setAnimation(animation);
 		this.animationEventHandler = animationEventHandler;
 	}
 
@@ -57,11 +63,11 @@ public class AnimationMonitor {
 			return;
 
 		if (callOnFinish)
-			animationEventHandler.onAnimationFinished(new AnimationEvent(animation));
+			animationEventHandler.onAnimationFinished(animationEvent);
 		if (callOnStart)
-			animationEventHandler.onAnimationStarted(new AnimationEvent(animation));
+			animationEventHandler.onAnimationStarted(animationEvent);
 		if (callOnIterationChanged)
-			animationEventHandler.onIterationChanged(new AnimationEvent(animation));
+			animationEventHandler.onIterationChanged(animationEvent);
 
 	}
 

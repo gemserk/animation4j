@@ -10,13 +10,22 @@ import com.gemserk.animation4j.animations.Animation;
  */
 public class AnimationEvent {
 
-	private final Animation animation;
+	private Animation animation;
+	
+	public void setAnimation(Animation animation) {
+		this.animation = animation;
+	}
 
 	public Animation getAnimation() {
 		return animation;
+	}
+	
+	public AnimationEvent() {
+		
 	}
 
 	public AnimationEvent(Animation animation) {
 		this.animation = animation;
 	}
+	
 }
