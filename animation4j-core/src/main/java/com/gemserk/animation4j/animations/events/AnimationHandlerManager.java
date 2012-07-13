@@ -3,6 +3,8 @@ package com.gemserk.animation4j.animations.events;
 import java.util.ArrayList;
 
 import com.gemserk.animation4j.animations.Animation;
+import com.gemserk.animation4j.utils.Pool;
+import com.gemserk.animation4j.utils.Pool.PoolObjectFactory;
 
 /**
  * Manages all animation event handlers, checking whenever an animation state changes so related animation event handlers be called.
@@ -17,10 +19,9 @@ public class AnimationHandlerManager {
 	 * 
 	 * @author acoppes
 	 */
-	public static class Action {
+	public class Action {
 
 		private final AnimationHandlerManager animationHandlerManager;
-
 		private final AnimationEventHandler animationEventHandler;
 
 		Action(AnimationHandlerManager animationHandlerManager, AnimationEventHandler animationEventHandler) {
@@ -29,11 +30,21 @@ public class AnimationHandlerManager {
 		}
 
 		public Action handleChangesOf(Animation animation) {
-			animationHandlerManager.handleAnimationChanges(new AnimationMonitor(animation, animationEventHandler));
+			AnimationMonitor animationMonitor = animationMonitorsPool.newObject();
+			animationMonitor.setAnimationEventHandler(animationEventHandler);
+			animationMonitor.setAnimation(animation);
+			animationHandlerManager.handleAnimationChanges(animationMonitor);
 			return this;
 		}
 
 	}
+
+	Pool<AnimationMonitor> animationMonitorsPool = new Pool<AnimationMonitor>(new PoolObjectFactory<AnimationMonitor>() {
+		@Override
+		public AnimationMonitor createObject() {
+			return new AnimationMonitor();
+		}
+	}, 64);
 
 	ArrayList<AnimationMonitor> animationMonitors = new ArrayList<AnimationMonitor>();
 
@@ -52,6 +63,13 @@ public class AnimationHandlerManager {
 	public void handleAnimationChanges(final AnimationMonitor animationMonitor) {
 		animationMonitors.add(animationMonitor);
 	}
+	
+	public void handleAnimationChanges(Animation animation, AnimationEventHandler animationEventHandler) {
+		AnimationMonitor animationMonitor = animationMonitorsPool.newObject();
+		animationMonitor.setAnimationEventHandler(animationEventHandler);
+		animationMonitor.setAnimation(animation);
+		handleAnimationChanges(animationMonitor);
+	}
 
 	public Action with(AnimationEventHandler animationEventHandler) {
 		return new Action(this, animationEventHandler);
@@ -63,6 +81,10 @@ public class AnimationHandlerManager {
 			if (animationMonitor.getAnimation() == animation)
 				animationMonitorsToRemove.add(animationMonitor);
 		}
+		
+		for (int i = 0; i < animationMonitorsToRemove.size(); i++) 
+			animationMonitorsPool.free(animationMonitorsToRemove.get(i));
+		
 		animationMonitors.removeAll(animationMonitorsToRemove);
 		animationMonitorsToRemove.clear();
 	}

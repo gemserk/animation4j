@@ -37,7 +37,7 @@ public class AnimationManager {
 	}
 
 	public void handleAnimationChanges(Animation animation, AnimationEventHandler animationEventHandler) {
-		animationHandlerManager.with(animationEventHandler).handleChangesOf(animation);
+		animationHandlerManager.handleAnimationChanges(animation, animationEventHandler);
 	}
 	
 	public void clear() {

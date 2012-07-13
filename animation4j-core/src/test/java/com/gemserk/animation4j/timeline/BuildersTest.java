@@ -34,7 +34,7 @@ public class BuildersTest {
 				.build();
 		assertThat(timelineAnimation.getDelay(), IsEqual.equalTo(0.2f));
 		assertThat(timelineAnimation.getDuration(), IsEqual.equalTo(1.2f));
-		System.out.println(timelineAnimation.getTimeline());
+		assertThat(timelineAnimation.isStarted(), IsEqual.equalTo(false));
 	}
 
 	@Test
@@ -57,6 +57,19 @@ public class BuildersTest {
 		timelineAnimation.update(1.2f);
 		
 		assertThat(floatValue1.value, IsEqual.equalTo(500f));
+	}
+	
+	@Test
+	public void bugAnimationShouldNotBeStarted() {
+		TimelineAnimation timelineAnimation = Builders.animation( //
+				Builders.timeline() //
+						.value(Builders.timelineValue(new FloatValueConverter()) //
+								.keyFrame(0f, new FloatValue(500f)) //
+								.keyFrame(0.5f, new FloatValue(12500f)) //
+								.keyFrame(1f, new FloatValue(500f)) //
+						)) //
+				.build();
+		assertThat(timelineAnimation.isStarted(), IsEqual.equalTo(false));
 	}
 	
 }
