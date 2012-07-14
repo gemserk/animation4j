@@ -1,6 +1,5 @@
 package com.gemserk.animation4j.animations;
 
-
 /**
  * An implementation of the Animation interface using a time line to animate values.
  * 
@@ -22,11 +21,11 @@ public class AnimationImpl implements Animation {
 	public PlayingDirection getPlayingDirection() {
 		return playingDirection;
 	}
-	
+
 	public void setDuration(float duration) {
 		this.duration = duration;
 	}
-	
+
 	@Override
 	public float getSpeed() {
 		return speed;
@@ -35,11 +34,11 @@ public class AnimationImpl implements Animation {
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
-	
+
 	public void setAlternateDirection(boolean alternateDirection) {
 		this.alternateDirection = alternateDirection;
 	}
-	
+
 	public float getCurrentTime() {
 		return currentTime;
 	}
@@ -81,6 +80,7 @@ public class AnimationImpl implements Animation {
 		this.iterations = iterationCount;
 		if (this.iterations <= 0)
 			this.iterations = Integer.MAX_VALUE;
+		this.currentTime = 0;
 		this.iteration = 1;
 		resume();
 	}
@@ -130,7 +130,6 @@ public class AnimationImpl implements Animation {
 			return true;
 		return currentTime > getDelay();
 	}
-	
 
 	@Override
 	public boolean isPlaying() {
