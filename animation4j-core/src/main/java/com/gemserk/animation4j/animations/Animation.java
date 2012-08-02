@@ -101,5 +101,7 @@ public interface Animation {
 	 * Returns the current speed of the animation.
 	 */
 	float getSpeed();
+	
+	float getCurrentTime();
 
 }

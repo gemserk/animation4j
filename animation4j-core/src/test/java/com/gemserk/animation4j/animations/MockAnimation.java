@@ -113,4 +113,11 @@ public class MockAnimation implements Animation {
 		
 	}
 
+	@Override
+	public float getCurrentTime() {
+		// TODO Auto-generated function stub
+		return 0;
+		
+	}
+
 }
