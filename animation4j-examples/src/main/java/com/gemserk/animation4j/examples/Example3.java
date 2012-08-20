@@ -53,12 +53,14 @@ public class Example3 extends Java2dGameAdapter {
 
 	private Color houseColor;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void init() {
 		
 		houseImage = ImageUtils.load("house-128x92.png");
 		
 		creditsPane = new JEditorPane("text/html", new FileHelper("license-lostgarden.html").read()) {
+			private static final long serialVersionUID = 1L;
 			{
 				setSize(600, 40);
 				setEditable(false);
@@ -66,6 +68,7 @@ public class Example3 extends Java2dGameAdapter {
 			}
 		};
 		textPane = new JEditorPane("text/html", new FileHelper("example3.html").read()) {
+			private static final long serialVersionUID = 1L;
 			{
 				setSize(600, 240);
 				setEditable(false);

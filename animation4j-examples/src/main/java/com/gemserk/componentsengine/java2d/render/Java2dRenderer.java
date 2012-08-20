@@ -20,7 +20,7 @@ public class Java2dRenderer {
 
 	public void render(Java2dRenderObject renderObject) {
 
-		Graphics2D graphics = currentGraphicsProvider.getGraphics();
+		currentGraphicsProvider.getGraphics();
 
 		if (renderObject instanceof Java2dImageRenderObject) {
 			imageRenderer.render((Java2dImageRenderObject) renderObject);

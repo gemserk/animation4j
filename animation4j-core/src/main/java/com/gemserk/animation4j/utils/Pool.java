@@ -26,6 +26,7 @@ import java.util.List;
 	}
 
 	/** the list of free objects **/
+	@SuppressWarnings("rawtypes")
 	private final List<T> freeObjects = new ArrayList();
 	/** the factory **/
 	private final PoolObjectFactory<T> factory;

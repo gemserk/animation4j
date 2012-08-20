@@ -34,6 +34,7 @@ public class Synchronizers {
 	 * @param transition
 	 *            The transition to be registered.
 	 */
+	@SuppressWarnings("rawtypes")
 	public static void transition(Transition transition) {
 		getInstance().transition(transition);
 	}
@@ -46,6 +47,7 @@ public class Synchronizers {
 	 * @param transitionEventHandler
 	 *            The TransitionEventHandler to be called when the Transition changes its state.
 	 */
+	@SuppressWarnings("rawtypes")
 	public static void transition(Transition transition, TransitionEventHandler transitionEventHandler) {
 		getInstance().transition(transition, transitionEventHandler);
 	}
@@ -58,6 +60,7 @@ public class Synchronizers {
 	 * @param transitionEventHandler
 	 *            The TransitionEventHandler to be called when the Transition changes its state.
 	 */
+	@SuppressWarnings("rawtypes")
 	public static void monitor(Transition transition, TransitionEventHandler transitionEventHandler) {
 		getInstance().monitor(transition, transitionEventHandler);
 	}

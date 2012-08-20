@@ -11,6 +11,7 @@ import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
  */
 public class Transitions {
 
+	@SuppressWarnings("rawtypes")
 	private static final TransitionBuilder transitionBuilder = new TransitionBuilder();
 
 	public static class TransitionBuilder<T> {
@@ -51,6 +52,7 @@ public class Transitions {
 			return this;
 		}
 
+		@SuppressWarnings("rawtypes")
 		public TransitionBuilder functions(InterpolationFunction... functions) {
 			transitionImpl.setFunctions(functions);
 			return this;
@@ -75,6 +77,7 @@ public class Transitions {
 	 *            The TypeConverter used to convert between float[] to the object and vice versa.
 	 * @return The TransitionBuilder to build the new transition.
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <T> TransitionBuilder<T> transition(T mutableObject, TypeConverter typeConverter) {
 		transitionBuilder.setMutableObjectTransition(new TransitionImpl(mutableObject, typeConverter));
 		transitionBuilder.setTypeConverter(typeConverter);

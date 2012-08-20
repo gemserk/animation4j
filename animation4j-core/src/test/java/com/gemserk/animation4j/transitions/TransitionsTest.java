@@ -33,7 +33,7 @@ public class TransitionsTest {
 				.start(20f, 20f) //
 				.end(0.5f, 100f, 100f) //
 				.build();
-		Vector2f value = transition.get();
+		transition.get();
 	}
 
 }

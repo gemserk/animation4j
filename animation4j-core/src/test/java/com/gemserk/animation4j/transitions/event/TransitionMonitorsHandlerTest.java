@@ -49,6 +49,7 @@ public class TransitionMonitorsHandlerTest {
 		assertThat(mockTransitionEventHandler.transition, IsNull.nullValue());
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void shouldCallOnStartWhenTransitionStartedDetected() {
 		MockTransitionEventHandler mockTransitionEventHandler = new MockTransitionEventHandler();
@@ -78,6 +79,7 @@ public class TransitionMonitorsHandlerTest {
 		assertThat(mockTransitionEventHandler.transition, IsSame.sameInstance(transition));
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void shouldCallOnFinishWhenTransitionFinishDetected() {
 		MockTransitionEventHandler mockTransitionEventHandler = new MockTransitionEventHandler();

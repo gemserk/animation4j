@@ -30,6 +30,7 @@ public class Timeline {
 	 * @param index
 	 *            The index of the corresponding index.
 	 */
+	@SuppressWarnings("unchecked")
 	public <T> TimelineValue<T> getTimeLineValue(int index) {
 		return values.get(index);
 	}

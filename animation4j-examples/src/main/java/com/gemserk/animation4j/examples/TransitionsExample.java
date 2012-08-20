@@ -14,6 +14,7 @@ public class TransitionsExample {
 		testUsingTransitionDirectly();
 	}
 
+	@SuppressWarnings("unchecked")
 	protected static void testUsingTransitionDirectly() {
 		InterpolationFunction[] functions = { InterpolationFunctions.easeOut(), InterpolationFunctions.easeIn() };
 
@@ -23,7 +24,7 @@ public class TransitionsExample {
 			.functions(functions) //
 			.build();
 		
-		Transition<Vector2f> anotherTransition = Transitions.transition(object1, vector2fConverter) //
+		Transitions.transition(object1, vector2fConverter) //
 			.build();
 		
 		System.out.println("Transition value: " + transition.get());

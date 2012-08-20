@@ -44,8 +44,8 @@ public class TransitionHandlersManagerTest {
 	}
 	
 	@Test
+	@SuppressWarnings("rawtypes")
 	public void checkSameProcessorUsedTwiceShouldNotBeFinished() {
-		@SuppressWarnings("rawtypes")
 		MockTransition transition = new MockTransition();
 		MockTransitionEventHandler mockTransitionEventHandler = new MockTransitionEventHandler();
 

@@ -34,6 +34,7 @@ public class TransitionHandlersManager {
 	 * @param transitionEventHandler
 	 *            The TransitionEventHandler to be called when changes were detected.
 	 */
+	@SuppressWarnings("rawtypes")
 	public void handle(Transition transition, TransitionEventHandler transitionEventHandler) {
 		TransitionMonitorProcessor transitionMonitorProcessor = monitorProcessorPool.newObject();
 		transitionMonitorProcessor.process(transition, transitionEventHandler);

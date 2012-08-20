@@ -128,6 +128,7 @@ public class Example2 extends Java2dGameAdapter {
 		String html = new FileHelper("license-lostgarden.html").read();
 
 		creditsPane = new JEditorPane("text/html", html) {
+			private static final long serialVersionUID = 1L;
 			{
 				setSize(600, 40);
 				setEditable(false);
@@ -136,6 +137,7 @@ public class Example2 extends Java2dGameAdapter {
 		};
 
 		textPane = new JEditorPane("text/html", "") {
+			private static final long serialVersionUID = 1L;
 			{
 				setSize(226, 156);
 				setEditable(false);

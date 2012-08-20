@@ -72,6 +72,7 @@ public class Builders {
 
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static class TimelineBuilder {
 
 		private ArrayList<TimelineValue> values;
@@ -181,6 +182,7 @@ public class Builders {
 
 	private static Builders.TimelineBuilder timelineBuilder = new TimelineBuilder();
 	private static Builders.TimelineAnimationBuilder timelineAnimationBuilder = new TimelineAnimationBuilder();
+	@SuppressWarnings("rawtypes")
 	private static Builders.TimelineValueBuilder timelineValueBuilder = new TimelineValueBuilder();
 
 	public static Builders.TimelineBuilder timeline() {
@@ -191,10 +193,12 @@ public class Builders {
 		return timelineAnimationBuilder.setTimelineBuilder(timelineBuilder);
 	}
 
+	@SuppressWarnings("unchecked")
 	public static <T> Builders.TimelineValueBuilder<T> timelineValue(T mutableObject, TypeConverter<T> typeConverter) {
 		return timelineValueBuilder.mutableObject(mutableObject).typeConverter(typeConverter);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static <T> Builders.TimelineValueBuilder<T> timelineValue(TypeConverter<T> typeConverter) {
 		return timelineValueBuilder.mutableObject(null).typeConverter(typeConverter);
 	}

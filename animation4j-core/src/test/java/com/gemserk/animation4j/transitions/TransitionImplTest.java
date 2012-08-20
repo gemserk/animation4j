@@ -1,15 +1,14 @@
 package com.gemserk.animation4j.transitions;
 
-import static org.easymock.EasyMock.isNull;
 import static org.junit.Assert.*;
 
-import org.easymock.internal.matchers.Null;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
 
 import com.gemserk.animation4j.converters.TypeConverter;
 
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class TransitionImplTest {
 
 	class MyObject {
@@ -177,8 +176,6 @@ public class TransitionImplTest {
 
 	@Test
 	public void shouldReturnMutableObject() {
-		float b[] = { 50f, 50f };
-
 		MyObject myObject = new MyObject();
 		myObject.x = 40f;
 		myObject.y = 40f;

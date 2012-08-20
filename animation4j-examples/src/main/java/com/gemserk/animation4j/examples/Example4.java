@@ -7,8 +7,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import com.gemserk.animation4j.animations.events.AnimationHandlerManager;
-import com.gemserk.animation4j.interpolator.function.InterpolationFunction;
-import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.componentsengine.java2d.Java2dGameAdapter;
@@ -66,8 +64,6 @@ public class Example4 extends Java2dGameAdapter {
 		backgroundImage = ImageUtils.load("example4/background.jpg");
 		buttonImage = ImageUtils.load("example4/settings-button.png");
 		buttonGlowImage = ImageUtils.load("example4/settings-button-glow.png");
-
-		final InterpolationFunction linearInterpolationFunction = InterpolationFunctions.linear();
 
 		final Vector2fConverter vector2fConverter = new Vector2fConverter();
 
