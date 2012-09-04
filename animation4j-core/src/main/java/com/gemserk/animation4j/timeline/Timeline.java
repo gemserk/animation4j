@@ -58,4 +58,16 @@ public class Timeline {
 		return values.toString();
 	}
 
+	/**
+	 * Configures the specified objects for each TimelineValue in order.
+	 */
+	@SuppressWarnings("unchecked")
+	public void setObjects(Object... objects) {
+		for (int i = 0; i < values.size(); i++) {
+			if (i >= objects.length)
+				return;
+			values.get(i).setObject(objects[i]);
+		}
+	}
+
 }
