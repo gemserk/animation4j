@@ -68,10 +68,10 @@ class TimelineValueFloatArrayImpl {
 	}
 
 	KeyFrame getPreviousKeyFrame(KeyFrame keyFrame) {
-		int currentKeyFrameIndex = keyFrame.index;
-		if (currentKeyFrameIndex - 1 < 0)
+		int previousKeyFrameIndex = keyFrame.index - 1;
+		if (previousKeyFrameIndex < 0)
 			return null;
-		return keyFrames.get(currentKeyFrameIndex - 1);
+		return keyFrames.get(keyFrame.index - 1);
 	}
 
 	@Override
