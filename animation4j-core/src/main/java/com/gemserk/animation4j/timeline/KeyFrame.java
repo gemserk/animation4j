@@ -17,6 +17,12 @@ public class KeyFrame {
 	private final float[] value;
 	private final InterpolationFunction[] functions;
 
+	/**
+	 * The internal index inside the {@link TimelineValue}, used to improve speed when calculating the 
+	 * previous {@link KeyFrame}.
+	 */
+	int index;
+
 	public float getTime() {
 		return time;
 	}
@@ -60,4 +66,5 @@ public class KeyFrame {
 		stringBuffer.append("]");
 		return stringBuffer.toString();
 	}
+
 }

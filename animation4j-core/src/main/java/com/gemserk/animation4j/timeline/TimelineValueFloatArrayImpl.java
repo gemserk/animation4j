@@ -28,6 +28,7 @@ class TimelineValueFloatArrayImpl {
 		if (keyFrame.getValue().length != x.length)
 			throw new IllegalArgumentException("keyframe should work over a valid float[] of size " + x.length);
 		keyFrames.add(keyFrame);
+		keyFrame.index = keyFrames.size() - 1;
 	}
 
 	public void setTime(float time) {
@@ -67,7 +68,7 @@ class TimelineValueFloatArrayImpl {
 	}
 
 	KeyFrame getPreviousKeyFrame(KeyFrame keyFrame) {
-		int currentKeyFrameIndex = keyFrames.indexOf(keyFrame);
+		int currentKeyFrameIndex = keyFrame.index;
 		if (currentKeyFrameIndex - 1 < 0)
 			return null;
 		return keyFrames.get(currentKeyFrameIndex - 1);
