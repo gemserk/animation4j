@@ -58,7 +58,7 @@ class TimelineValueFloatArrayImpl {
 		if (time < firstKeyFrame.getTime())
 			return firstKeyFrame;
 
-		for (int i = 0; i < keyFrames.size(); i++) {
+		for (int i = 1; i < keyFrames.size() - 1; i++) {
 			KeyFrame currentKeyFrame = keyFrames.get(i);
 			if (currentKeyFrame.getTime() > time)
 				return currentKeyFrame;
@@ -71,7 +71,7 @@ class TimelineValueFloatArrayImpl {
 		int previousKeyFrameIndex = keyFrame.index - 1;
 		if (previousKeyFrameIndex < 0)
 			return null;
-		return keyFrames.get(keyFrame.index - 1);
+		return keyFrames.get(previousKeyFrameIndex);
 	}
 
 	@Override
